@@ -1,0 +1,39 @@
+dist: xenial
+sudo: required
+
+language: node_js
+node_js:
+  - "lts/*"
+
+before_install:
+  - echo "Start Build for Hexo, kmahyyg.xyz"
+
+install:
+  - npm install hexo-cli hexo-deployer-git hexo-generator-feed hexo-generator-search -g --save
+
+script:
+  - hexo g
+
+deploy:
+  provider: pages
+  skip-cleanup: true
+  keep-history: true
+  github-token: $GITHUB_PERTKN
+  on:
+    branch: raw
+  target-branch: master
+  fqdn: blog.kmahyyg.xyz
+  project-name: kmahyyg.github.io
+  committer-from-gh: true
+  local-dir: public
+
+notifications:
+  webhooks:
+    urls:
+      - https://integrations.bonbotics.io/travis/webhook/McReXwoNYgeQzXAr10StqlRMROG9mkkwo61TkaJU9tE
+    on_success: always
+    on_failure: always
+    on_start: never
+
+after_deploy:
+   - ./after_deploy.sh
