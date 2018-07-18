@@ -78,7 +78,10 @@ theme: material
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
-  type:
+  type: git
+  repo:
+    github: git@github.com:kmahyyg/kmahyyg.github.io.git,master
+    coding: git@git.coding.net:kmahyyg/kmahyyg.git,master
 
 # Plugins
 

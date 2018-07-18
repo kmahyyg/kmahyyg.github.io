@@ -1,3 +1,6 @@
+.deploy*/
+public/
+
 # Logs
 logs
 *.log
