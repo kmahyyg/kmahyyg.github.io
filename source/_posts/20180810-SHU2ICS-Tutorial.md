@@ -1,5 +1,5 @@
 ---
-title: 大学 - 爬取课表并转换为 ICS 文件
+title: 爬取课表并转换为 ICS 文件
 date: 2018-08-10 08:06:18
 tags:
   -- School
