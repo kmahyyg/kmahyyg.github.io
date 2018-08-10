@@ -2,7 +2,7 @@
 title: 爬取课表并转换为 ICS 文件
 date: 2018-08-10 08:06:18
 tags:
-  -- School
+  - School
 --- 
 
 # 注意
