@@ -76,9 +76,9 @@ img:
     sidebar_header: "/img/sidebar_header.png"
     random_thumbnail: "/img/random/material-"
     footer_image:
-        upyun_logo:
-            link: "https://www.upyun.com/"
-            src: "/img/upyun_logo.svg"
+        #upyun_logo:
+            #link: "https://www.upyun.com/"
+            #src: "/img/upyun_logo.svg"
         coding_logo:
             link: "https://pages.coding.me"
             src: "https://dn-coding-net-production-static.qbox.me/static/f452324a7d42a04f5d11efe5497923cc.svg"
@@ -104,7 +104,7 @@ copyright_since: 2015
 # You can specify the text you want to show in footer, HTML tag is supported.
 #   For example, you can setup ICP license number as:
 #       '<a href="http://www.miitbeian.gov.cn" rel="nofollow">某ICP备xxxxxxxx号-x</a>'
-footer_text: '<a href="https://github.com/kmahyyg" rel="nofollow">世界最大同性交友网站</a>'
+footer_text: '<a href="https://www.upyun.com/" target="_blank" title="upyun_logo"><img src="/img/upyun_logo.svg" alt="upyun_logo"></a>'
 
 # Qrcode for redirect at other device
 #   use: choose which method to generate the qrcode for each posts.
