@@ -14,11 +14,11 @@ tags:
 > 任务八：走进安全
 >
 > * 破解离散数学2015年加密期中文件的口令
-> 参考资料1：[密码分析](https://zh.wikipedia.org/wiki/%E5%AF%86%E7%A0%81%E5%88%86%E6%9E%90)
+> 参考资料1: [密码分析](https://zh.wikipedia.org/wiki/%E5%AF%86%E7%A0%81%E5%88%86%E6%9E%90)
 ------------------ *这个是我自己加的，原本任务内容没有* -----------------
-> 参考资料2：[Pkzip官方文件头描述文档](https://pkware.cachefly.net/webdocs/casestudies/APPNOTE.TXT)
-> 参考资料3：[Pkzip文件架构分析](https://users.cs.jmu.edu/buchhofp/forensics/formats/pkzip.html)
-> 参考资料4：[zip加密算法分析1](https://eprint.iacr.org/2004/078.pdf)
+> 参考资料2: [Pkzip官方文件头描述文档](https://pkware.cachefly.net/webdocs/casestudies/APPNOTE.TXT)
+> 参考资料3: [Pkzip文件架构分析](https://users.cs.jmu.edu/buchhofp/forensics/formats/pkzip.html)
+> 参考资料4: [zip加密算法分析1](https://eprint.iacr.org/2004/078.pdf)
 > 参考资料5: [zip加密算法分析2](https://courses.cs.ut.ee/MTAT.07.022/2015_fall/uploads/Main/dmitri-report-f15-16.pdf)
 > 参考资料6: [pkzip传统加密算法的无密文破解分析](https://www.cs.auckland.ac.nz/~mike/zipattacks.pdf)
 ------------------ *这个是我自己加的，原本任务内容没有* -----------------
@@ -64,7 +64,7 @@ tags:
 
 分析：
 
-![local-file-header.png](https://i.loli.net/2017/08/21/599a3a8f95df7.png)
+![local-file-header.png](https://yygc.zzjnyyz.cn/asset_files/pkzip1.png)
 
 0x04034b50 (Must read in little-endian)   定义为文件头标签，即让OS知道这是个zip文件     
 
@@ -116,6 +116,6 @@ tags:
 
 ## bruteforce cracker
 
-Upload some [brute-force cracker](/school-share/zipcracker-bruteforce-real.rar) for pkzip.
+Upload some [brute-force cracker](https://yygc.zzjnyyz.cn/asset_files/zipcracker-bruteforce-real.rar) for pkzip.
 Still Cracking using DO .
 

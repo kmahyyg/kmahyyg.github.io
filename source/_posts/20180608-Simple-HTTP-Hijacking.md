@@ -13,9 +13,9 @@ However, after experiencing the DNS response packet fully-filled with alphabet w
 
 I will provide my packet capture files here.
 
-DNS Capture:  [PCAP File](/asset_files/udp53_filledNONSENSE.pcap)
+DNS Capture:  [PCAP File](https://yygc.zzjnyyz.cn/asset_files/udp53_filledNONSENSE.pcap)
 
-Hijack Capture: [CHLS File - Charles Proxy](/asset_files/jd_hijack_ipad.chls)
+Hijack Capture: [CHLS File - Charles Proxy](https://yygc.zzjnyyz.cn/asset_files/jd_hijack_ipad.chls)
 
 They still don't admit it. And they asked me if they could go to my house and check it themselves. I accepted. However, the process of reproduction is tested under a very clear environment. Now, they set up a whitelist and want to cheat me.
 
@@ -59,7 +59,7 @@ http://m.jd.com:80 {
 
 # Done!
 
-tested. 
+Tested. 
 
 Update: 2 weeks after I report to MIIT, still can be reproduced on my HUAWEI device.
 

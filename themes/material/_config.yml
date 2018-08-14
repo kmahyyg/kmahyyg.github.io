@@ -4,9 +4,9 @@
 
 # Head info
 head:
-    favicon: "https://www.gravatar.com/avatar/063ce3f48f23220b4a17d62ba5e50db0.jpg"
-    high_res_favicon: "https://www.gravatar.com/avatar/063ce3f48f23220b4a17d62ba5e50db0.jpg"
-    apple_touch_icon: "https://www.gravatar.com/avatar/063ce3f48f23220b4a17d62ba5e50db0.jpg"
+    favicon: "https://yygc.zzjnyyz.cn/asset_files/avatar-yyg.jpg"
+    high_res_favicon: "https://yygc.zzjnyyz.cn/asset_files/avatar-yyg.jpg"
+    apple_touch_icon: "https://yygc.zzjnyyz.cn/asset_files/avatar-yyg.jpg"
     keywords: "Patrick Young,kmahyyg,material"
     site_verification:
         google:
@@ -70,8 +70,8 @@ background:
 
 # Images Settings
 img:
-    logo: "https://www.gravatar.com/avatar/063ce3f48f23220b4a17d62ba5e50db0.jpg"
-    avatar: "https://www.gravatar.com/avatar/063ce3f48f23220b4a17d62ba5e50db0.jpg"
+    logo: "https://yygc.zzjnyyz.cn/asset_files/avatar-yyg.jpg"
+    avatar: "https://yygc.zzjnyyz.cn/asset_files/avatar-yyg.jpg"
     daily_pic: "/img/daily_pic.png"
     sidebar_header: "/img/sidebar_header.png"
     random_thumbnail: "/img/random/material-"
