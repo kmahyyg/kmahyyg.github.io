@@ -76,9 +76,9 @@ img:
     sidebar_header: "/img/sidebar_header.png"
     random_thumbnail: "/img/random/material-"
     footer_image:
-        #upyun_logo:
-            #link: "https://www.upyun.com/"
-            #src: "/img/upyun_logo.svg"
+        upyun_logo:
+            link: "https://www.upyun.com/"
+            src: "/img/upyun_logo.svg"
         coding_logo:
             link: "https://pages.coding.me"
             src: "https://dn-coding-net-production-static.qbox.me/static/f452324a7d42a04f5d11efe5497923cc.svg"
