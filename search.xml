@@ -3,6 +3,21 @@
   
     
     <entry>
+      <title>见鬼的 Travis CI</title>
+      <link href="/2018/Sucked-Travis-CI/"/>
+      <url>/2018/Sucked-Travis-CI/</url>
+      <content type="html"><![CDATA[<h2 id="情况"><a href="#情况" class="headerlink" title="情况"></a>情况</h2><p>最近一个月内 Travis CI 出现了 5 次基础设施不可用的情况，参见 <a href="https://www.traviscistatus.com/history" target="_blank" rel="noopener">https://www.traviscistatus.com/history</a></p><p>所有 <code>sudo: required</code> Build 均会直接 Timeout 或者 Build 失败。</p><h2 id="努力"><a href="#努力" class="headerlink" title="努力"></a>努力</h2><p>与客服邮件沟通 3 次，无果。</p><h2 id="更改"><a href="#更改" class="headerlink" title="更改"></a>更改</h2><p>改动：</p><pre class="line-numbers language-git"><code class="language-git">From: kmahyyg &lt;16604643+kmahyyg@users.noreply.github.com>Date: Sat, 18 Aug 2018 07:32:49 +0800Subject: [PATCH] reroute ci build to container to avoid sucked travis ci<span class="token deleted">---</span> .travis.yml | 4 ++-- 1 file changed, 2 insertions(+), 2 deletions(-)diff --git a/.travis.yml b/.travis.ymlindex 6554487..925bfd9 100644<span class="token deleted">--- a/.travis.yml</span><span class="token inserted">+++ b/.travis.yml</span><span class="token coord">@@ -1,5 +1,5 @@</span><span class="token deleted">-dist: xenial</span><span class="token deleted">-sudo: required</span><span class="token inserted">+dist: trusty</span><span class="token inserted">+sudo: false</span> language: node_js node_js:<span class="token deleted">-- </span>2.18.0<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><h2 id="结果"><a href="#结果" class="headerlink" title="结果"></a>结果</h2><p>当尝试把 Build Reroute 到 Travis 的 Container-Based build infrastructure 之后，依然失败。同一个 Build, 人工重启后成功。问题仍然存在。</p><p>继续联系客服，等待回复，表达愤怒。</p>]]></content>
+      
+      
+        <tags>
+            
+            <tag> Tech </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    <entry>
       <title>爬取课表并转换为 ICS 文件</title>
       <link href="/2018/SHU2ICS-Tutorial/"/>
       <url>/2018/SHU2ICS-Tutorial/</url>
