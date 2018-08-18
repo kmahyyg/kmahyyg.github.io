@@ -2,7 +2,7 @@
 title: InfoSec-CSRF and MISC
 date: 2018-07-06 01:03:26
 tags:
-  -- Tech
+  - Tech
 ---
 
 今天上课的时候，老师提到了CSRF跨站脚本攻击，特查阅资料。
