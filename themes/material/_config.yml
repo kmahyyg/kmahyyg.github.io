@@ -219,9 +219,9 @@ sidebar:
             link: "/tags"
             icon: book
             divider: true
-        School:
-            link: "/school-share"
-            icon: backup
+        Timeline:
+            link: "/timeline"
+            icon: timeline
             divider: false
         Express:
             link: "/express"
