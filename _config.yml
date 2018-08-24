@@ -95,6 +95,9 @@ search:
   path: search.xml
   field: post
   
+sitemap:
+  path: sitemap.xml
+  
 prism_plugin:
   mode: 'preprocess'    # realtime/preprocess
   theme: 'vs'
