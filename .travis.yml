@@ -14,7 +14,13 @@ before_install:
 
 install:
   - npm install hexo-cli -g --save
-  - npm install hexo hexo-deployer-git hexo-prism-plugin hexo-helper-qrcode hexo-generator-search hexo-generator-sitemap hexo-generator-feed --save 
+  - npm install hexo-helper-qrcode
+  - npm install hexo-generator-feed
+  - npm install hexo-deployer-git
+  - npm install hexo-prism-plugin
+  - npm install hexo-generator-search
+  - npm install hexo
+  - npm install hexo-generator-sitemap
 
 script:
   - hexo g
