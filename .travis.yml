@@ -13,6 +13,7 @@ before_install:
   - echo "Start Build for Hexo Blog, kmahyyg.github.io"
 
 install:
+  - touch package.json
   - npm install hexo-cli -g --save
   - npm install hexo-helper-qrcode --save
   - npm install hexo-generator-feed --save
