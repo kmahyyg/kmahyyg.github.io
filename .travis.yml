@@ -5,22 +5,22 @@ language: node_js
 node_js:
   - "8.11.3"
 
-cache:
-  directories:
-  - node_modules # NPM packages
+#cache:
+  #directories:
+    #- node_modules # NPM packages
 
 before_install:
   - echo "Start Build for Hexo Blog, kmahyyg.github.io"
 
 install:
   - npm install hexo-cli -g --save
-  - npm install hexo-helper-qrcode
-  - npm install hexo-generator-feed
-  - npm install hexo-deployer-git
-  - npm install hexo-prism-plugin
-  - npm install hexo-generator-search
-  - npm install hexo
-  - npm install hexo-generator-sitemap
+  - npm install hexo-helper-qrcode --save
+  - npm install hexo-generator-feed --save
+  - npm install hexo-deployer-git --save
+  - npm install hexo-prism-plugin --save
+  - npm install hexo-generator-search --save
+  - npm install hexo --save
+  - npm install hexo-generator-sitemap --save
 
 script:
   - hexo g
