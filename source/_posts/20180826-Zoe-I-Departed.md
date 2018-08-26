@@ -61,7 +61,7 @@ hope it lasts much longer or keep forever. Remember, I've told you some day that
 
 Part three: My begging
 
-First of all, I have to inform you that you've already been tagged "blacklist" in my soul mate list after I picked you. You are a good friend, but not a good soul mate. I confirmed you are still a good friend. I'm really sad, but life still goes on. So I'm still happy, Cuz unhappy will only cost me all things without any return. Secondly, I just hope you could answer me "Yes" towards whether to go the exhibition together. Thirdly, I hope there will be no more other reply except the second point listed above. Thanks for your understanding.
+First of all, I have to inform you that you've already been tagged "blacklist" in my soul mate list after I picked you. You are a good friend, but not a good soul mate. I confirmed you are still a good friend. I'm really sad, but life still goes on. So I'm still happy, Cuz unhappy will only cost me all things without any return. Secondly, I hope there will be no more other reply. Thanks for your understanding.
 
 Hope you have a better day.
 
