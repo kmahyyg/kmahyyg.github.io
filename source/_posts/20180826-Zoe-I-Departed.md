@@ -70,6 +70,10 @@ Patrick Cat
 
 Written at Sun Aug 26 20:05:16 CST 2018
 
+## The reason I deleted her
+
+I didn't want to do that at the very first time. I could understand that you're protecting yourself. But you know that I won't do any harm to you. You still chose to cheat me. I chose to exchange with my true heart, but you don't even understand it. That's what I can't stand. SEE YOU NEVER!
+
 # License
 
 YOU ARE NOT PERMITTED TO FORWARD IT ANYWHERE OR POST IT ANYWHERE ELSE (INCLUDING LINK TO THIS POST), NO DERIVS.
