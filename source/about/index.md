@@ -11,7 +11,10 @@ comments: false
  
  https://github.com/kmahyyg
  
- Backend, Frontend, Learnning Python and PHP.
+ Backend, Maybe to become a full-stack, Learnning Python and Go & PHP.
  
- Thanks for meeting her, Zoe, I've found my life back.
- Love!
+ Thanks for meeting her, Zoe, Everything will have an end.
+ 
+ NEVER DRINK AT NIGHT:
+  - Coke
+  - Herb Tea
