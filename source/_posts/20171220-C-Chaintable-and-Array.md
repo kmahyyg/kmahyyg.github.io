@@ -6,7 +6,7 @@ tags:
   - Tech
 ---
 
-![Array_Chaintable.png](https://i.loli.net/2017/12/20/5a39c48da6ba7.png)
+![Array_Chaintable.png](https://yygc.zzjnyyz.cn/asset_files/c-chaintable.png)
 
 https://www.cnblogs.com/tao560532/articles/2199280.html
 
