@@ -72,7 +72,9 @@ Written at Sun Aug 26 20:05:16 CST 2018
 
 ## The reason I deleted her
 
-I didn't want to do that at the very first time. I could understand that you're protecting yourself. But you know that I won't do any harm to you. You still chose to cheat me. I chose to exchange with my true heart, but you don't even understand it a bit. That's what I can't stand. SEE YOU NEVER!
+I didn't want to do that at the very first time. I could understand that you're protecting yourself. But you know that I won't do any harm to you. You still chose to cheat me. I chose to exchange with my true heart, but you don't even understand it a bit. That's what I can't stand.
+
+UPDATE： I just want a little bit response from heart to heart, but so hard to feel. See you. Thanks for your company and honesty.
 
 # License
 
