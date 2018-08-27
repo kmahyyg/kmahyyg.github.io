@@ -1,6 +1,6 @@
 ---
 title: Misunderstand? No, I'm a coward.
-date: 2018-08-8 22:37:48
+date: 2018-08-28 22:37:48
 tags:
   - School
 ---
