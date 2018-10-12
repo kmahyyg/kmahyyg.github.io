@@ -7,7 +7,7 @@ comments: false
 <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
 
 <script type="text/javascript">
-	donate_app_id = 10;
+	donate_app_id = 31;
 	jQuery(document).ready(function($) {
 		$('#donation_table').DataTable({
 			"ajax": {
@@ -18,7 +18,7 @@ comments: false
 					d.order_type = 3;
 				},
 				'beforeSend': function(request) {
-					request.setRequestHeader("AppId", 31);
+					request.setRequestHeader("AppId", donate_app_id);
 				},
 				'dataFilter': function(data) {
 					var msg = $.parseJSON(data);
