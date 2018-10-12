@@ -227,6 +227,14 @@ sidebar:
             link: "/express"
             icon: mail
             divider: false
+        ArchLinux:
+            link: "/archlinux"
+            icon: local_convenience_store
+            divider: false
+        Donate:
+            link: "/donate"
+            icon: account_balance_wallet
+            divider: false
     article_num:
         use: true
         divider: false
