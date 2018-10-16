@@ -280,7 +280,7 @@ BIOS 执行完成后，会跳转到 0x7c00 位置，我们使用 `b 0x7c00` 在�
 
 Updated on Tue Oct 16 21:52:16 CST 2018
 
-Rev.2
+Rev.3
 
 # Reference
 
@@ -295,3 +295,5 @@ https://stackoverflow.com/questions/37902940/disable-got-in-gcc
 https://stackoverflow.com/questions/35762970/jmp-in-nasm-bootloader
 
 https://www.nasm.us/doc/nasmdo12.html
+
+https://www.cnblogs.com/chengxuyuancc/archive/2013/05/13/3076524.html
