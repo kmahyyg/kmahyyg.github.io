@@ -12,7 +12,7 @@ tags:
 
 由于过去不努力和各种原因，导致没有选到汇编课程。旁听课程，保存下了逍爷的 PPT，积极参与实验和旁听课程。
 
-这就是我现在能做的，感谢王逍老师的辛勤付出。感谢我亲爱的钰儿帮我做的一切，么么哒！
+这就是我现在能做的，感谢王逍老师的辛勤付出。感谢我亲爱的钰帮我做的一切，么么哒！
 
 也感谢 RainbowTrash23333 一直以来对我的帮助，没有他们，就没有现在的我。
 
@@ -119,7 +119,7 @@ int main(void){
 main:
 .LFB3:
         .cfi_startproc
-        subq    $8, %rsp        #,
+        subq    $8, %rsp        #,               ; 修改堆栈基址寄存器，进入过程。
         .cfi_def_cfa_offset 16
 # exp1.c:7:     printf("%d %d %d",x,y,z);
         movl    $2163, %ecx     #,               ; 根据显示顺序，编译器预先完成加法计算后写入 ASM， 并将数据写入到对应寄存器
@@ -129,10 +129,10 @@ main:
         movl    $0, %eax        #,               ; Pass the beginning address to the EAX register
         call    *printf@GOTPCREL(%rip)  #        ; 调用系统标准C语言库中预定义好的 printf 宏实现打印到屏幕，具体请参考 GLIBC 的 stdio 实现
 # exp1.c:9: }
-        movl    $0, %eax        #,               ; 0 传入 EAX
-        addq    $8, %rsp        #,               ; 自加8 传入 栈基址寄存器 RSP
+        movl    $0, %eax        #,               ; 0 传入 EAX，保存程序执行得到的返回值
+        addq    $8, %rsp        #,               ; 自加8 传入 栈基址寄存器 RSP，设置堆栈指针。主要用于实现堆栈平衡，即 程序执行前后 ESP 不变。
         .cfi_def_cfa_offset 8
-        ret                                      ; 使用栈中的数据修改 IP，实现近转移
+        ret                                      ; 使用栈中的数据修改 IP，实现近转移，最终返回父进程。
         .cfi_endproc
 .LFE3:
         .size   main, .-main
@@ -146,7 +146,7 @@ main:
 
 ## 实验总结
 
-略，体验下 C 到 ASM 的转化。
+体验 C 到 ASM 的转化，为之后的反编译和逆向打下基础。
 
 # Experiment 2
 
@@ -159,6 +159,10 @@ Bochs x86 Emulator 2.6.9
 bximage 和 dd 工具
 
 Kate - Advanced Text Editor Version 18.08.2
+
+## 实验目的
+
+练习使用 Bochs 的调试功能，为接下来的调试操作系统或者底层代码做准备。
 
 ## 实验要求
 
@@ -192,7 +196,7 @@ DB 0x55,0xAA             ; the standard PC boot signature
 
 产生的 wx 文件：`DOS/MBR boot sector`
 
-## 编译完成后的 BOCHS 导入
+## 实验操作：编译完成后的 BOCHS 导入
 
 **请先查阅 Bochs 手册和对应工具的 manpage 以熟悉基础操作。**
 
@@ -236,19 +240,47 @@ $ bochs -q -f new.bochsrc
 $ sudo mount ./floppya.img /mnt/floppy/ -o loop
 ```
 
-## 实验总结
+## 实验结果与分析总结
 
-![RESULT EXP02](https://yygc.zzjnyyz.cn/asset_files/2018-asmexp1.png)
+源代码相关总结请参见前文。
+
+### Part 1: 启动成功
+
+![STARTUP EXP02](https://yygc.zzjnyyz.cn/asset_files/2018-asmexp1.png)
 
 踩了很多坑，主要是镜像建立和不截断写入数据。
+
+### Part 2: 关于 Bochs 的使用
+
+BIOS 执行完成后，会跳转到 0x7c00 位置，我们使用 `b 0x7c00` 在这里下断。
+
+> BOCHS 简易指南
+> 命令 c  运行程序，相当于windbg的g以及OD的F9
+> 命令 s  即step，单步执行程序
+> 命令 p  单步执行，步过函数
+> 命令 q  退出bochs并关闭虚拟机
+> 命令 b  下断点命令，如本例中：b 0x7c00
+> 命令 blist  显示断点状态
+> 命令 watch  显示当前所有读写断点
+> 命令 r  显示寄存器的值
+> 命令 u  反汇编代码，可设定起始和结束位置
+> 命令 info 根据参数不同显示相关信息
+
+接下来交替使用 s 和 p 交替执行，直到 BIOS 加载完成。因为现有知识不足以看清楚 BIOS 加载和启动过程，我们直接使用 c 执行 BIOS 程序直到断点。
+
+![BOCHSDBG EXP02](https://yygc.zzjnyyz.cn/asset_files/2018-asmexp2.png)
+
+到达断点处，可以看到我们编写的汇编程序源代码。最终会陷入死循环（看起来就是没动静），这时候，如果 Bochs 调试器不处于等待输入状态，则使用 Ctrl-C 跳回解释器，接下来使用 q 命令退出。
+
+简单调试完成。对应截图中可能涉及隐私泄露的信息已经打码，很抱歉给各位带来的糟糕的体验。 
 
 # 临时分割线
 
 （暂时完结）
 
-Updated on Tue Oct 16 15:34:29 CST 2018
+Updated on Tue Oct 16 21:52:16 CST 2018
 
-Rev.1
+Rev.2
 
 # Reference
 
@@ -260,6 +292,6 @@ https://stackoverflow.com/questions/38335212/calling-printf-in-x86-64-using-gnu-
 
 https://stackoverflow.com/questions/37902940/disable-got-in-gcc
 
-https://stackoverflow.com/questions/35762970/jmp-in-nasm-bootloader  
+https://stackoverflow.com/questions/35762970/jmp-in-nasm-bootloader
 
 https://www.nasm.us/doc/nasmdo12.html
