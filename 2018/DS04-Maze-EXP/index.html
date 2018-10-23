@@ -281,7 +281,7 @@
 
     
         <meta property="article:published_time" content="Thu Oct 18 2018 23:57:13 GMT+0000">
-        <meta property="article:modified_time" content="Fri Oct 19 2018 16:51:49 GMT+0000">
+        <meta property="article:modified_time" content="Tue Oct 23 2018 08:24:39 GMT+0000">
     
 
     <!-- The Twitter Card protocol -->
@@ -304,7 +304,7 @@
     "mainEntityOfPage": "https://www.kmahyyg.xyz/2018/DS04-Maze-EXP/index.html",
     "headline": "数据结构实验 4 - 迷宫",
     "datePublished": "Thu Oct 18 2018 23:57:13 GMT+0000",
-    "dateModified": "Fri Oct 19 2018 16:51:49 GMT+0000",
+    "dateModified": "Tue Oct 23 2018 08:24:39 GMT+0000",
     "author": {
         "@type": "Person",
         "name": "Patrick Young",
@@ -613,7 +613,7 @@ Phone is 9876543210
 </code></pre><h3 id="stdarg-h-在-C-中的应用"><a href="#stdarg-h-在-C-中的应用" class="headerlink" title="stdarg.h 在 C 中的应用"></a>stdarg.h 在 C 中的应用</h3><p>建议少用或者尽量不用。</p>
 <h4 id="库变量与库宏"><a href="#库变量与库宏" class="headerlink" title="库变量与库宏"></a>库变量与库宏</h4><p><code>va_list</code> ： 适用于 <code>va_start() va_arg() va_end()</code> 三个宏存储信息的类型，可近似等价于可变链表。</p>
 <p><code>void va_start(va_list ap, last_arg);</code> 初始化 <code>ap</code> 变量，与 <code>va_arg</code> <code>va_end</code> 共同使用，<code>last_arg</code> 是最后一个传递给函数的已知的固定参数，即省略号前的参数。</p>
-<p><code>type va_arg(va_list ap, type);</code> 这个宏检索函数参数列表 <code>va_list ap</code> 中类型为 <code>type</code> 的下一个参数。</p>
+<p><code>type va_arg(va_list ap, type);</code> 这个宏检索函数参数列表 <code>va_list ap</code> 中类型为 <code>type</code> 的 <strong>下一个参数</strong> 。 该函数应当理解为 <strong>指针</strong> ，函数返回为 <strong>有序列表中的符合对应类型的最近一个数据</strong>，函数参数以数据结构 <strong>栈</strong> 形式存储，从左向右入栈。</p>
 <p><code>void va_end(va_list ap);</code> 这个宏允许使用了带有 <code>va_start</code> 宏的带有可变参数的函数返回，若函数返回前未调用 <code>va_end</code> ，则结果为 <code>undefined</code>.</p>
 <h4 id="具体代码"><a href="#具体代码" class="headerlink" title="具体代码"></a>具体代码</h4><p>Compile ： <code>gcc -std=c99 test.c -o test</code></p>
 <p>test.c :</p>
