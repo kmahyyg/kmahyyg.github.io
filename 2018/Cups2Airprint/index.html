@@ -52,7 +52,7 @@
     
     <title>
         
-            见鬼的 Travis CI | 
+            将 CUPS 共享的打印机转为 Airprint 适用 | 
         
         Potato Online
     </title>
@@ -253,7 +253,7 @@
     <!-- WebAPP Icons -->
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="application-name" content="Potato Online">
-    <meta name="msapplication-starturl" content="https://www.kmahyyg.xyz/2018/Sucked-Travis-CI/">
+    <meta name="msapplication-starturl" content="https://www.kmahyyg.xyz/2018/Cups2Airprint/">
     <meta name="msapplication-navbutton-color" content="#0097A7">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-title" content="Potato Online">
@@ -272,15 +272,15 @@
     
 
     <!-- The Open Graph protocol -->
-    <meta property="og:url" content="https://www.kmahyyg.xyz/2018/Sucked-Travis-CI/">
+    <meta property="og:url" content="https://www.kmahyyg.xyz/2018/Cups2Airprint/">
     <meta property="og:type" content="blog">
-    <meta property="og:title" content="见鬼的 Travis CI | Potato Online">
+    <meta property="og:title" content="将 CUPS 共享的打印机转为 Airprint 适用 | Potato Online">
     <meta property="og:image" content="https://yygc.zzjnyyz.cn/asset_files/avatar-yyg.jpg">
     <meta property="og:description" content="Resources determined everything.">
     <meta property="og:article:tag" content="Tech"> 
 
     
-        <meta property="article:published_time" content="Sat Aug 18 2018 07:39:24 GMT+0000">
+        <meta property="article:published_time" content="Wed Oct 24 2018 10:31:57 GMT+0000">
         <meta property="article:modified_time" content="Wed Oct 24 2018 06:38:49 GMT+0000">
     
 
@@ -289,7 +289,7 @@
 
     <!-- Add canonical link for SEO -->
     
-        <link rel="canonical" href="https://www.kmahyyg.xyz/2018/Sucked-Travis-CI/index.html" />
+        <link rel="canonical" href="https://www.kmahyyg.xyz/2018/Cups2Airprint/index.html" />
     
 
     <!-- Structured-data for SEO -->
@@ -301,9 +301,9 @@
 {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
-    "mainEntityOfPage": "https://www.kmahyyg.xyz/2018/Sucked-Travis-CI/index.html",
-    "headline": "见鬼的 Travis CI",
-    "datePublished": "Sat Aug 18 2018 07:39:24 GMT+0000",
+    "mainEntityOfPage": "https://www.kmahyyg.xyz/2018/Cups2Airprint/index.html",
+    "headline": "将 CUPS 共享的打印机转为 Airprint 适用",
+    "datePublished": "Wed Oct 24 2018 10:31:57 GMT+0000",
     "dateModified": "Wed Oct 24 2018 06:38:49 GMT+0000",
     "author": {
         "@type": "Person",
@@ -397,7 +397,7 @@
     </button>
 
     <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn" style="max-height:80vh; overflow-y:scroll;">
-        <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#情况"><span class="post-toc-number">1.</span> <span class="post-toc-text">情况</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#努力"><span class="post-toc-number">2.</span> <span class="post-toc-text">努力</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#更改"><span class="post-toc-number">3.</span> <span class="post-toc-text">更改</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#结果"><span class="post-toc-number">4.</span> <span class="post-toc-text">结果</span></a></li></ol>
+        <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Convert-CUPS-Printer-to-Airprint-available"><span class="post-toc-number">1.</span> <span class="post-toc-text">Convert CUPS Printer to Airprint-available</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Preface"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">Preface</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Prepare"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">Prepare</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Configuration"><span class="post-toc-number">1.3.</span> <span class="post-toc-text">Configuration</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#CUPSD-添加打印机"><span class="post-toc-number">1.3.1.</span> <span class="post-toc-text">CUPSD 添加打印机</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#CUPSD-配置文件修改"><span class="post-toc-number">1.3.2.</span> <span class="post-toc-text">CUPSD 配置文件修改</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Avahi-Daemon-配置文件修改"><span class="post-toc-number">1.3.3.</span> <span class="post-toc-text">Avahi Daemon 配置文件修改</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Avahi-Daemon-及-打印机支持添加"><span class="post-toc-number">1.3.4.</span> <span class="post-toc-text">Avahi Daemon 及 打印机支持添加</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Enjoy"><span class="post-toc-number">1.4.</span> <span class="post-toc-text">Enjoy</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Acknowledgement"><span class="post-toc-number">1.5.</span> <span class="post-toc-text">Acknowledgement</span></a></li></ol></li></ol>
     </ul>
     
 
@@ -429,7 +429,7 @@
         
     
             <p class="article-headline-p">
-                见鬼的 Travis CI
+                将 CUPS 共享的打印机转为 Airprint 适用
             </p>
         </div>
 
@@ -448,7 +448,7 @@
     <!-- Author Name & Date -->
     <div>
         <strong>Patrick Young</strong>
-        <span>8月 18, 2018</span>
+        <span>10月 24, 2018</span>
     </div>
 
     <div class="section-spacer"></div>
@@ -470,7 +470,7 @@
 <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-qrcode-button">
     <li class="mdl-menu__item">在其它设备中阅读本文章</li>
     
-        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACYklEQVR42u3aQW7DMAwEwPz/0+0HamdJyopSjE9BYzgaF5CIJV8///p64eHh4eHh4eHhHcZ7xdfV/Zc/c/ttcmd1bXh4eHg7efnP//G4GJm/mt7a8PDw8Pbz7g+DZBNPlnL/5OTbN68bDw8P7zBevsXnC81fKx4eHt438vLP1SPkvljHw8PDO5M3DwWSQLYQK+zPWvDw8PBi3qTMffrzB/p7eHh4eLe8tVc+LlCNNgpPw8PDw3uYl0S01QGsaPsuFt/5CAIeHh7eHl51EXmUMFlo7/DAw8PD28O7X27efLqCzZtbiwf98fDw8Aa8PFTNW1+9ZSXrKZfUeHh4eA/z8sJ6ciT0DqTCE/Dw8PC285IooTA8WizHJ2A8PDy8E3jJ52r8Wt368fDw8E7jPd0AyyOG6kDD5Z14eHh4H+L1Rv/zg2Qy3P/mRePh4eFt4c0Pg6T8rf6lWuLj4eHhncCbtPmrcUYy8NosqfHw8PCW8srbbquJlRwwk0ErPDw8vHN494zqhp43vaqHEB4eHt5OXnMkdOmQVl5Yj0YH8PDw8JbyemMB1Yi2Wso3XwceHh7eRt5kg64W0JPRgebBgIeHh7eUV92Ce4Vv7/Xla8DDw8Pbw+s1q/IwNw818ljkzZ14eHh4D/NWbceT9ljeNouaZHh4eHhbePlhUAXPh1aTfwMeHh7ep3h5RJuQqtFGNbrFw8PD+0Zer7zOl14d/MLDw8M7k9eLJPKyOA8p8PDw8E7g5U2vSQTcC3A3ZS14eHh4MW+yxFUjAtVhrAf7e3h4eHhLh67Ov/Dw8PDw8PDw8A64fgEOAVPvEWfytwAAAABJRU5ErkJggg==">
+        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACWklEQVR42u3aQZLCMAwEQP7/6d0HUISR7CgJ1TlRLMmqOchm5NffT18vPDw8PDw8PDy8m/Fe8fV+1/vr4ye/v//pmUu14eHh4Y3wvrTauJRPxVWfv1QbHh4e3iDvuJXnjOq9+XOOP4OHh4d3f17SuJOlIv+/eHh4eM/lHYcC6wEHHh4e3lN4yQ/+vK0nzzm+64KsBQ8PDy/m5U18/vXofA8PDw8v4JWPNCWb2uWDBUsV4uHh4Z3MqwYNvS1yMuiqhhp4eHh41/Kq4ewuXu9QwuZfDHh4eHgtXnUQlWy4qxvr5JNRDXh4eHgn86o358X1Dhysb/fx8PDwzublx6GSTXZ+1GClhnKMi4eHh7eVlx+B6i0buxaGvFo8PDy8s3lRq20167zd977uj+/j4eHhDfL2NuteuNDbxOPh4eFdxcvDgl3gKjUKO/Dw8PAu5e0KYfNCqwsGHh4e3jwveXS1cfcweSTx5S48PDy8EV6viVdj394wLF948PDw8GZ4eaFJWb3Nem+ZwcPDw7sDL2++ebybx7LJ+G0pxsXDw8M7gbcSpyZfRL54VONdPDw8vKt466OvXmzRC3Dx8PDw7sNLQoTq9jc/tpUvA3h4eHhX8apXMyBohRG90AQPDw/vbF5vxFXdTFdDh96QDA8PD2+Sly8GyWY6Kb1c9K6UGg8PD28rL2/3K2Oq9WNeG7IWPDw8vHFedSSW/7U3fsPDw8N7Cm9+9JUc88LDw8Ob5OVDr5V3eowkhsDDw8Ob5PUigOr2Og8yqiMxPDw8vEne7114eHh4eHh4eHg3uP4BHWDYJDxOeegAAAAASUVORK5CYII=">
     
 </ul>
 
@@ -504,7 +504,7 @@
 
     <!-- Share Twitter -->
     
-        <a class="post_share-link" href="https://twitter.com/intent/tweet?text=见鬼的 Travis CI&url=https://www.kmahyyg.xyz/2018/Sucked-Travis-CI/index.html&via=Patrick Young" target="_blank">
+        <a class="post_share-link" href="https://twitter.com/intent/tweet?text=将 CUPS 共享的打印机转为 Airprint 适用&url=https://www.kmahyyg.xyz/2018/Cups2Airprint/index.html&via=Patrick Young" target="_blank">
             <li class="mdl-menu__item">
                 分享到 Twitter
             </li>
@@ -513,7 +513,7 @@
 
     <!-- Share Facebook -->
     
-        <a class="post_share-link" href="https://www.facebook.com/sharer/sharer.php?u=https://www.kmahyyg.xyz/2018/Sucked-Travis-CI/index.html" target="_blank">
+        <a class="post_share-link" href="https://www.facebook.com/sharer/sharer.php?u=https://www.kmahyyg.xyz/2018/Cups2Airprint/index.html" target="_blank">
             <li class="mdl-menu__item">
                 分享到 Facebook
             </li>
@@ -522,7 +522,7 @@
 
     <!-- Share Google+ -->
     
-        <a class="post_share-link" href="https://plus.google.com/share?url=https://www.kmahyyg.xyz/2018/Sucked-Travis-CI/index.html" target="_blank">
+        <a class="post_share-link" href="https://plus.google.com/share?url=https://www.kmahyyg.xyz/2018/Cups2Airprint/index.html" target="_blank">
             <li class="mdl-menu__item">
                 分享到 Google+
             </li>
@@ -534,7 +534,7 @@
 
     <!-- Share QQ -->
     
-        <a class="post_share-link" href="http://connect.qq.com/widget/shareqq/index.html?site=Potato Online&title=见鬼的 Travis CI&summary=Resources determined everything.&pics=https://www.kmahyyg.xyzhttps://yygc.zzjnyyz.cn/asset_files/avatar-yyg.jpg&url=https://www.kmahyyg.xyz/2018/Sucked-Travis-CI/index.html" target="_blank">
+        <a class="post_share-link" href="http://connect.qq.com/widget/shareqq/index.html?site=Potato Online&title=将 CUPS 共享的打印机转为 Airprint 适用&summary=Resources determined everything.&pics=https://www.kmahyyg.xyzhttps://yygc.zzjnyyz.cn/asset_files/avatar-yyg.jpg&url=https://www.kmahyyg.xyz/2018/Cups2Airprint/index.html" target="_blank">
             <li class="mdl-menu__item">
                 分享到 QQ
             </li>
@@ -543,7 +543,7 @@
 
     <!-- Share Telegram -->
     
-        <a class="post_share-link" href="https://telegram.me/share/url?url=https://www.kmahyyg.xyz/2018/Sucked-Travis-CI/index.html&text=见鬼的 Travis CI" target="_blank">
+        <a class="post_share-link" href="https://telegram.me/share/url?url=https://www.kmahyyg.xyz/2018/Cups2Airprint/index.html&text=将 CUPS 共享的打印机转为 Airprint 适用" target="_blank">
             <li class="mdl-menu__item">
                 分享到 Telegram
             </li>
@@ -559,35 +559,67 @@
                 <!-- Post Content -->
                 <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
     
-        <h2 id="情况"><a href="#情况" class="headerlink" title="情况"></a>情况</h2><p>最近一个月内 Travis CI 出现了 5 次基础设施不可用的情况，参见 <a href="https://www.traviscistatus.com/history" target="_blank" rel="noopener">https://www.traviscistatus.com/history</a></p>
-<p>所有 <code>sudo: required</code> Build 均会直接 Timeout 或者 Build 失败。</p>
-<h2 id="努力"><a href="#努力" class="headerlink" title="努力"></a>努力</h2><p>与客服邮件沟通 3 次，无果。</p>
-<h2 id="更改"><a href="#更改" class="headerlink" title="更改"></a>更改</h2><p>改动：</p>
-<pre class="line-numbers language-git"><code class="language-git">From: kmahyyg &lt;16604643+kmahyyg@users.noreply.github.com>
-Date: Sat, 18 Aug 2018 07:32:49 +0800
-Subject: [PATCH] reroute ci build to container to avoid sucked travis ci
-
-<span class="token deleted">---</span>
- .travis.yml | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/.travis.yml b/.travis.yml
-index 6554487..925bfd9 100644
-<span class="token deleted">--- a/.travis.yml</span>
-<span class="token inserted">+++ b/.travis.yml</span>
-<span class="token coord">@@ -1,5 +1,5 @@</span>
-<span class="token deleted">-dist: xenial</span>
-<span class="token deleted">-sudo: required</span>
-<span class="token inserted">+dist: trusty</span>
-<span class="token inserted">+sudo: false</span>
-
- language: node_js
- node_js:
-<span class="token deleted">-- </span>
-2.18.0
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h2 id="结果"><a href="#结果" class="headerlink" title="结果"></a>结果</h2><p>当尝试把 Build Reroute 到 Travis 的 Container-Based build infrastructure 之后，依然失败。同一个 Build, 人工重启后成功。问题仍然存在。</p>
-<p>继续联系客服，等待回复，表达愤怒。</p>
+        <h1 id="Convert-CUPS-Printer-to-Airprint-available"><a href="#Convert-CUPS-Printer-to-Airprint-available" class="headerlink" title="Convert CUPS Printer to Airprint-available"></a>Convert CUPS Printer to Airprint-available</h1><h2 id="Preface"><a href="#Preface" class="headerlink" title="Preface"></a>Preface</h2><p>由于人民日益增长的打印需要与打印店的打印质量和开门时间存在的巨大矛盾，已经穷得吃土的我买了一个打印机。<del>然而，迫于钱没加够，又有自动双面打印的需要（手动双面打印总是把纸放反……）所以舍弃了网络打印，买了个自动双面打印功能的 USB 打印机。</del></p>
+<h2 id="Prepare"><a href="#Prepare" class="headerlink" title="Prepare"></a>Prepare</h2><ol>
+<li>一台已经连接到打印机的服务器</li>
+<li>一台安装了对应 Linux 发行版及对应打印机驱动并连接到对应局域网的 Linux 主机</li>
+<li>可以正常运作的 CUPS 和 Avahi Daemon</li>
+</ol>
+<h2 id="Configuration"><a href="#Configuration" class="headerlink" title="Configuration"></a>Configuration</h2><p>请先确保您的打印机此时已经可以正常工作并能通过物理连接正常打印。</p>
+<h3 id="CUPSD-添加打印机"><a href="#CUPSD-添加打印机" class="headerlink" title="CUPSD 添加打印机"></a>CUPSD 添加打印机</h3><p>添加一个打印机，做好默认设置，务必把打印机的默认打印设置配置好之后设为共享打印机，并对 CUPSD 打印服务器整体的打印共享功能打开。</p>
+<h3 id="CUPSD-配置文件修改"><a href="#CUPSD-配置文件修改" class="headerlink" title="CUPSD 配置文件修改"></a>CUPSD 配置文件修改</h3><blockquote>
+<p>/etc/cups/cupsd.conf </p>
+</blockquote>
+<p>在 <code>Listen /run/cups/cups.sock</code> 后面添加这个。</p>
+<pre><code>Listen /run/cups/cups.sock
+Listen 0.0.0.0:631
+PreserveJobHistory
+FileDevice Yes
+ServerAlias *
+</code></pre><p>在这里添加对应的缺失的几行，并在 Web 管理控制端勾起 <code>Share printers connected to this system</code> 。</p>
+<pre><code>&lt;Location /&gt;
+  # Allow shared printing...
+  Order allow,deny
+  Allow @LOCAL
+&lt;/Location&gt;
+&lt;Location /admin&gt;
+  Order allow,deny
+  allow @LOCAL
+&lt;/Location&gt;
+&lt;Location /admin/conf&gt;
+  AuthType Default
+  Require user @SYSTEM
+&lt;/Location&gt;
+&lt;Location /admin/log&gt;
+  AuthType Default
+  Require user @SYSTEM
+  Order allow,deny
+  allow @LOCAL
+&lt;/Location&gt;
+</code></pre><h3 id="Avahi-Daemon-配置文件修改"><a href="#Avahi-Daemon-配置文件修改" class="headerlink" title="Avahi Daemon 配置文件修改"></a>Avahi Daemon 配置文件修改</h3><blockquote>
+<p>/etc/avahi/avahi-daemon.conf </p>
+</blockquote>
+<pre><code>domain-name=local
+</code></pre><p>将这一行的注释符号去除。</p>
+<h3 id="Avahi-Daemon-及-打印机支持添加"><a href="#Avahi-Daemon-及-打印机支持添加" class="headerlink" title="Avahi Daemon 及 打印机支持添加"></a>Avahi Daemon 及 打印机支持添加</h3><p>下载 参考文献 2 中的对应的 Python 脚本，并安装对应支持库。</p>
+<p>请注意，该脚本只支持 Python 2, 安装依赖：</p>
+<pre class="line-numbers language-bash"><code class="language-bash">$ <span class="token function">sudo</span> <span class="token function">apt-get</span> update -y <span class="token operator">&amp;&amp;</span> <span class="token function">sudo</span> <span class="token function">apt-get</span> <span class="token function">install</span> libxml2-dev
+$ <span class="token function">sudo</span> pip2 <span class="token function">install</span> pycups
+$ <span class="token function">sudo</span> pip2 <span class="token function">install</span> lxml
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<p>接下来使用对应的参数将会对所有已经在 CUPSD 中配置好的打印机生成对应的 Avahi 服务并保存到对应目录：</p>
+<pre class="line-numbers language-bash"><code class="language-bash">$ <span class="token function">sudo</span> python2 ./airprint-generate.py -P <span class="token operator">&lt;</span>CUPS 服务器端口号<span class="token operator">></span> -u root -d /etc/avahi/services -p c2a
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>重启服务，完成配置</p>
+<pre class="line-numbers language-bash"><code class="language-bash">$ <span class="token function">sudo</span> systemctl restart avahi-daemon.service
+$ <span class="token function">sudo</span> systemctl restart org.cups.cupsd.service
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<h2 id="Enjoy"><a href="#Enjoy" class="headerlink" title="Enjoy"></a>Enjoy</h2><p>打开连接到同一局域网的苹果设备，尝试打印，你就能看到对应 PC 连接的打印机了。</p>
+<h2 id="Acknowledgement"><a href="#Acknowledgement" class="headerlink" title="Acknowledgement"></a>Acknowledgement</h2><ul>
+<li><a href="https://askubuntu.com/questions/26130/how-can-share-my-printer-so-that-i-can-use-it-with-airprint" target="_blank" rel="noopener">AskUbuntu</a></li>
+<li><a href="https://github.com/tjfontaine/airprint-generate" target="_blank" rel="noopener">Airprint Service Generator</a></li>
+<li><a href="https://ezunix.org/index.php?title=Enable_iOS_AirPrint_with_any_printer_supported_by_CUPS" target="_blank" rel="noopener">EzUnix Tutorial</a></li>
+</ul>
 
         
                 <blockquote style="margin: 2em 0 0;padding: 0.5em 1em;border-left: 3px solid #F44336;background-color: #F5F5F5;list-style: none;">
@@ -596,7 +628,7 @@ index 6554487..925bfd9 100644
                             本博客所有文章，未经特殊说明，均使用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" target="_blank">CC BY-NC-SA 3.0 Unported License 授权</a>
                         </strong>
                         <br>
-                        <strong>本文链接：</strong><a href="https://www.kmahyyg.xyz/2018/Sucked-Travis-CI/">https://www.kmahyyg.xyz/2018/Sucked-Travis-CI/</a>
+                        <strong>本文链接：</strong><a href="https://www.kmahyyg.xyz/2018/Cups2Airprint/">https://www.kmahyyg.xyz/2018/Cups2Airprint/</a>
                     </p>
                 </blockquote>
         
@@ -652,8 +684,8 @@ index 6554487..925bfd9 100644
 
 <script type="text/javascript">
     var disqus_config = function () {
-        this.page.url = 'https://www.kmahyyg.xyz/2018/Sucked-Travis-CI/';  // Replace PAGE_URL with your page's canonical URL variable
-        this.page.identifier = 'https://www.kmahyyg.xyz/2018/Sucked-Travis-CI/'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+        this.page.url = 'https://www.kmahyyg.xyz/2018/Cups2Airprint/';  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = 'https://www.kmahyyg.xyz/2018/Cups2Airprint/'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
     };
 </script>
 
@@ -702,21 +734,13 @@ index 6554487..925bfd9 100644
             <nav class="material-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
     <!-- Prev Nav -->
     
-        <a href="/2018/Summer-Holiday-End/" id="post_nav-newer" class="prev-content">
-            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
-                <i class="material-icons">arrow_back</i>
-            </button>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            新篇
-        </a>
-    
 
     <!-- Section Spacer -->
     <div class="section-spacer"></div>
 
     <!-- Next Nav -->
     
-        <a href="/2018/SHU2ICS-Tutorial/" id="post_nav-older" class="next-content">
+        <a href="/2018/DS04-Maze-EXP/" id="post_nav-older" class="next-content">
             旧篇
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
