@@ -63,6 +63,15 @@ ServerAlias *
 </Location>
 ```
 
+### 创建 MIME 应用类型配置
+
+```bash
+# echo "image/urf urf string(0,UNIRAST<00>)" > \
+    /usr/share/cups/mime/airprint.types
+# echo "image/urf application/pdf 100 pdftoraster" > \
+    /usr/share/cups/mime/airprint.convs
+```
+
 ### Avahi Daemon 配置文件修改
 
 > /etc/avahi/avahi-daemon.conf 
