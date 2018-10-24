@@ -57,8 +57,8 @@ $ aria2c -D --conf-path <Config file path>
 $ sudo apt update -y
 $ sudo apt install mldonkey-server -y
 $ # 编辑系统配置文件 /var/lib/mldonkey/downloads.ini
-$ sudo systemd enable mldonkey-server
-$ sudo systemd start mldonkey-server
+$ sudo systemctl enable mldonkey-server
+$ sudo systemctl start mldonkey-server
 ```
 
 ## 部分配置文件
