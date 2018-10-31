@@ -18,6 +18,8 @@ tags:
 
 最后感谢 #rich 的刘老板提供的已备案域名用于本站所有图片和其他资源文件的 OSS 存储与 CDN 加速。
 
+感谢 Github Pages 提供的 Hosting 服务。
+
 废话不多说，上实验报告。这里由于并不提交正式的实验报告，就只是简单记录下实验步骤和踩的坑了，
 
 用于抄袭后交作业者请自觉绕道，发现必将严惩。
@@ -274,11 +276,133 @@ BIOS 执行完成后，会跳转到 0x7c00 位置，我们使用 `b 0x7c00` 在�
 
 简单调试完成。对应截图中可能涉及隐私泄露的信息已经打码，很抱歉给各位带来的糟糕的体验。 
 
+# Experiment 3
+
+## 实验用到的软件环境
+
+请参见我 [假期的汇编笔记](https://asm.kmahyyg.xyz)
+
+## 实验要求
+
+在 MSDOS DEBUG 环境中运行汇编语句。
+
+## 实验准备
+
+### 语句准备
+
+请参考 [Intel Pentium Instruction Set Reference](https://asminst.kmahyyg.xyz)
+
+### 操作准备
+
+请参考 [DEBUG 实验记录](https://asm.kmahyyg.xyz/exps/exp1-dosdbg.html)
+请参考 [DEBUG 操作参考文档](https://asm.kmahyyg.xyz/exps/exp1-debugref.html)
+
+## 实验操作
+
+### 验证类
+
+以下均使用 OP 替代操作码，请根据实验要求自行替换。
+
+1. 寄存器查看并分析
+
+```asm6502
+MOV AX,0A95B
+OP AX,8CA2
+```
+
+|OP|AX|OF|SF|ZF|AF|PF|CF|
+|----|----|----|----|----|----|----|----|
+|ADD| |  |  |  |  |  |  |
+|SUB| |  |  |  |  |  |  |
+
+2. 寄存器查看并分析
+
+```asm6502
+MOV AX,96
+MOV BX,12
+OP BL
+```
+
+|OP|AX|OF|SF|ZF|AF|PF|CF|
+|----|----|----|----|----|----|----|----|
+|MUL| |  |  |  |  |  |  |
+|IMUL| |  |  |  |  |  |  |
+|DIV| |  |  |  |  |  |  |
+|IDIV| |  |  |  |  |  |  |
+
+3. 寄存器查看并分析
+
+```asm6502
+MOV DX,0B9
+MOV CL,3
+OP
+```
+
+|OP|AX|OF|SF|ZF|AF|PF|CF|
+|----|----|----|----|----|----|----|----|
+|STC| |  |  |  |  |  |  |
+|SHR DX,1| |  |  |  |  |  |  |
+|SAR DX,CL| |  |  |  |  |  |  |
+|SHL DX,CL| |  |  |  |  |  |  |
+|ROR DX,CL| |  |  |  |  |  |  |
+|ROL DL,CL| |  |  |  |  |  |  |
+|RCL DX,CL| |  |  |  |  |  |  |
+|RCR DL,1| |  |  |  |  |  |  |
+
+4. 请选择能够转移到 L1 单元的条件转移指令下打勾并分析。
+
+```asm6502
+MOV AX,?
+MOV BX,?
+CMP AX,BX
+OP L1
+```
+
+|AX|BX|JB|JNB|JBE|JA|JL|JNL|JLE|JG|
+|----|----|----|----|----|----|----|----|----|----|
+|1F52H|1F52H|  |  |  |  |  |  |  |  |
+|0FF82H|007EH|  |  |  |  |  |  |  |  |
+|58BAH|020EH|  |  |  |  |  |  |  |  |
+|09A0H|1E97H|  |  |  |  |  |  |  |  |
+|FF5CH|FF8BH|  |  |  |  |  |  |  |  |
+|8AEAH|FC29H|  |  |  |  |  |  |  |  |
+
+
+### 编程类
+
+1. 将下列数组中的第六个数据放在 BL 寄存器中。
+
+```asm6502
+winder DW 1234H, 5678H, 'AB', 'CD'
+```
+
+寄存器间接寻址方式： `NOP`
+
+寄存器相对寻址方式： `NOP`
+
+基址与变址寻址： `NOP`
+
+2. 按要求编写指令
+
+AX 高三位为 0： `NOP`
+
+BX 高三位为 1： `NOP`
+
+CX 高三位取反： `NOP`
+
+测试 DX 的 D3  位：`NOP`
+
+AX 与 BX 中不同的位均为 1：`NOP`
+
+## 实验结果与分析总结
+
+TODO
+
 # 临时分割线
 
 （暂时完结）
 
-Updated on Tue Oct 16 21:52:16 CST 2018
+Updated on Wed Oct 31 20:27:09 CST 2018
 
 Rev.3
 
