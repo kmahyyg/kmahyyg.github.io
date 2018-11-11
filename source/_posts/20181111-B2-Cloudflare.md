@@ -31,6 +31,10 @@ tags:
 
 具体的 B2 云存储相关的安全设置请参考 Backblaze 官方文档，Cloudflare 安全性相关设置请参考 Cloudflare 官方文档并结合您的自身需求。
 
+Recommended Page Rules:
+
+![Recommended Page Rules](https://yygc.zzjnyyz.cn/asset_files/2018-b2cf-01.png)
+
 # Reference
 
 - https://help.backblaze.com/hc/en-us/articles/217666928-Using-Backblaze-B2-with-the-Cloudflare-CDN
