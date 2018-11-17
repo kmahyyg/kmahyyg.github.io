@@ -1,4 +1,7 @@
-<!DOCTYPE html>
+---
+layout: false
+---
+
 <head>
     <meta charset="UTF-8">
     <title>DS04 Maze - Video</title>
