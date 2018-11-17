@@ -326,10 +326,10 @@ MOV AX,0A95B
 OP AX,8CA2
 ```
 
-| OP   | AX   | OF   | SF   | ZF   | AF   | PF   | CF   |
-| ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
-| ADD  | 35FD | 1    | 0    | 0    | 0    | 0    | 1    |
-| SUB  | 1CB9 | 0    | 0    | 0    | 0    | 0    | 0    |
+|  OP  |  AX  |  OF  |  SF  |  ZF  |  AF  |  PF  |  CF  |
+| :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: |
+| ADD  | 35FD |      |      |      |      |      |      |
+| SUB  | 1CB9 |      |      |      |      |      |      |
 
 2. 寄存器查看并分析
 
@@ -339,10 +339,10 @@ MOV BX,12
 OP BL
 ```
 
-| OP   | AX   | OF   | SF   | ZF   | AF   | PF   | CF   |
-| ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
-| MUL  | 0480 | 1    | 1    |      |      |      | 1    |
-| IMUL | 0480 | 1    | 1    |      |      |      | 1    |
+|  OP  |  AX  |  OF  |  SF  |  ZF  |  AF  |  PF  |  CF  |
+| :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: |
+| MUL  | 0480 |      |      |      |      |      |      |
+| IMUL | 0480 |      |      |      |      |      |      |
 | DIV  | 0008 |      |      |      |      |      |      |
 | IDIV | 0008 |      |      |      |      |      |      |
 
@@ -356,14 +356,14 @@ OP
 
 | OP        | AX   | OF   | SF   | ZF   | AF   | PF   | CF   |
 | --------- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
-| STC       | 0000 |      |      |      |      |      | 1    |
-| SHR DX,1  | 0000 |      |      |      |      | 1    | 1    |
-| SAR DX,CL | 0000 |      |      |      |      | 1    |      |
+| STC       | 0000 |      |      |      |      |      |      |
+| SHR DX,1  | 0000 |      |      |      |      |      |      |
+| SAR DX,CL | 0000 |      |      |      |      |      |      |
 | SHL DX,CL | 0000 |      |      |      |      |      |      |
-| ROR DX,CL | 0000 | 1    |      |      |      |      |      |
-| ROL DL,CL | 0000 | 1    |      |      |      |      | 1    |
+| ROR DX,CL | 0000 |      |      |      |      |      |      |
+| ROL DL,CL | 0000 |      |      |      |      |      |      |
 | RCL DX,CL | 0000 |      |      |      |      |      |      |
-| RCR DL,1  | 0000 | 1    |      |      |      |      | 1    |
+| RCR DL,1  | 0000 |      |      |      |      |      |      |
 
 4. 请选择能够转移到 L1 单元的条件转移指令下打勾并分析。
 
@@ -374,14 +374,14 @@ CMP AX,BX
 OP L1
 ```
 
-| AX     | BX    | JB   | JNB  | JBE  | JA   | JL   | JNL  | JLE  | JG   |
-| ------ | ----- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
-| 1F52H  | 1F52H |      |      |      |      |      |      |      |      |
-| 0FF82H | 007EH |      |      |      |      |      |      |      |      |
-| 58BAH  | 020EH |      |      |      |      |      |      |      |      |
-| 09A0H  | 1E97H |      |      |      |      |      |      |      |      |
-| FF5CH  | FF8BH |      |      |      |      |      |      |      |      |
-| 8AEAH  | FC29H |      |      |      |      |      |      |      |      |
+| AX     | BX    | JB   | JNB  | JBE  | JA   | JL   | JNL  | JLE  |  JG   | CMP Result |
+| :------: | :-----: | :----: | :----: | :----: | :----: | :----: | :----: | :----: | :----: | :------:|
+| 1F52H  | 1F52H |      |      |      |      |      |      |      |      |       |
+| 0FF82H | 007EH |      |      |      |      |      |      |      |      |    |
+| 58BAH  | 020EH |      |      |      |      |      |      |      |      |   |
+| 09A0H  | 1E97H |      |      |      |      |      |      |      |      |   |
+| FF5CH  | FF8BH |      |      |      |      |      |      |      |      |   |
+| 8AEAH  | FC29H |      |      |      |      |      |      |      |      |   |
 
 
 ### 编程类
@@ -412,15 +412,25 @@ AX 与 BX 中不同的位均为 1： `NOP`
 
 ## 实验结果与分析总结
 
-TODO
+### 验证类
+
+![EXP3-01](https://yygc.zzjnyyz.cn/asset_files/2018-asmexp3.png)
+
+
+
+我承认这里我偷了个懒，没有把 EXP 4 对应的可用跳转指令列表，不过，我想，我已经把需要的寄存器告诉你了，你自己对一下吧。
+
+### 编程类
+
+
 
 # 临时分割线
 
 （暂时完结）
 
-Updated on Wed Oct 31 20:27:09 CST 2018
+Updated on Sat Nov 17 23:20:35 CST 2018
 
-Rev.3
+Rev.5
 
 # Reference
 
@@ -437,3 +447,7 @@ https://stackoverflow.com/questions/35762970/jmp-in-nasm-bootloader
 https://www.nasm.us/doc/nasmdo12.html
 
 https://www.cnblogs.com/chengxuyuancc/archive/2013/05/13/3076524.html
+
+https://stackoverflow.com/questions/9617877/assembly-jg-jnle-jl-jnge-after-cmp
+
+https://blog.csdn.net/richerg85/article/details/27558005
