@@ -392,11 +392,29 @@ OP L1
 winder DW 1234H, 5678H, 'AB', 'CD'
 ```
 
-寄存器间接寻址方式： `NOP`
+寄存器间接寻址方式： 
+```asm6502
+mov ax,datasg
+mov ds,ax
+add si,6
+mov bl,[si]
+```
 
-寄存器相对寻址方式： `NOP`
+寄存器相对寻址方式： 
+```asm6502
+mov ax,datasg
+mov ds,ax
+mov bl,[si+6]
+```
 
-基址与变址寻址： `NOP`
+基址与变址寻址： 
+```asm6502
+mov ax,datasg
+mov ds,ax
+mov dx, 6
+mov si, dx
+mov bl,ds:[si]
+```
 
 2. 按要求编写指令
 
@@ -416,8 +434,6 @@ AX 与 BX 中不同的位均为 1： `NOP`
 
 ![EXP3-01](https://yygc.zzjnyyz.cn/asset_files/2018-asmexp3.png)
 
-
-
 我承认这里我偷了个懒，没有把 EXP 4 对应的可用跳转指令列表，不过，我想，我已经把需要的寄存器告诉你了，你自己对一下吧。
 
 ### 编程类
@@ -428,9 +444,9 @@ AX 与 BX 中不同的位均为 1： `NOP`
 
 （暂时完结）
 
-Updated on Sat Nov 17 23:20:35 CST 2018
+Updated on Mon Nov 19 03:00:14 CST 2018
 
-Rev.5
+Rev.8
 
 # Reference
 
