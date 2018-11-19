@@ -281,7 +281,7 @@
 
     
         <meta property="article:published_time" content="Mon Nov 19 2018 13:09:43 GMT+0000">
-        <meta property="article:modified_time" content="Mon Nov 19 2018 05:12:25 GMT+0000">
+        <meta property="article:modified_time" content="Mon Nov 19 2018 06:22:15 GMT+0000">
     
 
     <!-- The Twitter Card protocol -->
@@ -304,7 +304,7 @@
     "mainEntityOfPage": "https://www.kmahyyg.xyz/2018/ASM-exp-report2/index.html",
     "headline": "YNU - 汇编语言程序设计实验报告 4",
     "datePublished": "Mon Nov 19 2018 13:09:43 GMT+0000",
-    "dateModified": "Mon Nov 19 2018 05:12:25 GMT+0000",
+    "dateModified": "Mon Nov 19 2018 06:22:15 GMT+0000",
     "author": {
         "@type": "Person",
         "name": "Patrick Young",
@@ -397,7 +397,7 @@
     </button>
 
     <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn" style="max-height:80vh; overflow-y:scroll;">
-        <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#License"><span class="post-toc-number">1.</span> <span class="post-toc-text">License</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Experiment-4"><span class="post-toc-number"></span> <span class="post-toc-text">Experiment 4</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#TODO"><span class="post-toc-number">1.</span> <span class="post-toc-text">TODO</span></a></li></ol>
+        <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#License"><span class="post-toc-number">1.</span> <span class="post-toc-text">License</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Experiment-4"><span class="post-toc-number"></span> <span class="post-toc-text">Experiment 4</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#实验目的"><span class="post-toc-number">1.</span> <span class="post-toc-text">实验目的</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#实验内容"><span class="post-toc-number">2.</span> <span class="post-toc-text">实验内容</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#思考题"><span class="post-toc-number">3.</span> <span class="post-toc-text">思考题</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#TODO"><span class="post-toc-number">4.</span> <span class="post-toc-text">TODO</span></a></li></ol>
     </ul>
     
 
@@ -560,7 +560,22 @@
                 <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
     
         <h2 id="License"><a href="#License" class="headerlink" title="License"></a>License</h2><p>本篇文章授权 采用 CC BY-NC-ND 3.0 Unported 协议，禁止转载。</p>
-<h1 id="Experiment-4"><a href="#Experiment-4" class="headerlink" title="Experiment 4"></a>Experiment 4</h1><h2 id="TODO"><a href="#TODO" class="headerlink" title="TODO"></a>TODO</h2>
+<h1 id="Experiment-4"><a href="#Experiment-4" class="headerlink" title="Experiment 4"></a>Experiment 4</h1><h2 id="实验目的"><a href="#实验目的" class="headerlink" title="实验目的"></a>实验目的</h2><p>使用虚拟机 Qemu-KVM 和调试器 Bochs，执行，调试 MBR 扇区代码，了解计算机启动的原理和 MBR 扇区代码的功能。</p>
+<h2 id="实验内容"><a href="#实验内容" class="headerlink" title="实验内容"></a>实验内容</h2><ol>
+<li>阅读参考源程序并增加注释；</li>
+<li>在参考源程序中增加指令(不要改变原程序的功能)，为程序增加功能：输出你的学号和姓名拼音；</li>
+<li>使用 NASM 工具将修改后的实验源程序编译为 .bin 文件；</li>
+<li>将 .bin 文件用 dd 写入虚拟机硬盘 MBR 扇区；</li>
+<li>使用 Qemu-KVM 虚拟机观察写入 .bin 文件的执行结果；</li>
+<li>关闭 Qemu-KVM，使用 BochsDBG 虚拟机调试写入在虚拟硬盘 MBR 扇区中的程序；</li>
+</ol>
+<h2 id="思考题"><a href="#思考题" class="headerlink" title="思考题"></a>思考题</h2><ol>
+<li>计算机如何在屏幕上显示字符？</li>
+<li>如何输入输出 10 进制数据？如何输入数字、字符串？</li>
+<li>MBR 扇区有什么特点？MBR 扇区中的代码实现什么功能？</li>
+<li>简述计算机复位后的启动过程。</li>
+</ol>
+<h2 id="TODO"><a href="#TODO" class="headerlink" title="TODO"></a>TODO</h2>
         
                 <blockquote style="margin: 2em 0 0;padding: 0.5em 1em;border-left: 3px solid #F44336;background-color: #F5F5F5;list-style: none;">
                     <p><strong>
