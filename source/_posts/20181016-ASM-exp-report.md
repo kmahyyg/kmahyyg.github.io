@@ -1,5 +1,5 @@
 ---
-title: YNU - 汇编语言程序设计实验报告
+title: YNU - 汇编语言程序设计实验报告 1~3
 date: 2018-10-16 13:24:31
 tags:
   - Tech
@@ -396,6 +396,7 @@ winder DW 1234H, 5678H, 'AB', 'CD'
 ```asm6502
 mov ax,datasg
 mov ds,ax
+lea si, winder
 add si,6
 mov bl,[si]
 ```
@@ -404,6 +405,7 @@ mov bl,[si]
 ```asm6502
 mov ax,datasg
 mov ds,ax
+lea si, winder
 mov bl,[si+6]
 ```
 
@@ -411,6 +413,7 @@ mov bl,[si+6]
 ```asm6502
 mov ax,datasg
 mov ds,ax
+lea si, winder
 mov dx, 6
 mov si, dx
 mov bl,ds:[si]
@@ -418,15 +421,21 @@ mov bl,ds:[si]
 
 2. 按要求编写指令
 
-AX 高三位为 0： `NOP`
+AX 高三位为 0： `and ah, 00011111B`
 
-BX 高三位为 1： `NOP`
+BX 高三位为 1： `or bh, 11100000B`
 
-CX 高三位取反： `NOP`
+CX 高三位取反： `xor ch, 11100000B`
 
-测试 DX 的 D3  位： `NOP`
+测试 DX 的 D3  位： `test dl,00001000B`
 
-AX 与 BX 中不同的位均为 1： `NOP`
+AX 中与 BX 中不同的位均为 1： 
+
+```asm6502
+mov dx,ax
+xor ax,bx
+or ax,dx
+```
 
 ## 实验结果与分析总结
 
@@ -438,15 +447,15 @@ AX 与 BX 中不同的位均为 1： `NOP`
 
 ### 编程类
 
+见上
 
+# 分割线
 
-# 临时分割线
+（前三个实验到此完结）
 
-（暂时完结）
+Updated on Mon Nov 19 13:08:16 CST 2018
 
-Updated on Mon Nov 19 03:00:14 CST 2018
-
-Rev.8
+Rev.10
 
 # Reference
 
@@ -467,3 +476,5 @@ https://www.cnblogs.com/chengxuyuancc/archive/2013/05/13/3076524.html
 https://stackoverflow.com/questions/9617877/assembly-jg-jnle-jl-jnge-after-cmp
 
 https://blog.csdn.net/richerg85/article/details/27558005
+
+http://www.iteedu.com/plang/asm/index.php
