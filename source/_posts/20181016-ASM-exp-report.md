@@ -429,7 +429,7 @@ CX 高三位取反： `xor ch, 11100000B`
 
 测试 DX 的 D3  位： `test dl,00001000B`
 
-AX 中与 BX 中不同的位均为 1： 
+AX 中与 BX 中不同的位均为 1：   `or ax,bx`
 
 ```asm6502
 mov dx,ax
