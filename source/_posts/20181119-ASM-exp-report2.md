@@ -45,6 +45,10 @@ https://asm.kmahyyg.xyz/exps/exp7-transfer.html#quiz-2%EF%BC%9A-%E6%A0%B9%E6%8D%
 
 https://computer.howstuffworks.com/bios1.htm
 
+https://blog.csdn.net/qq_28598203/article/details/51081368
+
+结合中断向量表实现。
+
 3. MBR 扇区有什么特点？MBR 扇区中的代码实现什么功能？
 
 https://wiki.osdev.org/MBR_(x86)
