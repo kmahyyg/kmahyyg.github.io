@@ -68,6 +68,8 @@ Rev. 01
 
 https://thestarman.pcministry.com/asm/mbr/STDMBR.htm
 
+https://thestarman.pcministry.com/asm/bios/index.html
+
 https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-823-computer-system-architecture-fall-2005/index.htm
 
 https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-828-operating-system-engineering-fall-2012/index.htm
