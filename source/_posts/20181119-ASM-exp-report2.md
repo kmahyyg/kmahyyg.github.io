@@ -1,5 +1,5 @@
 ---
-title: YNU - 汇编语言程序设计实验报告 4
+title: YNU - 汇编语言程序设计实验报告 4-5
 date: 2018-11-19 13:09:43
 tags:
   - Tech
@@ -57,12 +57,45 @@ https://wiki.osdev.org/MBR_(x86)
 
 https://wiki.osdev.org/Boot_Sequence
 
-# COMING SOON
+# Experiment 5
 
-TODO
+## 实验目的
 
-Updated on Tue Nov 20 21:22:34 CST 2018
-Rev. 01
+了解计算机屏幕显示的原理，编程实现显存映射与中断 `int 10H` 式。
+
+## 实验内容
+
+1. 使用控制显存显示内容。
+
+> 略，之前的实现均使用的这种方式。MASM 与 NASM 的差异，在使用这种方式时差异不大，此处略去不表。
+
+2. 使用 `int 10H` 方式显示数据。
+
+看这里！这里有代码： 
+
+MASM: https://gist.github.com/kmahyyg/4e8dc523f513ff78a53c18e4234460af
+
+NASM: https://gist.github.com/kmahyyg/4e8dc523f513ff78a53c18e4234460af
+
+## 思考题
+
+1. 注释源程序
+
+已经注释了，懒得多写废话，具体的详细文档自己看后面的 Reference。这里略微一提， BIOS 是一个最小型的系统，在硬件支持 int 13h 对应的显示模式的前提下，可以通过 BIOS 中断向量 int 10h 调用显示 API。
+
+具体参考这里 https://protas.pypt.lt/informatika/assembler/writing_to_the_screen
+
+2.显示字符的方式
+
+就两种，实验目的里写的很清楚，具体的自己去查资料。
+
+## END
+
+本学期的汇编课程的随堂实验就到此告一段落，感谢 王逍老师的精心付出 
+和 钰在各方面的帮助，爱你！
+
+Updated on Thu Nov 29 23:41:30 CST 2018
+Rev. 07
 
 # Reference
 
@@ -73,3 +106,7 @@ https://thestarman.pcministry.com/asm/bios/index.html
 https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-823-computer-system-architecture-fall-2005/index.htm
 
 https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-828-operating-system-engineering-fall-2012/index.htm
+
+https://stackoverflow.com/questions/41196376/int-10h-13h-bios-string-output-not-working
+
+http://www.ablmcc.edu.hk/~scy/CIT/8086_bios_and_dos_interrupts.htm
