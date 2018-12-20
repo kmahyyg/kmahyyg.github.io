@@ -89,13 +89,163 @@ NASM: https://gist.github.com/kmahyyg/4e8dc523f513ff78a53c18e4234460af
 
 就两种，实验目的里写的很清楚，具体的自己去查资料。
 
-## END
+# Experiment 6
+
+## 实验目的
+
+接受键盘输入，保存到磁盘；从磁盘读取，显示到屏幕。
+
+## 实验实现
+
+目前问题：
+
+Can： 接受输入、保存到 FDD，从磁盘读取，读取到指定的具体的固定 RAM 地址并显示。
+Cannot： 读取到变量对应的地址并显示，读取 FDD 成功但写入 RAM 失败...
+
+接受输入，写入 FDD 的代码：
+
+```asm6502
+dataarea segment
+    buffer db 64   ; max 63 bytes string
+           db ?
+    string db 64 dup ('$')  ; preallocated with '$', int 21h/0ah output
+dataarea ends
+
+codesg segment
+
+;START PROC
+main proc far
+    assume cs:codesg,ds:dataarea
+    
+start:
+
+;SAVE THE CURRENT SITUATION FOR RET
+    push ds
+    sub ax,ax
+    push ax
+    
+;POINT CORRESPONDING DATA REGISTER
+    mov ax,dataarea
+    mov ds,ax
+
+;GET INPUT FROM KEYBOARD
+    lea dx,buffer
+    mov ah,0ah
+    int 21h
+    
+;PREPARE ES:BX to where data to be wrote into
+    mov ax,dataarea
+    mov es,ax
+    lea bx,string
+    
+;WRITE DATA TO FDD, 0 Cylinder: 0 Track: 4 Sector
+;Each sector has 512 bytes
+    mov ah,3  ; 3 for write
+    mov al,1  ; how many sectors to write
+    mov dh,0  ; cylinder
+    mov ch,0  ; track
+    mov cl,4  ; sector
+    mov dl,0  ; drive no. 
+    ;0:FDD-A, 1:FDD-B, 80H:HDD-C, 81H:HDD-D
+    int 13h 
+    
+    ret
+main endp
+codesg ends
+    end start 
+```
+
+接受输入之后回显打印：
+
+```asm6502
+;sudo mount -o loop,offset=$(python -c 'print(512*63)') /var/lib/libvirt/images/dosdata.img /mnt/nfs1
+
+dataarea segment
+    buffer db 64
+           db ?
+    string db 64 dup ('$')
+    hint   db 10,13,'$'
+dataarea ends
+
+codesg segment
+main proc far
+    assume cs:codesg,ds:dataarea
+start:
+    push ds
+    sub ax,ax
+    push ax
+
+    mov ax,dataarea
+    mov ds,ax
+
+    lea dx,buffer
+    mov ah,0ah
+    int 21h
+
+    mov cx,2
+    
+newl:
+    lea dx,hint
+    mov ah,9h
+    int 21h
+
+    loop newl
+    
+    lea dx,string
+    mov ah,9h
+    int 21h
+    
+    ret
+main endp
+codesg ends
+    end start 
+```
+
+
+### Reference
+
+**不要忘记打末尾的 `h`**
+
+```
+INT 13h / AH = 02h - read disk sectors into memory.
+INT 13h / AH = 03h - write disk sectors.
+    input:
+AL = number of sectors to read/write (must be nonzero)
+CH = cylinder number (0..79).
+CL = sector number (1..18).
+DH = head number (0..1).
+DL = drive number (0..3 , for the emulator it depends on quantity of FLOPPY_ files).
+ES:BX points to data buffer.
+    return:
+CF set on error.
+CF clear if successful.
+AH = status (0 - if successful).
+AL = number of sectors transferred. 
+Note: each sector has 512 bytes.
+```
+
+```
+INT 21h / AH=9 - output of a string at DS:DX. String must be terminated by '$'. 
+example:
+        org 100h
+        mov dx, offset msg
+        mov ah, 9
+        int 21h
+        ret
+        msg db "hello world $"
+```
+
+```
+INT 21h / AH=0Ah - input of a string to DS:DX, fist byte is buffer size, second byte is number of chars actually read. this function does not add '$' in the end of string. to print using INT 21h / AH=9 you must set dollar character at the end of it and start printing from address DS:DX + 2. 
+```
+
+# END
 
 本学期的汇编课程的随堂实验就到此告一段落，感谢 王逍老师的精心付出 
 和 钰在各方面的帮助，爱你！
 
 Updated on Thu Nov 29 23:41:30 CST 2018
-Rev. 07
+Rev. 09
 
 # Reference
 
