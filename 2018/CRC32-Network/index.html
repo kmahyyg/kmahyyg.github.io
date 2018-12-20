@@ -52,7 +52,7 @@
     
     <title>
         
-            Discrete Math | 
+            关于 C 的 CRC32 实现 | 
         
         Potato Online
     </title>
@@ -63,7 +63,7 @@
 
     <meta name="format-detection" content="telephone=no"/>
     <meta name="description" itemprop="description" content="Resources determined everything.">
-    <meta name="keywords" content="Patrick Young,kmahyyg,material,School">
+    <meta name="keywords" content="Patrick Young,kmahyyg,material,Tech,School">
     <meta name="theme-color" content="#0097A7">
 
     <!-- Disable Fucking Bloody Baidu Tranformation -->
@@ -253,7 +253,7 @@
     <!-- WebAPP Icons -->
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="application-name" content="Potato Online">
-    <meta name="msapplication-starturl" content="https://www.kmahyyg.xyz/2017/Discrete-Math/">
+    <meta name="msapplication-starturl" content="https://www.kmahyyg.xyz/2018/CRC32-Network/">
     <meta name="msapplication-navbutton-color" content="#0097A7">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-title" content="Potato Online">
@@ -272,15 +272,15 @@
     
 
     <!-- The Open Graph protocol -->
-    <meta property="og:url" content="https://www.kmahyyg.xyz/2017/Discrete-Math/">
+    <meta property="og:url" content="https://www.kmahyyg.xyz/2018/CRC32-Network/">
     <meta property="og:type" content="blog">
-    <meta property="og:title" content="Discrete Math | Potato Online">
+    <meta property="og:title" content="关于 C 的 CRC32 实现 | Potato Online">
     <meta property="og:image" content="https://yygc.zzjnyyz.cn/asset_files/avatar-yyg.jpg">
     <meta property="og:description" content="Resources determined everything.">
-    <meta property="og:article:tag" content="School"> 
+    <meta property="og:article:tag" content="Tech"> <meta property="og:article:tag" content="School"> 
 
     
-        <meta property="article:published_time" content="Sat Nov 04 2017 03:01:56 GMT+0000">
+        <meta property="article:published_time" content="Tue Dec 04 2018 21:14:28 GMT+0000">
         <meta property="article:modified_time" content="Thu Dec 20 2018 07:28:17 GMT+0000">
     
 
@@ -289,7 +289,7 @@
 
     <!-- Add canonical link for SEO -->
     
-        <link rel="canonical" href="https://www.kmahyyg.xyz/2017/Discrete-Math/index.html" />
+        <link rel="canonical" href="https://www.kmahyyg.xyz/2018/CRC32-Network/index.html" />
     
 
     <!-- Structured-data for SEO -->
@@ -301,9 +301,9 @@
 {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
-    "mainEntityOfPage": "https://www.kmahyyg.xyz/2017/Discrete-Math/index.html",
-    "headline": "Discrete Math",
-    "datePublished": "Sat Nov 04 2017 03:01:56 GMT+0000",
+    "mainEntityOfPage": "https://www.kmahyyg.xyz/2018/CRC32-Network/index.html",
+    "headline": "关于 C 的 CRC32 实现",
+    "datePublished": "Tue Dec 04 2018 21:14:28 GMT+0000",
     "dateModified": "Thu Dec 20 2018 07:28:17 GMT+0000",
     "author": {
         "@type": "Person",
@@ -322,7 +322,7 @@
             "url": "https://yygc.zzjnyyz.cn/asset_files/avatar-yyg.jpg"
         }
     },
-    "keywords": ",SchoolPatrick Young,kmahyyg,material",
+    "keywords": ",Tech,SchoolPatrick Young,kmahyyg,material",
     "description": "Resources determined everything.",
 }
 </script>
@@ -397,7 +397,7 @@
     </button>
 
     <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn" style="max-height:80vh; overflow-y:scroll;">
-        <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#CP-规则"><span class="post-toc-number">1.</span> <span class="post-toc-text">CP 规则</span></a></li></ol>
+        <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Preface"><span class="post-toc-number">1.</span> <span class="post-toc-text">Preface</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#关于-CRC32"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">关于 CRC32</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#关于-手动计算"><span class="post-toc-number">1.1.1.</span> <span class="post-toc-text">关于 手动计算</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#参考文献"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">参考文献</span></a></li></ol></li></ol>
     </ul>
     
 
@@ -429,7 +429,7 @@
         
     
             <p class="article-headline-p">
-                Discrete Math
+                关于 C 的 CRC32 实现
             </p>
         </div>
 
@@ -448,7 +448,7 @@
     <!-- Author Name & Date -->
     <div>
         <strong>Patrick Young</strong>
-        <span>11月 04, 2017</span>
+        <span>12月 04, 2018</span>
     </div>
 
     <div class="section-spacer"></div>
@@ -470,7 +470,7 @@
 <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-qrcode-button">
     <li class="mdl-menu__item">在其它设备中阅读本文章</li>
     
-        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACXElEQVR42u3aQXKDMAwF0Nz/0u0BOoEvCRQmfawyCRg/L2RH0uvnq68XHh4eHh4eHh7ew3iv+Pr71Mlr3oyQj9mcGx4eHt4KL5lo9Z53r8/Hb74XDw8Pb5F3HMqP7zke83gJ3i1HdW54eHh4T+Y10wSHh2k8PDy8/8Y7HqeX4MDDw8N7Pi/5w9975fxovpRrwcPDw4t5eRDf/7xa38PDw8MLeL2Ewvz+6qZSeCMeHh7ezbw8EM8TtceFruT7ZD54eHh4d/N6AT2HjRKyMRgPDw9vnzdvh+qF8uomES0lHh4e3s28XnNVtSF1kiCuLhweHh7eDi9vIZ0E9+rUq4uOh4eHt8OrpiSuajbNkxF58QwPDw9vk1ctUB3fU0i5tpLCJ8/i4eHhLfKSw2t+BO9tFb1jOh4eHt4m7z5SrwyWUE+O8nh4eHgf4o2K98VGgfnBHQ8PD2+T10tATApj1xbYRv8Y8PDw8Fq8XnDvlcR6xbDqEuPh4eHdzcvTDdUyVZLG7ZXfyk1XeHh4eJfyrm2Bykfuhf5mrgUPDw/v5jTuhFpukBpsReVkBB4eHt4KL4FVA3fOq/6Kh4eH9xxeb/OoLlm15IaHh4f3KV71SjaM3uaRJ4XLBTA8PDy8S3m95qp5EK+maEdNV3h4eHg38PIkbB7EkwkVJh0sOh4eHt4+Lwnr+RTzRHB1yzlJBOPh4eE9kldNH+TFrfzZQjICDw8P7/G8XlifbAZ4eHh4n+LlrVG9dqvRQTnYivDw8PA2edVSVrVM1WvkyhcXDw8Pb5P3fRceHh4eHh4eHt4Drl8H52ejITrowAAAAABJRU5ErkJggg==">
+        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACYElEQVR42u3aQVbDMAwFwN7/0nAASPol2W7gTVa80DqeLCxV0uvrX18vPDw8PDw8PDy8h/Fe8fXLQhf3r1b+ef9+td7e8PDw8M7w3hy1Y96O9S9fCh4eHt5B3v1RvurzydN7z8LDw8N7Mu/+AdVQUX0uHh4e3l/kVbcbFRHisIGHh4f3HF7yg/++LJuUJ/JvfaDWgoeHhxfz8kP8/N9H+3t4eHh4Aa880lQ80O8/MyltXO4QDw8PbzMvP4hzZK/RldyPEnc8PDy8zbzqIFT+UhYUZGMwHh4e3klefmTnISFPlJMn5mk6Hh4e3hN4UcOpNTLVG+1aHBjw8PDwxrxJCyppaOUvKEmvy4EBDw8PbxEv30QOngeGXvMMDw8P7yQvHxfIi7zV8u5kQAEPDw/vPC9KVVvFgl7brAfDw8PDO8NbVWztgXdQ8fDw8M7weosm4SRPzfOXW26A4eHh4W3m5cMB9+2uKqYaKgopNR4eHt4GXq+wW930PAAsGLrCw8PDW8SrDk710vFk/cVDV3h4eHjbeMlC1U3k+MmoQTnu4eHh4S3lVYNELyTM779J2fHw8PAO8npjWKOSa7W5hYeHh/dIXjWZnrSyqkXbaKwBDw8PbzNv3vpKCqyTF5SXlfHw8PDO8Jrt+fi/ebF4UgTBw8PDO8/rBYOcNGmq5SVmPDw8vPO83gBWrzzRKw2Phq7w8PDwPsqrJsRVdi8Fx8PDw3syr9r+r6bU1WCAh4eH9yleUoyYlx6aiXLebMPDw8M7wusNPK0KEs3hqh39PTw8PLyA9/8uPDw8PDw8PDy8B1zfdA0A/L3BvKEAAAAASUVORK5CYII=">
     
 </ul>
 
@@ -484,7 +484,7 @@
     </button>
     <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-viewtags-button">
         <li class="mdl-menu__item">
-        <a class="post_tag-link" href="/tags/School/">School</a>
+        <a class="post_tag-link" href="/tags/School/">School</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/Tech/">Tech</a>
     </ul>
     
 
@@ -504,7 +504,7 @@
 
     <!-- Share Twitter -->
     
-        <a class="post_share-link" href="https://twitter.com/intent/tweet?text=Discrete Math&url=https://www.kmahyyg.xyz/2017/Discrete-Math/index.html&via=Patrick Young" target="_blank">
+        <a class="post_share-link" href="https://twitter.com/intent/tweet?text=关于 C 的 CRC32 实现&url=https://www.kmahyyg.xyz/2018/CRC32-Network/index.html&via=Patrick Young" target="_blank">
             <li class="mdl-menu__item">
                 分享到 Twitter
             </li>
@@ -513,7 +513,7 @@
 
     <!-- Share Facebook -->
     
-        <a class="post_share-link" href="https://www.facebook.com/sharer/sharer.php?u=https://www.kmahyyg.xyz/2017/Discrete-Math/index.html" target="_blank">
+        <a class="post_share-link" href="https://www.facebook.com/sharer/sharer.php?u=https://www.kmahyyg.xyz/2018/CRC32-Network/index.html" target="_blank">
             <li class="mdl-menu__item">
                 分享到 Facebook
             </li>
@@ -522,7 +522,7 @@
 
     <!-- Share Google+ -->
     
-        <a class="post_share-link" href="https://plus.google.com/share?url=https://www.kmahyyg.xyz/2017/Discrete-Math/index.html" target="_blank">
+        <a class="post_share-link" href="https://plus.google.com/share?url=https://www.kmahyyg.xyz/2018/CRC32-Network/index.html" target="_blank">
             <li class="mdl-menu__item">
                 分享到 Google+
             </li>
@@ -534,7 +534,7 @@
 
     <!-- Share QQ -->
     
-        <a class="post_share-link" href="http://connect.qq.com/widget/shareqq/index.html?site=Potato Online&title=Discrete Math&summary=Resources determined everything.&pics=https://www.kmahyyg.xyzhttps://yygc.zzjnyyz.cn/asset_files/avatar-yyg.jpg&url=https://www.kmahyyg.xyz/2017/Discrete-Math/index.html" target="_blank">
+        <a class="post_share-link" href="http://connect.qq.com/widget/shareqq/index.html?site=Potato Online&title=关于 C 的 CRC32 实现&summary=Resources determined everything.&pics=https://www.kmahyyg.xyzhttps://yygc.zzjnyyz.cn/asset_files/avatar-yyg.jpg&url=https://www.kmahyyg.xyz/2018/CRC32-Network/index.html" target="_blank">
             <li class="mdl-menu__item">
                 分享到 QQ
             </li>
@@ -543,7 +543,7 @@
 
     <!-- Share Telegram -->
     
-        <a class="post_share-link" href="https://telegram.me/share/url?url=https://www.kmahyyg.xyz/2017/Discrete-Math/index.html&text=Discrete Math" target="_blank">
+        <a class="post_share-link" href="https://telegram.me/share/url?url=https://www.kmahyyg.xyz/2018/CRC32-Network/index.html&text=关于 C 的 CRC32 实现" target="_blank">
             <li class="mdl-menu__item">
                 分享到 Telegram
             </li>
@@ -559,7 +559,149 @@
                 <!-- Post Content -->
                 <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
     
-        <h1 id="CP-规则"><a href="#CP-规则" class="headerlink" title="CP 规则"></a>CP 规则</h1><p>先说一下，即使不用CP规则，只用P规则和T规则（即直接证明法）也可以实现所有证明。引入CP规则，只是为了简化证明过程。不过CP规则的适用范围不像P、T规则那样具有普遍性——当被证明的结论本身是一个条件复合命题时，才会用到CP规则。其内容是：<br>若要证明：(S)=&gt;(R→C)；——S是前提，R→C是结论；<br>只需证明：(S∧R)=&gt;(C)；——即：把R当作附加的前提，引入推理过程；<br>具体运用方法就是：<br>（1）使用P规则，把R当作一般前提（就像S一样）来使用；但应加以说明：附加前提；<br>（2）当推导出C之后，可直接写出最后的结论：R→C；这一步的说明是：CP规则；<br>需要注意：单纯来看（2）中的这一步推理，其实从C到R→C是可以直接推出的。【C=&gt;R→C】本身就是一个重言蕴含式（也就是推理公式），在直接证明法中可直接使用T规则完成这一步的推理。但是，在这里是不行的。<br>因为，推导C的过程中我们用到了R这一前提，但这个前提不是用纯正的P规则引入的。R是作为“附加前提”引入的。可以说，C这个中间结论（以及所有借助R推出的中间结论）并不是纯正的结论。事实上，这个中间结论可能根本就是个假命题。——虽然这并不影响我们的最终推理，因为我们的目标并不是C，而是R→C，但是，这种情况在直接推理中是绝对不允许的：在直接推理中，包括中间结论在内的每一步都必须是真命题。<br>这也就是CP规则与P、T规则的区别所在。所以，在这样的推理中，必须对CP规则的使用作出说明。<br>如上所说，CP规则的使用被分成了（1）、（2）两部分。这两部分所依据的规则都与纯正的P、T规则不同，所以都应作出特殊的说明。</p>
+        <h1 id="Preface"><a href="#Preface" class="headerlink" title="Preface"></a>Preface</h1><p>最近讲了计算机网络课程，在上课过程中明白了 CRC32 的人工计算方法。个人猜测后面计算机网络实验会做，趁最近忙碌，一鼓作气，在刚刚学完的时候一起实现了吧。</p>
+<h2 id="关于-CRC32"><a href="#关于-CRC32" class="headerlink" title="关于 CRC32"></a>关于 CRC32</h2><p>具体的原理性的东西就不说了，大家自己搜索 IEEE 802.3 相关文档和维基百科吧。主要用途是传输过程中的错误检测，由于容错率高，简单易于实现，占用资源少，得到了广泛的应用。</p>
+<h3 id="关于-手动计算"><a href="#关于-手动计算" class="headerlink" title="关于 手动计算"></a>关于 手动计算</h3><p>就那点内容，其实我也很懵逼，就多查查资料吧。剩下的就是 <code>Talk is cheap, show me the code!</code> ，大家自己根据 Reversed CRC32 的 GZip 实现参考吧。</p>
+<pre class="line-numbers language-cpp"><code class="language-cpp"><span class="token comment" spellcheck="true">// C Native implement, CRC32</span>
+
+<span class="token comment" spellcheck="true">// Reference: RFC1952 https://tools.ietf.org/html/rfc1952</span>
+<span class="token comment" spellcheck="true">// Reference: PEDIY https://bbs.pediy.com/thread-17195.htm</span>
+<span class="token comment" spellcheck="true">// Reference: CSDN https://blog.csdn.net/xiaogugood/article/details/8724745</span>
+<span class="token comment" spellcheck="true">// Reference: https://stackoverflow.com/questions/2587766/how-is-a-crc32-checksum-calculated</span>
+<span class="token comment" spellcheck="true">// Reference: http://stigge.org/martin/pub/SAR-PR-2006-05.pdf</span>
+
+<span class="token comment" spellcheck="true">// Written by Patrick Young</span>
+<span class="token comment" spellcheck="true">// Created on Tuesday, December 11, 2018 2:57 PM</span>
+<span class="token comment" spellcheck="true">// Updated on Wednesday, December 12, 2018 1:06 PM</span>
+<span class="token comment" spellcheck="true">// Rev.5</span>
+
+<span class="token comment" spellcheck="true">/*
+ * The highest bit of the generator is always 1, so ignored in the polyabbr.
+ *
+ * Algorithm   Result       Check               Poly        Init       RefIn     RefOut     XorOut      ReversedPoly
+    CRC-32     0xCBF43926      0xCBF43926    0x04C11DB7      0xFFFFFFFF    true    true    0xFFFFFFFF   0xEDB88320
+ */</span>
+
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h></span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;inttypes.h></span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;string.h></span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;stdlib.h></span></span>
+
+<span class="token keyword">unsigned</span> <span class="token keyword">long</span> crc_table<span class="token punctuation">[</span><span class="token number">256</span><span class="token punctuation">]</span><span class="token punctuation">;</span>  <span class="token comment" spellcheck="true">// Table of CRCs of all 8-bit messages</span>
+<span class="token keyword">int</span> is_crc_table_computed <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+
+<span class="token comment" spellcheck="true">//计算本字节后的CRC码，等于上一字节余式CRC码的低8位左移8位，加上上一字节CRC右移8位和本字节之和后所求得的CRC码</span>
+<span class="token keyword">void</span> <span class="token function">make_crc_table</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+    <span class="token keyword">unsigned</span> <span class="token keyword">long</span> c<span class="token punctuation">;</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> n <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> n <span class="token operator">&lt;</span> <span class="token number">256</span><span class="token punctuation">;</span> <span class="token operator">++</span>n<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token comment" spellcheck="true">// all groups contains 8 bits * 4 * n, XOR can be passed without any external opeation</span>
+        <span class="token comment" spellcheck="true">// divide the msg into 8-bit-long group</span>
+        c <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">unsigned</span> <span class="token keyword">long</span><span class="token punctuation">)</span> n<span class="token punctuation">;</span>
+        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> k <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> k <span class="token operator">&lt;</span> <span class="token number">8</span><span class="token punctuation">;</span> <span class="token operator">++</span>k<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>c <span class="token operator">&amp;</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+                <span class="token comment" spellcheck="true">// Least-Significant-Bit first.</span>
+                <span class="token comment" spellcheck="true">// Same CRC property but reversed to fit old hardware(low memory address save lower bits of data.)</span>
+                c<span class="token operator">=</span> <span class="token number">0xedb88320L</span> <span class="token operator">^</span> <span class="token punctuation">(</span>c <span class="token operator">>></span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment" spellcheck="true">// 0 is non-sense.</span>
+            <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+                c<span class="token operator">=</span> c <span class="token operator">>></span> <span class="token number">1</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+        crc_table<span class="token punctuation">[</span>n<span class="token punctuation">]</span> <span class="token operator">=</span> c<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    is_crc_table_computed <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment" spellcheck="true">/*
+ * Update a running crc with the bytes buf[0..len-1] and return
+the updated crc. The crc should be initialized to zero. Pre- and
+post-conditioning (one's complement) is performed within this
+function so it shouldn't be done by the caller. Usage example:
+ *
+ *  unsigned long crc = 0L;
+ *
+ *  while (read_buffer(buffer, length) != EOF) {
+ *      crc = update_crc(crc, buffer, length);
+ *  }
+ *   if (crc != original_crc) error();
+ *
+*/</span>
+
+<span class="token keyword">unsigned</span> <span class="token keyword">long</span> <span class="token function">update_crc</span><span class="token punctuation">(</span><span class="token keyword">unsigned</span> <span class="token keyword">long</span> crc<span class="token punctuation">,</span> <span class="token keyword">unsigned</span> <span class="token keyword">char</span> <span class="token operator">*</span>buf<span class="token punctuation">,</span> <span class="token keyword">int</span> len<span class="token punctuation">)</span><span class="token punctuation">{</span>
+    <span class="token keyword">unsigned</span> <span class="token keyword">long</span> c <span class="token operator">=</span> crc <span class="token operator">^</span> <span class="token number">0xffffffffL</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>is_crc_table_computed<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token function">make_crc_table</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment" spellcheck="true">// build the crc table first for fast lookup</span>
+    <span class="token punctuation">}</span>
+    <span class="token comment" spellcheck="true">/*
+    （1）将上次计算出的CRC校验码右移一个字节；
+    （2）将移出的这个字节与新的要校验的字节进行XOR运算；
+    （3）用运算出的值在预先生成码表中进行索引，获取对应的值（称为余式）；
+    （4）用获取的值与第（1）步右移后的值进行XOR运算；
+    （5）如果要校验的数据已经处理完，则第（4）步的结果就是最终的CRC校验码。如果还有数据要进行处理，则再转到第（1）步运行。
+     */</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> p <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> p <span class="token operator">&lt;</span> len<span class="token punctuation">;</span> <span class="token operator">++</span>p<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        c <span class="token operator">=</span> crc_table<span class="token punctuation">[</span><span class="token punctuation">(</span>c <span class="token operator">^</span> buf<span class="token punctuation">[</span>p<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span> <span class="token number">0xff</span><span class="token punctuation">]</span> <span class="token operator">^</span> <span class="token punctuation">(</span>c <span class="token operator">>></span><span class="token number">8</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">// remove the non-sense zero and shifted bits</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">return</span> c <span class="token operator">^</span> <span class="token number">0xffffffffL</span><span class="token punctuation">;</span>
+    <span class="token comment" spellcheck="true">// avoid "add zero as you want, not affected" problem</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">unsigned</span> <span class="token keyword">long</span> <span class="token function">crc</span><span class="token punctuation">(</span><span class="token keyword">unsigned</span> <span class="token keyword">char</span> <span class="token operator">*</span>buf<span class="token punctuation">,</span> <span class="token keyword">int</span> len<span class="token punctuation">)</span><span class="token punctuation">{</span>
+    <span class="token comment" spellcheck="true">// Math theory by hand: (quotient + remainder)/divisor = 0</span>
+    <span class="token comment" spellcheck="true">// appended 0s is used for be a placeholder of remainder</span>
+    <span class="token keyword">return</span> <span class="token function">update_crc</span><span class="token punctuation">(</span><span class="token number">0L</span><span class="token punctuation">,</span>buf<span class="token punctuation">,</span>len<span class="token punctuation">)</span><span class="token punctuation">;</span>      <span class="token comment" spellcheck="true">// recursive update crc checksum.</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">int</span> <span class="token function">check_crcsum</span><span class="token punctuation">(</span><span class="token keyword">unsigned</span> <span class="token keyword">char</span> <span class="token operator">*</span>src<span class="token punctuation">,</span> <span class="token keyword">unsigned</span> <span class="token keyword">long</span> sum<span class="token punctuation">)</span><span class="token punctuation">{</span>
+    <span class="token comment" spellcheck="true">// why should I calculate the damn divide</span>
+    <span class="token comment" spellcheck="true">// (data+crc) / divisor = 000 ,correct</span>
+    <span class="token keyword">unsigned</span> <span class="token keyword">long</span> xr <span class="token operator">=</span> <span class="token function">crc</span><span class="token punctuation">(</span>src<span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">)</span><span class="token function">strlen</span><span class="token punctuation">(</span>src<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment" spellcheck="true">// just calculate received data's CRC, check if corresponding is okay.</span>
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"The source is %s, Checksum calculated is: 0x%lx\n"</span><span class="token punctuation">,</span> src<span class="token punctuation">,</span> xr<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>xr <span class="token operator">==</span> sum<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"Data CRC check passed! \n\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">else</span> <span class="token punctuation">{</span>
+        <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"The offered checksum 0x%lx is different from offered one. \n"</span><span class="token punctuation">,</span>sum<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"Data Corrupted! \n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> <span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">void</span> <span class="token function">printUsage</span><span class="token punctuation">(</span><span class="token keyword">char</span> <span class="token operator">*</span>argv<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"Illegal input! \n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"Usage: %s &lt;SOURCE STRING> 0x&lt;CRC32SUM>\n"</span><span class="token punctuation">,</span>argv<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"Usage: If you want to calculate, just input source in ASCII mode. \n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"Usage: If you want to check, use the second param such as 1A3C5D78 as a HEX String.\n\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span><span class="token operator">*</span> argv<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>argc <span class="token operator">!=</span> <span class="token number">2</span> <span class="token operator">&amp;&amp;</span> argc <span class="token operator">!=</span><span class="token number">3</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token function">printUsage</span><span class="token punctuation">(</span>argv<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>argc <span class="token operator">==</span> <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">char</span> <span class="token operator">*</span>ipt <span class="token operator">=</span> argv<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+        <span class="token keyword">unsigned</span> <span class="token keyword">long</span> final <span class="token operator">=</span> <span class="token function">crc</span><span class="token punctuation">(</span>ipt<span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">)</span><span class="token function">strlen</span><span class="token punctuation">(</span>ipt<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"The source is: %s\n"</span><span class="token punctuation">,</span>ipt<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"The CRC32 checksum is: 0x%lx \n\n"</span><span class="token punctuation">,</span>final<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>argc <span class="token operator">==</span> <span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">char</span> <span class="token operator">*</span>ipt <span class="token operator">=</span> argv<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+        <span class="token keyword">char</span> <span class="token operator">*</span>csum <span class="token operator">=</span> argv<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">strlen</span><span class="token punctuation">(</span>csum<span class="token punctuation">)</span> <span class="token operator">!=</span> <span class="token number">8</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+            <span class="token function">printUsage</span><span class="token punctuation">(</span>argv<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">return</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">unsigned</span> <span class="token keyword">long</span> hexcsum <span class="token operator">=</span> <span class="token function">strtoul</span><span class="token punctuation">(</span>csum<span class="token punctuation">,</span><span class="token constant">NULL</span><span class="token punctuation">,</span><span class="token number">16</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">int</span> stats <span class="token operator">=</span> <span class="token function">check_crcsum</span><span class="token punctuation">(</span>ipt<span class="token punctuation">,</span>hexcsum<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> stats<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><p><a href="https://www.xilinx.com/support/documentation/application_notes/xapp209.pdf" target="_blank" rel="noopener">https://www.xilinx.com/support/documentation/application_notes/xapp209.pdf</a></p>
 
         
                 <blockquote style="margin: 2em 0 0;padding: 0.5em 1em;border-left: 3px solid #F44336;background-color: #F5F5F5;list-style: none;">
@@ -568,7 +710,7 @@
                             本博客所有文章，未经特殊说明，均使用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" target="_blank">CC BY-NC-SA 3.0 Unported License 授权</a>
                         </strong>
                         <br>
-                        <strong>本文链接：</strong><a href="https://www.kmahyyg.xyz/2017/Discrete-Math/">https://www.kmahyyg.xyz/2017/Discrete-Math/</a>
+                        <strong>本文链接：</strong><a href="https://www.kmahyyg.xyz/2018/CRC32-Network/">https://www.kmahyyg.xyz/2018/CRC32-Network/</a>
                     </p>
                 </blockquote>
         
@@ -624,8 +766,8 @@
 
 <script type="text/javascript">
     var disqus_config = function () {
-        this.page.url = 'https://www.kmahyyg.xyz/2017/Discrete-Math/';  // Replace PAGE_URL with your page's canonical URL variable
-        this.page.identifier = 'https://www.kmahyyg.xyz/2017/Discrete-Math/'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+        this.page.url = 'https://www.kmahyyg.xyz/2018/CRC32-Network/';  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = 'https://www.kmahyyg.xyz/2018/CRC32-Network/'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
     };
 </script>
 
@@ -674,21 +816,13 @@
             <nav class="material-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
     <!-- Prev Nav -->
     
-        <a href="/2017/How-to-set-up-a-Git-server-on-Ubuntu/" id="post_nav-newer" class="prev-content">
-            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
-                <i class="material-icons">arrow_back</i>
-            </button>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            新篇
-        </a>
-    
 
     <!-- Section Spacer -->
     <div class="section-spacer"></div>
 
     <!-- Next Nav -->
     
-        <a href="/2017/ShadowsocksLIBEV/" id="post_nav-older" class="next-content">
+        <a href="/2018/ASM-exp-report2/" id="post_nav-older" class="next-content">
             旧篇
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
