@@ -3,6 +3,40 @@
   
     
     <entry>
+      <title>2018 汇编大作业</title>
+      <link href="/2019/ASM-BigHomework/"/>
+      <url>/2019/ASM-BigHomework/</url>
+      <content type="html"><![CDATA[<p>TODO</p>]]></content>
+      
+      
+        <tags>
+            
+            <tag> Tech </tag>
+            
+            <tag> School </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    <entry>
+      <title>2018 年终总结</title>
+      <link href="/2019/2018-EndofYear/"/>
+      <url>/2019/2018-EndofYear/</url>
+      <content type="html"><![CDATA[<p>TODO</p>]]></content>
+      
+      
+        <tags>
+            
+            <tag> School </tag>
+            
+            <tag> Personal </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    <entry>
       <title>关于 C 的 CRC32 实现</title>
       <link href="/2018/CRC32-Network/"/>
       <url>/2018/CRC32-Network/</url>
@@ -77,6 +111,8 @@
             
             <tag> Tech </tag>
             
+            <tag> Datastru </tag>
+            
         </tags>
       
     </entry>
@@ -121,6 +157,8 @@
         <tags>
             
             <tag> Tech </tag>
+            
+            <tag> Datastru </tag>
             
         </tags>
       
