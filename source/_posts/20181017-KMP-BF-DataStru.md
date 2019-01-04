@@ -3,6 +3,7 @@ title: KMP 与 BF 字符串模式匹配算法简析
 date: 2018-10-17 13:29:29
 tags:
   - Tech
+  - Datastru
 ---
 
 # 字符串模式匹配算法
