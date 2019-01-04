@@ -1,0 +1,1220 @@
+<!DOCTYPE html>
+<html style="display: none;" lang="zh">
+    <head>
+    <meta charset="utf-8">
+    <!--
+        © Material Theme
+        https://github.com/viosey/hexo-theme-material
+        Version: 1.5.6 -->
+    <script>
+        window.materialVersion = "1.5.6"
+        // Delete localstorage with these tags
+        window.oldVersion = [
+            'codestartv1',
+            '1.3.4',
+            '1.4.0',
+            '1.4.0b1',
+            '1.5.0',
+            '1.5.2',
+            '1.5.5'
+        ]
+    </script>
+
+    <!-- dns prefetch -->
+    <meta http-equiv="x-dns-prefetch-control" content="on">
+
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net/gh/viosey/hexo-theme-material@1.5.6/source"/>
+
+
+
+
+
+    <link rel="dns-prefetch" href="https://kmahyyg.disqus.com"/>
+
+
+
+    <link rel="dns-prefetch" href="https://www.google-analytics.com"/>
+
+
+
+    <link rel="dns-prefetch" href="https://lib.baomitu.com"/>
+
+
+
+
+
+    <!-- Meta & Info -->
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+    <!-- Title -->
+    
+    <title>
+        
+            数据结构与算法课程 - Chap 2 线性表 | 
+        
+        Potato Online
+    </title>
+
+    <!-- Favicons -->
+    <link rel="icon shortcut" type="image/ico" href="https://yygc.zzjnyyz.cn/asset_files/avatar-yyg.jpg">
+    <link rel="icon" href="https://yygc.zzjnyyz.cn/asset_files/avatar-yyg.jpg">
+
+    <meta name="format-detection" content="telephone=no"/>
+    <meta name="description" itemprop="description" content="Resources determined everything.">
+    <meta name="keywords" content="Patrick Young,kmahyyg,material,School,Datastru">
+    <meta name="theme-color" content="#0097A7">
+
+    <!-- Disable Fucking Bloody Baidu Tranformation -->
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+
+    <!--[if lte IE 9]>
+        <link rel="stylesheet" href="/css/ie-blocker.css">
+
+        
+            <script src="/js/ie-blocker.zhCN.js"></script>
+        
+    <![endif]-->
+
+    <!-- Import lsloader -->
+    <script>(function(){window.lsloader={jsRunSequence:[],jsnamemap:{},cssnamemap:{}};lsloader.removeLS=function(a){try{localStorage.removeItem(a)}catch(b){}};lsloader.setLS=function(a,c){try{localStorage.setItem(a,c)}catch(b){}};lsloader.getLS=function(a){var c="";try{c=localStorage.getItem(a)}catch(b){c=""}return c};versionString="/*"+(window.materialVersion||"unknownVersion")+"*/";lsloader.clean=function(){try{var b=[];for(var a=0;a<localStorage.length;a++){b.push(localStorage.key(a))}b.forEach(function(e){var f=lsloader.getLS(e);if(window.oldVersion){var d=window.oldVersion.reduce(function(g,h){return g||f.indexOf("/*"+h+"*/")!==-1},false);if(d){lsloader.removeLS(e)}}})}catch(c){}};lsloader.clean();lsloader.load=function(f,a,b,d){if(typeof b==="boolean"){d=b;b=undefined}d=d||false;b=b||function(){};var e;e=this.getLS(f);if(e&&e.indexOf(versionString)===-1){this.removeLS(f);this.requestResource(f,a,b,d);return}if(e){var c=e.split(versionString)[0];if(c!=a){console.log("reload:"+a);this.removeLS(f);this.requestResource(f,a,b,d);return}e=e.split(versionString)[1];if(d){this.jsRunSequence.push({name:f,code:e});this.runjs(a,f,e)}else{document.getElementById(f).appendChild(document.createTextNode(e));b()}}else{this.requestResource(f,a,b,d)}};lsloader.requestResource=function(b,e,a,c){var d=this;if(c){this.iojs(e,b,function(h,f,g){d.setLS(f,h+versionString+g);d.runjs(h,f,g)})}else{this.iocss(e,b,function(f){document.getElementById(b).appendChild(document.createTextNode(f));d.setLS(b,e+versionString+f)},a)}};lsloader.iojs=function(d,b,g){var a=this;a.jsRunSequence.push({name:b,code:""});try{var f=new XMLHttpRequest();f.open("get",d,true);f.onreadystatechange=function(){if(f.readyState==4){if((f.status>=200&&f.status<300)||f.status==304){if(f.response!=""){g(d,b,f.response);return}}a.jsfallback(d,b)}};f.send(null)}catch(c){a.jsfallback(d,b)}};lsloader.iocss=function(f,c,h,a){var b=this;try{var g=new XMLHttpRequest();g.open("get",f,true);g.onreadystatechange=function(){if(g.readyState==4){if((g.status>=200&&g.status<300)||g.status==304){if(g.response!=""){h(g.response);a();return}}b.cssfallback(f,c,a)}};g.send(null)}catch(d){b.cssfallback(f,c,a)}};lsloader.iofonts=function(f,c,h,a){var b=this;try{var g=new XMLHttpRequest();g.open("get",f,true);g.onreadystatechange=function(){if(g.readyState==4){if((g.status>=200&&g.status<300)||g.status==304){if(g.response!=""){h(g.response);a();return}}b.cssfallback(f,c,a)}};g.send(null)}catch(d){b.cssfallback(f,c,a)}};lsloader.runjs=function(f,c,e){if(!!c&&!!e){for(var b in this.jsRunSequence){if(this.jsRunSequence[b].name==c){this.jsRunSequence[b].code=e}}}if(!!this.jsRunSequence[0]&&!!this.jsRunSequence[0].code&&this.jsRunSequence[0].status!="failed"){var a=document.createElement("script");a.appendChild(document.createTextNode(this.jsRunSequence[0].code));a.type="text/javascript";document.getElementsByTagName("head")[0].appendChild(a);this.jsRunSequence.shift();if(this.jsRunSequence.length>0){this.runjs()}}else{if(!!this.jsRunSequence[0]&&this.jsRunSequence[0].status=="failed"){var d=this;var a=document.createElement("script");a.src=this.jsRunSequence[0].path;a.type="text/javascript";this.jsRunSequence[0].status="loading";a.onload=function(){d.jsRunSequence.shift();if(d.jsRunSequence.length>0){d.runjs()}};document.body.appendChild(a)}}};lsloader.tagLoad=function(b,a){this.jsRunSequence.push({name:a,code:"",path:b,status:"failed"});this.runjs()};lsloader.jsfallback=function(c,b){if(!!this.jsnamemap[b]){return}else{this.jsnamemap[b]=b}for(var a in this.jsRunSequence){if(this.jsRunSequence[a].name==b){this.jsRunSequence[a].code="";this.jsRunSequence[a].status="failed";this.jsRunSequence[a].path=c}}this.runjs()};lsloader.cssfallback=function(e,c,b){if(!!this.cssnamemap[c]){return}else{this.cssnamemap[c]=1}var d=document.createElement("link");d.type="text/css";d.href=e;d.rel="stylesheet";d.onload=d.onerror=b;var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(d,a)};lsloader.runInlineScript=function(c,b){var a=document.getElementById(b).innerText;this.jsRunSequence.push({name:c,code:a});this.runjs()}})();</script>
+
+    <!-- Import queue -->
+    <script>function Queue(){this.dataStore=[];this.offer=b;this.poll=d;this.execNext=a;this.debug=false;this.startDebug=c;function b(e){if(this.debug){console.log("Offered a Queued Function.")}if(typeof e==="function"){this.dataStore.push(e)}else{console.log("You must offer a function.")}}function d(){if(this.debug){console.log("Polled a Queued Function.")}return this.dataStore.shift()}function a(){var e=this.poll();if(e!==undefined){if(this.debug){console.log("Run a Queued Function.")}e()}}function c(){this.debug=true}}var queue=new Queue();</script>
+
+    <!-- Import CSS -->
+    
+        <style id="material_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("material_css","https://cdn.jsdelivr.net/gh/viosey/hexo-theme-material@1.5.6/source/css/material.min.css",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
+        <style id="style_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("style_css","https://cdn.jsdelivr.net/gh/viosey/hexo-theme-material@1.5.6/source/css/style.min.css",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
+
+        
+            
+                <style id="prettify_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("prettify_css","https://cdn.jsdelivr.net/gh/viosey/hexo-theme-material@1.5.6/source/css/prettify.min.css",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
+                <style id="prettify_theme"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("prettify_theme","https://cdn.jsdelivr.net/gh/viosey/hexo-theme-material@1.5.6/source/css/prettify/github-v2.min.css",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
+            
+        
+
+    
+
+    
+
+    <!-- Config CSS -->
+
+<!-- Other Styles -->
+<style>
+  body, html {
+    font-family: Roboto, "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+    overflow-x: hidden !important;
+  }
+  
+  code {
+    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+  }
+
+  a {
+    color: #00838F;
+  }
+
+  .mdl-card__media,
+  #search-label,
+  #search-form-label:after,
+  #scheme-Paradox .hot_tags-count,
+  #scheme-Paradox .sidebar_archives-count,
+  #scheme-Paradox .sidebar-colored .sidebar-header,
+  #scheme-Paradox .sidebar-colored .sidebar-badge{
+    background-color: #0097A7 !important;
+  }
+
+  /* Sidebar User Drop Down Menu Text Color */
+  #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:hover,
+  #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:focus {
+    color: #0097A7 !important;
+  }
+
+  #post_entry-right-info,
+  .sidebar-colored .sidebar-nav li:hover > a,
+  .sidebar-colored .sidebar-nav li:hover > a i,
+  .sidebar-colored .sidebar-nav li > a:hover,
+  .sidebar-colored .sidebar-nav li > a:hover i,
+  .sidebar-colored .sidebar-nav li > a:focus i,
+  .sidebar-colored .sidebar-nav > .open > a,
+  .sidebar-colored .sidebar-nav > .open > a:hover,
+  .sidebar-colored .sidebar-nav > .open > a:focus,
+  #ds-reset #ds-ctx .ds-ctx-entry .ds-ctx-head a {
+    color: #0097A7 !important;
+  }
+
+  .toTop {
+    background: #757575 !important;
+  }
+
+  .material-layout .material-post>.material-nav,
+  .material-layout .material-index>.material-nav,
+  .material-nav a {
+    color: #757575;
+  }
+
+  #scheme-Paradox .MD-burger-layer {
+    background-color: #757575;
+  }
+
+  #scheme-Paradox #post-toc-trigger-btn {
+    color: #757575;
+  }
+
+  .post-toc a:hover {
+    color: #00838F;
+    text-decoration: underline;
+  }
+
+</style>
+
+
+<!-- Theme Background Related-->
+
+    <style>
+      body{
+        background-color: #F5F5F5;
+      }
+
+      /* blog_info bottom background */
+      #scheme-Paradox .material-layout .something-else .mdl-card__supporting-text{
+        background-color: #fff;
+      }
+    </style>
+
+
+
+
+<!-- Fade Effect -->
+
+    <style>
+      .fade {
+        transition: all 800ms linear;
+        -webkit-transform: translate3d(0,0,0);
+        -moz-transform: translate3d(0,0,0);
+        -ms-transform: translate3d(0,0,0);
+        -o-transform: translate3d(0,0,0);
+        transform: translate3d(0,0,0);
+        opacity: 1;
+      }
+
+      .fade.out{
+        opacity: 0;
+      }
+    </style>
+
+
+<!-- Import Font -->
+<!-- Import Roboto -->
+
+    <style>
+        @font-face {
+            font-family: Roboto;
+            font-style: normal;
+            font-weight: 300;
+            src: url(https://lib.baomitu.com/fonts/roboto/roboto-v15-latin-300.eot);
+            src: local('Roboto'),local('Roboto-Normal'),url(https://lib.baomitu.com/fonts/roboto/roboto-v15-latin-300.eot?#iefix) format('embedded-opentype'),url(https://lib.baomitu.com/fonts/roboto/roboto-v15-latin-300.woff2) format('woff2'),url(https://lib.baomitu.com/fonts/roboto/roboto-v15-latin-300.woff) format('woff'),url(https://lib.baomitu.com/fonts/roboto/roboto-v15-latin-300.ttf) format('truetype'),url(https://lib.baomitu.com/fonts/roboto/roboto-v15-latin-300.svg#Roboto) format('svg')
+        }
+
+        @font-face {
+            font-family: Roboto;
+            font-style: normal;
+            font-weight: regular;
+            src: url(https://lib.baomitu.com/fonts/roboto/roboto-v15-latin-regular.eot);
+            src: local('Roboto'),local('Roboto-Normal'),url(https://lib.baomitu.com/fonts/roboto/roboto-v15-latin-regular.eot?#iefix) format('embedded-opentype'),url(https://lib.baomitu.com/fonts/roboto/roboto-v15-latin-regular.woff2) format('woff2'),url(https://lib.baomitu.com/fonts/roboto/roboto-v15-latin-regular.woff) format('woff'),url(https://lib.baomitu.com/fonts/roboto/roboto-v15-latin-regular.ttf) format('truetype'),url(https://lib.baomitu.com/fonts/roboto/roboto-v15-latin-regular.svg#Roboto) format('svg')
+        }
+
+        @font-face {
+            font-family: Roboto;
+            font-style: normal;
+            font-weight: 500;
+            src: url(https://lib.baomitu.com/fonts/roboto/roboto-v15-latin-500.eot);
+            src: local('Roboto'),local('Roboto-Normal'),url(https://lib.baomitu.com/fonts/roboto/roboto-v15-latin-500.eot?#iefix) format('embedded-opentype'),url(https://lib.baomitu.com/fonts/roboto/roboto-v15-latin-500.woff2) format('woff2'),url(https://lib.baomitu.com/fonts/roboto/roboto-v15-latin-500.woff) format('woff'),url(https://lib.baomitu.com/fonts/roboto/roboto-v15-latin-500.ttf) format('truetype'),url(https://lib.baomitu.com/fonts/roboto/roboto-v15-latin-500.svg#Roboto) format('svg')
+        }
+    </style>
+
+
+<!-- Import Material Icons -->
+
+
+    <style id="material_icons"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("material_icons","https://cdn.jsdelivr.net/gh/viosey/hexo-theme-material@1.5.6/source/css/material-icons.css",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
+
+
+
+
+    <!-- Import jQuery -->
+    
+        <script>lsloader.load("jq_js","https://cdn.jsdelivr.net/npm/jquery@2.2.0/dist/jquery.min.js", true)</script>
+    
+
+    <!-- WebAPP Icons -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="Potato Online">
+    <meta name="msapplication-starturl" content="https://www.kmahyyg.xyz/2019/ynu-datastru-c2/">
+    <meta name="msapplication-navbutton-color" content="#0097A7">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="Potato Online">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon" href="https://yygc.zzjnyyz.cn/asset_files/avatar-yyg.jpg">
+
+    <!-- Site Verification -->
+    
+    
+
+    <!-- RSS -->
+    
+        
+            <link rel=alternate type="application/atom+xml" href="/atom.xml">
+        
+    
+
+    <!-- The Open Graph protocol -->
+    <meta property="og:url" content="https://www.kmahyyg.xyz/2019/ynu-datastru-c2/">
+    <meta property="og:type" content="blog">
+    <meta property="og:title" content="数据结构与算法课程 - Chap 2 线性表 | Potato Online">
+    <meta property="og:image" content="https://yygc.zzjnyyz.cn/asset_files/avatar-yyg.jpg">
+    <meta property="og:description" content="Resources determined everything.">
+    <meta property="og:article:tag" content="School"> <meta property="og:article:tag" content="Datastru"> 
+
+    
+        <meta property="article:published_time" content="Sat Jan 05 2019 01:15:25 GMT+0000">
+        <meta property="article:modified_time" content="Fri Jan 04 2019 17:18:57 GMT+0000">
+    
+
+    <!-- The Twitter Card protocol -->
+    <meta name="twitter:card" content="summary_large_image">
+
+    <!-- Add canonical link for SEO -->
+    
+        <link rel="canonical" href="https://www.kmahyyg.xyz/2019/ynu-datastru-c2/index.html" />
+    
+
+    <!-- Structured-data for SEO -->
+    
+        
+
+
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "mainEntityOfPage": "https://www.kmahyyg.xyz/2019/ynu-datastru-c2/index.html",
+    "headline": "数据结构与算法课程 - Chap 2 线性表",
+    "datePublished": "Sat Jan 05 2019 01:15:25 GMT+0000",
+    "dateModified": "Fri Jan 04 2019 17:18:57 GMT+0000",
+    "author": {
+        "@type": "Person",
+        "name": "Patrick Young",
+        "image": {
+            "@type": "ImageObject",
+            "url": "https://yygc.zzjnyyz.cn/asset_files/avatar-yyg.jpg"
+        },
+        "description": "The man who control all the sources will control the whole world!"
+    },
+    "publisher": {
+        "@type": "Organization",
+        "name": "Potato Online",
+        "logo": {
+            "@type":"ImageObject",
+            "url": "https://yygc.zzjnyyz.cn/asset_files/avatar-yyg.jpg"
+        }
+    },
+    "keywords": ",School,DatastruPatrick Young,kmahyyg,material",
+    "description": "Resources determined everything.",
+}
+</script>
+
+
+    
+
+    <!-- Analytics -->
+    
+        <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+    ga('create', 'UA-123948588-1', 'auto');ga('send', 'pageview');
+</script>
+    
+    
+    
+
+    <!-- Custom Head -->
+    
+
+<link rel="stylesheet" href="/css/prism-vs.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
+
+
+    
+        <body id="scheme-Paradox" class="lazy">
+            <div class="material-layout  mdl-js-layout has-drawer is-upgraded">
+                
+
+                <!-- Main Container -->
+                <main class="material-layout__content" id="main">
+
+                    <!-- Top Anchor -->
+                    <div id="top"></div>
+
+                    
+                        <!-- Hamburger Button -->
+                        <button class="MD-burger-icon sidebar-toggle">
+                            <span id="MD-burger-id" class="MD-burger-layer"></span>
+                        </button>
+                    
+
+                    <!-- Post TOC -->
+
+    
+    <!-- Back Button -->
+    <!--
+    <div class="material-back" id="backhome-div" tabindex="0">
+        <a class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon"
+           href="#" onclick="window.history.back();return false;"
+           target="_self"
+           role="button"
+           data-upgraded=",MaterialButton,MaterialRipple">
+            <i class="material-icons" role="presentation">arrow_back</i>
+            <span class="mdl-button__ripple-container">
+                <span class="mdl-ripple"></span>
+            </span>
+        </a>
+    </div>
+    -->
+
+
+    <!-- Left aligned menu below button -->
+    
+    
+    <button id="post-toc-trigger-btn"
+        class="mdl-button mdl-js-button mdl-button--icon">
+        <i class="material-icons">format_list_numbered</i>
+    </button>
+
+    <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn" style="max-height:80vh; overflow-y:scroll;">
+        <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#数据结构复习-Chapter-2-线性表"><span class="post-toc-number">1.</span> <span class="post-toc-text">数据结构复习 - Chapter 2 线性表</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#定义"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">定义</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#顺序表示"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">顺序表示</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#链式表示"><span class="post-toc-number">1.3.</span> <span class="post-toc-text">链式表示</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#链表修改：-节点插入与删除"><span class="post-toc-number">1.3.1.</span> <span class="post-toc-text">链表修改： 节点插入与删除</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#循环链表与双向链表"><span class="post-toc-number">1.3.2.</span> <span class="post-toc-text">循环链表与双向链表</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#实验回顾"><span class="post-toc-number">1.4.</span> <span class="post-toc-text">实验回顾</span></a></li></ol></li></ol>
+    </ul>
+    
+
+
+
+
+<!-- Layouts -->
+
+    <!-- Post Module -->
+    <div class="material-post_container">
+
+        <div class="material-post mdl-grid">
+            <div class="mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col">
+
+                <!-- Post Header(Thumbnail & Title) -->
+                
+    <!-- Paradox Post Header -->
+    
+        
+            <!-- Random Thumbnail -->
+            <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
+            <script type="text/ls-javascript" id="post-thumbnail-script">
+    var randomNum = Math.floor(Math.random() * 19 + 1);
+
+    $('.post_thumbnail-random').attr('data-original', '/img/random/material-' + randomNum + '.png');
+    $('.post_thumbnail-random').addClass('lazy');
+</script>
+
+        
+    
+            <p class="article-headline-p">
+                数据结构与算法课程 - Chap 2 线性表
+            </p>
+        </div>
+
+
+
+
+
+                
+                    <!-- Paradox Post Info -->
+                    <div class="mdl-color-text--grey-700 mdl-card__supporting-text meta">
+
+    <!-- Author Avatar -->
+    <div id="author-avatar">
+        <img src="https://yygc.zzjnyyz.cn/asset_files/avatar-yyg.jpg" width="44px" height="44px" alt="Author Avatar"/>
+    </div>
+    <!-- Author Name & Date -->
+    <div>
+        <strong>Patrick Young</strong>
+        <span>1月 05, 2019</span>
+    </div>
+
+    <div class="section-spacer"></div>
+
+    <!-- Favorite -->
+    <!--
+        <button id="article-functions-like-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon btn-like">
+            <i class="material-icons" role="presentation">favorite</i>
+            <span class="visuallyhidden">favorites</span>
+        </button>
+    -->
+
+    <!-- Qrcode -->
+    
+        <button id="article-functions-qrcode-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+    <i class="material-icons" role="presentation">devices other</i>
+    <span class="visuallyhidden">devices other</span>
+</button>
+<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-qrcode-button">
+    <li class="mdl-menu__item">在其它设备中阅读本文章</li>
+    
+        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACZElEQVR42u3aS27DMAwFwNz/0u22QJD2kZRZJxivgnxsjRaS8sjH10dfDzw8PDw8PDw8vJvxHvGV/Ornp8+vn3/7/P6BseHh4eGt8P5Yal98J5+Cyf2rv8XDw8Pb5OULfb4Z5JvE/Ll4eHh4d+YlQ0+ecnZa8fDw8N6RV71+P4Lj4eHh3Z+XL+unQodqBHx51oKHh4cX8/JFfP/1an0PDw8PL+CVW5rGG0ke4x5ousLDw8O7gJcvxL0jch7jzseDh4eHt8PrlbXyUDXhVaOKQoyLh4eHdwEvv0XyfnkRP7S14OHh4W3yeot+NfDNg+N5bIGHh4e3yZtsCb3oYf6dQgEMDw8P7xAvuWmvPNbbSJKJK3dG4OHh4R3lRX/vg4fl8UQyffmBvlAAw8PDwzvKqz6yF7M+BlcCw8PDw9vhVePas8PNw4ukKQEPDw9vn5cXtHqDqH4nb2vAw8PD2+RVGwiORQZBk0FOwsPDw9vnTQLW/A75xtMLhfHw8PA2eUnhv9pSUJ2yXrENDw8Pb583aQtIJqWwoB86juPh4eHt8Kpxaq/t4NT7hSM1Hh4e3sW86tE5aoFqfZoUwF5uaXh4eHj/yuuFFOUBDVpXRxsDHh4e3jjGrbYU9DaYZlkrb6LFw8PDu5hXXY4nEXA18mi2c+Hh4eGt8PJwNh9W3hCQF72iicPDw8Nb5FUX6DxyzbeNahiBh4eH9768KCYIPp03NODh4eHdmZcv3NVjdz4R5foeHh4e3lHepDWqt/TngCRWxsPDw9vkVSOAKn5S3EqaCfDw8PA2eZ934eHh4eHh4eHh3eD6Bu16SLSpGi8TAAAAAElFTkSuQmCC">
+    
+</ul>
+
+    
+
+    <!-- Tags (bookmark) -->
+    
+    <button id="article-functions-viewtags-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+        <i class="material-icons" role="presentation">bookmark</i>
+        <span class="visuallyhidden">bookmark</span>
+    </button>
+    <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-viewtags-button">
+        <li class="mdl-menu__item">
+        <a class="post_tag-link" href="/tags/Datastru/">Datastru</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/School/">School</a>
+    </ul>
+    
+
+    <!-- Share -->
+    
+        <button id="article-fuctions-share-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+    <i class="material-icons" role="presentation">share</i>
+    <span class="visuallyhidden">share</span>
+</button>
+<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-fuctions-share-button">
+    
+
+    
+
+    <!-- Share Weibo -->
+    
+
+    <!-- Share Twitter -->
+    
+        <a class="post_share-link" href="https://twitter.com/intent/tweet?text=数据结构与算法课程 - Chap 2 线性表&url=https://www.kmahyyg.xyz/2019/ynu-datastru-c2/index.html&via=Patrick Young" target="_blank">
+            <li class="mdl-menu__item">
+                分享到 Twitter
+            </li>
+        </a>
+    
+
+    <!-- Share Facebook -->
+    
+        <a class="post_share-link" href="https://www.facebook.com/sharer/sharer.php?u=https://www.kmahyyg.xyz/2019/ynu-datastru-c2/index.html" target="_blank">
+            <li class="mdl-menu__item">
+                分享到 Facebook
+            </li>
+        </a>
+    
+
+    <!-- Share Google+ -->
+    
+        <a class="post_share-link" href="https://plus.google.com/share?url=https://www.kmahyyg.xyz/2019/ynu-datastru-c2/index.html" target="_blank">
+            <li class="mdl-menu__item">
+                分享到 Google+
+            </li>
+        </a>
+    
+
+    <!-- Share LinkedIn -->
+    
+
+    <!-- Share QQ -->
+    
+        <a class="post_share-link" href="http://connect.qq.com/widget/shareqq/index.html?site=Potato Online&title=数据结构与算法课程 - Chap 2 线性表&summary=Resources determined everything.&pics=https://www.kmahyyg.xyzhttps://yygc.zzjnyyz.cn/asset_files/avatar-yyg.jpg&url=https://www.kmahyyg.xyz/2019/ynu-datastru-c2/index.html" target="_blank">
+            <li class="mdl-menu__item">
+                分享到 QQ
+            </li>
+        </a>
+    
+
+    <!-- Share Telegram -->
+    
+        <a class="post_share-link" href="https://telegram.me/share/url?url=https://www.kmahyyg.xyz/2019/ynu-datastru-c2/index.html&text=数据结构与算法课程 - Chap 2 线性表" target="_blank">
+            <li class="mdl-menu__item">
+                分享到 Telegram
+            </li>
+        </a>
+    
+</ul>
+
+    
+</div>
+
+                
+
+                <!-- Post Content -->
+                <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
+    
+        <h1 id="数据结构复习-Chapter-2-线性表"><a href="#数据结构复习-Chapter-2-线性表" class="headerlink" title="数据结构复习 - Chapter 2 线性表"></a>数据结构复习 - Chapter 2 线性表</h1><h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><p>回顾：</p>
+<p>线性结构：数据元素有序且有限，有且仅有一个起始节点与终端节点，并且每个节点最多只有一个直接前驱和直接后继，头节点没有直接前驱，尾节点没有直接后继。</p>
+<p>线性表：由 n 个同类型的数据元素组成的有限序列。 n 定义为表长度。可以灵活增长、缩短、CRUD。</p>
+<p>直接前驱与直接后继 用有序对表示：&lt;a2,a3&gt;</p>
+<p>存在的应用方法：</p>
+<ul>
+<li>初始化</li>
+<li>求长度、判空、清空</li>
+<li>求所在位置序号、求前驱、求后继</li>
+<li>插入、删除、读取</li>
+<li>求交并</li>
+</ul>
+<h2 id="顺序表示"><a href="#顺序表示" class="headerlink" title="顺序表示"></a>顺序表示</h2><p>定义：按逻辑顺序依次存放在一组地址连续的存储单元。只存储本身的值，不存储逻辑关系，关系通过存储地址相邻来隐含表示。</p>
+<p><strong>注意：数组下表从 0 开始，顺序表位序从 1 开始</strong>。</p>
+<p>算法实现注意：</p>
+<ol>
+<li>入参检查，传入参数不合法返回 -1.</li>
+<li>置空 != 销毁</li>
+<li>顺序表冒泡排序问题</li>
+<li>合并线性表，先排序后合并。</li>
+</ol>
+<p>顺序存储：</p>
+<ul>
+<li>特征：逻辑相邻、物理相邻</li>
+<li>优点：随机查找快，O(1)，节省了存储关系的空间，结构简单、实现方便。</li>
+<li>缺点：插入删除慢，O(n)，不能充分利用所有空间，可能溢出。</li>
+</ul>
+<h2 id="链式表示"><a href="#链式表示" class="headerlink" title="链式表示"></a>链式表示</h2><p>定义：任意存储单元存储数据元素，线性表数据元素的逻辑次序和物理保存次序不一定相同。<br>包括：单链表、双链表、多链表、循环链表。根据指针域数目和指向区分。</p>
+<p>存储结构：</p>
+<ol>
+<li>区分头节点和首元节点。 空表的头节点，指针域为空，代表该链表为空（等价于头指针指向 NULL）。头指针指向头节点，作为首元结点的直接前驱。头节点的数据域可用于存储链表长度。</li>
+</ol>
+<p>查找：按位置、按 Value 查找。<br>插入：指针修改是难点。</p>
+<h3 id="链表修改：-节点插入与删除"><a href="#链表修改：-节点插入与删除" class="headerlink" title="链表修改： 节点插入与删除"></a>链表修改： 节点插入与删除</h3><p>原则：先空后实。先修改新建节点的数据域和指针域，再修改原链表中的元素。</p>
+<p>删除注意：保存现场，需要预保存指向下一元素的指针。</p>
+<p>C 语言背景：如果条件为真 ? 则值为 X : 否则值为 Y</p>
+<h3 id="循环链表与双向链表"><a href="#循环链表与双向链表" class="headerlink" title="循环链表与双向链表"></a>循环链表与双向链表</h3><p>循环链表：将终端指针域的 NULL 指向头节点，就得到了单链表。<br>判断依据：指针指向元素的 next 域是否与头指针重合。<br>特点：从任一节点出发均可找到表中的其他节点。</p>
+<p>双向链表： prior = next = NULL 即为空。<br>插入删除遵循：先空后实。画图是关键。</p>
+<h2 id="实验回顾"><a href="#实验回顾" class="headerlink" title="实验回顾"></a>实验回顾</h2><p>注意 数据处理与 Error Handler，其他的都是常规操作。画图就对了。</p>
+
+        
+                <blockquote style="margin: 2em 0 0;padding: 0.5em 1em;border-left: 3px solid #F44336;background-color: #F5F5F5;list-style: none;">
+                    <p><strong>
+                         
+                            本博客所有文章，未经特殊说明，均使用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" target="_blank">CC BY-NC-SA 3.0 Unported License 授权</a>
+                        </strong>
+                        <br>
+                        <strong>本文链接：</strong><a href="https://www.kmahyyg.xyz/2019/ynu-datastru-c2/">https://www.kmahyyg.xyz/2019/ynu-datastru-c2/</a>
+                    </p>
+                </blockquote>
+        
+    
+
+    
+</div>
+
+
+                
+
+                <!-- Post Comments -->
+                
+                    
+    <!-- 使用 DISQUS_CLICK -->
+<div id="disqus-comment">
+    <div id="disqus_thread"></div>
+
+<!-- add animation -->
+<style>
+	.disqus_click_btn {
+            line-height: 30px;
+            margin: 0;
+            min-width: 50px;
+            padding: 0 14px;
+            display: inline-block;
+            font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+            font-size: 14px;
+            font-weight: 400;
+            text-transform: uppercase;
+            letter-spacing: 0;
+            overflow: hidden;
+            will-change: box-shadow;
+            transition: box-shadow .2s cubic-bezier(.4, 0, 1, 1), background-color .2s cubic-bezier(.4, 0, .2, 1), color .2s cubic-bezier(.4, 0, .2, 1);
+            outline: 0;
+            cursor: pointer;
+            text-decoration: none;
+            text-align: center;
+            vertical-align: middle;
+            border: 0;
+            background: rgba(158, 158, 158, .2);
+            box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .14), 0 3px 1px -2px rgba(0, 0, 0, .2), 0 1px 5px 0 rgba(0, 0, 0, .12);
+            color: #fff;
+            background-color: #757575;
+            text-shadow: 0;
+            display: none
+        }
+</style>
+	
+<div class="btn_click_load"> 
+    <button class="disqus_click_btn">阅读评论（请确保 disqus 可以正常加载）</button>
+</div>
+
+<script type="text/javascript">
+    var disqus_config = function () {
+        this.page.url = 'https://www.kmahyyg.xyz/2019/ynu-datastru-c2/';  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = 'https://www.kmahyyg.xyz/2019/ynu-datastru-c2/'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+</script>
+
+<script type="text/ls-javascript" id="disqus-lazy-load-script">
+    $.ajax({
+        url: 'https://disqus.com/next/config.json',
+        timeout: 4000,
+        type: 'GET',
+        success: (function() {
+            var d = document;
+            var s = d.createElement('script');
+            s.src = '//kmahyyg.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', + new Date());
+            (d.head || d.body).appendChild(s);
+            $('.disqus_click_btn').css('display','none');
+        })(),
+        error: function() {
+          $('.disqus_click_btn').css('display','block');
+        }
+    });
+    $('.btn_click_load').click(function() {  //click to load comments
+        (function() { // DON'T EDIT BELOW THIS LINE
+            var d = document;
+            var s = d.createElement('script');
+            s.src = '//kmahyyg.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', + new Date());
+            (d.head || d.body).appendChild(s);
+        })();
+        $('.disqus_click_btn').css('display','none');
+    });
+</script>
+  	
+
+</div>
+<style>
+    #disqus-comment{
+        background-color: #eee;
+        padding: 2pc;
+    }
+</style>
+
+                
+            </div>
+
+            <!-- Post Prev & Next Nav -->
+            <nav class="material-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
+    <!-- Prev Nav -->
+    
+        <a href="/2019/ynu-datastru-c3/" id="post_nav-newer" class="prev-content">
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+                <i class="material-icons">arrow_back</i>
+            </button>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            新篇
+        </a>
+    
+
+    <!-- Section Spacer -->
+    <div class="section-spacer"></div>
+
+    <!-- Next Nav -->
+    
+        <a href="/2019/ynu-datastru-c1/" id="post_nav-older" class="next-content">
+            旧篇
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+                <i class="material-icons">arrow_forward</i>
+            </button>
+        </a>
+    
+</nav>
+
+        </div>
+    </div>
+
+
+
+                    
+                        <!-- Overlay For Active Sidebar -->
+<div class="sidebar-overlay"></div>
+
+<!-- Material sidebar -->
+<aside id="sidebar" class="sidebar sidebar-colored sidebar-fixed-left" role="navigation">
+    <div id="sidebar-main">
+        <!-- Sidebar Header -->
+        <div class="sidebar-header header-cover" style="background-image: url(/img/sidebar_header.png);">
+    <!-- Top bar -->
+    <div class="top-bar"></div>
+
+    <!-- Sidebar toggle button -->
+    <button type="button" class="sidebar-toggle mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" style="display: initial;" data-upgraded=",MaterialButton,MaterialRipple">
+        <i class="material-icons">clear_all</i>
+        <span class="mdl-button__ripple-container">
+            <span class="mdl-ripple">
+            </span>
+        </span>
+    </button>
+
+    <!-- Sidebar Avatar -->
+    <div class="sidebar-image">
+        <img src="https://yygc.zzjnyyz.cn/asset_files/avatar-yyg.jpg" alt="Patrick Young's avatar">
+    </div>
+
+    <!-- Sidebar Email -->
+    <a data-toggle="dropdown" class="sidebar-brand" href="#settings-dropdown">
+        i@kmahyyg.xyz
+        <b class="caret"></b>
+    </a>
+</div>
+
+
+        <!-- Sidebar Navigation  -->
+        <ul class="nav sidebar-nav">
+    <!-- User dropdown  -->
+    <li class="dropdown">
+        <ul id="settings-dropdown" class="dropdown-menu">
+            
+                <li>
+                    <a href="mailto://i@kmahyyg.xyz" target="_blank" title="Email Me">
+                        
+                            <i class="material-icons sidebar-material-icons sidebar-indent-left1pc-element">email</i>
+                        
+                        Email Me
+                    </a>
+                </li>
+            
+        </ul>
+    </li>
+
+    <!-- Homepage -->
+    
+        <li id="sidebar-first-li">
+            <a href="/">
+                
+                    <i class="material-icons sidebar-material-icons">home</i>
+                
+                主页
+            </a>
+        </li>
+        
+    
+
+    <!-- Archives  -->
+    
+        <li class="dropdown">
+            <a href="#" class="ripple-effect dropdown-toggle" data-toggle="dropdown">
+                
+                    <i class="material-icons sidebar-material-icons">inbox</i>
+                
+                    归档
+                <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+            <li>
+                <a class="sidebar_archives-link" href="/archives/2019/01/">一月 2019<span class="sidebar_archives-count">12</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/12/">十二月 2018<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/11/">十一月 2018<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/10/">十月 2018<span class="sidebar_archives-count">6</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/09/">九月 2018<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/08/">八月 2018<span class="sidebar_archives-count">8</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/07/">七月 2018<span class="sidebar_archives-count">5</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/06/">六月 2018<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/05/">五月 2018<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/04/">四月 2018<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/02/">二月 2018<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/12/">十二月 2017<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/11/">十一月 2017<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/10/">十月 2017<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/09/">九月 2017<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/08/">八月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/07/">七月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/06/">六月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/04/">四月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/01/">一月 2017<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/12/">十二月 2016<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/10/">十月 2016<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/09/">九月 2016<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/08/">八月 2016<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/07/">七月 2016<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/06/">六月 2016<span class="sidebar_archives-count">6</span></a>
+            </ul>
+        </li>
+        
+    
+
+    <!-- Categories  -->
+    
+
+    <!-- Pages  -->
+    
+        <li>
+            <a href="/about" title="About">
+                
+                    <i class="material-icons sidebar-material-icons">person</i>
+                
+                About
+            </a>
+        </li>
+        
+    
+        <li>
+            <a href="/tags" title="Tags">
+                
+                    <i class="material-icons sidebar-material-icons">book</i>
+                
+                Tags
+            </a>
+        </li>
+        
+            <li class="divider"></li>
+        
+    
+        <li>
+            <a href="/timeline" title="Timeline">
+                
+                    <i class="material-icons sidebar-material-icons">timeline</i>
+                
+                Timeline
+            </a>
+        </li>
+        
+    
+        <li>
+            <a href="/express" title="Express">
+                
+                    <i class="material-icons sidebar-material-icons">mail</i>
+                
+                Express
+            </a>
+        </li>
+        
+    
+        <li>
+            <a href="/archlinux" title="ArchLinux">
+                
+                    <i class="material-icons sidebar-material-icons">local_convenience_store</i>
+                
+                ArchLinux
+            </a>
+        </li>
+        
+    
+        <li>
+            <a href="/donate" title="Donate">
+                
+                    <i class="material-icons sidebar-material-icons">account_balance_wallet</i>
+                
+                Donate
+            </a>
+        </li>
+        
+    
+
+    <!-- Article Number  -->
+    
+        <li>
+            <a href="/archives">
+                文章总数
+                <span class="sidebar-badge">77</span>
+            </a>
+        </li>
+        
+    
+</ul>
+
+
+        <!-- Sidebar Footer -->
+        <!--
+I'm glad you use this theme, the development is no so easy, I hope you can keep the copyright, I will thank you so much.
+If you still want to delete the copyrights, could you still retain the first one? Which namely "Theme Material"
+It will not impact the appearance and can give developers a lot of support :)
+
+很高兴您使用并喜欢该主题，开发不易 十分谢谢与希望您可以保留一下版权声明。
+如果您仍然想删除的话 能否只保留第一项呢？即 "Theme Material"
+它不会影响美观并可以给开发者很大的支持和动力。 :)
+-->
+
+<!-- Sidebar Divider -->
+
+    <div class="sidebar-divider"></div>
+
+
+<!-- Theme Material -->
+
+    <a href="https://github.com/viosey/hexo-theme-material"  class="sidebar-footer-text-a" target="_blank">
+        <div class="sidebar-text mdl-button mdl-js-button mdl-js-ripple-effect sidebar-footer-text-div" data-upgraded=",MaterialButton,MaterialRipple">
+            主题 - Material
+            <span class="sidebar-badge badge-circle">i</span>
+        </div>
+    </a>
+
+
+<!-- Help & Support -->
+<!--
+
+-->
+
+<!-- Feedback -->
+<!--
+
+-->
+
+<!-- About Theme -->
+<!--
+
+-->
+
+    </div>
+
+    <!-- Sidebar Image -->
+    
+    <span id="footer-image">
+        <a href="https://pages.coding.me" target="_blank" title="coding_logo">
+            <img src="https://dn-coding-net-production-static.qbox.me/static/f452324a7d42a04f5d11efe5497923cc.svg" alt="coding_logo"><!--
+     --></a>
+    </span>
+
+
+</aside>
+
+                    
+
+                    
+                        <!-- Footer Top Button -->
+                        <div id="back-to-top" class="toTop-wrap">
+    <a href="#top" class="toTop">
+        <i class="material-icons footer_top-i">expand_less</i>
+    </a>
+</div>
+
+                    
+
+                    <!--Footer-->
+<footer class="mdl-mini-footer" id="bottom">
+    
+        <!-- Paradox Footer Left Section -->
+        <div class="mdl-mini-footer--left-section sns-list">
+    <!-- Twitter -->
+    
+        <a href="https://twitter.com/potatoonline" target="_blank">
+            <button class="mdl-mini-footer--social-btn social-btn footer-sns-twitter">
+                <span class="visuallyhidden">Twitter</span>
+            </button><!--
+     --></a>
+    
+
+    <!-- Facebook -->
+    
+
+    <!-- Google + -->
+    
+        <a href="https://plus.google.com/107216796718714158302" target="_blank">
+            <button class="mdl-mini-footer--social-btn social-btn footer-sns-gplus">
+                <span class="visuallyhidden">Google Plus</span>
+            </button><!--
+     --></a>
+    
+
+    <!-- Weibo -->
+    
+
+    <!-- Instagram -->
+    
+
+    <!-- Tumblr -->
+    
+
+    <!-- Github -->
+    
+        <a href="httpg://github.com/kmahyyg" target="_blank">
+            <button class="mdl-mini-footer--social-btn social-btn footer-sns-github">
+                <span class="visuallyhidden">Github</span>
+            </button><!--
+     --></a>
+    
+
+    <!-- LinkedIn -->
+    
+
+    <!-- Zhihu -->
+    
+
+    <!-- Bilibili -->
+    
+
+    <!-- Telegram -->
+    
+        <a href="https://t.me/kmahyyg" target="_blank">
+            <button class="mdl-mini-footer--social-btn social-btn footer-sns-telegram">
+                <span class="visuallyhidden">Telegram</span>
+            </button><!--
+     --></a>
+    
+
+    <!-- V2EX -->
+    
+        <a href="https://www.v2ex.com/member/kmahyyg" target="_blank">
+            <button class="mdl-mini-footer--social-btn social-btn footer-sns-v2ex">
+                <span class="visuallyhidden">V2EX</span>
+            </button><!--
+     --></a>
+    
+
+    <!-- Segmentfault -->
+    
+</div>
+
+
+        <!--Copyright-->
+        <div id="copyright">
+            Copyright&nbsp;©&nbsp;<span year></span>&nbsp;Potato Online
+            
+                <br>
+                
+                    <a href="https://www.upyun.com/" target="_blank" title="upyun_logo"><img src="/img/upyun_logo.svg" alt="upyun_logo"></a>
+                
+            
+        </div>
+
+        <!-- Paradox Footer Right Section -->
+
+        <!--
+        I am glad you use this theme, the development is no so easy, I hope you can keep the copyright.
+        It will not impact the appearance and can give developers a lot of support :)
+
+        很高兴您使用该主题，开发不易，希望您可以保留一下版权声明。
+        它不会影响美观并可以给开发者很大的支持。 :)
+        -->
+
+        <div class="mdl-mini-footer--right-section">
+            <div>
+                <div class="footer-develop-div">Powered by <a href="https://hexo.io" target="_blank" class="footer-develop-a">Hexo</a></div>
+                <div class="footer-develop-div">Theme - <a href="https://github.com/viosey/hexo-theme-material" target="_blank" class="footer-develop-a">Material</a></div>
+            </div>
+        </div>
+    
+</footer>
+
+
+                    <!-- Import JS File -->
+
+    <script>lsloader.load("lazyload_js","https://cdn.jsdelivr.net/gh/viosey/hexo-theme-material@1.5.6/source/js/lazyload.min.js", true)</script>
+
+
+
+    <script>lsloader.load("js_js","https://cdn.jsdelivr.net/gh/viosey/hexo-theme-material@1.5.6/source/js/js.min.js", true)</script>
+
+
+
+    <script>lsloader.load("np_js","https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js", true)</script>
+
+
+<script type="text/ls-javascript" id="NProgress-script">
+    NProgress.configure({
+        showSpinner: true
+    });
+    NProgress.start();
+    $('#nprogress .bar').css({
+        'background': '#29d'
+    });
+    $('#nprogress .peg').css({
+        'box-shadow': '0 0 10px #29d, 0 0 15px #29d'
+    });
+    $('#nprogress .spinner-icon').css({
+        'border-top-color': '#29d',
+        'border-left-color': '#29d'
+    });
+    setTimeout(function() {
+        NProgress.done();
+        $('.fade').removeClass('out');
+    }, 800);
+</script>
+
+
+
+
+
+
+
+
+
+   <!-- 使用 DISQUS js 代码 -->
+
+
+
+
+
+
+<!-- UC Browser Compatible -->
+<script>
+	var agent = navigator.userAgent.toLowerCase();
+	if(agent.indexOf('ucbrowser')>0) {
+		document.write('<link rel="stylesheet" href="/css/uc.css">');
+	   alert('由于 UC 浏览器使用极旧的内核，而本网站使用了一些新的特性。\n为了您能更好的浏览，推荐使用 Chrome 或 Firefox 浏览器。');
+	}
+</script>
+
+<!-- Import prettify js  -->
+
+    
+        
+            <script>lsloader.load("prettify_js","https://cdn.jsdelivr.net/npm/code-prettify@0.1.0/src/prettify.min.js", true)</script>
+        
+    
+
+
+
+<!-- Window Load -->
+<!-- add class for prettify -->
+<script type="text/ls-javascript" id="window-load">
+    $(window).on('load', function() {
+        // Post_Toc parent position fixed
+        $('.post-toc-wrap').parent('.mdl-menu__container').css('position', 'fixed');
+    });
+
+    
+        
+            $(function() {
+                $('pre').addClass('prettyprint linenums').attr('style', 'overflow:auto;');
+                prettyPrint();
+                })
+        
+    
+    
+</script>
+
+<!-- MathJax Load-->
+
+
+<!-- Bing Background -->
+
+
+<script type="text/ls-javascript" id="lazy-load">
+    // Offer LazyLoad
+    queue.offer(function(){
+        $('.lazy').lazyload({
+            effect : 'show'
+        });
+    });
+
+    // Start Queue
+    $(document).ready(function(){
+        setInterval(function(){
+            queue.execNext();
+        },200);
+    });
+</script>
+
+<!-- Custom Footer -->
+
+
+
+<script>
+    var copyrightNow = new Date().getFullYear();
+    var textContent = document.querySelector('span[year]')
+
+    copyrightSince = 2015;
+    if (copyrightSince === copyrightNow||copyrightSince === 0000) {
+        textContent.textContent = copyrightNow
+    } else {
+        textContent.textContent = copyrightSince + ' - ' + copyrightNow
+    }
+
+    (function(){
+        var scriptList = document.querySelectorAll('script[type="text/ls-javascript"]')
+
+        for (var i = 0; i < scriptList.length; ++i) {
+            var item = scriptList[i];
+            lsloader.runInlineScript(item.id,item.id);
+        }
+    })()
+console.log('\n %c © Material Theme | Version: 1.5.6 | https://github.com/viosey/hexo-theme-material %c \n', 'color:#455a64;background:#e0e0e0;padding:5px 0;border-top-left-radius:5px;border-bottom-left-radius:5px;', 'color:#455a64;background:#e0e0e0;padding:5px 0;border-top-right-radius:5px;border-bottom-right-radius:5px;');
+</script>
+
+                </main>
+            </div>
+        </body>
+    
+</html>
