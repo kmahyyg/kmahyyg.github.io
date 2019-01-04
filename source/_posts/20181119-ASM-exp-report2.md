@@ -260,3 +260,7 @@ https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-828-op
 https://stackoverflow.com/questions/41196376/int-10h-13h-bios-string-output-not-working
 
 http://www.ablmcc.edu.hk/~scy/CIT/8086_bios_and_dos_interrupts.htm
+
+https://wiki.osdev.org/ATA_PIO_Mode
+
+https://stackoverflow.com/questions/8461363/access-harddrive-using-assembly
