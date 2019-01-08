@@ -1,0 +1,1515 @@
+<!DOCTYPE html>
+<html style="display: none;" lang="zh">
+    <head>
+    <meta charset="utf-8">
+    <!--
+        © Material Theme
+        https://github.com/viosey/hexo-theme-material
+        Version: 1.5.6 -->
+    <script>
+        window.materialVersion = "1.5.6"
+        // Delete localstorage with these tags
+        window.oldVersion = [
+            'codestartv1',
+            '1.3.4',
+            '1.4.0',
+            '1.4.0b1',
+            '1.5.0',
+            '1.5.2',
+            '1.5.5'
+        ]
+    </script>
+
+    <!-- dns prefetch -->
+    <meta http-equiv="x-dns-prefetch-control" content="on">
+
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net/gh/viosey/hexo-theme-material@1.5.6/source"/>
+
+
+
+
+
+    <link rel="dns-prefetch" href="https://kmahyyg.disqus.com"/>
+
+
+
+    <link rel="dns-prefetch" href="https://www.google-analytics.com"/>
+
+
+
+    <link rel="dns-prefetch" href="https://lib.baomitu.com"/>
+
+
+
+
+
+    <!-- Meta & Info -->
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+    <!-- Title -->
+    
+    <title>
+        
+            计算机网络期末复习稿 | 
+        
+        Potato Online
+    </title>
+
+    <!-- Favicons -->
+    <link rel="icon shortcut" type="image/ico" href="https://yygc.zzjnyyz.cn/asset_files/avatar-yyg.jpg">
+    <link rel="icon" href="https://yygc.zzjnyyz.cn/asset_files/avatar-yyg.jpg">
+
+    <meta name="format-detection" content="telephone=no"/>
+    <meta name="description" itemprop="description" content="Resources determined everything.">
+    <meta name="keywords" content="Patrick Young,kmahyyg,material,School">
+    <meta name="theme-color" content="#0097A7">
+
+    <!-- Disable Fucking Bloody Baidu Tranformation -->
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+
+    <!--[if lte IE 9]>
+        <link rel="stylesheet" href="/css/ie-blocker.css">
+
+        
+            <script src="/js/ie-blocker.zhCN.js"></script>
+        
+    <![endif]-->
+
+    <!-- Import lsloader -->
+    <script>(function(){window.lsloader={jsRunSequence:[],jsnamemap:{},cssnamemap:{}};lsloader.removeLS=function(a){try{localStorage.removeItem(a)}catch(b){}};lsloader.setLS=function(a,c){try{localStorage.setItem(a,c)}catch(b){}};lsloader.getLS=function(a){var c="";try{c=localStorage.getItem(a)}catch(b){c=""}return c};versionString="/*"+(window.materialVersion||"unknownVersion")+"*/";lsloader.clean=function(){try{var b=[];for(var a=0;a<localStorage.length;a++){b.push(localStorage.key(a))}b.forEach(function(e){var f=lsloader.getLS(e);if(window.oldVersion){var d=window.oldVersion.reduce(function(g,h){return g||f.indexOf("/*"+h+"*/")!==-1},false);if(d){lsloader.removeLS(e)}}})}catch(c){}};lsloader.clean();lsloader.load=function(f,a,b,d){if(typeof b==="boolean"){d=b;b=undefined}d=d||false;b=b||function(){};var e;e=this.getLS(f);if(e&&e.indexOf(versionString)===-1){this.removeLS(f);this.requestResource(f,a,b,d);return}if(e){var c=e.split(versionString)[0];if(c!=a){console.log("reload:"+a);this.removeLS(f);this.requestResource(f,a,b,d);return}e=e.split(versionString)[1];if(d){this.jsRunSequence.push({name:f,code:e});this.runjs(a,f,e)}else{document.getElementById(f).appendChild(document.createTextNode(e));b()}}else{this.requestResource(f,a,b,d)}};lsloader.requestResource=function(b,e,a,c){var d=this;if(c){this.iojs(e,b,function(h,f,g){d.setLS(f,h+versionString+g);d.runjs(h,f,g)})}else{this.iocss(e,b,function(f){document.getElementById(b).appendChild(document.createTextNode(f));d.setLS(b,e+versionString+f)},a)}};lsloader.iojs=function(d,b,g){var a=this;a.jsRunSequence.push({name:b,code:""});try{var f=new XMLHttpRequest();f.open("get",d,true);f.onreadystatechange=function(){if(f.readyState==4){if((f.status>=200&&f.status<300)||f.status==304){if(f.response!=""){g(d,b,f.response);return}}a.jsfallback(d,b)}};f.send(null)}catch(c){a.jsfallback(d,b)}};lsloader.iocss=function(f,c,h,a){var b=this;try{var g=new XMLHttpRequest();g.open("get",f,true);g.onreadystatechange=function(){if(g.readyState==4){if((g.status>=200&&g.status<300)||g.status==304){if(g.response!=""){h(g.response);a();return}}b.cssfallback(f,c,a)}};g.send(null)}catch(d){b.cssfallback(f,c,a)}};lsloader.iofonts=function(f,c,h,a){var b=this;try{var g=new XMLHttpRequest();g.open("get",f,true);g.onreadystatechange=function(){if(g.readyState==4){if((g.status>=200&&g.status<300)||g.status==304){if(g.response!=""){h(g.response);a();return}}b.cssfallback(f,c,a)}};g.send(null)}catch(d){b.cssfallback(f,c,a)}};lsloader.runjs=function(f,c,e){if(!!c&&!!e){for(var b in this.jsRunSequence){if(this.jsRunSequence[b].name==c){this.jsRunSequence[b].code=e}}}if(!!this.jsRunSequence[0]&&!!this.jsRunSequence[0].code&&this.jsRunSequence[0].status!="failed"){var a=document.createElement("script");a.appendChild(document.createTextNode(this.jsRunSequence[0].code));a.type="text/javascript";document.getElementsByTagName("head")[0].appendChild(a);this.jsRunSequence.shift();if(this.jsRunSequence.length>0){this.runjs()}}else{if(!!this.jsRunSequence[0]&&this.jsRunSequence[0].status=="failed"){var d=this;var a=document.createElement("script");a.src=this.jsRunSequence[0].path;a.type="text/javascript";this.jsRunSequence[0].status="loading";a.onload=function(){d.jsRunSequence.shift();if(d.jsRunSequence.length>0){d.runjs()}};document.body.appendChild(a)}}};lsloader.tagLoad=function(b,a){this.jsRunSequence.push({name:a,code:"",path:b,status:"failed"});this.runjs()};lsloader.jsfallback=function(c,b){if(!!this.jsnamemap[b]){return}else{this.jsnamemap[b]=b}for(var a in this.jsRunSequence){if(this.jsRunSequence[a].name==b){this.jsRunSequence[a].code="";this.jsRunSequence[a].status="failed";this.jsRunSequence[a].path=c}}this.runjs()};lsloader.cssfallback=function(e,c,b){if(!!this.cssnamemap[c]){return}else{this.cssnamemap[c]=1}var d=document.createElement("link");d.type="text/css";d.href=e;d.rel="stylesheet";d.onload=d.onerror=b;var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(d,a)};lsloader.runInlineScript=function(c,b){var a=document.getElementById(b).innerText;this.jsRunSequence.push({name:c,code:a});this.runjs()}})();</script>
+
+    <!-- Import queue -->
+    <script>function Queue(){this.dataStore=[];this.offer=b;this.poll=d;this.execNext=a;this.debug=false;this.startDebug=c;function b(e){if(this.debug){console.log("Offered a Queued Function.")}if(typeof e==="function"){this.dataStore.push(e)}else{console.log("You must offer a function.")}}function d(){if(this.debug){console.log("Polled a Queued Function.")}return this.dataStore.shift()}function a(){var e=this.poll();if(e!==undefined){if(this.debug){console.log("Run a Queued Function.")}e()}}function c(){this.debug=true}}var queue=new Queue();</script>
+
+    <!-- Import CSS -->
+    
+        <style id="material_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("material_css","https://cdn.jsdelivr.net/gh/viosey/hexo-theme-material@1.5.6/source/css/material.min.css",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
+        <style id="style_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("style_css","https://cdn.jsdelivr.net/gh/viosey/hexo-theme-material@1.5.6/source/css/style.min.css",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
+
+        
+            
+                <style id="prettify_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("prettify_css","https://cdn.jsdelivr.net/gh/viosey/hexo-theme-material@1.5.6/source/css/prettify.min.css",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
+                <style id="prettify_theme"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("prettify_theme","https://cdn.jsdelivr.net/gh/viosey/hexo-theme-material@1.5.6/source/css/prettify/github-v2.min.css",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
+            
+        
+
+    
+
+    
+
+    <!-- Config CSS -->
+
+<!-- Other Styles -->
+<style>
+  body, html {
+    font-family: Roboto, "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+    overflow-x: hidden !important;
+  }
+  
+  code {
+    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+  }
+
+  a {
+    color: #00838F;
+  }
+
+  .mdl-card__media,
+  #search-label,
+  #search-form-label:after,
+  #scheme-Paradox .hot_tags-count,
+  #scheme-Paradox .sidebar_archives-count,
+  #scheme-Paradox .sidebar-colored .sidebar-header,
+  #scheme-Paradox .sidebar-colored .sidebar-badge{
+    background-color: #0097A7 !important;
+  }
+
+  /* Sidebar User Drop Down Menu Text Color */
+  #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:hover,
+  #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:focus {
+    color: #0097A7 !important;
+  }
+
+  #post_entry-right-info,
+  .sidebar-colored .sidebar-nav li:hover > a,
+  .sidebar-colored .sidebar-nav li:hover > a i,
+  .sidebar-colored .sidebar-nav li > a:hover,
+  .sidebar-colored .sidebar-nav li > a:hover i,
+  .sidebar-colored .sidebar-nav li > a:focus i,
+  .sidebar-colored .sidebar-nav > .open > a,
+  .sidebar-colored .sidebar-nav > .open > a:hover,
+  .sidebar-colored .sidebar-nav > .open > a:focus,
+  #ds-reset #ds-ctx .ds-ctx-entry .ds-ctx-head a {
+    color: #0097A7 !important;
+  }
+
+  .toTop {
+    background: #757575 !important;
+  }
+
+  .material-layout .material-post>.material-nav,
+  .material-layout .material-index>.material-nav,
+  .material-nav a {
+    color: #757575;
+  }
+
+  #scheme-Paradox .MD-burger-layer {
+    background-color: #757575;
+  }
+
+  #scheme-Paradox #post-toc-trigger-btn {
+    color: #757575;
+  }
+
+  .post-toc a:hover {
+    color: #00838F;
+    text-decoration: underline;
+  }
+
+</style>
+
+
+<!-- Theme Background Related-->
+
+    <style>
+      body{
+        background-color: #F5F5F5;
+      }
+
+      /* blog_info bottom background */
+      #scheme-Paradox .material-layout .something-else .mdl-card__supporting-text{
+        background-color: #fff;
+      }
+    </style>
+
+
+
+
+<!-- Fade Effect -->
+
+    <style>
+      .fade {
+        transition: all 800ms linear;
+        -webkit-transform: translate3d(0,0,0);
+        -moz-transform: translate3d(0,0,0);
+        -ms-transform: translate3d(0,0,0);
+        -o-transform: translate3d(0,0,0);
+        transform: translate3d(0,0,0);
+        opacity: 1;
+      }
+
+      .fade.out{
+        opacity: 0;
+      }
+    </style>
+
+
+<!-- Import Font -->
+<!-- Import Roboto -->
+
+    <style>
+        @font-face {
+            font-family: Roboto;
+            font-style: normal;
+            font-weight: 300;
+            src: url(https://lib.baomitu.com/fonts/roboto/roboto-v15-latin-300.eot);
+            src: local('Roboto'),local('Roboto-Normal'),url(https://lib.baomitu.com/fonts/roboto/roboto-v15-latin-300.eot?#iefix) format('embedded-opentype'),url(https://lib.baomitu.com/fonts/roboto/roboto-v15-latin-300.woff2) format('woff2'),url(https://lib.baomitu.com/fonts/roboto/roboto-v15-latin-300.woff) format('woff'),url(https://lib.baomitu.com/fonts/roboto/roboto-v15-latin-300.ttf) format('truetype'),url(https://lib.baomitu.com/fonts/roboto/roboto-v15-latin-300.svg#Roboto) format('svg')
+        }
+
+        @font-face {
+            font-family: Roboto;
+            font-style: normal;
+            font-weight: regular;
+            src: url(https://lib.baomitu.com/fonts/roboto/roboto-v15-latin-regular.eot);
+            src: local('Roboto'),local('Roboto-Normal'),url(https://lib.baomitu.com/fonts/roboto/roboto-v15-latin-regular.eot?#iefix) format('embedded-opentype'),url(https://lib.baomitu.com/fonts/roboto/roboto-v15-latin-regular.woff2) format('woff2'),url(https://lib.baomitu.com/fonts/roboto/roboto-v15-latin-regular.woff) format('woff'),url(https://lib.baomitu.com/fonts/roboto/roboto-v15-latin-regular.ttf) format('truetype'),url(https://lib.baomitu.com/fonts/roboto/roboto-v15-latin-regular.svg#Roboto) format('svg')
+        }
+
+        @font-face {
+            font-family: Roboto;
+            font-style: normal;
+            font-weight: 500;
+            src: url(https://lib.baomitu.com/fonts/roboto/roboto-v15-latin-500.eot);
+            src: local('Roboto'),local('Roboto-Normal'),url(https://lib.baomitu.com/fonts/roboto/roboto-v15-latin-500.eot?#iefix) format('embedded-opentype'),url(https://lib.baomitu.com/fonts/roboto/roboto-v15-latin-500.woff2) format('woff2'),url(https://lib.baomitu.com/fonts/roboto/roboto-v15-latin-500.woff) format('woff'),url(https://lib.baomitu.com/fonts/roboto/roboto-v15-latin-500.ttf) format('truetype'),url(https://lib.baomitu.com/fonts/roboto/roboto-v15-latin-500.svg#Roboto) format('svg')
+        }
+    </style>
+
+
+<!-- Import Material Icons -->
+
+
+    <style id="material_icons"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("material_icons","https://cdn.jsdelivr.net/gh/viosey/hexo-theme-material@1.5.6/source/css/material-icons.css",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
+
+
+
+
+    <!-- Import jQuery -->
+    
+        <script>lsloader.load("jq_js","https://cdn.jsdelivr.net/npm/jquery@2.2.0/dist/jquery.min.js", true)</script>
+    
+
+    <!-- WebAPP Icons -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="Potato Online">
+    <meta name="msapplication-starturl" content="https://www.kmahyyg.xyz/2019/ynu-networkbasic/">
+    <meta name="msapplication-navbutton-color" content="#0097A7">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="Potato Online">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon" href="https://yygc.zzjnyyz.cn/asset_files/avatar-yyg.jpg">
+
+    <!-- Site Verification -->
+    
+    
+
+    <!-- RSS -->
+    
+        
+            <link rel=alternate type="application/atom+xml" href="/atom.xml">
+        
+    
+
+    <!-- The Open Graph protocol -->
+    <meta property="og:url" content="https://www.kmahyyg.xyz/2019/ynu-networkbasic/">
+    <meta property="og:type" content="blog">
+    <meta property="og:title" content="计算机网络期末复习稿 | Potato Online">
+    <meta property="og:image" content="https://yygc.zzjnyyz.cn/asset_files/avatar-yyg.jpg">
+    <meta property="og:description" content="Resources determined everything.">
+    <meta property="og:article:tag" content="School"> 
+
+    
+        <meta property="article:published_time" content="Wed Jan 09 2019 00:06:43 GMT+0000">
+        <meta property="article:modified_time" content="Tue Jan 08 2019 16:24:45 GMT+0000">
+    
+
+    <!-- The Twitter Card protocol -->
+    <meta name="twitter:card" content="summary_large_image">
+
+    <!-- Add canonical link for SEO -->
+    
+        <link rel="canonical" href="https://www.kmahyyg.xyz/2019/ynu-networkbasic/index.html" />
+    
+
+    <!-- Structured-data for SEO -->
+    
+        
+
+
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "mainEntityOfPage": "https://www.kmahyyg.xyz/2019/ynu-networkbasic/index.html",
+    "headline": "计算机网络期末复习稿",
+    "datePublished": "Wed Jan 09 2019 00:06:43 GMT+0000",
+    "dateModified": "Tue Jan 08 2019 16:24:45 GMT+0000",
+    "author": {
+        "@type": "Person",
+        "name": "Patrick Young",
+        "image": {
+            "@type": "ImageObject",
+            "url": "https://yygc.zzjnyyz.cn/asset_files/avatar-yyg.jpg"
+        },
+        "description": "The man who control all the sources will control the whole world!"
+    },
+    "publisher": {
+        "@type": "Organization",
+        "name": "Potato Online",
+        "logo": {
+            "@type":"ImageObject",
+            "url": "https://yygc.zzjnyyz.cn/asset_files/avatar-yyg.jpg"
+        }
+    },
+    "keywords": ",SchoolPatrick Young,kmahyyg,material",
+    "description": "Resources determined everything.",
+}
+</script>
+
+
+    
+
+    <!-- Analytics -->
+    
+        <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+    ga('create', 'UA-123948588-1', 'auto');ga('send', 'pageview');
+</script>
+    
+    
+    
+
+    <!-- Custom Head -->
+    
+
+<link rel="stylesheet" href="/css/prism-vs.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
+
+
+    
+        <body id="scheme-Paradox" class="lazy">
+            <div class="material-layout  mdl-js-layout has-drawer is-upgraded">
+                
+
+                <!-- Main Container -->
+                <main class="material-layout__content" id="main">
+
+                    <!-- Top Anchor -->
+                    <div id="top"></div>
+
+                    
+                        <!-- Hamburger Button -->
+                        <button class="MD-burger-icon sidebar-toggle">
+                            <span id="MD-burger-id" class="MD-burger-layer"></span>
+                        </button>
+                    
+
+                    <!-- Post TOC -->
+
+    
+    <!-- Back Button -->
+    <!--
+    <div class="material-back" id="backhome-div" tabindex="0">
+        <a class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon"
+           href="#" onclick="window.history.back();return false;"
+           target="_self"
+           role="button"
+           data-upgraded=",MaterialButton,MaterialRipple">
+            <i class="material-icons" role="presentation">arrow_back</i>
+            <span class="mdl-button__ripple-container">
+                <span class="mdl-ripple"></span>
+            </span>
+        </a>
+    </div>
+    -->
+
+
+    <!-- Left aligned menu below button -->
+    
+    
+    <button id="post-toc-trigger-btn"
+        class="mdl-button mdl-js-button mdl-button--icon">
+        <i class="material-icons">format_list_numbered</i>
+    </button>
+
+    <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn" style="max-height:80vh; overflow-y:scroll;">
+        <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Computer-Chapter-1-Basic-Concepts"><span class="post-toc-number">1.</span> <span class="post-toc-text">Computer - Chapter 1 - Basic Concepts</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Level-5-7-Layers-Important"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">Level 5/7 Layers (Important)</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Store-and-Forward-Important"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">Store and Forward (Important)</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Delay-Important"><span class="post-toc-number">1.2.1.</span> <span class="post-toc-text">Delay (Important)</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Communication"><span class="post-toc-number">1.3.</span> <span class="post-toc-text">Communication</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Computer-network-Chapter-2-Application-Layer"><span class="post-toc-number">2.</span> <span class="post-toc-text">Computer network - Chapter 2 - Application Layer</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Process"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">Process</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Application-Service-you-may-need-to-know"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">Application Service you may need to know</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#HTTP"><span class="post-toc-number">2.2.1.</span> <span class="post-toc-text">HTTP</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#FTP"><span class="post-toc-number">2.2.2.</span> <span class="post-toc-text">FTP</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Email"><span class="post-toc-number">2.3.</span> <span class="post-toc-text">Email</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#DNS"><span class="post-toc-number">2.4.</span> <span class="post-toc-text">DNS</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Socket"><span class="post-toc-number">2.5.</span> <span class="post-toc-text">Socket</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Computer-Network-Chapter-3-Transport-layer-Really-matters"><span class="post-toc-number">3.</span> <span class="post-toc-text">Computer Network - Chapter 3 - Transport layer (Really matters)</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Multiplex-and-Demultiplex"><span class="post-toc-number">3.1.</span> <span class="post-toc-text">Multiplex and Demultiplex</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Transport-service"><span class="post-toc-number">3.2.</span> <span class="post-toc-text">Transport service</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#TCP-Service-Important"><span class="post-toc-number">3.2.1.</span> <span class="post-toc-text">TCP Service (Important)</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Reliable-data-transfer"><span class="post-toc-number">3.2.1.1.</span> <span class="post-toc-text">Reliable data transfer</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Checksum"><span class="post-toc-number">3.2.1.2.</span> <span class="post-toc-text">Checksum</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#UDP-Service-Important"><span class="post-toc-number">3.2.2.</span> <span class="post-toc-text">UDP Service (Important)</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Computer-network-Chapter-4-Network-Layer"><span class="post-toc-number">4.</span> <span class="post-toc-text">Computer network - Chapter 4 - Network Layer</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Network-Layer-Function"><span class="post-toc-number">4.1.</span> <span class="post-toc-text">Network Layer Function</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#IP-Internet-protocol"><span class="post-toc-number">4.2.</span> <span class="post-toc-text">IP: Internet protocol</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Data-structure"><span class="post-toc-number">4.2.1.</span> <span class="post-toc-text">Data structure</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Addr"><span class="post-toc-number">4.2.2.</span> <span class="post-toc-text">Addr</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Hierarchical-Addressing-Route-Aggregation"><span class="post-toc-number">4.2.3.</span> <span class="post-toc-text">Hierarchical Addressing: Route Aggregation</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Routing-Algorithms"><span class="post-toc-number">4.3.</span> <span class="post-toc-text">Routing Algorithms</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Dijkstra"><span class="post-toc-number">4.3.1.</span> <span class="post-toc-text">Dijkstra</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Distance-vector-Algorithm-Bellman-Ford-Equation"><span class="post-toc-number">4.3.2.</span> <span class="post-toc-text">Distance vector Algorithm (Bellman-Ford Equation)</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Computer-Network-Chapter-5-Link-Layer"><span class="post-toc-number">5.</span> <span class="post-toc-text">Computer Network - Chapter 5 - Link Layer</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Introduction"><span class="post-toc-number">5.1.</span> <span class="post-toc-text">Introduction</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Error-Detection-and-Correlation"><span class="post-toc-number">5.2.</span> <span class="post-toc-text">Error Detection and Correlation</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Parity-Bit"><span class="post-toc-number">5.2.1.</span> <span class="post-toc-text">Parity Bit</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#CRC-Cyclic-Redundancy-Check"><span class="post-toc-number">5.2.2.</span> <span class="post-toc-text">CRC: Cyclic Redundancy Check</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#ARP"><span class="post-toc-number">5.3.</span> <span class="post-toc-text">ARP</span></a></li></ol></li></ol>
+    </ul>
+    
+
+
+
+
+<!-- Layouts -->
+
+    <!-- Post Module -->
+    <div class="material-post_container">
+
+        <div class="material-post mdl-grid">
+            <div class="mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col">
+
+                <!-- Post Header(Thumbnail & Title) -->
+                
+    <!-- Paradox Post Header -->
+    
+        
+            <!-- Random Thumbnail -->
+            <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
+            <script type="text/ls-javascript" id="post-thumbnail-script">
+    var randomNum = Math.floor(Math.random() * 19 + 1);
+
+    $('.post_thumbnail-random').attr('data-original', '/img/random/material-' + randomNum + '.png');
+    $('.post_thumbnail-random').addClass('lazy');
+</script>
+
+        
+    
+            <p class="article-headline-p">
+                计算机网络期末复习稿
+            </p>
+        </div>
+
+
+
+
+
+                
+                    <!-- Paradox Post Info -->
+                    <div class="mdl-color-text--grey-700 mdl-card__supporting-text meta">
+
+    <!-- Author Avatar -->
+    <div id="author-avatar">
+        <img src="https://yygc.zzjnyyz.cn/asset_files/avatar-yyg.jpg" width="44px" height="44px" alt="Author Avatar"/>
+    </div>
+    <!-- Author Name & Date -->
+    <div>
+        <strong>Patrick Young</strong>
+        <span>1月 09, 2019</span>
+    </div>
+
+    <div class="section-spacer"></div>
+
+    <!-- Favorite -->
+    <!--
+        <button id="article-functions-like-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon btn-like">
+            <i class="material-icons" role="presentation">favorite</i>
+            <span class="visuallyhidden">favorites</span>
+        </button>
+    -->
+
+    <!-- Qrcode -->
+    
+        <button id="article-functions-qrcode-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+    <i class="material-icons" role="presentation">devices other</i>
+    <span class="visuallyhidden">devices other</span>
+</button>
+<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-qrcode-button">
+    <li class="mdl-menu__item">在其它设备中阅读本文章</li>
+    
+        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACaklEQVR42u3aQY7CMBAEQP7/6d0HrBa6x7EJqHJCCJGUD2OnZx4/X3098PDw8PDw8PDwbsZ7xNe/f/f098+/+fv9+rPh4eHhneG9KLUBL6cWJX70bHh4eHgneclj/VuOn37flv7Zs+Hh4eHdmdd+TrYHPDw8vO/mrS/K8y0EDw8P71N4s7ghiXeTI/UtshY8PDy8mJc3mc5/Ptrfw8PDwwt49UhTHNcmocN6k+zF0BUeHh7eBl5eiK/dTvKgoR4Cw8PDwzvIaxtUK6NUeYzbttPw8PDwdvNWGv/55tHGxHmUHL0x4OHh4W3g5dS80TU7iLfHfTw8PLx38ZK/zgt3W/rb+OPFIuLh4eFt5uXFt12ClUGE/I54eHh453mzTSJvR80i4HZx8fDw8M7z1oef8kBhFk8MRwfw8PDwtvHyW0YtqHIjyUeyom0MDw8PbzMvb/kvFeukcTVaVjw8PLx38fKDb9v0aodfk0UpjtR4eHh423iz8j0bJphFD8OhKzw8PLxtvHVSEtG28e5se8DDw8M7yUv+ri33szA3P9wPwwg8PDy8ZV7yOX/cHFO0ta56Y8DDw8PbwEsC1nxrmQ1pzRYFDw8P7zwvAef4opSXAe6L58fDw8PbzGuvlTGCNv6YbWB4eHh4u3lLTfqyrbXS4ioCZTw8PLwjvGQzyAGzFlfbYBu+MeDh4eFdyssLdN4Aa9n5FlUcqfHw8PBuwEu2ljZ0SO4SBbt4eHh4H8Jrf7PSbLt4MgIPDw9vgZeEEW3Rz4/m7SACHh4e3nt5swjgWnYSN0QhMh4eHt5m3vddeHh4eHh4eHh4N7h+AYsn9xPsc4JEAAAAAElFTkSuQmCC">
+    
+</ul>
+
+    
+
+    <!-- Tags (bookmark) -->
+    
+    <button id="article-functions-viewtags-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+        <i class="material-icons" role="presentation">bookmark</i>
+        <span class="visuallyhidden">bookmark</span>
+    </button>
+    <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-viewtags-button">
+        <li class="mdl-menu__item">
+        <a class="post_tag-link" href="/tags/School/">School</a>
+    </ul>
+    
+
+    <!-- Share -->
+    
+        <button id="article-fuctions-share-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+    <i class="material-icons" role="presentation">share</i>
+    <span class="visuallyhidden">share</span>
+</button>
+<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-fuctions-share-button">
+    
+
+    
+
+    <!-- Share Weibo -->
+    
+
+    <!-- Share Twitter -->
+    
+        <a class="post_share-link" href="https://twitter.com/intent/tweet?text=计算机网络期末复习稿&url=https://www.kmahyyg.xyz/2019/ynu-networkbasic/index.html&via=Patrick Young" target="_blank">
+            <li class="mdl-menu__item">
+                分享到 Twitter
+            </li>
+        </a>
+    
+
+    <!-- Share Facebook -->
+    
+        <a class="post_share-link" href="https://www.facebook.com/sharer/sharer.php?u=https://www.kmahyyg.xyz/2019/ynu-networkbasic/index.html" target="_blank">
+            <li class="mdl-menu__item">
+                分享到 Facebook
+            </li>
+        </a>
+    
+
+    <!-- Share Google+ -->
+    
+        <a class="post_share-link" href="https://plus.google.com/share?url=https://www.kmahyyg.xyz/2019/ynu-networkbasic/index.html" target="_blank">
+            <li class="mdl-menu__item">
+                分享到 Google+
+            </li>
+        </a>
+    
+
+    <!-- Share LinkedIn -->
+    
+
+    <!-- Share QQ -->
+    
+        <a class="post_share-link" href="http://connect.qq.com/widget/shareqq/index.html?site=Potato Online&title=计算机网络期末复习稿&summary=Resources determined everything.&pics=https://www.kmahyyg.xyzhttps://yygc.zzjnyyz.cn/asset_files/avatar-yyg.jpg&url=https://www.kmahyyg.xyz/2019/ynu-networkbasic/index.html" target="_blank">
+            <li class="mdl-menu__item">
+                分享到 QQ
+            </li>
+        </a>
+    
+
+    <!-- Share Telegram -->
+    
+        <a class="post_share-link" href="https://telegram.me/share/url?url=https://www.kmahyyg.xyz/2019/ynu-networkbasic/index.html&text=计算机网络期末复习稿" target="_blank">
+            <li class="mdl-menu__item">
+                分享到 Telegram
+            </li>
+        </a>
+    
+</ul>
+
+    
+</div>
+
+                
+
+                <!-- Post Content -->
+                <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
+    
+        <h1 id="Computer-Chapter-1-Basic-Concepts"><a href="#Computer-Chapter-1-Basic-Concepts" class="headerlink" title="Computer - Chapter 1 - Basic Concepts"></a>Computer - Chapter 1 - Basic Concepts</h1><p>Host: End System.</p>
+<p>Routers: Forward packets(chunks) of data through network.</p>
+<p>Protocols: Control sending and receiving of messages. A protocol is a set of rules that govern data communication. It is an agreement between the communication entities. The elements of protocol are syntax, semantics, and timing.  </p>
+<ul>
+<li>Syntax: Data structure or format. </li>
+<li>Semantics: the meaning of each section of bits. </li>
+<li>Timing: When to send and how fast it should be.</li>
+</ul>
+<p>C/S: Client/Server Model: Client host requests, receives service from server.</p>
+<p>Peer2Peer model: Minimal (or no) use of dedicated server.</p>
+<h2 id="Level-5-7-Layers-Important"><a href="#Level-5-7-Layers-Important" class="headerlink" title="Level 5/7 Layers (Important)"></a>Level 5/7 Layers (Important)</h2><p>Level 5:</p>
+<p>TCP/IP Layer:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">Application Layer</th>
+<th style="text-align:center">Message</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">Transport Layer</td>
+<td style="text-align:center">Segment</td>
+</tr>
+<tr>
+<td style="text-align:center">Network Layer</td>
+<td style="text-align:center">Datagram</td>
+</tr>
+<tr>
+<td style="text-align:center">Link Layer</td>
+<td style="text-align:center">Frame</td>
+</tr>
+</tbody>
+</table>
+<p>ISO/OSI Layer:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">Application Layer</th>
+<th style="text-align:center">应用软件接口</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">Presentation Layer</td>
+<td style="text-align:center">转换格式并封包</td>
+</tr>
+<tr>
+<td style="text-align:center">Session Layer</td>
+<td style="text-align:center">维护会话状态</td>
+</tr>
+<tr>
+<td style="text-align:center">Transport Layer</td>
+<td style="text-align:center">添加传输表头形成片</td>
+</tr>
+<tr>
+<td style="text-align:center">Network Layer</td>
+<td style="text-align:center">形成数据报，决定路径选择与转发</td>
+</tr>
+<tr>
+<td style="text-align:center">Data link Layer</td>
+<td style="text-align:center">网络寻址，错误纠正，形成帧</td>
+</tr>
+<tr>
+<td style="text-align:center">Physical Layer</td>
+<td style="text-align:center">与硬件直接互通</td>
+</tr>
+</tbody>
+</table>
+<h2 id="Store-and-Forward-Important"><a href="#Store-and-Forward-Important" class="headerlink" title="Store and Forward (Important)"></a>Store and Forward (Important)</h2><p>Circuit Switching: A dedicated circuit per call as telephone net.</p>
+<ul>
+<li>End to end resources served for “call”</li>
+<li>Link Bandwidth, Switch Capacity</li>
+<li>Dedicated Resouces</li>
+<li>Circuit-like (guaranteed) performance</li>
+<li>Call setup required</li>
+</ul>
+<p>Example: TDM&amp;FDM, Datagram network <strong>is neither connection-oriented or connection-less</strong></p>
+<p>Packet Switching: Data sent through net in discrete “chunks”</p>
+<p>Pros:</p>
+<ul>
+<li>Divided data stream into packets</li>
+<li>Shared network resources</li>
+<li>each packet uses full link bandwidth</li>
+<li>resources used as needed</li>
+</ul>
+<p>Cons:</p>
+<ul>
+<li>Aggregate resource demand can exceed amount available</li>
+<li>Congestion Control</li>
+<li>Node receives complete packet before forwarding, store and forward</li>
+</ul>
+<h3 id="Delay-Important"><a href="#Delay-Important" class="headerlink" title="Delay (Important)"></a>Delay (Important)</h3><p>Transmission 传输 Delay: From the first sent bit to the last sent bit (Check header and calculate checksum)</p>
+<p>Propagation 传播 Delay: From the first sent bit to the first received bit</p>
+<p>Queuing Delay: From entering queue to send</p>
+<p>Processing Delay: From Send process to queue entrance</p>
+<p>Total delay: the sum of the four delays above.</p>
+<h2 id="Communication"><a href="#Communication" class="headerlink" title="Communication"></a>Communication</h2><p>Full Duplex: Client&amp;Server transfer in 2 directions at the same time.</p>
+<p>Half Deplex: Only Client/Server can transfer at the same time but allow 2 directions.</p>
+<p>Simplex: Only single directions can be used for transmission. (eg. Radio Station)</p>
+<p>Connection Media: </p>
+<p>UnGuided media: </p>
+<ul>
+<li>Wireless network</li>
+<li>Satellite radio</li>
+</ul>
+<p>Guided media:</p>
+<ul>
+<li>Twisted-Pair Wire</li>
+<li>Coaxial cable</li>
+<li>Fiber optics</li>
+</ul>
+<h1 id="Computer-network-Chapter-2-Application-Layer"><a href="#Computer-network-Chapter-2-Application-Layer" class="headerlink" title="Computer network - Chapter 2 - Application Layer"></a>Computer network - Chapter 2 - Application Layer</h1><p>Due to the well-known, this part will be simplified.</p>
+<h2 id="Process"><a href="#Process" class="headerlink" title="Process"></a>Process</h2><p>Process: Progam running within a host, a instance.</p>
+<p>Two processes communicate through IPC. Inter-process communicate by exchanging message.</p>
+<h2 id="Application-Service-you-may-need-to-know"><a href="#Application-Service-you-may-need-to-know" class="headerlink" title="Application Service you may need to know"></a>Application Service you may need to know</h2><h3 id="HTTP"><a href="#HTTP" class="headerlink" title="HTTP"></a>HTTP</h3><p>URL: Protocol + Hostname + Path name</p>
+<p>Pipeline + Connection-alive(Persistent HTTP with single TCP conn) + Stateless</p>
+<p><strong>RTT</strong> : Round-Trip Time. 1 RTT = Send out and get back. Total RTT for HTTP: 2 RTT(1 for initiate conn, one for first request) + Transfer.</p>
+<p>Request Packet Format:</p>
+<pre><code>[METHOD] [PATH NAME] [HTTP Version][\r\n]
+[Headers][\r\n]
+[Data body][\r\n]
+</code></pre><p>Response Packet Format:</p>
+<pre><code>[HTTP Version] [Status code] [Status Phrase][\r\n]
+[Headers][\r\n]
+[Data: Entity body][\r\n]
+</code></pre><p>Authentication:<br><img src="https://mdn.mozillademos.org/files/14689/HTTPAuth.png" alt="MDN HTTP 403"></p>
+<p>Conditional GET:<br>Related Header: <code>If-modified-since:</code> <code>304 Not Modified / 200 OK</code></p>
+<h3 id="FTP"><a href="#FTP" class="headerlink" title="FTP"></a>FTP</h3><p>Out of band communication: Port 20 for data transfer, Port 21 for command transfer</p>
+<h2 id="Email"><a href="#Email" class="headerlink" title="Email"></a>Email</h2><p>Major Components: User agents + Mail server + DNS + Protocol (SMTP/IMAP/POP3)</p>
+<p>SMTP(25 / 465 SSL / 587 TLS): Push to server. (Send only for now)</p>
+<p>IMAP(143/ 993 Encrypted) &amp; POP3(110/ 995 Encrypted): Pull from client. (Receive at client, IMAP recommended)</p>
+<p>Message in SMTP: 7-bit ASCII Code with Extended S/MIME via Base64 Encode</p>
+<p>SMTP: </p>
+<pre><code>-- Header lines --
+To:   
+From:  
+Subject:   
+-- Header lines --
+DATA BODY  [\r\n][\r\n]
+</code></pre><h2 id="DNS"><a href="#DNS" class="headerlink" title="DNS"></a>DNS</h2><p>Provide: </p>
+<ul>
+<li>Distributed database based name resolver (Map from domain name to IP address)</li>
+<li>Host aliasing via CNAME</li>
+<li>Mail server aliasing via MX and PTR</li>
+<li>Load distribution</li>
+</ul>
+<p>53/UDP with iterated query, 8 Global Root Server.</p>
+<h2 id="Socket"><a href="#Socket" class="headerlink" title="Socket"></a>Socket</h2><p>Socket: The interface (sends to / receives from), middle-man in process and system TCP buffers.<br>Socket Pair: [IP Address:Port]</p>
+<p>Server:</p>
+<pre class="line-numbers language-python"><code class="language-python"><span class="token keyword">import</span> socket
+<span class="token keyword">import</span> sys
+<span class="token keyword">import</span> time
+
+HOST <span class="token operator">=</span> <span class="token string">'0.0.0.0'</span>
+PORT <span class="token operator">=</span> <span class="token number">23301</span>
+
+
+lsock <span class="token operator">=</span> socket<span class="token punctuation">.</span>socket<span class="token punctuation">(</span>socket<span class="token punctuation">.</span>AF_INET<span class="token punctuation">,</span> socket<span class="token punctuation">.</span>SOCK_STREAM<span class="token punctuation">)</span>   <span class="token comment" spellcheck="true"># Define protocal stack as IPV4</span>
+lsock<span class="token punctuation">.</span>bind<span class="token punctuation">(</span><span class="token punctuation">(</span>HOST<span class="token punctuation">,</span> PORT<span class="token punctuation">)</span><span class="token punctuation">)</span>  <span class="token comment" spellcheck="true"># Bind IP and port</span>
+lsock<span class="token punctuation">.</span>listen<span class="token punctuation">(</span><span class="token number">65535</span><span class="token punctuation">)</span>  <span class="token comment" spellcheck="true"># max connection number</span>
+conn<span class="token punctuation">,</span> addr <span class="token operator">=</span> lsock<span class="token punctuation">.</span>accept<span class="token punctuation">(</span><span class="token punctuation">)</span>  <span class="token comment" spellcheck="true"># Accept Connection</span>
+data <span class="token operator">=</span> conn<span class="token punctuation">.</span>recv<span class="token punctuation">(</span><span class="token number">1492</span><span class="token punctuation">)</span>  <span class="token comment" spellcheck="true"># receive data with MTU 1492</span>
+conn<span class="token punctuation">.</span>sendall<span class="token punctuation">(</span>data<span class="token punctuation">)</span>  <span class="token comment" spellcheck="true"># send data</span>
+conn<span class="token punctuation">.</span>close<span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>Client:</p>
+<pre class="line-numbers language-python"><code class="language-python"><span class="token keyword">import</span> socket
+<span class="token keyword">import</span> sys
+<span class="token keyword">import</span> time
+
+HOST <span class="token operator">=</span> <span class="token string">'127.0.0.1'</span>
+PORT <span class="token operator">=</span> <span class="token number">23301</span>
+
+recsock <span class="token operator">=</span> socket<span class="token punctuation">.</span>socket<span class="token punctuation">(</span>socket<span class="token punctuation">.</span>AF_INET<span class="token punctuation">,</span> socket<span class="token punctuation">.</span>SOCK_STREAM<span class="token punctuation">)</span> 
+recsock<span class="token punctuation">.</span>connect_ex<span class="token punctuation">(</span><span class="token punctuation">(</span>HOST<span class="token punctuation">,</span>PORT<span class="token punctuation">)</span><span class="token punctuation">)</span>   <span class="token comment" spellcheck="true"># Connect to server</span>
+recsock<span class="token punctuation">.</span>sendall<span class="token punctuation">(</span>b<span class="token string">'HelloWorld!'</span><span class="token punctuation">)</span>
+data<span class="token operator">=</span>recsock<span class="token punctuation">.</span>recv<span class="token punctuation">(</span><span class="token number">1492</span><span class="token punctuation">)</span>
+recsock<span class="token punctuation">.</span>close<span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h1 id="Computer-Network-Chapter-3-Transport-layer-Really-matters"><a href="#Computer-Network-Chapter-3-Transport-layer-Really-matters" class="headerlink" title="Computer Network - Chapter 3 - Transport layer (Really matters)"></a>Computer Network - Chapter 3 - Transport layer (Really matters)</h1><p>Transport layer: logical communication between processes</p>
+<p>Network layer: logical communication between hosts</p>
+<h2 id="Multiplex-and-Demultiplex"><a href="#Multiplex-and-Demultiplex" class="headerlink" title="Multiplex and Demultiplex"></a>Multiplex and Demultiplex</h2><p>Demultiplex: delivering received segments to correct socket.</p>
+<p>Multiplex: Gather data from multi sockets and enveloping data with header.</p>
+<p>IP Datagram format: <code>Header fields | 32 Bits SRC IP | 32 Bits DEST IP | DATA</code></p>
+<p>UDP socket: identified by <code>dest IP | dest port</code><br>TCP socket: identified by <code>src IP | src port</code></p>
+<h2 id="Transport-service"><a href="#Transport-service" class="headerlink" title="Transport service"></a>Transport service</h2><p>An app needed:</p>
+<ul>
+<li>Data loss control</li>
+<li>Bandwidth</li>
+<li>Timing(Low delay)</li>
+</ul>
+<h3 id="TCP-Service-Important"><a href="#TCP-Service-Important" class="headerlink" title="TCP Service (Important)"></a>TCP Service (Important)</h3><ul>
+<li>Connection-oriented, full duplex data, pipeline</li>
+<li>Reliable Transport with point to point and in-order</li>
+<li>Flow control</li>
+<li>Congestion control with buffers</li>
+</ul>
+<p>MSS: Max segment size, default 536 Bytes</p>
+<p>Segment Structure:</p>
+<pre><code>| source port | dest port |
+| sequence no | ack no    |
+| head len  | 0 | UAPRSF  |
+|Receive window | checksum|
+|Urg data pointer| options|
+|        body : data      |
+</code></pre><h4 id="Reliable-data-transfer"><a href="#Reliable-data-transfer" class="headerlink" title="Reliable data transfer"></a>Reliable data transfer</h4><p>Sequence No. = 第一个字节号</p>
+<p>Piggybacked &amp; Cumulative ACKs: ACK No.: 下一个待传字节号</p>
+<p>TCP 超时重传： Timeout events &amp; Duplicate ACKs</p>
+<p>MSL: Max segment lifetime</p>
+<p><img src="https://yygc.zzjnyyz.cn/asset_files/tcp-handshake-conn.jpg" alt="TCP_CONN"></p>
+<p>SYN_SENT -&gt; SYN_RCVD -&gt; ESTABLISHED -&gt; ESTABLISHED</p>
+<p><img src="https://yygc.zzjnyyz.cn/asset_files/tcp-handshake-disconn.jpg" alt="TCP_DISCONN"></p>
+<p>FIN_WAIT_1 -&gt; CLOSE_WAIT -&gt; FIN_WAIT_2 -&gt; LAST_ACK -&gt; TIME_WAIT -&gt; CLOSED</p>
+<h4 id="Checksum"><a href="#Checksum" class="headerlink" title="Checksum"></a>Checksum</h4><p>IEEE 802.3 CRC32</p>
+<h3 id="UDP-Service-Important"><a href="#UDP-Service-Important" class="headerlink" title="UDP Service (Important)"></a>UDP Service (Important)</h3><ul>
+<li>Unreliable, unordered delivery (data may be lost)</li>
+<li>Connection-less (no handshake, each segment handled by app): Simple and smaller header</li>
+<li>No congestion control with best-effort</li>
+</ul>
+<p>Used for:</p>
+<ul>
+<li>Loss tolerant, rate sensitive(streaming and multimedia)</li>
+<li>DNS &amp; SNMP</li>
+</ul>
+<p>Packet format:</p>
+<pre><code>        src port        |    dest port    |
+length including header |    checksum     |
+</code></pre><p>Checksum:</p>
+<p>Divided data into 16-bit groups and add each one, wrap around if additional bit get.<br>checksum is sum get reversed.</p>
+<h1 id="Computer-network-Chapter-4-Network-Layer"><a href="#Computer-network-Chapter-4-Network-Layer" class="headerlink" title="Computer network - Chapter 4 - Network Layer"></a>Computer network - Chapter 4 - Network Layer</h1><h2 id="Network-Layer-Function"><a href="#Network-Layer-Function" class="headerlink" title="Network Layer Function"></a>Network Layer Function</h2><ul>
+<li>Routing: determine which route should be taken</li>
+<li>Forwarding: process to next hop</li>
+</ul>
+<p>BTW, Virtual circuit networking: router must maintain connection state information, contains path from src to desc, vc no, entries in fwd tables.</p>
+<h2 id="IP-Internet-protocol"><a href="#IP-Internet-protocol" class="headerlink" title="IP: Internet protocol"></a>IP: Internet protocol</h2><h3 id="Data-structure"><a href="#Data-structure" class="headerlink" title="Data structure"></a>Data structure</h3><pre><code>version | head length | type of service |       length      |
+identifier      |        flags      |   fragment offset     |
+  TTL     |     Upper Layer         |   IP Checksum         |
+                            SRC IP                          |
+                            DEST IP                         |
+                            Options                         |
+                            DATA                            |
+</code></pre><p>Identifier: Used for reassemale segment</p>
+<p>Header len: Min 20 Bytes = 5, Max 60 Bytes = 15;</p>
+<p>Flag: | Reserved 0 | Don’t Fragment (1,DF) | Last Fragment (0,More_F)|</p>
+<p>Type of service: Used for QOS,<br>| Precendence (0-2 bits) | Normal delay (0) | High throughput (1) | High Reliability(1) | Reserved (6-7 Bits) |</p>
+<p>Fragment Offset:</p>
+<p><strong>数据部分切割，不含报头长度</strong> = (PacketLength - HeaderLength) / 8</p>
+<h3 id="Addr"><a href="#Addr" class="headerlink" title="Addr"></a>Addr</h3><p>IPv4 Addr is 32 Bits.</p>
+<p>In binary: </p>
+<p>Class A = 0 + Netid + Hostid<br>Class B = 10 + Netid + Hostid<br>Class C = 110 + Netid + Hostid</p>
+<p>Class D = 1110 + xx (Multicast Addr)<br>Class E = 1111 + yy (Reserved Addr) </p>
+<p>CIDR: 192.168.200.0/24  24:Network mask, previous 24 bits of mask is 1.</p>
+<p>Minimum IP is Subnet Addr, Last IP is multicast IP.</p>
+<p>IP Address AND network mask is CIDR ADDR.</p>
+<h3 id="Hierarchical-Addressing-Route-Aggregation"><a href="#Hierarchical-Addressing-Route-Aggregation" class="headerlink" title="Hierarchical Addressing: Route Aggregation"></a>Hierarchical Addressing: Route Aggregation</h3><p>Autonomous System: An aggregation of routers that they run the same routing algorithm, and one or more of the routers ( is called gateway router) can routing packets to other networks. Use Intra-AS routing protocol for peering with another AS.</p>
+<h2 id="Routing-Algorithms"><a href="#Routing-Algorithms" class="headerlink" title="Routing Algorithms"></a>Routing Algorithms</h2><p>Global: Link state algorithm (Dijkstra)</p>
+<p>Decentralized: Distance vector Algorithm (Bellman-Ford Equation)</p>
+<h3 id="Dijkstra"><a href="#Dijkstra" class="headerlink" title="Dijkstra"></a>Dijkstra</h3><p>TALK IS CHEAP, SHOW ME THE CODE!</p>
+<pre class="line-numbers language-python"><code class="language-python"><span class="token comment" spellcheck="true">#!/usr/bin/env python3</span>
+<span class="token comment" spellcheck="true"># -*- encoding:utf-8 -*-</span>
+
+<span class="token keyword">import</span> sys
+
+<span class="token keyword">class</span> <span class="token class-name">Graph</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">def</span> <span class="token function">__init__</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span>vertices<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        self<span class="token punctuation">.</span>V <span class="token operator">=</span> vertices   <span class="token comment" spellcheck="true"># initiate 2D arrays with the number of vertexes</span>
+        self<span class="token punctuation">.</span>graph <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">[</span><span class="token number">0</span> <span class="token keyword">for</span> column <span class="token keyword">in</span> range<span class="token punctuation">(</span>vertices<span class="token punctuation">)</span><span class="token punctuation">]</span> <span class="token keyword">for</span> row <span class="token keyword">in</span> range<span class="token punctuation">(</span>vertices<span class="token punctuation">)</span><span class="token punctuation">]</span>
+
+    <span class="token keyword">def</span> <span class="token function">printSolution</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span>dist<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"  Vertex\tDistance from src"</span><span class="token punctuation">)</span>   <span class="token comment" spellcheck="true"># print the solution, loop all vertexes</span>
+        <span class="token keyword">for</span> node <span class="token keyword">in</span> range<span class="token punctuation">(</span>self<span class="token punctuation">.</span>V<span class="token punctuation">)</span><span class="token punctuation">:</span>
+            <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"\t"</span><span class="token punctuation">,</span>node<span class="token punctuation">,</span><span class="token string">"\t\t\t"</span><span class="token punctuation">,</span>dist<span class="token punctuation">[</span>node<span class="token punctuation">]</span><span class="token punctuation">)</span>
+
+    <span class="token keyword">def</span> <span class="token function">minDistance</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span>dist<span class="token punctuation">,</span>sptSet<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        min <span class="token operator">=</span> sys<span class="token punctuation">.</span>maxsize  <span class="token comment" spellcheck="true"># assume that all paths have the maximum length</span>
+        min_index <span class="token operator">=</span> None   <span class="token comment" spellcheck="true"># initial var to avoid non-sense error</span>
+        <span class="token keyword">for</span> v <span class="token keyword">in</span> range<span class="token punctuation">(</span>self<span class="token punctuation">.</span>V<span class="token punctuation">)</span><span class="token punctuation">:</span>
+            <span class="token comment" spellcheck="true"># find the vertex with minDist from not in sTree</span>
+            <span class="token keyword">if</span> dist<span class="token punctuation">[</span>v<span class="token punctuation">]</span> <span class="token operator">&lt;</span> min <span class="token operator">and</span> sptSet<span class="token punctuation">[</span>v<span class="token punctuation">]</span> <span class="token operator">==</span> <span class="token boolean">False</span><span class="token punctuation">:</span>
+                min <span class="token operator">=</span> dist<span class="token punctuation">[</span>v<span class="token punctuation">]</span>
+                min_index <span class="token operator">=</span> v
+        <span class="token keyword">if</span> min_index <span class="token operator">==</span> None<span class="token punctuation">:</span>
+            <span class="token keyword">raise</span> NotImplementedError
+        <span class="token keyword">return</span> min_index
+
+    <span class="token keyword">def</span> <span class="token function">dijkstra</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span>src<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        dist <span class="token operator">=</span> <span class="token punctuation">[</span>sys<span class="token punctuation">.</span>maxsize<span class="token punctuation">]</span> <span class="token operator">*</span> self<span class="token punctuation">.</span>V
+        dist<span class="token punctuation">[</span>src<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">0</span>  <span class="token comment" spellcheck="true"># vertex to itself should be zero</span>
+        sptSet <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token boolean">False</span><span class="token punctuation">]</span> <span class="token operator">*</span> self<span class="token punctuation">.</span>V  <span class="token comment" spellcheck="true"># Shortest path tree set, initiate</span>
+
+        <span class="token comment" spellcheck="true"># choose a vertex</span>
+        <span class="token keyword">for</span> cout <span class="token keyword">in</span> range<span class="token punctuation">(</span>self<span class="token punctuation">.</span>V<span class="token punctuation">)</span><span class="token punctuation">:</span>
+            <span class="token comment" spellcheck="true"># pick the minDist vertex from not accessed vertexes, first time == src</span>
+            u <span class="token operator">=</span> self<span class="token punctuation">.</span>minDistance<span class="token punctuation">(</span>dist<span class="token punctuation">,</span>sptSet<span class="token punctuation">)</span>
+            <span class="token comment" spellcheck="true"># the minDist vertex put into shortest path tree</span>
+            sptSet<span class="token punctuation">[</span>u<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token boolean">True</span>
+            <span class="token comment" spellcheck="true"># only when current vertex > new vertex, and the vertex not in sptset,</span>
+            <span class="token comment" spellcheck="true"># update the picked vertex's neighbor's distance (new distance with new node as a relay)</span>
+            <span class="token keyword">for</span> v <span class="token keyword">in</span> range<span class="token punctuation">(</span>self<span class="token punctuation">.</span>V<span class="token punctuation">)</span><span class="token punctuation">:</span>
+                <span class="token keyword">if</span> self<span class="token punctuation">.</span>graph<span class="token punctuation">[</span>u<span class="token punctuation">]</span><span class="token punctuation">[</span>v<span class="token punctuation">]</span> <span class="token operator">></span> <span class="token number">0</span> <span class="token operator">and</span> sptSet<span class="token punctuation">[</span>v<span class="token punctuation">]</span> <span class="token operator">==</span> <span class="token boolean">False</span> <span class="token operator">and</span> dist<span class="token punctuation">[</span>v<span class="token punctuation">]</span> <span class="token operator">></span> dist<span class="token punctuation">[</span>u<span class="token punctuation">]</span> <span class="token operator">+</span> self<span class="token punctuation">.</span>graph<span class="token punctuation">[</span>u<span class="token punctuation">]</span><span class="token punctuation">[</span>v<span class="token punctuation">]</span><span class="token punctuation">:</span>
+                    dist<span class="token punctuation">[</span>v<span class="token punctuation">]</span> <span class="token operator">=</span> dist<span class="token punctuation">[</span>u<span class="token punctuation">]</span> <span class="token operator">+</span> self<span class="token punctuation">.</span>graph<span class="token punctuation">[</span>u<span class="token punctuation">]</span><span class="token punctuation">[</span>v<span class="token punctuation">]</span>
+        self<span class="token punctuation">.</span>printSolution<span class="token punctuation">(</span>dist<span class="token punctuation">)</span>
+
+<span class="token keyword">if</span> __name__ <span class="token operator">==</span> <span class="token string">'__main__'</span><span class="token punctuation">:</span>
+    g <span class="token operator">=</span> Graph<span class="token punctuation">(</span><span class="token number">6</span><span class="token punctuation">)</span>
+    g<span class="token punctuation">.</span>graph <span class="token operator">=</span> <span class="token punctuation">[</span>
+        <span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">5</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token comment" spellcheck="true">#A, and no-route should be zero.</span>
+        <span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token comment" spellcheck="true">#B</span>
+        <span class="token punctuation">[</span><span class="token number">5</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">5</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token comment" spellcheck="true">#C</span>
+        <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token comment" spellcheck="true">#D</span>
+        <span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token comment" spellcheck="true">#E</span>
+        <span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">5</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">]</span>  <span class="token comment" spellcheck="true">#F</span>
+    <span class="token punctuation">]</span>
+    g<span class="token punctuation">.</span>dijkstra<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span> <span class="token comment" spellcheck="true"># source is A</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="Distance-vector-Algorithm-Bellman-Ford-Equation"><a href="#Distance-vector-Algorithm-Bellman-Ford-Equation" class="headerlink" title="Distance vector Algorithm (Bellman-Ford Equation)"></a>Distance vector Algorithm (Bellman-Ford Equation)</h3><p>D (X to Y) = min {neiborhood V} -&gt; cost(x,v) + cost(v,y)<br>重点：结点获得最短路径的下一跳, 该信息用于转发表中！</p>
+<p>异步迭代:</p>
+<ul>
+<li>引发每次局部迭代的因素</li>
+<li>局部链路费用改变</li>
+<li>来自邻居的DV更新</li>
+</ul>
+<p>分布式:</p>
+<ul>
+<li>每个结点只当DV变化时才通告给邻居</li>
+<li>邻居在必要时（其DV更新后发生改变）再通告它们的邻居</li>
+</ul>
+<h1 id="Computer-Network-Chapter-5-Link-Layer"><a href="#Computer-Network-Chapter-5-Link-Layer" class="headerlink" title="Computer Network - Chapter 5 - Link Layer"></a>Computer Network - Chapter 5 - Link Layer</h1><h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>Nodes: Hosts and routers</p>
+<p>Links: Communication channels that connect adjacent nodes along communication path.</p>
+<p>Farme: Layer-2 Packet, PDF, encapsulates datagram. </p>
+<p>Responsible for : transfer datagram from one node to adjacent node over a link</p>
+<h2 id="Error-Detection-and-Correlation"><a href="#Error-Detection-and-Correlation" class="headerlink" title="Error Detection and Correlation"></a>Error Detection and Correlation</h2><h3 id="Parity-Bit"><a href="#Parity-Bit" class="headerlink" title="Parity Bit"></a>Parity Bit</h3><p>奇校验 是 奇数个 1 得到的校验位为 0，偶校验 是 偶数个 1 得到的校验位 为 0</p>
+<h3 id="CRC-Cyclic-Redundancy-Check"><a href="#CRC-Cyclic-Redundancy-Check" class="headerlink" title="CRC: Cyclic Redundancy Check"></a>CRC: Cyclic Redundancy Check</h3><p>G:1001=x^3+x^0=x^3+1 D:101110</p>
+<p>G 的最高位恒为 1, D 左移 (len(G)-1) 位后对 G 作 XOR 除法运算，最终得到余数即为 Checksum.</p>
+<p>检验无误： D 左移 (len(G)-1) 位后加上 Checksum 对 G 作 XOR 除法，余数为 0 则正常。</p>
+<h2 id="ARP"><a href="#ARP" class="headerlink" title="ARP"></a>ARP</h2><p>Address Resolution Protocol: IP/MAC address mapping for lan nodes</p>
+<p>ARP Table builder:</p>
+<ul>
+<li>A Broadcast: B’s IP Addr is blahblah，but I don’t know B’s MAC (Dest IP: 192.168.200.255, Dest MAC: FFFFFFFFFFFF)</li>
+<li>B Receive, then replies to A with B’s MAC (unicast)</li>
+</ul>
+
+        
+                <blockquote style="margin: 2em 0 0;padding: 0.5em 1em;border-left: 3px solid #F44336;background-color: #F5F5F5;list-style: none;">
+                    <p><strong>
+                         
+                            本博客所有文章，未经特殊说明，均使用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" target="_blank">CC BY-NC-SA 3.0 Unported License 授权</a>
+                        </strong>
+                        <br>
+                        <strong>本文链接：</strong><a href="https://www.kmahyyg.xyz/2019/ynu-networkbasic/">https://www.kmahyyg.xyz/2019/ynu-networkbasic/</a>
+                    </p>
+                </blockquote>
+        
+    
+
+    
+</div>
+
+
+                
+
+                <!-- Post Comments -->
+                
+                    
+    <!-- 使用 DISQUS_CLICK -->
+<div id="disqus-comment">
+    <div id="disqus_thread"></div>
+
+<!-- add animation -->
+<style>
+	.disqus_click_btn {
+            line-height: 30px;
+            margin: 0;
+            min-width: 50px;
+            padding: 0 14px;
+            display: inline-block;
+            font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+            font-size: 14px;
+            font-weight: 400;
+            text-transform: uppercase;
+            letter-spacing: 0;
+            overflow: hidden;
+            will-change: box-shadow;
+            transition: box-shadow .2s cubic-bezier(.4, 0, 1, 1), background-color .2s cubic-bezier(.4, 0, .2, 1), color .2s cubic-bezier(.4, 0, .2, 1);
+            outline: 0;
+            cursor: pointer;
+            text-decoration: none;
+            text-align: center;
+            vertical-align: middle;
+            border: 0;
+            background: rgba(158, 158, 158, .2);
+            box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .14), 0 3px 1px -2px rgba(0, 0, 0, .2), 0 1px 5px 0 rgba(0, 0, 0, .12);
+            color: #fff;
+            background-color: #757575;
+            text-shadow: 0;
+            display: none
+        }
+</style>
+	
+<div class="btn_click_load"> 
+    <button class="disqus_click_btn">阅读评论（请确保 disqus 可以正常加载）</button>
+</div>
+
+<script type="text/javascript">
+    var disqus_config = function () {
+        this.page.url = 'https://www.kmahyyg.xyz/2019/ynu-networkbasic/';  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = 'https://www.kmahyyg.xyz/2019/ynu-networkbasic/'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+</script>
+
+<script type="text/ls-javascript" id="disqus-lazy-load-script">
+    $.ajax({
+        url: 'https://disqus.com/next/config.json',
+        timeout: 4000,
+        type: 'GET',
+        success: (function() {
+            var d = document;
+            var s = d.createElement('script');
+            s.src = '//kmahyyg.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', + new Date());
+            (d.head || d.body).appendChild(s);
+            $('.disqus_click_btn').css('display','none');
+        })(),
+        error: function() {
+          $('.disqus_click_btn').css('display','block');
+        }
+    });
+    $('.btn_click_load').click(function() {  //click to load comments
+        (function() { // DON'T EDIT BELOW THIS LINE
+            var d = document;
+            var s = d.createElement('script');
+            s.src = '//kmahyyg.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', + new Date());
+            (d.head || d.body).appendChild(s);
+        })();
+        $('.disqus_click_btn').css('display','none');
+    });
+</script>
+  	
+
+</div>
+<style>
+    #disqus-comment{
+        background-color: #eee;
+        padding: 2pc;
+    }
+</style>
+
+                
+            </div>
+
+            <!-- Post Prev & Next Nav -->
+            <nav class="material-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
+    <!-- Prev Nav -->
+    
+
+    <!-- Section Spacer -->
+    <div class="section-spacer"></div>
+
+    <!-- Next Nav -->
+    
+        <a href="/2019/ynu-datastru-c10/" id="post_nav-older" class="next-content">
+            旧篇
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+                <i class="material-icons">arrow_forward</i>
+            </button>
+        </a>
+    
+</nav>
+
+        </div>
+    </div>
+
+
+
+                    
+                        <!-- Overlay For Active Sidebar -->
+<div class="sidebar-overlay"></div>
+
+<!-- Material sidebar -->
+<aside id="sidebar" class="sidebar sidebar-colored sidebar-fixed-left" role="navigation">
+    <div id="sidebar-main">
+        <!-- Sidebar Header -->
+        <div class="sidebar-header header-cover" style="background-image: url(/img/sidebar_header.png);">
+    <!-- Top bar -->
+    <div class="top-bar"></div>
+
+    <!-- Sidebar toggle button -->
+    <button type="button" class="sidebar-toggle mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" style="display: initial;" data-upgraded=",MaterialButton,MaterialRipple">
+        <i class="material-icons">clear_all</i>
+        <span class="mdl-button__ripple-container">
+            <span class="mdl-ripple">
+            </span>
+        </span>
+    </button>
+
+    <!-- Sidebar Avatar -->
+    <div class="sidebar-image">
+        <img src="https://yygc.zzjnyyz.cn/asset_files/avatar-yyg.jpg" alt="Patrick Young's avatar">
+    </div>
+
+    <!-- Sidebar Email -->
+    <a data-toggle="dropdown" class="sidebar-brand" href="#settings-dropdown">
+        i@kmahyyg.xyz
+        <b class="caret"></b>
+    </a>
+</div>
+
+
+        <!-- Sidebar Navigation  -->
+        <ul class="nav sidebar-nav">
+    <!-- User dropdown  -->
+    <li class="dropdown">
+        <ul id="settings-dropdown" class="dropdown-menu">
+            
+                <li>
+                    <a href="mailto://i@kmahyyg.xyz" target="_blank" title="Email Me">
+                        
+                            <i class="material-icons sidebar-material-icons sidebar-indent-left1pc-element">email</i>
+                        
+                        Email Me
+                    </a>
+                </li>
+            
+        </ul>
+    </li>
+
+    <!-- Homepage -->
+    
+        <li id="sidebar-first-li">
+            <a href="/">
+                
+                    <i class="material-icons sidebar-material-icons">home</i>
+                
+                主页
+            </a>
+        </li>
+        
+    
+
+    <!-- Archives  -->
+    
+        <li class="dropdown">
+            <a href="#" class="ripple-effect dropdown-toggle" data-toggle="dropdown">
+                
+                    <i class="material-icons sidebar-material-icons">inbox</i>
+                
+                    归档
+                <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+            <li>
+                <a class="sidebar_archives-link" href="/archives/2019/01/">一月 2019<span class="sidebar_archives-count">13</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/12/">十二月 2018<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/11/">十一月 2018<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/10/">十月 2018<span class="sidebar_archives-count">6</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/09/">九月 2018<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/08/">八月 2018<span class="sidebar_archives-count">8</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/07/">七月 2018<span class="sidebar_archives-count">5</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/06/">六月 2018<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/05/">五月 2018<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/04/">四月 2018<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/02/">二月 2018<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/12/">十二月 2017<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/11/">十一月 2017<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/10/">十月 2017<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/09/">九月 2017<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/08/">八月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/07/">七月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/06/">六月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/04/">四月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/01/">一月 2017<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/12/">十二月 2016<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/10/">十月 2016<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/09/">九月 2016<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/08/">八月 2016<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/07/">七月 2016<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/06/">六月 2016<span class="sidebar_archives-count">6</span></a>
+            </ul>
+        </li>
+        
+    
+
+    <!-- Categories  -->
+    
+
+    <!-- Pages  -->
+    
+        <li>
+            <a href="/about" title="About">
+                
+                    <i class="material-icons sidebar-material-icons">person</i>
+                
+                About
+            </a>
+        </li>
+        
+    
+        <li>
+            <a href="/tags" title="Tags">
+                
+                    <i class="material-icons sidebar-material-icons">book</i>
+                
+                Tags
+            </a>
+        </li>
+        
+            <li class="divider"></li>
+        
+    
+        <li>
+            <a href="/timeline" title="Timeline">
+                
+                    <i class="material-icons sidebar-material-icons">timeline</i>
+                
+                Timeline
+            </a>
+        </li>
+        
+    
+        <li>
+            <a href="/express" title="Express">
+                
+                    <i class="material-icons sidebar-material-icons">mail</i>
+                
+                Express
+            </a>
+        </li>
+        
+    
+        <li>
+            <a href="/archlinux" title="ArchLinux">
+                
+                    <i class="material-icons sidebar-material-icons">local_convenience_store</i>
+                
+                ArchLinux
+            </a>
+        </li>
+        
+    
+        <li>
+            <a href="/donate" title="Donate">
+                
+                    <i class="material-icons sidebar-material-icons">account_balance_wallet</i>
+                
+                Donate
+            </a>
+        </li>
+        
+    
+
+    <!-- Article Number  -->
+    
+        <li>
+            <a href="/archives">
+                文章总数
+                <span class="sidebar-badge">78</span>
+            </a>
+        </li>
+        
+    
+</ul>
+
+
+        <!-- Sidebar Footer -->
+        <!--
+I'm glad you use this theme, the development is no so easy, I hope you can keep the copyright, I will thank you so much.
+If you still want to delete the copyrights, could you still retain the first one? Which namely "Theme Material"
+It will not impact the appearance and can give developers a lot of support :)
+
+很高兴您使用并喜欢该主题，开发不易 十分谢谢与希望您可以保留一下版权声明。
+如果您仍然想删除的话 能否只保留第一项呢？即 "Theme Material"
+它不会影响美观并可以给开发者很大的支持和动力。 :)
+-->
+
+<!-- Sidebar Divider -->
+
+    <div class="sidebar-divider"></div>
+
+
+<!-- Theme Material -->
+
+    <a href="https://github.com/viosey/hexo-theme-material"  class="sidebar-footer-text-a" target="_blank">
+        <div class="sidebar-text mdl-button mdl-js-button mdl-js-ripple-effect sidebar-footer-text-div" data-upgraded=",MaterialButton,MaterialRipple">
+            主题 - Material
+            <span class="sidebar-badge badge-circle">i</span>
+        </div>
+    </a>
+
+
+<!-- Help & Support -->
+<!--
+
+-->
+
+<!-- Feedback -->
+<!--
+
+-->
+
+<!-- About Theme -->
+<!--
+
+-->
+
+    </div>
+
+    <!-- Sidebar Image -->
+    
+    <span id="footer-image">
+        <a href="https://pages.coding.me" target="_blank" title="coding_logo">
+            <img src="https://dn-coding-net-production-static.qbox.me/static/f452324a7d42a04f5d11efe5497923cc.svg" alt="coding_logo"><!--
+     --></a>
+    </span>
+
+
+</aside>
+
+                    
+
+                    
+                        <!-- Footer Top Button -->
+                        <div id="back-to-top" class="toTop-wrap">
+    <a href="#top" class="toTop">
+        <i class="material-icons footer_top-i">expand_less</i>
+    </a>
+</div>
+
+                    
+
+                    <!--Footer-->
+<footer class="mdl-mini-footer" id="bottom">
+    
+        <!-- Paradox Footer Left Section -->
+        <div class="mdl-mini-footer--left-section sns-list">
+    <!-- Twitter -->
+    
+        <a href="https://twitter.com/potatoonline" target="_blank">
+            <button class="mdl-mini-footer--social-btn social-btn footer-sns-twitter">
+                <span class="visuallyhidden">Twitter</span>
+            </button><!--
+     --></a>
+    
+
+    <!-- Facebook -->
+    
+
+    <!-- Google + -->
+    
+        <a href="https://plus.google.com/107216796718714158302" target="_blank">
+            <button class="mdl-mini-footer--social-btn social-btn footer-sns-gplus">
+                <span class="visuallyhidden">Google Plus</span>
+            </button><!--
+     --></a>
+    
+
+    <!-- Weibo -->
+    
+
+    <!-- Instagram -->
+    
+
+    <!-- Tumblr -->
+    
+
+    <!-- Github -->
+    
+        <a href="httpg://github.com/kmahyyg" target="_blank">
+            <button class="mdl-mini-footer--social-btn social-btn footer-sns-github">
+                <span class="visuallyhidden">Github</span>
+            </button><!--
+     --></a>
+    
+
+    <!-- LinkedIn -->
+    
+
+    <!-- Zhihu -->
+    
+
+    <!-- Bilibili -->
+    
+
+    <!-- Telegram -->
+    
+        <a href="https://t.me/kmahyyg" target="_blank">
+            <button class="mdl-mini-footer--social-btn social-btn footer-sns-telegram">
+                <span class="visuallyhidden">Telegram</span>
+            </button><!--
+     --></a>
+    
+
+    <!-- V2EX -->
+    
+        <a href="https://www.v2ex.com/member/kmahyyg" target="_blank">
+            <button class="mdl-mini-footer--social-btn social-btn footer-sns-v2ex">
+                <span class="visuallyhidden">V2EX</span>
+            </button><!--
+     --></a>
+    
+
+    <!-- Segmentfault -->
+    
+</div>
+
+
+        <!--Copyright-->
+        <div id="copyright">
+            Copyright&nbsp;©&nbsp;<span year></span>&nbsp;Potato Online
+            
+                <br>
+                
+                    <a href="https://www.upyun.com/" target="_blank" title="upyun_logo"><img src="/img/upyun_logo.svg" alt="upyun_logo"></a>
+                
+            
+        </div>
+
+        <!-- Paradox Footer Right Section -->
+
+        <!--
+        I am glad you use this theme, the development is no so easy, I hope you can keep the copyright.
+        It will not impact the appearance and can give developers a lot of support :)
+
+        很高兴您使用该主题，开发不易，希望您可以保留一下版权声明。
+        它不会影响美观并可以给开发者很大的支持。 :)
+        -->
+
+        <div class="mdl-mini-footer--right-section">
+            <div>
+                <div class="footer-develop-div">Powered by <a href="https://hexo.io" target="_blank" class="footer-develop-a">Hexo</a></div>
+                <div class="footer-develop-div">Theme - <a href="https://github.com/viosey/hexo-theme-material" target="_blank" class="footer-develop-a">Material</a></div>
+            </div>
+        </div>
+    
+</footer>
+
+
+                    <!-- Import JS File -->
+
+    <script>lsloader.load("lazyload_js","https://cdn.jsdelivr.net/gh/viosey/hexo-theme-material@1.5.6/source/js/lazyload.min.js", true)</script>
+
+
+
+    <script>lsloader.load("js_js","https://cdn.jsdelivr.net/gh/viosey/hexo-theme-material@1.5.6/source/js/js.min.js", true)</script>
+
+
+
+    <script>lsloader.load("np_js","https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js", true)</script>
+
+
+<script type="text/ls-javascript" id="NProgress-script">
+    NProgress.configure({
+        showSpinner: true
+    });
+    NProgress.start();
+    $('#nprogress .bar').css({
+        'background': '#29d'
+    });
+    $('#nprogress .peg').css({
+        'box-shadow': '0 0 10px #29d, 0 0 15px #29d'
+    });
+    $('#nprogress .spinner-icon').css({
+        'border-top-color': '#29d',
+        'border-left-color': '#29d'
+    });
+    setTimeout(function() {
+        NProgress.done();
+        $('.fade').removeClass('out');
+    }, 800);
+</script>
+
+
+
+
+
+
+
+
+
+   <!-- 使用 DISQUS js 代码 -->
+
+
+
+
+
+
+<!-- UC Browser Compatible -->
+<script>
+	var agent = navigator.userAgent.toLowerCase();
+	if(agent.indexOf('ucbrowser')>0) {
+		document.write('<link rel="stylesheet" href="/css/uc.css">');
+	   alert('由于 UC 浏览器使用极旧的内核，而本网站使用了一些新的特性。\n为了您能更好的浏览，推荐使用 Chrome 或 Firefox 浏览器。');
+	}
+</script>
+
+<!-- Import prettify js  -->
+
+    
+        
+            <script>lsloader.load("prettify_js","https://cdn.jsdelivr.net/npm/code-prettify@0.1.0/src/prettify.min.js", true)</script>
+        
+    
+
+
+
+<!-- Window Load -->
+<!-- add class for prettify -->
+<script type="text/ls-javascript" id="window-load">
+    $(window).on('load', function() {
+        // Post_Toc parent position fixed
+        $('.post-toc-wrap').parent('.mdl-menu__container').css('position', 'fixed');
+    });
+
+    
+        
+            $(function() {
+                $('pre').addClass('prettyprint linenums').attr('style', 'overflow:auto;');
+                prettyPrint();
+                })
+        
+    
+    
+</script>
+
+<!-- MathJax Load-->
+
+
+<!-- Bing Background -->
+
+
+<script type="text/ls-javascript" id="lazy-load">
+    // Offer LazyLoad
+    queue.offer(function(){
+        $('.lazy').lazyload({
+            effect : 'show'
+        });
+    });
+
+    // Start Queue
+    $(document).ready(function(){
+        setInterval(function(){
+            queue.execNext();
+        },200);
+    });
+</script>
+
+<!-- Custom Footer -->
+
+
+
+<script>
+    var copyrightNow = new Date().getFullYear();
+    var textContent = document.querySelector('span[year]')
+
+    copyrightSince = 2015;
+    if (copyrightSince === copyrightNow||copyrightSince === 0000) {
+        textContent.textContent = copyrightNow
+    } else {
+        textContent.textContent = copyrightSince + ' - ' + copyrightNow
+    }
+
+    (function(){
+        var scriptList = document.querySelectorAll('script[type="text/ls-javascript"]')
+
+        for (var i = 0; i < scriptList.length; ++i) {
+            var item = scriptList[i];
+            lsloader.runInlineScript(item.id,item.id);
+        }
+    })()
+console.log('\n %c © Material Theme | Version: 1.5.6 | https://github.com/viosey/hexo-theme-material %c \n', 'color:#455a64;background:#e0e0e0;padding:5px 0;border-top-left-radius:5px;border-bottom-left-radius:5px;', 'color:#455a64;background:#e0e0e0;padding:5px 0;border-top-right-radius:5px;border-bottom-right-radius:5px;');
+</script>
+
+                </main>
+            </div>
+        </body>
+    
+</html>
