@@ -270,11 +270,11 @@ TCP 超时重传： Timeout events & Duplicate ACKs
 
 MSL: Max segment lifetime
 
-![TCP_CONN](https://yygc.zzjnyyz.cn/asset_files/tcp-handshake-conn.jpg)
+![TCP_CONN](/asset_files/tcp-handshake-conn.jpg)
 
 SYN_SENT -> SYN_RCVD -> ESTABLISHED -> ESTABLISHED
 
-![TCP_DISCONN](https://yygc.zzjnyyz.cn/asset_files/tcp-handshake-disconn.jpg)
+![TCP_DISCONN](/asset_files/tcp-handshake-disconn.jpg)
 
 FIN_WAIT_1 -> CLOSE_WAIT -> FIN_WAIT_2 -> LAST_ACK -> TIME_WAIT -> CLOSED
 

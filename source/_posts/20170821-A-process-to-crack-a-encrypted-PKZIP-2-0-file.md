@@ -64,7 +64,7 @@ tags:
 
 分析：
 
-![local-file-header.png](https://yygc.zzjnyyz.cn/asset_files/pkzip1.png)
+![local-file-header.png](/asset_files/pkzip1.png)
 
 0x04034b50 (Must read in little-endian)   定义为文件头标签，即让OS知道这是个zip文件     
 
@@ -116,6 +116,6 @@ tags:
 
 ## bruteforce cracker
 
-Upload some [brute-force cracker](https://yygc.zzjnyyz.cn/asset_files/zipcracker-bruteforce-real.rar) for pkzip.
+Upload some [brute-force cracker](/asset_files/zipcracker-bruteforce-real.rar) for pkzip.
 Still Cracking using DO .
 

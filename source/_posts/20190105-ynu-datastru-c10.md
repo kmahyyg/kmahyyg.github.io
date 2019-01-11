@@ -139,5 +139,5 @@ for i in range(len(L1)-1, 0, -1):
 
 ## 各种算法的时间复杂度
 
-![时间复杂度表](https://yygc.zzjnyyz.cn/asset_files/2019-sort-complexity.png)
+![时间复杂度表](/asset_files/2019-sort-complexity.png)
 

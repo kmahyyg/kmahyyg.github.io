@@ -25,7 +25,7 @@ date: 2018-02-18 23:42:57
 
 苗寨小北门
 
-![xbm.jpg](https://yygc.zzjnyyz.cn/asset_files/vltour2018/vltour1.jpg)
+![xbm.jpg](/asset_files/vltour2018/vltour1.jpg)
 
 >
 >## 贵州西江千户苗寨
@@ -51,39 +51,39 @@ date: 2018-02-18 23:42:57
 
 998客栈大门
 
-![qunar_998.jpg](https://yygc.zzjnyyz.cn/asset_files/vltour2018/vltour2.jpg)
+![qunar_998.jpg](/asset_files/vltour2018/vltour2.jpg)
 
 前台一景
 
-![998qt.jpg](https://yygc.zzjnyyz.cn/asset_files/vltour2018/vltour3.jpg)
+![998qt.jpg](/asset_files/vltour2018/vltour3.jpg)
 
 充满艺术感的公共大厅(1)
 
-![9982.jpg](https://yygc.zzjnyyz.cn/asset_files/vltour2018/vltour4.jpg)
+![9982.jpg](/asset_files/vltour2018/vltour4.jpg)
 
 老板浪爷是一个很有艺术格调的人，一个有趣的灵魂，也是一个热情洋溢的人。墙上的画总是不一样，但是每天不变的是一如既往温暖的998。我去的时候正好经历了两任店长交接的过程。
 
-![9983.jpg](https://yygc.zzjnyyz.cn/asset_files/vltour2018/vltour5.jpg)
+![9983.jpg](/asset_files/vltour2018/vltour5.jpg)
 
 店铺一角的陈设
 
-![9984.jpg](https://yygc.zzjnyyz.cn/asset_files/vltour2018/vltour6.jpg)
+![9984.jpg](/asset_files/vltour2018/vltour6.jpg)
 
 旁边公共区域大厅的座位，你可以在闲暇时光：沏上一杯热茶，看看书、与掌柜和远道而来的灵魂聊聊天、欣赏苗寨的美丽风光。
 
-![9985.jpg](https://yygc.zzjnyyz.cn/asset_files/vltour2018/vltour7.jpg)
+![9985.jpg](/asset_files/vltour2018/vltour7.jpg)
 
-![998out3.jpg](https://yygc.zzjnyyz.cn/asset_files/vltour2018/vltour8.jpg)
+![998out3.jpg](/asset_files/vltour2018/vltour8.jpg)
 
 充满文艺气息的客栈一角，老板与老板娘都是美术专业毕业，热爱艺术，热情好客！
 
-![9986.jpg](https://yygc.zzjnyyz.cn/asset_files/vltour2018/vltour9.jpg)
+![9986.jpg](/asset_files/vltour2018/vltour9.jpg)
 
 前台另一个公共区域，在这里你可以享受苗寨西门区域的壮丽景色。与此遥相呼应的是观景台面对的北门景色。
 
-![998out1.jpg](https://yygc.zzjnyyz.cn/asset_files/vltour2018/vltour10.jpg)
+![998out1.jpg](/asset_files/vltour2018/vltour10.jpg)
 
-![998out2.jpg](https://yygc.zzjnyyz.cn/asset_files/vltour2018/vltour11.jpg)
+![998out2.jpg](/asset_files/vltour2018/vltour11.jpg)
 
 998是一家经营了十年的客栈，目前包括998小小的客栈+998偏安一隅两个部分，与幸福里、90年代、北纬27度几家客栈、第三级共建友好联盟。在幸福里，我认识了另一个义工，可爱的静静君（以后不能乱说我想静静了 XD）。而998的老板浪爷正如之上所说，努力为每一个远道而来的朋友在998营造一份家的温暖。在998，每一个朋友都是我们的亲人。
 
@@ -149,7 +149,7 @@ date: 2018-02-18 23:42:57
 
 # Cold But Warm - Those people
 
-![cold2.jpg](https://yygc.zzjnyyz.cn/asset_files/vltour2018/vltour12.jpg)
+![cold2.jpg](/asset_files/vltour2018/vltour12.jpg)
 
 在998的一个月里，我经历了西江的寒冬，在旅游淡季的同时迎来了寒潮。在寒潮中，却一直有这样的一些掌柜们与我们共享欢乐。
 
@@ -179,7 +179,7 @@ date: 2018-02-18 23:42:57
 
 ## 困难的冰雪一周
 
-![cold.jpg](https://yygc.zzjnyyz.cn/asset_files/vltour2018/vltour13.jpg)
+![cold.jpg](/asset_files/vltour2018/vltour13.jpg)
 
 很开心的，我遇到了西江最冷的一周。冷得瑟瑟发抖，晚上要三床被子+一个睡袋才能抵御老式木质吊脚楼阁楼缝隙中呼啸而入的瑟瑟寒风。然后水管直接冻住了，不同的房间供水情况差异很大，每天要为客人提水服务。天气很冷，路上结了厚厚的冰，非常的湿滑，也是非常考验人的毅力。
 
@@ -189,25 +189,25 @@ date: 2018-02-18 23:42:57
 
 # 与游客们的邂逅
 
-![night.jpg](https://yygc.zzjnyyz.cn/asset_files/vltour2018/vltour14.jpg)
+![night.jpg](/asset_files/vltour2018/vltour14.jpg)
 
 ——与方南小姐姐同行
 
 ## 观景台一游
 
-![gjt1.jpg](https://yygc.zzjnyyz.cn/asset_files/vltour2018/vltour15.jpg)
+![gjt1.jpg](/asset_files/vltour2018/vltour15.jpg)
 
-![gjt2.jpg](https://yygc.zzjnyyz.cn/asset_files/vltour2018/vltour16.jpg)
+![gjt2.jpg](/asset_files/vltour2018/vltour16.jpg)
 
-![gjt3.jpg](https://yygc.zzjnyyz.cn/asset_files/vltour2018/vltour17.jpg)
+![gjt3.jpg](/asset_files/vltour2018/vltour17.jpg)
 
-![gjt4.jpg](https://yygc.zzjnyyz.cn/asset_files/vltour2018/vltour18.jpg)
+![gjt4.jpg](/asset_files/vltour2018/vltour18.jpg)
 
-![gjt5.jpg](https://yygc.zzjnyyz.cn/asset_files/vltour2018/vltour19.jpg)
+![gjt5.jpg](/asset_files/vltour2018/vltour19.jpg)
 
-![gjt6.jpg](https://yygc.zzjnyyz.cn/asset_files/vltour2018/vltour20.jpg)
+![gjt6.jpg](/asset_files/vltour2018/vltour20.jpg)
 
-![gjt7.jpg](https://yygc.zzjnyyz.cn/asset_files/vltour2018/vltour21.jpg)
+![gjt7.jpg](/asset_files/vltour2018/vltour21.jpg)
 
 ——作为滇蓝RES去摸po的时候拍的，可惜更高处拍的更美的景色被我手机三清弄没了，心塞......
 
@@ -215,7 +215,7 @@ date: 2018-02-18 23:42:57
 
 # 小年
 
-![xiaonian1.jpg](https://yygc.zzjnyyz.cn/asset_files/vltour2018/vltour22.jpg)
+![xiaonian1.jpg](/asset_files/vltour2018/vltour22.jpg)
 
 樱桃姐教我包饺子~ ~ ~ 东北寄来的肉冻~ ~ ~ ，还有浪爷的家传腌菜（未上镜）~ ~ ~
 

@@ -33,7 +33,7 @@ Tutorial:    https://blog.kmahyyg.xyz/2018/ASM-exp-report/#%E5%AE%9E%E9%AA%8C%E6
 
 6. 关闭 Qemu-KVM，使用 BochsDBG 虚拟机调试写入在虚拟硬盘 MBR 扇区中的程序；
 
-![2018-asmexp3-02.png](https://yygc.zzjnyyz.cn/asset_files/2018-asmexp3-02.png)
+![2018-asmexp3-02.png](/asset_files/2018-asmexp3-02.png)
 
 ## 思考题
 
