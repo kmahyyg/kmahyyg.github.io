@@ -281,7 +281,7 @@
 
     
         <meta property="article:published_time" content="Mon Aug 21 2017 01:21:49 GMT+0000">
-        <meta property="article:modified_time" content="Fri Jan 11 2019 13:00:12 GMT+0000">
+        <meta property="article:modified_time" content="Fri Jan 11 2019 15:42:15 GMT+0000">
     
 
     <!-- The Twitter Card protocol -->
@@ -304,7 +304,7 @@
     "mainEntityOfPage": "https://www.kmahyyg.xyz/2017/A-process-to-crack-a-encrypted-PKZIP-2-0-file/index.html",
     "headline": "A process to crack a encrypted PKZIP 2.0 file",
     "datePublished": "Mon Aug 21 2017 01:21:49 GMT+0000",
-    "dateModified": "Fri Jan 11 2019 13:00:12 GMT+0000",
+    "dateModified": "Fri Jan 11 2019 15:42:15 GMT+0000",
     "author": {
         "@type": "Person",
         "name": "Patrick Young",
@@ -597,7 +597,7 @@
  [end of central directory record]
 </code></pre></blockquote>
 <p>分析：</p>
-<p><img src="https://yygc.zzjnyyz.cn/asset_files/pkzip1.png" alt="local-file-header.png"></p>
+<p><img src="/asset_files/pkzip1.png" alt="local-file-header.png"></p>
 <p>0x04034b50 (Must read in little-endian)   定义为文件头标签，即让OS知道这是个zip文件     </p>
 <blockquote>
 <pre><code> 文档4.3.7部分
@@ -613,7 +613,7 @@
 <h2 id="回归正题"><a href="#回归正题" class="headerlink" title="回归正题"></a>回归正题</h2><p>由上可知，这个文件最低的解压缩软件要求版本是2.0，也就是说它在1.0 1.1是无法解压的，那么也不可能是过高的版本，知道了它使用了传统的 PKWARE 加密方式。</p>
 <p>鉴于C语言没学，具体的算法和思路代码自己参看参考资料4吧。<br>无奈了，大概能看懂一些东西，就是crc32 + uint8/16/32 + xor + 伪随机数据流的一个东西。</p>
 <p>好吧，转到Github，看看有没有大神写了crack代码并开源。找到了，然后把它附到了我的站点上，需要的自取。</p>
-<h2 id="bruteforce-cracker"><a href="#bruteforce-cracker" class="headerlink" title="bruteforce cracker"></a>bruteforce cracker</h2><p>Upload some <a href="https://yygc.zzjnyyz.cn/asset_files/zipcracker-bruteforce-real.rar" target="_blank" rel="noopener">brute-force cracker</a> for pkzip.<br>Still Cracking using DO .</p>
+<h2 id="bruteforce-cracker"><a href="#bruteforce-cracker" class="headerlink" title="bruteforce cracker"></a>bruteforce cracker</h2><p>Upload some <a href="/asset_files/zipcracker-bruteforce-real.rar">brute-force cracker</a> for pkzip.<br>Still Cracking using DO .</p>
 
         
                 <blockquote style="margin: 2em 0 0;padding: 0.5em 1em;border-left: 3px solid #F44336;background-color: #F5F5F5;list-style: none;">

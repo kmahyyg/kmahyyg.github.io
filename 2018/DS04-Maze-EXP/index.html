@@ -281,7 +281,7 @@
 
     
         <meta property="article:published_time" content="Thu Oct 18 2018 23:57:13 GMT+0000">
-        <meta property="article:modified_time" content="Fri Jan 11 2019 13:00:12 GMT+0000">
+        <meta property="article:modified_time" content="Fri Jan 11 2019 15:42:15 GMT+0000">
     
 
     <!-- The Twitter Card protocol -->
@@ -304,7 +304,7 @@
     "mainEntityOfPage": "https://www.kmahyyg.xyz/2018/DS04-Maze-EXP/index.html",
     "headline": "数据结构实验 4 - 迷宫",
     "datePublished": "Thu Oct 18 2018 23:57:13 GMT+0000",
-    "dateModified": "Fri Jan 11 2019 13:00:12 GMT+0000",
+    "dateModified": "Fri Jan 11 2019 15:42:15 GMT+0000",
     "author": {
         "@type": "Person",
         "name": "Patrick Young",
@@ -642,8 +642,8 @@ Phone is 9876543210
 <span class="token punctuation">}</span>
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h1 id="迷宫生成"><a href="#迷宫生成" class="headerlink" title="迷宫生成"></a>迷宫生成</h1><p>其实是一个 树/图 的遍历问题，这样也就关联上了两种常用算法：BFS（广度优先搜索）、DFS(深度优先搜索)，实际上就是一个 Single Source Shortest Path 寻找问题。</p>
-<p><img src="https://yygc.zzjnyyz.cn/asset_files/2018-mazegen-01.png" alt="gen-maze.png"></p>
-<p><a href="https://yygc.zzjnyyz.cn/maze_ds04_vid.html" target="_blank" rel="noopener">点击此处查看视频演示</a></p>
+<p><img src="/asset_files/2018-mazegen-01.png" alt="gen-maze.png"></p>
+<p><a href="/asset_files/2018-mazegen.flv">点击此处查看视频演示</a></p>
 <h2 id="推荐的生成思路"><a href="#推荐的生成思路" class="headerlink" title="推荐的生成思路"></a>推荐的生成思路</h2><p>Once we have a grid filled with walls, we transform it into a maze as follows:</p>
 <ol>
 <li>We pick a random cell</li>
@@ -690,7 +690,7 @@ The optional argument random is a 0-argument function returning a random float i
 <pre class="line-numbers language-python"><code class="language-python">w<span class="token punctuation">,</span> h <span class="token operator">=</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span>
 A <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">[</span>None<span class="token punctuation">]</span> <span class="token operator">*</span> w <span class="token keyword">for</span> i <span class="token keyword">in</span> range<span class="token punctuation">(</span>h<span class="token punctuation">)</span><span class="token punctuation">]</span>
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-<h1 id="迷宫自动完成"><a href="#迷宫自动完成" class="headerlink" title="迷宫自动完成"></a>迷宫自动完成</h1><p><img src="https://yygc.zzjnyyz.cn/asset_files/2018-mazegen-02.png" alt="autowalk-maze.png"></p>
+<h1 id="迷宫自动完成"><a href="#迷宫自动完成" class="headerlink" title="迷宫自动完成"></a>迷宫自动完成</h1><p><img src="/asset_files/2018-mazegen-02.png" alt="autowalk-maze.png"></p>
 <h1 id="编写过程中的实现问题"><a href="#编写过程中的实现问题" class="headerlink" title="编写过程中的实现问题"></a>编写过程中的实现问题</h1><h2 id="Dirty-Workaround-ycomlib-h"><a href="#Dirty-Workaround-ycomlib-h" class="headerlink" title="Dirty Workaround (ycomlib.h)"></a>Dirty Workaround (ycomlib.h)</h2><p>请参考 Github Repo 中的对应文件。</p>
 <h2 id="最大的问题"><a href="#最大的问题" class="headerlink" title="最大的问题"></a>最大的问题</h2><p>Python 预实现过后，进行面向 C 的迁移。很多方面，例如 二维数组的传递、数组 Index 超界、递归超过上限 问题，导致了许多的 SEGV，最后还是没有解决。时间太紧张了，没时间了。整体的思路还算清晰，请参考上面的附图。也欢迎您和我联系，交换您的想法。</p>
 <h1 id="Acknowledgement"><a href="#Acknowledgement" class="headerlink" title="Acknowledgement"></a>Acknowledgement</h1><ul>
