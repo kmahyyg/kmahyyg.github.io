@@ -5,7 +5,7 @@ tags:
   - School
 ---
 
-# Computer - Chapter 1 - Basic Concepts
+# Computer Network - Chapter 1 - Basic Concepts
 
 Host: End System.
 
