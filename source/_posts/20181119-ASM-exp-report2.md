@@ -1,6 +1,6 @@
 ---
 title: YNU - 汇编语言程序设计实验报告 4-5
-date: 2018-11-19 13:09:43
+date: 2019-01-11 20:58:01
 tags:
   - Tech
   - School
@@ -100,7 +100,8 @@ NASM: https://gist.github.com/kmahyyg/4e8dc523f513ff78a53c18e4234460af
 目前问题：
 
 Can： 接受输入、保存到 FDD，从磁盘读取，读取到指定的具体的固定 RAM 地址并显示。
-Cannot： 读取到变量对应的地址并显示，读取 FDD 成功但写入 RAM 失败...
+
+<del>Cannot： 读取到变量对应的地址并显示，读取 FDD 成功但写入 RAM 失败... 已修复： dx 和 bx 两个寄存器中传入的地址存在问题</del>
 
 接受输入，写入 FDD 的代码：
 
@@ -155,6 +156,41 @@ codesg ends
     end start 
 ```
 
+从 FDD 中读取内容并显示在屏幕上：
+```asm6502
+datasg segment
+    readout db 512 dup ('$')
+datasg ends
+
+codesg segment
+
+start:
+        mov ax,datasg
+        mov ds,ax
+        mov es,ax
+        lea bx,readout   ;ready for read buffer
+        
+        mov ah,2
+        mov al,1
+        mov dh,0
+        mov ch,0
+        mov cl,4
+        mov dl,0
+        int 13h
+        
+        mov dx,offset readout
+        mov ah,9
+        int 21h
+        
+        mov ax,4c00h
+        int 21h
+
+codesg ends
+end start
+```
+
+### Reference
+
 接受输入之后回显打印：
 
 ```asm6502
@@ -201,9 +237,6 @@ codesg ends
     end start 
 ```
 
-
-### Reference
-
 **不要忘记打末尾的 `h`**
 
 ```
@@ -241,11 +274,11 @@ INT 21h / AH=0Ah - input of a string to DS:DX, fist byte is buffer size, second 
 
 # END
 
-本学期的汇编课程的随堂实验就到此告一段落，感谢 王逍老师的精心付出 
-和 钰在各方面的帮助，爱你！
+本学期的汇编课程所有的的随堂实验就到此告一段落，感谢 王逍 老师的精心付出。
+和 钰 在各方面的帮助，爱你！
 
-Updated on Thu Nov 29 23:41:30 CST 2018
-Rev. 09
+Updated on 2019-01-11 20:58:01
+Rev. 11
 
 # Reference
 
