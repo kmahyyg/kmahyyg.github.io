@@ -63,7 +63,7 @@ To-do List:
 
 ### 2018 Wikipedia Summer Meetup @ Kunming
 
-![WikiMeetup，图片打不开请使用科学上网软件](/asset_files/2018-wikipdaKM1.jpg)
+![WikiMeetup，图片打不开请使用科学上网软件](https://alicdn.kmahyyg.xyz/asset_files/2018-wikipdaKM1.jpg)
 
 参加了 [2018 年 维基百科大陆维基人夏季聚会](https://zh.wikipedia.org/wiki/Wikipedia:%E8%81%9A%E4%BC%9A/%E4%B8%AD%E5%9B%BD%E5%A4%A7%E9%99%86%E7%A4%BE%E7%BE%A4%E8%81%9A%E4%BC%9A/2018%E6%98%86%E6%98%8E%E5%A4%8F%E8%81%9A)，很开心在这次聚会上认识了各路豪杰，包括 Zhangmoon、Chen、河水、仪莎 和 Evelyn。他们很多都是（曾经或正在）旅居海外的华人，中文维基数十万用户，实际的参与编辑的月活跃用户其实不到五千。
 
@@ -75,6 +75,7 @@ To-do List:
 
 
 ### 情感：那些心中青春的悸动
+
 > 前方高能，请非相关人士直接放弃阅读这一部分。
 > 此部分将尽可能使用英文撰写。
 

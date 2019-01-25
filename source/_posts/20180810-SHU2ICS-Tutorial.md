@@ -52,7 +52,7 @@ Mac OS 用户请直接使用此教程安装 https://pythonguidecn.readthedocs.io
 
 正确回显：
 
-![pyversion](/asset_files/shu2ics_pyv.png)
+![pyversion](https://alicdn.kmahyyg.xyz/asset_files/shu2ics_pyv.webp)
 
 ## 教程 Part 1： 下载代码并安装所需的项目依赖
 
@@ -64,7 +64,7 @@ Mac OS 用户请直接使用此教程安装 https://pythonguidecn.readthedocs.io
  
 点击页面的 "Clone or Download" 按钮，然后选择 “Download zip”
  
-![drepo](/asset_files/2ics_dcode.png)
+![drepo](https://alicdn.kmahyyg.xyz/asset_files/2ics_dcode.webp)
  
 将下载好的代码解压后，打开解压得到的文件夹，并在文件夹中打开终端，输入：
  
@@ -86,17 +86,17 @@ Mac OS 用户请直接使用此教程安装 https://pythonguidecn.readthedocs.io
 
 第二步：按照界面提示，根据格式输入一个学期开始的时间。接下来选择学期数，并输入您的教务系统帐号和密码。 **输入密码时不会有任何回显，您无需担心，请直接往下输入，输入完成按下回车键即可！**
 
-![login](/asset_files/shu2ics_op.png)
+![login](https://alicdn.kmahyyg.xyz/asset_files/shu2ics_op.webp)
 
 第三步： 见到 `Validate Image` 开头的提示后，软件会自动弹出验证码，请您将验证码输入到对应位置。 **验证码不区分大小写**
 
-![captcha notice](/asset_files/shu2ics_capt1.png)
+![captcha notice](https://alicdn.kmahyyg.xyz/asset_files/shu2ics_capt1.webp)
 
-![captcha img](/asset_files/shu2ics_capt2.png)
+![captcha img](https://alicdn.kmahyyg.xyz/asset_files/shu2ics_capt2.webp)
 
 第四步： 请您耐心等待，直到导出完成，这时候，在您的当前工作文件夹内会产生一个大小不为 0 的文件 `Course Schedule.ics` 文件。导出成功！
 
-![ics file](/asset_files/shu2ics_suc.png)
+![ics file](https://alicdn.kmahyyg.xyz/asset_files/shu2ics_suc.webp)
 
 ### YNU2Gcalendar
 
@@ -112,7 +112,7 @@ Mac OS 用户请直接使用此教程安装 https://pythonguidecn.readthedocs.io
 
 并保存，关闭文本编辑器。
 
-![modify user login crediential](/asset_files/ynu2ics_modify.png)
+![modify user login crediential](https://alicdn.kmahyyg.xyz/asset_files/ynu2ics_modify.webp)
 
 **如果您的统一身份认证开启了两次确认验证或者单点登陆，本程序已经预置了处理代码，但不保证有效，请您暂时关闭。**
 
@@ -120,13 +120,13 @@ Mac OS 用户请直接使用此教程安装 https://pythonguidecn.readthedocs.io
 
 第三步：运行 `python3 ./client.py` 启动程序，按照提示接受免责声明并确认您已完成前面几步，接下来按任意键继续。程序模拟登陆完成后，请您输入当前学期共几周，一般为 18 ~ 20 周。只能输入整数！
 
-![run photo](/asset_files/ynu2ics_op.png)
+![run photo](https://alicdn.kmahyyg.xyz/asset_files/ynu2ics_op.webp)
 
 第四步：运行完成，当前文件夹内会产生一个大小不为 0 的文件 `ynucal.ics`，导出成功！
 
-![success](/asset_files/ynu2ics_suc1.png)
+![success](https://alicdn.kmahyyg.xyz/asset_files/ynu2ics_suc1.webp)
 
-![success2](/asset_files/ynu2ics_suc2.png)
+![success2](https://alicdn.kmahyyg.xyz/asset_files/ynu2ics_suc2.webp)
 
 ## 教程 Part 3： 使用日历文件
 

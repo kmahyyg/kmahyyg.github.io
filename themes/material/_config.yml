@@ -4,9 +4,9 @@
 
 # Head info
 head:
-    favicon: "https://www.kmahyyg.xyz/asset_files/avatar-yyg.jpg"
-    high_res_favicon: "https://www.kmahyyg.xyz/asset_files/avatar-yyg.jpg"
-    apple_touch_icon: "https://www.kmahyyg.xyz/asset_files/avatar-yyg.jpg"
+    favicon: "https://alicdn.kmahyyg.xyz/asset_files/avatar-yyg.jpg"
+    high_res_favicon: "https://alicdn.kmahyyg.xyz/asset_files/avatar-yyg.jpg"
+    apple_touch_icon: "https://alicdn.kmahyyg.xyz/asset_files/avatar-yyg.jpg"
     keywords: "Patrick Young,kmahyyg,material"
     site_verification:
         google:
@@ -70,8 +70,8 @@ background:
 
 # Images Settings
 img:
-    logo: "https://www.kmahyyg.xyz/asset_files/avatar-yyg.jpg"
-    avatar: "https://www.kmahyyg.xyz/asset_files/avatar-yyg.jpg"
+    logo: "https://alicdn.kmahyyg.xyz/asset_files/avatar-yyg.jpg"
+    avatar: "https://alicdn.kmahyyg.xyz/asset_files/avatar-yyg.jpg"
     daily_pic: "/img/daily_pic.png"
     sidebar_header: "/img/sidebar_header.png"
     random_thumbnail: "/img/random/material-"

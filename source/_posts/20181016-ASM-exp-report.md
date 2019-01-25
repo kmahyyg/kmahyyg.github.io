@@ -248,7 +248,7 @@ $ sudo mount ./floppya.img /mnt/floppy/ -o loop
 
 ### Part 1: 启动成功
 
-![STARTUP EXP02](/asset_files/2018-asmexp1.png)
+![STARTUP EXP02](https://alicdn.kmahyyg.xyz/asset_files/2018-asmexp1.webp)
 
 踩了很多坑，主要是镜像建立和不截断写入数据。
 
@@ -270,7 +270,7 @@ BIOS 执行完成后，会跳转到 0x7c00 位置，我们使用 `b 0x7c00` 在�
 
 接下来交替使用 s 和 p 交替执行，直到 BIOS 加载完成。因为现有知识不足以看清楚 BIOS 加载和启动过程，我们直接使用 c 执行 BIOS 程序直到断点。
 
-![BOCHSDBG EXP02](/asset_files/2018-asmexp2.png)
+![BOCHSDBG EXP02](https://alicdn.kmahyyg.xyz/asset_files/2018-asmexp2.webp)
 
 到达断点处，可以看到我们编写的汇编程序源代码。最终会陷入死循环（看起来就是没动静），这时候，如果 Bochs 调试器不处于等待输入状态，则使用 Ctrl-C 跳回解释器，接下来使用 q 命令退出。
 
@@ -441,7 +441,7 @@ or ax,dx
 
 ### 验证类
 
-![EXP3-01](/asset_files/2018-asmexp3.png)
+![EXP3-01](https://alicdn.kmahyyg.xyz/asset_files/2018-asmexp3.webp)
 
 我承认这里我偷了个懒，没有把 EXP 4 对应的可用跳转指令列表，不过，我想，我已经把需要的寄存器告诉你了，你自己对一下吧。
 

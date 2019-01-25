@@ -65,7 +65,7 @@ tags:
 收拾下心情，擦擦眼泪，我回来了。
 -------------------------
 
-![cat](/asset_files/hateself1.jpg)
+![cat](https://alicdn.kmahyyg.xyz/asset_files/hateself1.jpg)
 
 我恨自己，恨自己不敢面对我内心那个真实而又脆弱的我，不敢把它暴露出来，接受阳光的修复和洗礼。
 

@@ -33,7 +33,7 @@ tags:
 
 Recommended Page Rules:
 
-![Recommended Page Rules](/asset_files/2018-b2cf-01.png)
+![Recommended Page Rules](https://alicdn.kmahyyg.xyz/asset_files/2018-b2cf-01.webp)
 
 # Reference
 

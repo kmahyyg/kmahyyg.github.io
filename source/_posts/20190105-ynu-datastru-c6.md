@@ -328,6 +328,6 @@ BinaryTreeNode* construct(int* preOrder,int* midOrder,int len){
 
 Huffman 编码：利用 Huffman 树可以构造一种不等长的二进制编码，并且构造所得的 Huffman 编码是一种最优前缀编码，即：需要传输的电文的总长度最短。任何一个字符的编码都不是同一字符集中另一个字符的编码的前缀。"左 0 右 1"
 
-![huffman_tree](/asset_files/Huffman_tree_2.svg)
+![huffman_tree](https://alicdn.kmahyyg.xyz/asset_files/Huffman_tree_2.svg)
 
 **权重最低的为叶子节点，叶子节点的双亲节点为孩子的权重之和，依此类推，根节点的孩子节点的权重最高，对应单字符的权重最高、使用频率最高、电文最短。**

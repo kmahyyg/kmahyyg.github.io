@@ -6,7 +6,7 @@ tags:
   - Tech
 ---
 
-![Array_Chaintable.png](/asset_files/c-chaintable.png)
+![Array_Chaintable.png](https://alicdn.kmahyyg.xyz/asset_files/c-chaintable.webp)
 
 https://www.cnblogs.com/tao560532/articles/2199280.html
 
