@@ -280,8 +280,8 @@
     <meta property="og:article:tag" content="Tech"> <meta property="og:article:tag" content="School"> 
 
     
-        <meta property="article:published_time" content="Fri Jan 04 2019 20:12:43 GMT+0000">
-        <meta property="article:modified_time" content="Sat Jan 26 2019 01:44:24 GMT+0000">
+        <meta property="article:published_time" content="Sat Jan 26 2019 20:54:29 GMT+0000">
+        <meta property="article:modified_time" content="Tue Jan 29 2019 13:40:17 GMT+0000">
     
 
     <!-- The Twitter Card protocol -->
@@ -303,8 +303,8 @@
     "@type": "BlogPosting",
     "mainEntityOfPage": "https://www.kmahyyg.xyz/2019/ASM-BigHomework/index.html",
     "headline": "2018 汇编大作业",
-    "datePublished": "Fri Jan 04 2019 20:12:43 GMT+0000",
-    "dateModified": "Sat Jan 26 2019 01:44:24 GMT+0000",
+    "datePublished": "Sat Jan 26 2019 20:54:29 GMT+0000",
+    "dateModified": "Tue Jan 29 2019 13:40:17 GMT+0000",
     "author": {
         "@type": "Person",
         "name": "Patrick Young",
@@ -448,7 +448,7 @@
     <!-- Author Name & Date -->
     <div>
         <strong>Patrick Young</strong>
-        <span>1月 04, 2019</span>
+        <span>1月 26, 2019</span>
     </div>
 
     <div class="section-spacer"></div>
@@ -559,13 +559,17 @@
                 <!-- Post Content -->
                 <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
     
-        <h2 id="整体思路"><a href="#整体思路" class="headerlink" title="整体思路"></a>整体思路</h2><p>读取输入 -&gt; 处理输入 -&gt; 与密码比较 -&gt; 装入 Decoder -&gt; Decoder 装载 MBR</p>
-<p>观察发现 MS-DOS 7.11 和 WinXP 的 磁盘，1～31 扇区均为空！（0 扇区为 MBR）</p>
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p><a href="https://stackoverflow.com/questions/1396909/ret-retn-retf-how-to-use-them" target="_blank" rel="noopener">https://stackoverflow.com/questions/1396909/ret-retn-retf-how-to-use-them</a></p>
-<p><a href="https://sourcegraph.com/github.com/sunnyden/MBRLock@master/" target="_blank" rel="noopener">https://sourcegraph.com/github.com/sunnyden/MBRLock@master/</a></p>
-<p><a href="https://www.felixcloutier.com/x86/" target="_blank" rel="noopener">https://www.felixcloutier.com/x86/</a></p>
-<p><a href="https://asminst.kmahyyg.xyz/" target="_blank" rel="noopener">https://asminst.kmahyyg.xyz/</a></p>
-<p><a href="https://blog.csdn.net/u013630349/article/details/50370227" target="_blank" rel="noopener">https://blog.csdn.net/u013630349/article/details/50370227</a></p>
+        <h2 id="整体思路"><a href="#整体思路" class="headerlink" title="整体思路"></a>整体思路</h2><p><img src="https://alicdn.kmahyyg.xyz/asset_files/2019-asmbighw-flow.webp" alt="workflow chart"></p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p>观察发现 MS-DOS 7.11 和 WinXP 的 磁盘，1～31 扇区均为空！（0 扇区为 MBR）</p>
+<ul>
+<li><a href="https://stackoverflow.com/questions/1396909/ret-retn-retf-how-to-use-them" target="_blank" rel="noopener">https://stackoverflow.com/questions/1396909/ret-retn-retf-how-to-use-them</a></li>
+<li><a href="https://stackoverflow.com/questions/39474332/assembly-difference-between-var-and-var/39474660" target="_blank" rel="noopener">https://stackoverflow.com/questions/39474332/assembly-difference-between-var-and-var/39474660</a></li>
+<li><a href="https://sourcegraph.com/github.com/sunnyden/MBRLock@master/" target="_blank" rel="noopener">https://sourcegraph.com/github.com/sunnyden/MBRLock@master/</a></li>
+<li><a href="https://www.felixcloutier.com/x86/" target="_blank" rel="noopener">https://www.felixcloutier.com/x86/</a></li>
+<li><a href="https://asminst.kmahyyg.xyz/" target="_blank" rel="noopener">https://asminst.kmahyyg.xyz/</a></li>
+<li><a href="https://blog.csdn.net/u013630349/article/details/50370227" target="_blank" rel="noopener">https://blog.csdn.net/u013630349/article/details/50370227</a></li>
+<li><a href="https://docs.microsoft.com/en-us/cpp/cpp/argument-passing-and-naming-conventions?view=vs-2017" target="_blank" rel="noopener">https://docs.microsoft.com/en-us/cpp/cpp/argument-passing-and-naming-conventions?view=vs-2017</a></li>
+</ul>
 
         
                 <blockquote style="margin: 2em 0 0;padding: 0.5em 1em;border-left: 3px solid #F44336;background-color: #F5F5F5;list-style: none;">
@@ -680,21 +684,13 @@
             <nav class="material-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
     <!-- Prev Nav -->
     
-        <a href="/2019/chinese-gentleman-works-hard/" id="post_nav-newer" class="prev-content">
-            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
-                <i class="material-icons">arrow_back</i>
-            </button>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            新篇
-        </a>
-    
 
     <!-- Section Spacer -->
     <div class="section-spacer"></div>
 
     <!-- Next Nav -->
     
-        <a href="/2018/CRC32-Network/" id="post_nav-older" class="next-content">
+        <a href="/2019/201901124-cqcd-trip-cqday1/" id="post_nav-older" class="next-content">
             旧篇
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
