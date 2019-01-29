@@ -321,6 +321,36 @@ $ telnet localhost 4000
 
 公告：本站评论 **不对** 使用中国大陆 IP 地址访问本站的用户开放。
 
+## Hostsolutions 关于 FUSE 无法使用的问题
+
+该站的老板不是专业的 IDC，是个 Oneman，工单回复时效基本按月计算。需要使用 FUSE 进行 rclone 等操作的用户请先工单请求开启 FUSE，然后在 `/etc/systemd/system/hostsolutions-enable-fuse.service ` 中插入下列内容后：
+
+```systemd
+[Unit]
+Description=Hostsolutions' LXC VPS - Enable FUSE
+After=basic.target
+Wants=local-fs.target basic.target
+
+[Service]
+User=root
+Group=root
+ExecStart=/bin/mknod -m 666 /dev/fuse c 10 229
+Type=oneshot
+
+[Install]
+WantedBy=multi-user.target
+```
+
+执行
+
+```bash
+# systemctl daemon-reload
+# systemctl start hostsolutions-enable-fuse.service 
+# systemctl enable hostsolutions-enable-fuse.service 
+```
+
+之后使用 `ls -alh /dev` 检查输出是否为 `crw-rw-rw-   1 root root      10,   229 Jan 29 21:13 fuse`
+
 # 参考文献
 
 - [Caddy Server Documentation](https://caddyserver.com/docs)
