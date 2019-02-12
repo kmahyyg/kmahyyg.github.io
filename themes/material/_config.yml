@@ -33,9 +33,7 @@ scheme: Paradox
 
 # UI & UX: slogan, color, effect
 uiux:
-    # Use empty slogan for importing DailyPoem Support
-    slogan: "  "
-    # slogan: "The man who control all the sources will control the whole world!"
+    slogan: "The man who control all the sources will control the whole world!"
     theme_color: "#0097A7"
     theme_sub_color: "#00838F"
     hyperlink_color: "#00838F"
@@ -74,9 +72,7 @@ background:
 img:
     logo: "https://alicdn.kmahyyg.xyz/asset_files/avatar-yyg.jpg"
     avatar: "https://alicdn.kmahyyg.xyz/asset_files/avatar-yyg.jpg"
-    # Enable DailyPoem
-    daily_pic: "https://v2.jinrishici.com/one.svg"
-    # daily_pic: "/img/daily_pic.png"
+    daily_pic: "/img/daily_pic.png"
     sidebar_header: "/img/sidebar_header.png"
     random_thumbnail: "/img/random/material-"
     footer_image:
