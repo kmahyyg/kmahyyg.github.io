@@ -33,6 +33,7 @@ scheme: Paradox
 
 # UI & UX: slogan, color, effect
 uiux:
+    slogan_poem: true
     slogan: "The man who control all the sources will control the whole world!"
     theme_color: "#0097A7"
     theme_sub_color: "#00838F"

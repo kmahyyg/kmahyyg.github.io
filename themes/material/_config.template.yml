@@ -33,6 +33,7 @@ scheme: Paradox
 
 # UI & UX: slogan, color, effect
 uiux:
+    slogan_poem: false
     slogan: "Hi, nice to meet you"
     theme_color: "#0097A7"
     theme_sub_color: "#00838F"
