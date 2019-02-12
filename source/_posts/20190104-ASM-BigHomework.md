@@ -1,6 +1,6 @@
 ---
 title: 2018 汇编大作业
-date: 2019-02-01 16:03:55
+date: 2019-02-08 09:24:00
 tags:
   - School
   - Tech
@@ -9,6 +9,18 @@ tags:
 ## 整体思路
 
 ![workflow chart](https://alicdn.kmahyyg.xyz/asset_files/2019-asmbighw-flow.webp)
+
+Storage:
+-  Test
+
+Encrypt:
+-  Test
+
+Decrypt:
+-  Test
+
+MBR PlaceHolder:
+
 
 ## Source code 
 
