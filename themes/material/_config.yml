@@ -19,7 +19,7 @@ head:
 # Jump Links Settings
 url:
     rss: "/atom.xml"
-    daily_pic: "http://www.bing.com"
+    daily_pic: "https://www.bing.com"
     logo: "#"
 
 
@@ -73,7 +73,7 @@ background:
 img:
     logo: "https://alicdn.kmahyyg.xyz/asset_files/avatar-yyg.jpg"
     avatar: "https://alicdn.kmahyyg.xyz/asset_files/avatar-yyg.jpg"
-    daily_pic: "/img/daily_pic.png"
+    daily_pic: "https://bing.biturl.top/?format=image&resolution=1366&mkt=en-US"
     sidebar_header: "/img/sidebar_header.png"
     random_thumbnail: "/img/random/material-"
     footer_image:
