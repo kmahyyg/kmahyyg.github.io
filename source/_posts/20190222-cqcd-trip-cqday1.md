@@ -1,6 +1,6 @@
 ---
 title: 2019 新年之旅 - 重庆 Day 1
-date: 2019-02-23 20:23:11
+date: 2019-02-24 00:06:21
 tags:
   - Personal
 ---
@@ -44,15 +44,32 @@ tags:
 
 ## Day 1 - 下午
 
+吃完了冰粉，已经接近下午四点。看了看地图，发现在这该死的山城里 GPS 总是失灵，由于接下来时间安排的限制，只能去走走最近的一些景点了。地图上最近一个 POI 就是新华日报社旧址，旧址现已被翻修一新，内部展览着过去出版的新华日报和报社工作人员的生活环境还有一些当时新华日报的成就。下面两张图是我觉得记忆很深的一部分：（门口的标语我只拍了一半，不知道当时创立新华日报的编辑看到现在的新华日报和这两幅标语，心中会是何种滋味）
+
 ![OldChinaDaily1](https://alicdn.kmahyyg.xyz/asset_files/cqcd2019/cq-day1/2019cq-7.jpg)
 
 ![OldChinaDaily2](https://alicdn.kmahyyg.xyz/asset_files/cqcd2019/cq-day1/2019cq-8.jpg)
+
+约莫逛了一个多小时，就又到了饭点，便来到了重庆的解放碑商圈。这座纪念碑，象征了新中国成立之前那几辈人的艰辛，是民国人的“精神堡垒”。
 
 ![RevolutionMemorial](https://alicdn.kmahyyg.xyz/asset_files/cqcd2019/cq-day1/2019cq-9.jpg)
 
 ## Day 1 - 晚上
 
+晚上，提前和大哥约了晚饭，[POI 锅锅筵水八块重庆老火锅](https://map.baidu.com/?shareurl=1&poiShareUid=5a993447ac44d6b2b8bd633d)。味道很正，没有让重庆人做出“最大的让步” （XD 好像我还是能吃辣的），原本说吃完饭还有时间就去洪崖洞逛逛，结果边吃边聊，吃完就接近 22 点了，直接回了住处，一天就这样结束了。
+
 ![GGYHotPot](https://alicdn.kmahyyg.xyz/asset_files/cqcd2019/cq-day1/2019cq-10.jpg)
+
+店门口夜间漫步一景，略微下着些小雨，对岸的那个建筑就是重庆大剧院。
+
+THE END
+
+## DEPRECATED
+
+由于时间安排不当，当天的行程被 DEPRECATED 了下列 POI：
+
+- 洪崖洞
+- 南山一棵树
 
 Rev.1 2019.1.20 于 G8710 次列车
 Rev.2 2019.1.24 于 家中
