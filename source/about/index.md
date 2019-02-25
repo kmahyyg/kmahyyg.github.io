@@ -13,7 +13,7 @@ comments: false
  
  Backend, Maybe to become a full-stack, Learnning Python and Go & PHP.
  
- Thanks for meeting her, Zoe, Everything will have an end.
+ <del>Thanks for meeting her, Zoe, Everything will have an end.[ALREADY END]</del>
  
  NEVER DRINK AT NIGHT:
   - Coke
