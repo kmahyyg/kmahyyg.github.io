@@ -3,6 +3,21 @@
   
     
     <entry>
+      <title>Dolphin 添加右键菜单解压 Windows 打包的 Zip 文件</title>
+      <link href="/2019/dolphin-gbkunzip/"/>
+      <url>/2019/dolphin-gbkunzip/</url>
+      <content type="html"><![CDATA[<p>代码来源： <a href="https://github.com/farseerfc/dotfiles" target="_blank" rel="noopener">https://github.com/farseerfc/dotfiles</a>  （非常感谢教授~）</p><p>问题原因： Windows 打包的 Zip 文件默认采用 GBK 编码，与 Ark 默认的编码 UTF-8 冲突。</p><p>（PS. 如果您使用 Gnome 桌面环境搭配 Nautilus，请您查看代码来源下载对应的代码文件。）</p><p>解决办法： 使用 farseerfc 写的右键菜单快捷方式解码。</p><p>环境： KDE Plasma + Arch Linux</p><p>代码：</p><pre class="line-numbers language-bash"><code class="language-bash"><span class="token function">mkdir</span> -p ~/.local/share/kservices5/ServiceMenus<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p>将下列代码保存为 <code>unzip.desktop</code> 保存到上述文件夹内：</p><pre class="line-numbers language-yaml"><code class="language-yaml"><span class="token punctuation">[</span>Desktop Entry<span class="token punctuation">]</span>Type=ServiceServiceTypes=KonqPopupMenu/PluginMimeType=application/zip;application/x<span class="token punctuation">-</span>zip<span class="token punctuation">-</span>compressed;application/octet<span class="token punctuation">-</span>stream;Actions=unzipsjis;unzipgbk;X<span class="token punctuation">-</span>KDE<span class="token punctuation">-</span>Submenu=Unzip as<span class="token punctuation">[</span>Desktop Action unzipsjis<span class="token punctuation">]</span>Name=Unzip here shift<span class="token punctuation">-</span>jisIcon=application<span class="token punctuation">-</span>zipExec="unzip" "<span class="token punctuation">-</span>O" "sjis" "%U"<span class="token punctuation">[</span>Desktop Action unzipgbk<span class="token punctuation">]</span>Name=Unzip here GBKIcon=application<span class="token punctuation">-</span>zipExec="unzip" "<span class="token punctuation">-</span>O" "gb18030" "%U"<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><pre class="line-numbers language-bash"><code class="language-bash">$ <span class="token function">chmod</span> +x ~/.local/share/kservices5/ServiceMenus/unzip.deskstop<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p>大功告成！</p>]]></content>
+      
+      
+        <tags>
+            
+            <tag> Tech </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    <entry>
       <title>Golang 学习笔记</title>
       <link href="/2019/golang01/"/>
       <url>/2019/golang01/</url>
