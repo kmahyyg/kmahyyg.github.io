@@ -80,9 +80,6 @@ img:
         #upyun_logo:
             #link: "https://www.upyun.com/"
             #src: "/img/upyun_logo.svg"
-        coding_logo:
-            link: "https://pages.coding.me"
-            src: "https://dn-coding-net-production-static.qbox.me/static/f452324a7d42a04f5d11efe5497923cc.svg"
 
 # Custom Fonts
 #   family: the font-family which will be used in the theme
@@ -105,7 +102,7 @@ copyright_since: 2015
 # You can specify the text you want to show in footer, HTML tag is supported.
 #   For example, you can setup ICP license number as:
 #       '<a href="http://www.miitbeian.gov.cn" rel="nofollow">某ICP备xxxxxxxx号-x</a>'
-footer_text: '<a href="https://www.upyun.com/" target="_blank" title="upyun_logo"><img src="/img/upyun_logo.svg" alt="upyun_logo"></a>'
+footer_text: 
 
 # Qrcode for redirect at other device
 #   use: choose which method to generate the qrcode for each posts.
@@ -168,10 +165,10 @@ toc:
 
 # SNS Menu
 sns:
-    email: "i@kmahyyg.xyz"
+    email: "mailto://i@kmahyyg.xyz"
     facebook: 
     twitter: "https://twitter.com/potatoonline"
-    googleplus: "https://plus.google.com/107216796718714158302"
+    googleplus: "https://plus.google.com/"
     weibo:
     instagram:
     tumblr:
@@ -179,7 +176,7 @@ sns:
     linkedin:
     zhihu:
     bilibili:
-    telegram: "https://t.me/kmahyyg"
+    telegram: "https://t.me/ecdsa_sha2_nistp256"
     v2ex: "https://www.v2ex.com/member/kmahyyg"
     segmentfault: 
 
