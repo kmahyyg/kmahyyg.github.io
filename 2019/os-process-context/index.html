@@ -52,7 +52,7 @@
     
     <title>
         
-            KMP 与 BF 字符串模式匹配算法简析 | 
+            操作系统原理 - 用户空间、内核空间与上下文 | 
         
         Potato Online
     </title>
@@ -63,7 +63,7 @@
 
     <meta name="format-detection" content="telephone=no"/>
     <meta name="description" itemprop="description" content="Resources determined everything.">
-    <meta name="keywords" content="Patrick Young,kmahyyg,material,Tech,Datastru">
+    <meta name="keywords" content="Patrick Young,kmahyyg,material,School">
     <meta name="theme-color" content="#0097A7">
 
     <!-- Disable Fucking Bloody Baidu Tranformation -->
@@ -253,7 +253,7 @@
     <!-- WebAPP Icons -->
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="application-name" content="Potato Online">
-    <meta name="msapplication-starturl" content="https://www.kmahyyg.xyz/2018/KMP-BF-DataStru/">
+    <meta name="msapplication-starturl" content="https://www.kmahyyg.xyz/2019/os-process-context/">
     <meta name="msapplication-navbutton-color" content="#0097A7">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-title" content="Potato Online">
@@ -272,15 +272,15 @@
     
 
     <!-- The Open Graph protocol -->
-    <meta property="og:url" content="https://www.kmahyyg.xyz/2018/KMP-BF-DataStru/">
+    <meta property="og:url" content="https://www.kmahyyg.xyz/2019/os-process-context/">
     <meta property="og:type" content="blog">
-    <meta property="og:title" content="KMP 与 BF 字符串模式匹配算法简析 | Potato Online">
+    <meta property="og:title" content="操作系统原理 - 用户空间、内核空间与上下文 | Potato Online">
     <meta property="og:image" content="https://alicdn.kmahyyg.xyz/asset_files/avatar-yyg.jpg">
     <meta property="og:description" content="Resources determined everything.">
-    <meta property="og:article:tag" content="Tech"> <meta property="og:article:tag" content="Datastru"> 
+    <meta property="og:article:tag" content="School"> 
 
     
-        <meta property="article:published_time" content="Wed Oct 17 2018 13:29:29 GMT+0000">
+        <meta property="article:published_time" content="Mon Apr 08 2019 00:51:52 GMT+0000">
         <meta property="article:modified_time" content="Sun Apr 07 2019 17:38:25 GMT+0000">
     
 
@@ -289,7 +289,7 @@
 
     <!-- Add canonical link for SEO -->
     
-        <link rel="canonical" href="https://www.kmahyyg.xyz/2018/KMP-BF-DataStru/index.html" />
+        <link rel="canonical" href="https://www.kmahyyg.xyz/2019/os-process-context/index.html" />
     
 
     <!-- Structured-data for SEO -->
@@ -301,9 +301,9 @@
 {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
-    "mainEntityOfPage": "https://www.kmahyyg.xyz/2018/KMP-BF-DataStru/index.html",
-    "headline": "KMP 与 BF 字符串模式匹配算法简析",
-    "datePublished": "Wed Oct 17 2018 13:29:29 GMT+0000",
+    "mainEntityOfPage": "https://www.kmahyyg.xyz/2019/os-process-context/index.html",
+    "headline": "操作系统原理 - 用户空间、内核空间与上下文",
+    "datePublished": "Mon Apr 08 2019 00:51:52 GMT+0000",
     "dateModified": "Sun Apr 07 2019 17:38:25 GMT+0000",
     "author": {
         "@type": "Person",
@@ -322,7 +322,7 @@
             "url": "https://alicdn.kmahyyg.xyz/asset_files/avatar-yyg.jpg"
         }
     },
-    "keywords": ",Tech,DatastruPatrick Young,kmahyyg,material",
+    "keywords": ",SchoolPatrick Young,kmahyyg,material",
     "description": "Resources determined everything.",
 }
 </script>
@@ -397,7 +397,7 @@
     </button>
 
     <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn" style="max-height:80vh; overflow-y:scroll;">
-        <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#字符串模式匹配算法"><span class="post-toc-number">1.</span> <span class="post-toc-text">字符串模式匹配算法</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#BF-算法-Brute-Force"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">BF 算法 (Brute Force)</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#KMP-算法-Kruth-Morris-Pratt"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">KMP 算法 (Kruth-Morris-Pratt)</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#算法示例"><span class="post-toc-number">1.2.1.</span> <span class="post-toc-text">算法示例</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#失配函数"><span class="post-toc-number">1.2.2.</span> <span class="post-toc-text">失配函数</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#理清匹配过程"><span class="post-toc-number">1.2.2.1.</span> <span class="post-toc-text">理清匹配过程</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#关于-Next-表的建立"><span class="post-toc-number">1.2.2.2.</span> <span class="post-toc-text">关于 Next 表的建立</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#学习之后实验"><span class="post-toc-number">1.2.3.</span> <span class="post-toc-text">学习之后实验</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#关于逍爷的讲解"><span class="post-toc-number">1.2.4.</span> <span class="post-toc-text">关于逍爷的讲解</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#相关代码"><span class="post-toc-number">1.3.</span> <span class="post-toc-text">相关代码</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#BF"><span class="post-toc-number">1.3.1.</span> <span class="post-toc-text">BF</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#KMP"><span class="post-toc-number">1.3.2.</span> <span class="post-toc-text">KMP</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#改进后的-Next-数组的递归生成"><span class="post-toc-number">1.3.3.</span> <span class="post-toc-text">改进后的 Next 数组的递归生成</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#拓展延伸：-Sunday-算法"><span class="post-toc-number">1.4.</span> <span class="post-toc-text">拓展延伸： Sunday 算法</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Boyer-Moore-算法"><span class="post-toc-number">1.4.1.</span> <span class="post-toc-text">Boyer-Moore 算法</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Sunday-算法"><span class="post-toc-number">1.4.2.</span> <span class="post-toc-text">Sunday 算法</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#一点点碎碎念"><span class="post-toc-number">1.5.</span> <span class="post-toc-text">一点点碎碎念</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Reference"><span class="post-toc-number">2.</span> <span class="post-toc-text">Reference</span></a></li></ol>
+        <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#警告"><span class="post-toc-number">1.</span> <span class="post-toc-text">警告</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#内核空间与用户空间"><span class="post-toc-number">2.</span> <span class="post-toc-text">内核空间与用户空间</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#定义与铺垫"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">定义与铺垫</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#虚拟内存地址"><span class="post-toc-number">2.1.1.</span> <span class="post-toc-text">虚拟内存地址</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#内核空间与用户空间-1"><span class="post-toc-number">2.1.2.</span> <span class="post-toc-text">内核空间与用户空间</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#32-位架构的机器"><span class="post-toc-number">2.1.2.1.</span> <span class="post-toc-text">32 位架构的机器</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#64-位架构的机器"><span class="post-toc-number">2.1.2.2.</span> <span class="post-toc-text">64 位架构的机器</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#关于内核空间与内存安全"><span class="post-toc-number">2.1.3.</span> <span class="post-toc-text">关于内核空间与内存安全</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#题外：那-Ring-1-和-Ring-2-呢？"><span class="post-toc-number">2.1.3.1.</span> <span class="post-toc-text">题外：那 Ring 1 和 Ring 2 呢？</span></a></li></ol></li></ol></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#上下文-Context"><span class="post-toc-number">3.</span> <span class="post-toc-text">上下文 Context</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#明确相关概念"><span class="post-toc-number">3.1.</span> <span class="post-toc-text">明确相关概念</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#原子上下文"><span class="post-toc-number">3.1.1.</span> <span class="post-toc-text">原子上下文</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#关于-Linux-Kernel-的-preempt-count"><span class="post-toc-number">3.1.2.</span> <span class="post-toc-text">关于 Linux Kernel 的 preempt_count</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#上下文切换简述"><span class="post-toc-number">3.2.</span> <span class="post-toc-text">上下文切换简述</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Linux-Kernel-的上下文切换-context-switch-实现"><span class="post-toc-number">3.3.</span> <span class="post-toc-text">Linux Kernel 的上下文切换 context_switch 实现</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Reference"><span class="post-toc-number">4.</span> <span class="post-toc-text">Reference</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#各类博客"><span class="post-toc-number">4.0.0.1.</span> <span class="post-toc-text">各类博客</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#专业的问答网站和第三方文档"><span class="post-toc-number">4.0.0.2.</span> <span class="post-toc-text">专业的问答网站和第三方文档</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Linux-内核源代码"><span class="post-toc-number">4.0.0.3.</span> <span class="post-toc-text">Linux 内核源代码</span></a></li></ol></li></ol></li></ol></li></ol>
     </ul>
     
 
@@ -429,7 +429,7 @@
         
     
             <p class="article-headline-p">
-                KMP 与 BF 字符串模式匹配算法简析
+                操作系统原理 - 用户空间、内核空间与上下文
             </p>
         </div>
 
@@ -448,7 +448,7 @@
     <!-- Author Name & Date -->
     <div>
         <strong>Patrick Young</strong>
-        <span>10月 17, 2018</span>
+        <span>4月 08, 2019</span>
     </div>
 
     <div class="section-spacer"></div>
@@ -470,7 +470,7 @@
 <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-qrcode-button">
     <li class="mdl-menu__item">在其它设备中阅读本文章</li>
     
-        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACVklEQVR42u3aQXLDIBAEQP3/084DEiszgJDsak4ul2W2dQBqluP11ePAw8PDw8PDw8N7GO+Ix/lTf0wTPPv7+wW14eHh4W3h/bPUBiXmjOT/p2rDw8PD28h7t+CeM86nzF9BMm/0WvHw8PA+hHfOfjdLOy8eHh7e5/KSAGIm4MDDw8P7FF67rCdFt6HGzVkLHh4eXszLi97/eWt/Dw8PDy/g1Vea4pZ/HlIkG0BRIR4eHt7FvHwhzgHJ7+c3Bjw8PLx7eUlQ2/5m/tm8Njw8PLydvPMlOFnKk3+YD3aLJhweHh7exbyxq6ht4z8PjpN58fDw8J7Ma1tibfQw/5v6ThkeHh7eNC+PYpOYdSYgbmvAw8PDu5c3thwvuCAVbEV5tXh4eHh7eDORa7Jt5Af0fPOY6u/h4eHhLeK1zadVQUYeXhTz4uHh4V3Mmy/6FYyocTW0MeDh4eHt541dF8g/53Hw2OzFkRoPDw9vEa/9i5mYNW+AJQExHh4e3l28sbB17MCdbBLtBQU8PDy8p/HyRtdMjJsfsheEEXh4eHgX8Mai1Xyhb19u/iweHh7evby2TdXC2g2gOLjj4eHhbeTNX5Nqo9tVNeDh4eHt5LWjvVraAvKoAg8PD+8u3hGPGeRYyDt4nQsPDw9vC6/dDNrj9dhrao/meHh4ePt5ixfoIJ6YOXAviHHx8PDwtvPaJb49picvBQ8PD++zeMfQSMptNwM8PDy8u3j51ah2q8hfzXkNeHh4eM/hrVrQZ5pbbfvtkv4eHh4eXsD7voGHh4eHh4eHh/eA8QO6eoaSzfhjgAAAAABJRU5ErkJggg==">
+        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACW0lEQVR42u3aUW4CMQwFQO5/6fYAqMtznJiFTr5QEdtMkJLw7MfPV48HHh4eHh4eHh7ezXiPeDx/6vr18/P/+o/JZwtzw8PDwxvhvdhqL3nJVHL8hrnh4eHhDfKSaSWw5Ai5XpS1ueHh4eF9Ci+5ZCcMPDw8vP/DW5vcX+925oaHh4c3z0t+8PcZ/UPoYNaCh4eHF/PyItP869H6Hh4eHl7AK7c0tctaSfj7tp4yPDw8vIBXjVz7paxdBwMeHh7eHXjVRqu1Jq21JUsWEQ8PD2+GVw1qk809vzTni5gsEB4eHt4Mr1pwypsGOtfuvDELDw8Pb563tinncW31CMnjYzw8PLx38aoNVWth7mITwOVyl7MWPDw8vAO8fpRQ3frzCKOAx8PDwzvM61yskxii2hawFnPg4eHhzfP2Rq5rB8waqdw6gIeHh3eA15lo56KchBTbmq7w8PDwtvL2xrI5ZttRgYeHhzfIq0YJJya9dmDg4eHhTfKqU8mL/ck1PW+uyo8HPDw8vBleEitUmwmqse+2v+Dh4eEN8jqYTjTcaV8o9JTh4eHhHeDlB0O16NUphiUXazw8PLx38ZJSfV4wKxT7l4IPPDw8vHfxquPFphzEtfkirgXEeHh4eKd5/UJXNSzIg4+1choeHh7eDK96GCSbeF6+qj7zxdLj4eHhDfKqAeuuBqz8+dGXgYeHh3dLXqfYX12O8nPw8PDwPpCXbOt5qSyPIfDw8PDmeUkYsYZMwoi8bHYwxsXDw8M7UABLothq/Lqr3QoPDw9vhvd9Aw8PDw8PDw8P7wbjF++shpKNssI8AAAAAElFTkSuQmCC">
     
 </ul>
 
@@ -484,7 +484,7 @@
     </button>
     <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-viewtags-button">
         <li class="mdl-menu__item">
-        <a class="post_tag-link" href="/tags/Datastru/">Datastru</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/Tech/">Tech</a>
+        <a class="post_tag-link" href="/tags/School/">School</a>
     </ul>
     
 
@@ -504,7 +504,7 @@
 
     <!-- Share Twitter -->
     
-        <a class="post_share-link" href="https://twitter.com/intent/tweet?text=KMP 与 BF 字符串模式匹配算法简析&url=https://www.kmahyyg.xyz/2018/KMP-BF-DataStru/index.html&via=Patrick Young" target="_blank">
+        <a class="post_share-link" href="https://twitter.com/intent/tweet?text=操作系统原理 - 用户空间、内核空间与上下文&url=https://www.kmahyyg.xyz/2019/os-process-context/index.html&via=Patrick Young" target="_blank">
             <li class="mdl-menu__item">
                 分享到 Twitter
             </li>
@@ -513,7 +513,7 @@
 
     <!-- Share Facebook -->
     
-        <a class="post_share-link" href="https://www.facebook.com/sharer/sharer.php?u=https://www.kmahyyg.xyz/2018/KMP-BF-DataStru/index.html" target="_blank">
+        <a class="post_share-link" href="https://www.facebook.com/sharer/sharer.php?u=https://www.kmahyyg.xyz/2019/os-process-context/index.html" target="_blank">
             <li class="mdl-menu__item">
                 分享到 Facebook
             </li>
@@ -522,7 +522,7 @@
 
     <!-- Share Google+ -->
     
-        <a class="post_share-link" href="https://plus.google.com/share?url=https://www.kmahyyg.xyz/2018/KMP-BF-DataStru/index.html" target="_blank">
+        <a class="post_share-link" href="https://plus.google.com/share?url=https://www.kmahyyg.xyz/2019/os-process-context/index.html" target="_blank">
             <li class="mdl-menu__item">
                 分享到 Google+
             </li>
@@ -534,7 +534,7 @@
 
     <!-- Share QQ -->
     
-        <a class="post_share-link" href="http://connect.qq.com/widget/shareqq/index.html?site=Potato Online&title=KMP 与 BF 字符串模式匹配算法简析&summary=Resources determined everything.&pics=https://www.kmahyyg.xyzhttps://alicdn.kmahyyg.xyz/asset_files/avatar-yyg.jpg&url=https://www.kmahyyg.xyz/2018/KMP-BF-DataStru/index.html" target="_blank">
+        <a class="post_share-link" href="http://connect.qq.com/widget/shareqq/index.html?site=Potato Online&title=操作系统原理 - 用户空间、内核空间与上下文&summary=Resources determined everything.&pics=https://www.kmahyyg.xyzhttps://alicdn.kmahyyg.xyz/asset_files/avatar-yyg.jpg&url=https://www.kmahyyg.xyz/2019/os-process-context/index.html" target="_blank">
             <li class="mdl-menu__item">
                 分享到 QQ
             </li>
@@ -543,7 +543,7 @@
 
     <!-- Share Telegram -->
     
-        <a class="post_share-link" href="https://telegram.me/share/url?url=https://www.kmahyyg.xyz/2018/KMP-BF-DataStru/index.html&text=KMP 与 BF 字符串模式匹配算法简析" target="_blank">
+        <a class="post_share-link" href="https://telegram.me/share/url?url=https://www.kmahyyg.xyz/2019/os-process-context/index.html&text=操作系统原理 - 用户空间、内核空间与上下文" target="_blank">
             <li class="mdl-menu__item">
                 分享到 Telegram
             </li>
@@ -559,356 +559,168 @@
                 <!-- Post Content -->
                 <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
     
-        <h1 id="字符串模式匹配算法"><a href="#字符串模式匹配算法" class="headerlink" title="字符串模式匹配算法"></a>字符串模式匹配算法</h1><p>这里讨论两种常见的字符串模式匹配算法，不讨论字符串的预处理。</p>
-<p>关于对字符串进行搜索，请参考 <a href="https://zh.m.wikipedia.org/wiki/Boyer-Moore%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%90%9C%E7%B4%A2%E7%AE%97%E6%B3%95" target="_blank" rel="noopener">Boyer-Moore 字符串搜索算法 (Wikipedia CN)</a></p>
-<p>另外建议大家阅读 [Sunday 算法]</p>
-<h2 id="BF-算法-Brute-Force"><a href="#BF-算法-Brute-Force" class="headerlink" title="BF 算法 (Brute Force)"></a>BF 算法 (Brute Force)</h2><p>返回子串 Ptn 在主串 Tag 的第 pos 个字符后(含第 pos 个位置)第一次出现的位置，若不存在，则返回 -1，这里的位置全部以从 0 开始计算为准，其中 T 非空，0 &lt;= pos &lt;= Tlen。</p>
-<p>使用 i 标记当前在 Tag 中匹配的字符的位置，初始值为 pos。 使用 j 标记 Ptn 中正在等待比较的位置，初始值为 0,下同。</p>
-<pre class="line-numbers language-c"><code class="language-c"><span class="token keyword">int</span> <span class="token function">index</span><span class="token punctuation">(</span><span class="token keyword">const</span> string <span class="token operator">&amp;</span>Tag<span class="token punctuation">,</span><span class="token keyword">const</span> string <span class="token operator">&amp;</span>Ptn<span class="token punctuation">,</span><span class="token keyword">int</span> pos<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>即对 Tag 的每一个字符与 Ptn 的字符进行逐字比较：</p>
+        <h1 id="警告"><a href="#警告" class="headerlink" title="警告"></a>警告</h1><p>本文很长，均为 Linux 实现，并将附赠源代码链接。请做好长时间阅读的准备。</p>
+<p>作者的精力有限，本文将仅讨论 Linux Kernel 5.0.6 的 x86_32 和 x86_64 架构的相关实现。ARM 和 MIPS 架构在部分内容上有较大的区别，请有兴趣的读者自行 Google.</p>
+<h1 id="内核空间与用户空间"><a href="#内核空间与用户空间" class="headerlink" title="内核空间与用户空间"></a>内核空间与用户空间</h1><p>下图是 Linux 的一个整体结构示意：</p>
+<p><img src="https://alicdn.kmahyyg.xyz/asset_files/context_01_insidelinux.webp" alt="Kernel Memory Space"></p>
+<h2 id="定义与铺垫"><a href="#定义与铺垫" class="headerlink" title="定义与铺垫"></a>定义与铺垫</h2><h3 id="虚拟内存地址"><a href="#虚拟内存地址" class="headerlink" title="虚拟内存地址"></a>虚拟内存地址</h3><p>我们首先需要明确的一点：现代操作系统为了性能考虑，全部采用了虚拟内存地址机制，来确保系统的高效运行。</p>
+<p>那我们为什么需要采用虚拟内存地址：</p>
 <ul>
-<li>若完整匹配则返回匹配成功的 pos 值。</li>
-<li>匹配过程中，对当前的 pos 值对应位置之后的每一字符进行 Ptn 的匹配，出现不符合的情况，则将 i 置为 pos + 1，j 置为 0；从当前 pos 值对应的下一个字符开始从头对 Ptn 进行匹配。</li>
-<li>若扫描完整个 Tag 都无法匹配，返回 -1.</li>
+<li>编译器编译产生的二进制运行产生的内存映像（Process Image）是将二进制文件中所有内容加载到内存的一个镜像，每一个函数都有一个 hardcoded 的保存地址，如果没有虚拟内存，想象一下多个程序同时运行的情况，必然产生代码冲突。</li>
+<li>还是和上面一样，假设加载到内存地址产生冲突，但是恰好两部分代码一致，其中某一个程序出错了，这段内存被改写。另一个进程会因为这段被改写的内存空间而导致 crash.</li>
+<li>同样的多进程环境，部分内存为了系统安全，应当不允许被系统内核之外的程序读取。如果不使用虚拟内存机制，难以对这一点做出保证。</li>
+<li>假设采取内存分页机制，如果直接使用 direct address，不停的进行页交换，必然会导致严重的性能损耗。</li>
+<li>根据硬件的不同，部分地址为某些硬件运行而预留，第三方改写或非法读取可能造成严重后果。</li>
+<li>早期电脑的运行内存较小，虚拟内存机制可以将主存的部分空间用于临时充当内存。</li>
 </ul>
-<p>该算法在最坏情况下的时间复杂度为 O(len(P)*len(T))，另外该算法的空间复杂度为 O(1)。</p>
-<h2 id="KMP-算法-Kruth-Morris-Pratt"><a href="#KMP-算法-Kruth-Morris-Pratt" class="headerlink" title="KMP 算法 (Kruth-Morris-Pratt)"></a>KMP 算法 (Kruth-Morris-Pratt)</h2><p>上述算法的时间复杂度为乘积关系，是由于索引指针回溯引起的，针对上述不足，有了 KMP 算法。 KMP 算法的时间复杂度为 O(len(P)+len(T))，空间复杂度为 O(len(P))。这个算法改进的地方在于，不需要过度回溯索引指针 i，而是利用部分匹配结果尽可能的向远滑动，继续进行回溯。</p>
-<h3 id="算法示例"><a href="#算法示例" class="headerlink" title="算法示例"></a>算法示例</h3><p>Step 0: 比较开始。</p>
-<pre><code>     00000000001111111111222
-i:   01234567890123456789012
-Tag: ABC ABCDAB ABCDABCDABDE
-Ptn: ABCDABD
-j:   0123456
-</code></pre><p>Step 1: 从头比较，比较到 Tag[3] = ‘ ‘ 时发现与 Ptn[3] = ‘D’ 不符。我们已知 Tag[1~3] 与 Ptn[0] 不符，接下来略过这些字符，令 i = 4, j = 0</p>
-<pre><code>     00000000001111111111222
-i:   01234567890123456789012
-Tag: ABC ABCDAB ABCDABCDABDE
-Ptn:     ABCDABD
-j:       0123456
-</code></pre><p>Step 2：这时我们继续检索 Tag，发现仍不匹配，但是 Tag[8~9] 对应的 ‘AB’ 出现了两次，故可以作为下次比较的起始点，我们令 i = 8, j = 2，继续比较。</p>
-<pre><code>     00000000001111111111222
-i:   01234567890123456789012
-Tag: ABC ABCDAB ABCDABCDABDE
-Ptn:         ABCDABD
-j:           0123456
-</code></pre><p>Step 3：到 i = 10 时，此时我们放弃比较重复内容，比较 i = 10 与 j = 2 发现出现不符。接下来，由于 ‘AB’ 重复出现，我们从 i = 11, j = 0 开始比较。</p>
-<pre><code>     00000000001111111111222
-i:   01234567890123456789012
-Tag: ABC ABCDAB ABCDABCDABDE
-Ptn:            ABCDABD
-j:              0123456
-</code></pre><p>Step 4：到 i = 17, j = 6 出现不相同异常，我们采取一贯的做法，令 i = 15, j = 2 继续搜索。</p>
-<pre><code>     00000000001111111111222
-i:   01234567890123456789012
-Tag: ABC ABCDAB ABCDABCDABDE
-Ptn:                ABCDABD
-j:                  0123456
-</code></pre><p>Step 5：此时我们找到完全匹配的字符串，初始位置为 15, 返回 i。比较结束。</p>
-<h3 id="失配函数"><a href="#失配函数" class="headerlink" title="失配函数"></a><strong>失配函数</strong></h3><p>特殊情况：当一个失配出现在模式串的此次匹配最开始，此时无法回退，我们置 j = -1，跳到模式串的开头字符。</p>
-<p>关键：建立 next 表。</p>
-<h4 id="理清匹配过程"><a href="#理清匹配过程" class="headerlink" title="理清匹配过程"></a>理清匹配过程</h4><p>假设现在文本串 Tag 匹配到 i 位置，模式串 Ptn 匹配到 j 位置：</p>
-<ul>
-<li>如果 j == -1 或当前字符匹配成功（即 Tag[i] == Ptn[j]），都令 i++，j++，继续匹配下一个字符；</li>
-<li>如果当前字符匹配失败（即 Tag[i] != Ptn[j]），则令 i 不变，j = next[j]。此举意味着失配时，模式串 Ptn 相对于文本串 Tag 向右移动了 (j - next [j]) 位。<br>换言之，当匹配失败时，模式串向右移动的位数为： <strong>失配字符所在位置 - 失配字符对应的 next 值（next 数组的求解会在下文中详细阐述），即移动的实际位数为：(j - next[j])</strong> ，且此值大于等于 1。</li>
-</ul>
-<p>很快，你也会意识到 next 数组各值的含义：代表当前字符之前的字符串中，有多大长度的相同前缀后缀。例如如果 next [j] = k，代表 j 之前的字符串中有最大长度为 k 的相同前缀后缀。</p>
-<ul>
-<li>这也意味着在某个字符失配时，该字符对应的 next 值会告诉你下一步匹配中，模式串应该跳到哪个位置（跳到 next [j] 的位置）。如果 next [j] 等于 0，则跳到模式串的开头字符，若 next [j] = k 且 k &gt; 0，代表下次匹配跳到 j 之前的某个字符，而不是跳到开头，且具体跳过了 k 个字符。</li>
-</ul>
-<p>这里，我们明确一点，next 表的产生实际只与 <strong>模式串及其子串</strong> 有关。</p>
-<h4 id="关于-Next-表的建立"><a href="#关于-Next-表的建立" class="headerlink" title="关于 Next 表的建立"></a>关于 Next 表的建立</h4><ol>
-<li>寻找前缀后缀的公共元素最大长度</li>
-</ol>
-<p>对于 Ptn = p0 p1 … pj ，寻找 Ptn 中长度最大且相等的前缀和后缀。若存在 p0 p1 … pk = p(j-k) p(j-k+1)… pj，那么在包含 pj 的模式串中有最大长度为 k+1 的相同前缀和后缀。</p>
-<ol start="2">
-<li>求 next 数组</li>
-</ol>
-<p>next 数组考虑的是除当前字符外的最长相同前缀后缀，所以通过第 ① 步骤求得各个前缀后缀的公共元素的最大长度后，只要稍作变形即可：将第 ① 步骤中求得的值整体右移一位，然后初值赋为 -1 。</p>
-<ol start="3">
-<li>根据 next 数组进行匹配 </li>
-</ol>
-<p>匹配失配，j = next[j] ，模式串向右移动 j - next[j] 位。即当 模式串的后缀 p(j-k) p(j-k+1) … p(j-1) 和 源串 s(i-k) s(i-k+1) … s(i-1) 匹配成功，但最后一位 pj 和 si 匹配失败的时候，因为 next[j] = k，等价于 <strong>在不包含 pj 的模式串中有最大公共长度为 k 的前缀后缀，即 p0 p1 … p(k-1) = p(j-k+) p(j-k+1) … p(j-1)</strong> ，接下来我们令 j = next[j] ，从而让字符串右移 next[j] 位，此时模式串的最大长度公共前缀 p0 p1 … p(k-1) 对应这 s(i-k) s(i-k+1) … s(i-1), 实现了跳过公共前后缀的匹配，直接匹配 pk 和 si 继续匹配。</p>
-<h3 id="学习之后实验"><a href="#学习之后实验" class="headerlink" title="学习之后实验"></a>学习之后实验</h3><pre><code>原字符串 TAG： BBC ABCDAB ABCDABCDABDE
-匹配模式串 PTN:               ABCDABD
-</code></pre><ol>
-<li>寻找最长前缀后缀</li>
-</ol>
-<table>
-<thead>
-<tr>
-<th style="text-align:center">子串</th>
-<th style="text-align:center">前缀</th>
-<th style="text-align:center">后缀</th>
-<th style="text-align:center">最大公共元素长度</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">A</td>
-<td style="text-align:center">/</td>
-<td style="text-align:center">/</td>
-<td style="text-align:center">0</td>
-</tr>
-<tr>
-<td style="text-align:center">AB</td>
-<td style="text-align:center">A</td>
-<td style="text-align:center">B</td>
-<td style="text-align:center">0</td>
-</tr>
-<tr>
-<td style="text-align:center">ABC</td>
-<td style="text-align:center">A,AB</td>
-<td style="text-align:center">C,BC</td>
-<td style="text-align:center">0</td>
-</tr>
-<tr>
-<td style="text-align:center">ABCD</td>
-<td style="text-align:center">A,AB,ABC</td>
-<td style="text-align:center">D,CD,BCD</td>
-<td style="text-align:center">0</td>
-</tr>
-<tr>
-<td style="text-align:center">ABCDA</td>
-<td style="text-align:center"><font color="red">A</font>,AB,ABC,ABCD</td>
-<td style="text-align:center"><font color="red">A</font>,DA,CDA,BCDA</td>
-<td style="text-align:center">1</td>
-</tr>
-<tr>
-<td style="text-align:center">ABCDAB</td>
-<td style="text-align:center">A,<font color="red">AB</font>,ABCD,ABCDA</td>
-<td style="text-align:center">B,<font color="red">AB</font>,DAB,CDAB,BCDAB</td>
-<td style="text-align:center">2</td>
-</tr>
-<tr>
-<td style="text-align:center">ABCDABD</td>
-<td style="text-align:center">A,AB,ABC,ABCD,ABCDA,ABCDAB</td>
-<td style="text-align:center">D,BD,ABD,DABD,CDABD,BCDABD</td>
-<td style="text-align:center">0</td>
-</tr>
-</tbody>
-</table>
-<p>对应生成的公共元素最大长度表如下：</p>
-<table>
-<thead>
-<tr>
-<th>字符</th>
-<th>A</th>
-<th>B</th>
-<th>C</th>
-<th>D</th>
-<th>A</th>
-<th>B</th>
-<th>D</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>最大前缀后缀公共元素长度</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>1</td>
-<td>2</td>
-<td>0</td>
-</tr>
-</tbody>
-</table>
-<ol start="2">
-<li>基于最大长度表生成 NEXT 表</li>
-</ol>
-<p>原来 next 数组的求解竟然如此简单：就是找最大对称长度的前缀后缀，然后整体右移一位，初值赋为-1（当然，你也可以直接计算某个字符对应的next值，就是 <strong>看这个字符之前的字符串中有多大长度的相同前缀后缀</strong>）</p>
-<table>
-<thead>
-<tr>
-<th>模式串子串</th>
-<th>A</th>
-<th>B</th>
-<th>C</th>
-<th>D</th>
-<th>A</th>
-<th>B</th>
-<th>D</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>NEXT</td>
-<td>-1</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>1</td>
-<td>2</td>
-</tr>
-</tbody>
-</table>
-<blockquote>
-<p>备注：这里其实 next[A0] == -1，意在告诉程序当一开始模式串第一个字符与文本串就不匹配时，可以放弃此次匹配，直接将模式串不断右移一位开始下一次匹配。</p>
-</blockquote>
-<ol start="3">
-<li>初始匹配</li>
-</ol>
-<pre><code>原字符串 TAG： BBC ABCDAB ABCDABCDABDE
-匹配模式串 PTN:    ABCDABD
-</code></pre><p>这里，我们从一开始就发现没有匹配的字符，于是不断后移一位。移动到 i = 4 时，与第五个字符 A 匹配成功，接下来，一直向下匹配，匹配到 j = 6 （字母 D2）时，发生失配。这时将模式串后移，后移 j = j - next[D2] = 6 - 2 = 4 位。</p>
-<ol start="4">
-<li>第二次匹配</li>
-</ol>
-<pre><code>原字符串 TAG： BBC ABCDAB ABCDABCDABDE
-匹配模式串 PTN:        ABCDABD
-</code></pre><p>这里，移动到 i = 8 时，与第九个字符 A 匹配成功，接下来，一直向下匹配，匹配到 j = 2 （字母 C）时，发生失配。这时将模式串后移，后移 j = j - next[C] = 2 - 0 = 2 位。</p>
-<ol start="5">
-<li>第三次匹配， (TAG[10] = ‘ ‘) != (PTN[0] == ‘A’)，后移 j = j - next[A1] = 0 - (-1) = 1 位。</li>
-</ol>
-<pre><code>原字符串 TAG： BBC ABCDAB ABCDABCDABDE
-匹配模式串 PTN:          ABCDABD
-</code></pre><ol start="6">
-<li>第四次匹配， (TAG[17] = ‘C’) != (PTN[6] == ‘D’)，后移 j = j - next[D2] = 6 - 2 = 4 位。</li>
-</ol>
-<pre><code>原字符串 TAG： BBC ABCDAB ABCDABCDABDE
-匹配模式串 PTN:           ABCDABD
-</code></pre><ol start="7">
-<li>第五次匹配， 匹配成功。</li>
-</ol>
-<pre><code>原字符串 TAG： BBC ABCDAB ABCDABCDABDE
-匹配模式串 PTN:               ABCDABD
-</code></pre><h3 id="关于逍爷的讲解"><a href="#关于逍爷的讲解" class="headerlink" title="关于逍爷的讲解"></a>关于逍爷的讲解</h3><p>试比较：</p>
-<p>失配时，模式串向右移动的位数为：失配字符所在<strong>位置</strong> - 失配字符对应的 next 值</p>
-<p>失配时，模式串向右移动的位数为：<strong>已匹配字符数 - 失配字符的上一位字符所对应的最大长度值</strong></p>
-<p>其实二者等价，只不过讲法不同罢了。</p>
-<p>根据《最大长度表》，失配时，模式串向右移动的位数 = 已经匹配的字符数 - 失配字符的上一位字符的最大长度值。</p>
-<p>而根据《next 数组》，失配时，模式串向右移动的位数 = 失配字符的位置 - 失配字符对应的 next 值。</p>
-<p>其中，从 0 开始计数时，失配字符的位置 = 已经匹配的字符数（失配字符不计数），而失配字符对应的next 值 = 失配字符的上一位字符的最大长度值，两相比较，结果必然完全一致。</p>
-<h2 id="相关代码"><a href="#相关代码" class="headerlink" title="相关代码"></a>相关代码</h2><h3 id="BF"><a href="#BF" class="headerlink" title="BF"></a>BF</h3><pre class="line-numbers language-c"><code class="language-c"><span class="token keyword">int</span> <span class="token function">ViolentMatch</span><span class="token punctuation">(</span><span class="token keyword">char</span><span class="token operator">*</span> s<span class="token punctuation">,</span> <span class="token keyword">char</span><span class="token operator">*</span> p<span class="token punctuation">)</span>
-<span class="token punctuation">{</span>
-    <span class="token keyword">int</span> sLen <span class="token operator">=</span> <span class="token function">strlen</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">int</span> pLen <span class="token operator">=</span> <span class="token function">strlen</span><span class="token punctuation">(</span>p<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<p>具体的对于内存地址的映射和管理问题，我们将在后续学习到内存调度时进一步阐述。</p>
+<h3 id="内核空间与用户空间-1"><a href="#内核空间与用户空间-1" class="headerlink" title="内核空间与用户空间"></a>内核空间与用户空间</h3><h4 id="32-位架构的机器"><a href="#32-位架构的机器" class="headerlink" title="32 位架构的机器"></a>32 位架构的机器</h4><p>综上所述，我们在当前运行的电脑上（例如运行 gdb 调试程序时）看到的内存地址均为系统对物理内存进行映射后的虚拟地址。对于这部分地址的处理，Linux Kernel 在 32 位架构（最大内存寻址能力 4 GiB）的机器上将其分割为两部分，Low + High，比例为 Low: High = 3:1 ，具体的源代码可以参加 Linux 内核源码 <a href="https://elixir.bootlin.com/linux/v5.0.6/source/arch/x86/Kconfig#L1361" target="_blank" rel="noopener">arch/x86/Kconfig Line 1361</a>。对于 32 位架构，内存大于 4 GiB 的 Intel 机器，则内核会启用 Intel Physical Address Extension (PAE) 来扩展寻址到最大 64 GiB，这部分内容略去不表。</p>
+<pre><code>Linux uses only 4 segments:
 
-    <span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
-    <span class="token keyword">int</span> j <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
-    <span class="token keyword">while</span> <span class="token punctuation">(</span>i <span class="token operator">&lt;</span> sLen <span class="token operator">&amp;&amp;</span> j <span class="token operator">&lt;</span> pLen<span class="token punctuation">)</span>
-    <span class="token punctuation">{</span>
-        <span class="token keyword">if</span> <span class="token punctuation">(</span>s<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">==</span> p<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">)</span>
-        <span class="token punctuation">{</span>
-            <span class="token comment" spellcheck="true">//①如果当前字符匹配成功（即 Tag[i] == Ptn[j]），则 i++，j++    </span>
-            i<span class="token operator">++</span><span class="token punctuation">;</span>
-            j<span class="token operator">++</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
-        <span class="token keyword">else</span>
-        <span class="token punctuation">{</span>
-            <span class="token comment" spellcheck="true">//②如果失配（即 Tag[i]! = Ptn[j]），令i = i - (j - 1)，j = 0    </span>
-            i <span class="token operator">=</span> i <span class="token operator">-</span> j <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span>
-            j <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
-    <span class="token punctuation">}</span>
-    <span class="token comment" spellcheck="true">//匹配成功，返回模式串 Ptn 在文本串 Tag 中的位置，否则返回 -1</span>
-    <span class="token keyword">if</span> <span class="token punctuation">(</span>j <span class="token operator">==</span> pLen<span class="token punctuation">)</span>
-        <span class="token keyword">return</span> i <span class="token operator">-</span> j<span class="token punctuation">;</span>
-    <span class="token keyword">else</span>
-        <span class="token keyword">return</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h3 id="KMP"><a href="#KMP" class="headerlink" title="KMP"></a>KMP</h3><pre class="line-numbers language-c"><code class="language-c"><span class="token keyword">int</span> <span class="token function">KmpSearch</span><span class="token punctuation">(</span><span class="token keyword">char</span><span class="token operator">*</span> s<span class="token punctuation">,</span> <span class="token keyword">char</span><span class="token operator">*</span> p<span class="token punctuation">)</span>
-<span class="token punctuation">{</span>
-    <span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
-    <span class="token keyword">int</span> j <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
-    <span class="token keyword">int</span> sLen <span class="token operator">=</span> <span class="token function">strlen</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">int</span> pLen <span class="token operator">=</span> <span class="token function">strlen</span><span class="token punctuation">(</span>p<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">while</span> <span class="token punctuation">(</span>i <span class="token operator">&lt;</span> sLen <span class="token operator">&amp;&amp;</span> j <span class="token operator">&lt;</span> pLen<span class="token punctuation">)</span>
-    <span class="token punctuation">{</span>
-        <span class="token comment" spellcheck="true">//①如果当前字符匹配成功（即 Tag[i] == Ptn[j]），都令 i++，j++    </span>
-        <span class="token keyword">if</span> <span class="token punctuation">(</span>s<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">==</span> p<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">)</span>
-        <span class="token punctuation">{</span>
-            i<span class="token operator">++</span><span class="token punctuation">;</span>
-            j<span class="token operator">++</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
-        <span class="token keyword">else</span>
-        <span class="token punctuation">{</span>
-            <span class="token comment" spellcheck="true">//②如果当前字符匹配失败（即 Tag[i] != Ptn[j]），则令 i 不变，j = next[j]    </span>
-            <span class="token comment" spellcheck="true">//next[j]即为j所对应的next值      </span>
-            j <span class="token operator">=</span> next<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
-    <span class="token punctuation">}</span>
-    <span class="token keyword">if</span> <span class="token punctuation">(</span>j <span class="token operator">==</span> pLen<span class="token punctuation">)</span>
-        <span class="token keyword">return</span> i <span class="token operator">-</span> j<span class="token punctuation">;</span>
-    <span class="token keyword">else</span>
-        <span class="token keyword">return</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h3 id="改进后的-Next-数组的递归生成"><a href="#改进后的-Next-数组的递归生成" class="headerlink" title="改进后的 Next 数组的递归生成"></a>改进后的 Next 数组的递归生成</h3><pre class="line-numbers language-c"><code class="language-c"><span class="token keyword">void</span> <span class="token function">GetNextval</span><span class="token punctuation">(</span><span class="token keyword">char</span><span class="token operator">*</span> p<span class="token punctuation">,</span> <span class="token keyword">int</span> next<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
-<span class="token punctuation">{</span>
-    <span class="token keyword">int</span> pLen <span class="token operator">=</span> <span class="token function">strlen</span><span class="token punctuation">(</span>p<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    next<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
-    <span class="token keyword">int</span> k <span class="token operator">=</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
-    <span class="token keyword">int</span> j <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
-    <span class="token keyword">while</span> <span class="token punctuation">(</span>j <span class="token operator">&lt;</span> pLen <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">)</span>
-    <span class="token punctuation">{</span>
-        <span class="token comment" spellcheck="true">//p[k]表示前缀，p[j]表示后缀  </span>
-        <span class="token keyword">if</span> <span class="token punctuation">(</span>k <span class="token operator">==</span> <span class="token operator">-</span><span class="token number">1</span> <span class="token operator">||</span> p<span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">==</span> p<span class="token punctuation">[</span>k<span class="token punctuation">]</span><span class="token punctuation">)</span>
-        <span class="token punctuation">{</span>
-            <span class="token operator">++</span>j<span class="token punctuation">;</span>
-            <span class="token operator">++</span>k<span class="token punctuation">;</span>
-            <span class="token comment" spellcheck="true">//较之前next数组求法，改动在下面4行</span>
-            <span class="token keyword">if</span> <span class="token punctuation">(</span>p<span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">!=</span> p<span class="token punctuation">[</span>k<span class="token punctuation">]</span><span class="token punctuation">)</span>
-                next<span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">=</span> k<span class="token punctuation">;</span>   <span class="token comment" spellcheck="true">//之前只有这一行</span>
-            <span class="token keyword">else</span>
-                <span class="token comment" spellcheck="true">//因为不能出现p[j] = p[(next[j])]，所以当出现时需要继续递归，k = next[k] = next[next[k]]</span>
-                next<span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">=</span> next<span class="token punctuation">[</span>k<span class="token punctuation">]</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
-        <span class="token keyword">else</span>
-        <span class="token punctuation">{</span>
-            k <span class="token operator">=</span> next<span class="token punctuation">[</span>k<span class="token punctuation">]</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h2 id="拓展延伸：-Sunday-算法"><a href="#拓展延伸：-Sunday-算法" class="headerlink" title="拓展延伸： Sunday 算法"></a>拓展延伸： Sunday 算法</h2><h3 id="Boyer-Moore-算法"><a href="#Boyer-Moore-算法" class="headerlink" title="Boyer-Moore 算法"></a>Boyer-Moore 算法</h3><p>略显复杂，略去不提，看文章开头有 Wikipedia 链接，也是一个改进算法。</p>
-<p>该算法从模式串的尾部开始匹配，且拥有在最坏情况下O(N)的时间复杂度。在实践中，比KMP算法的实际效能高。</p>
-<p>BM算法定义了两个规则：</p>
-<p>坏字符规则：当文本串中的某个字符跟模式串的某个字符不匹配时，我们称文本串中的这个失配字符为坏字符，此时模式串需要向右移动，移动的位数 = 坏字符在模式串中的位置 - 坏字符在模式串中最右出现的位置。此外，如果”坏字符”不包含在模式串之中，则最右出现位置为-1。</p>
-<p>好后缀规则：当字符失配时，后移位数 = 好后缀在模式串中的位置 - 好后缀在模式串上一次出现的位置，且如果好后缀在模式串中没有再次出现，则为-1。</p>
-<h3 id="Sunday-算法"><a href="#Sunday-算法" class="headerlink" title="Sunday 算法"></a>Sunday 算法</h3><p>上文中，我们已经介绍了 <code>KMP</code> 算法和 <code>BM</code> 算法，这两个算法在最坏情况下均具有线性的查找时间。但实际上， <code>KMP</code> 算法并不比最简单的 <code>C</code> 库函数 <code>strstr()</code> 快多少，而 <code>BM</code> 算法虽然通常比 <code>KMP</code> 算法快，但 <code>BM</code> 算法也还不是现有字符串查找算法中最快的算法，本文最后再介绍一种比 <code>BM</code> 算法更快的查找算法即 <code>Sunday</code> 算法。</p>
-<p>Sunday 算法由 Daniel M.Sunday 在 1990 年提出，它的思想跟 BM 算法很相似：</p>
-<p>只不过 Sunday 算法是从前往后匹配，在匹配失败时关注的是文本串中参加匹配的最末位字符的下一位字符。如果该字符没有在模式串中出现则直接跳过，即移动位数 = 匹配串长度 + 1；否则，其移动位数 = 模式串中最右端的该字符到末尾的距离 + 1。</p>
-<p>下面举个例子说明下 Sunday 算法。假定现在要在文本串 “substring searching algorithm” 中查找模式串 “search” 。</p>
-<ol>
-<li>刚开始时，把模式串与文本串左边对齐：</li>
-</ol>
-<pre><code>substring searching algorithm
-search
-^
-</code></pre><ol start="2">
-<li>结果发现在第 2 个字符处发现不匹配，不匹配时关注文本串中参加匹配的最末位字符的下一位字符，即标粗的字符 i，因为模式串 search 中并不存在 i，所以模式串直接跳过一大片，向右移动位数 = 匹配串长度 + 1 = 6 + 1 = 7，从 i 之后的那个字符（即字符 n ）开始下一步的匹配，如下图：</li>
-</ol>
-<pre><code>substring searching algorithm
-　　　     search
-　　　　 ^
-</code></pre><ol start="3">
-<li>结果第一个字符就不匹配，再看文本串中参加匹配的最末位字符的下一位字符，是 ‘r’ ，它出现在模式串中的倒数第 3 位，于是把模式串向右移动 3 位（ r 到模式串末尾的距离 + 1 = 2 + 1 = 3 ），使两个 ‘r’ 对齐，如下：</li>
-</ol>
-<pre><code>substring searching algorithm
-　　　　        search
-　　　　　　　   ^
-</code></pre><ol start="4">
-<li>匹配成功。</li>
-</ol>
-<p>回顾整个过程，我们只移动了两次模式串就找到了匹配位置，缘于 Sunday 算法每一步的移动量都比较大，效率很高。完。</p>
-<h2 id="一点点碎碎念"><a href="#一点点碎碎念" class="headerlink" title="一点点碎碎念"></a>一点点碎碎念</h2><p>学院现在的课程设置问题非常严重，图灵机、有限状态自动机、算法优化、通信原理、量子物理各方面的课程缺乏严重，导致学生学习专业课程时出现了极大的知识断层，课外各种杂事颇多，时间非常紧张，需要学生花大量课后时间充电。</p>
-<p>本来计算机相关行业，知识更新速度快，入门门槛高、相对复杂，基础知识要求广泛，现在却这样，大学真的很忙。每天都是高压锅生活。为了光明的未来和亲爱的钰，还是更加努力吧！</p>
-<p>关于昨天的汇编文章：其实用什么平台并不重要，作为入门者，你需要明白的只是老师为什么让你这样做，这样做背后的计算机原理是什么。在具体实践上，如何把本来 Windows 上的东西尽量在 Linux 上完美复现或者找到替代品。这样就好了。我知道 Windows 开发的公司仍然是绝大多数，但是在 Linux 平台写代码给了很多人一种专注于代码实现本身的感觉（虽然初始状态的学习曲线非常抖），不用像 Windows 一样各种折腾环境。更何况，Arch Linux 的系统设计注重代码正确、优雅和极简主义，期待用户能够愿意去理解系统的操作，这样的系统正是我们有一点点基础的初学者所需要的。日常用 Linux 多学点底层的东西同时又提高效率又何妨？</p>
-<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><ul>
-<li><p><a href="https://blog.csdn.net/ns_code/article/details/19286279" target="_blank" rel="noopener">https://blog.csdn.net/ns_code/article/details/19286279</a></p>
+2 segments (code and data/stack) for KERNEL SPACE from [0xC000 0000] (3 GB) to [0xFFFF FFFF] (4 GB)
+2 segments (code and data/stack) for USER SPACE from [0] (0 GB) to [0xBFFF FFFF] (3 GB)
+                               __
+   4 GB---&gt;|                |    |
+           |     Kernel     |    |  Kernel Space (Code + Data/Stack)
+           |                |  __|
+   3 GB---&gt;|----------------|  __
+           |                |    |
+           |                |    |
+   2 GB---&gt;|                |    |
+           |     Tasks      |    |  User Space (Code + Data/Stack)
+           |                |    |
+   1 GB---&gt;|                |    |
+           |                |    |
+           |________________|  __| 
+ 0x00000000
+          Kernel/User Linear addresses
+
+
+
+            ________________ _____                    
+           |Other KernelData|___  |  |                |
+           |----------------|   | |__|                |
+           |     Kernel     |\  |____|   Real Other   |
+  3 GB ---&gt;|----------------| \      |   Kernel Data  |
+           |                |\ \     |                |
+           |              __|_\_\____|__   Real       |
+           |      Tasks     |  \ \   |     Tasks      |
+           |              __|___\_\__|__   Space      |
+           |                |    \ \ |                |
+           |                |     \ \|----------------|
+           |                |      \ |Real KernelSpace|
+           |________________|       \|________________|
+
+           Logical Addresses          Physical Addresses
+</code></pre><p>而这两部分空间的左右是什么呢？怎样才能正确的操作这部分空间呢？（保留原汁原味，不翻译！）</p>
+<blockquote>
+<p>Kernel space is where the kernel (i.e., the core of the operating system) executes (i.e., runs) and provides its services.</p>
+</blockquote>
+<blockquote>
+<p>User space is that set of memory locations in which user processes (i.e., everything other than the kernel) run. A process is an executing instance of a program. One of the roles of the kernel is to manage individual user processes within this space and to prevent them from interfering with each other.</p>
+</blockquote>
+<blockquote>
+<p>Kernel space can be accessed by user processes only through the use of system calls. System calls are requests in a Unix-like operating system by an active process for a service performed by the kernel, such as input/output (I/O) or process creation. An active process is a process that is currently progressing in the CPU, as contrasted with a process that is waiting for its next turn in the CPU. I/O is any program, operation or device that transfers data to or from a CPU and to or from a peripheral device (such as disk drives, keyboards, mice and printers).</p>
+</blockquote>
+<h4 id="64-位架构的机器"><a href="#64-位架构的机器" class="headerlink" title="64 位架构的机器"></a>64 位架构的机器</h4><p>对于 64 位架构的机器，其最大内存寻址能力为 17179869184 GiB，足以覆盖目前常见的绝大多数机器装配的内存。故而 Linux kernel 不再区分 Low/High Memory，全部视为 Low Memory。User Space 和 Kernel Space 的 Limit 均相同。现今的内存分页机制其实非常复杂，由于分页层数的不同，导致虚拟地址空间的大小也不同，具体相关描述请查看内核源代码和内核文档。</p>
+<p><img src="https://alicdn.kmahyyg.xyz/asset_files/context_02_lvmm_64.svg" alt="Linux Mapper of RAM_x64"></p>
+<p>下列的文档可能对你了解这部分内容有所帮助。</p>
+<ul>
+<li><p><a href="https://en.wikibooks.org/wiki/The_Linux_Kernel/Memory" target="_blank" rel="noopener">https://en.wikibooks.org/wiki/The_Linux_Kernel/Memory</a></p>
 </li>
-<li><p><a href="https://zh.m.wikipedia.org/zh-cn/%E5%85%8B%E5%8A%AA%E6%96%AF-%E8%8E%AB%E9%87%8C%E6%96%AF-%E6%99%AE%E6%8B%89%E7%89%B9%E7%AE%97%E6%B3%95" target="_blank" rel="noopener">https://zh.m.wikipedia.org/zh-cn/%E5%85%8B%E5%8A%AA%E6%96%AF-%E8%8E%AB%E9%87%8C%E6%96%AF-%E6%99%AE%E6%8B%89%E7%89%B9%E7%AE%97%E6%B3%95</a></p>
+<li><p><a href="https://elixir.bootlin.com/linux/v5.0.6/source/arch/x86/Kconfig#L1356" target="_blank" rel="noopener">https://elixir.bootlin.com/linux/v5.0.6/source/arch/x86/Kconfig#L1356</a></p>
 </li>
-<li><p><a href="http://saturnman.blog.163.com/blog/static/5576112010969957130/" target="_blank" rel="noopener">http://saturnman.blog.163.com/blog/static/5576112010969957130/</a></p>
-</li>
-<li><p><a href="https://blog.csdn.net/v_july_v/article/details/7041827" target="_blank" rel="noopener">https://blog.csdn.net/v_july_v/article/details/7041827</a>    Strongly Recommended</p>
+<li><p><a href="https://elixir.bootlin.com/linux/v5.0.6/source/Documentation/vm/highmem.rst" target="_blank" rel="noopener">https://elixir.bootlin.com/linux/v5.0.6/source/Documentation/vm/highmem.rst</a></p>
 </li>
 </ul>
+<blockquote>
+<p>High memory (highmem) is used when the size of physical memory approaches or exceeds the maximum size of virtual memory. At that point it becomes impossible for the kernel to keep all of the available physical memory mapped at all times. This means the kernel needs to start using temporary mappings of the pieces of physical memory that it wants to access.</p>
+</blockquote>
+<ul>
+<li><a href="https://elixir.bootlin.com/linux/v5.0.6/source/Documentation/x86/x86_64/mm.txt" target="_blank" rel="noopener">https://elixir.bootlin.com/linux/v5.0.6/source/Documentation/x86/x86_64/mm.txt</a></li>
+</ul>
+<blockquote>
+<p>Architecture defines a 64-bit virtual address. Implementations can support<br>less. Currently supported are 48- and 57-bit virtual addresses. Bits 63<br>through to the most-significant implemented bit are sign extended.<br>This causes hole between user space and kernel addresses if you interpret them<br>as unsigned.</p>
+</blockquote>
+<blockquote>
+<p>The direct mapping covers all memory in the system up to the highest<br>memory address (this means in some cases it can also include PCI memory<br>holes).</p>
+</blockquote>
+<h3 id="关于内核空间与内存安全"><a href="#关于内核空间与内存安全" class="headerlink" title="关于内核空间与内存安全"></a>关于内核空间与内存安全</h3><p>那为什么要区分内核空间和用户空间呢？每个进程到底能用到多少的内存呢？</p>
+<p>操作系统的核心是系统内核，内核独立于普通的应用程序，可以访问受保护的内存空间、拥有访问底层所有硬件设备的最高权限，保护这部分内存就显得尤为重要。针对 32 位 Linux 操作系统而言，将最高的 1 GiB（从虚拟地址 0xC0000000 到 0xFFFFFFFF ），供内核使用，称为内核空间，而将较低的 3 GiB（从虚拟地址 0x00000000 到 0xBFFFFFFF ），供各个进程使用，称为用户空间。每个进程可以通过系统调用进入内核，因此，Linux 内核由系统内的所有进程共享。于是，从具体进程的角度来看，每个进程可以拥有 4 GiB 的虚拟空间。</p>
+<p>内核空间故名思议，存放的是内核代码和数据；而用户空间存放的是用的代码和数据，这两部分空间再次强调，都是保存在 <strong>虚拟内存空间之内</strong> 的。内核的数据需要悉心的保护，确保不被未授权第三方获取，Linux Kernel 使用了两层保护机制，即 Ring 0 和 Ring 3.</p>
+<p>用户初始运行一个进程时，运行于 Ring 3（用户态），此时处理器工作在权限最低的 Ring 3, 程序请求提权发出中断信号，进而通过 TRAP 指令调用中断处理程序执行 System Call（系统调用），陷入 Ring 0（内核态）时便拥有了最高权限，执行的内核代码便会调用当前进程的内核栈，每个进程都有自己对应的内核栈。有名的 Rootkit 病毒便大多是提权到 Ring 0 来实现自我保护的。</p>
+<h4 id="题外：那-Ring-1-和-Ring-2-呢？"><a href="#题外：那-Ring-1-和-Ring-2-呢？" class="headerlink" title="题外：那 Ring 1 和 Ring 2 呢？"></a>题外：那 Ring 1 和 Ring 2 呢？</h4><p>X86 架构提供了四层分级保护域，Ring 0 到 Ring 3. Ring 0 具有最高权限，Ring 3 权限最低。Ring 1 大多用于加载虚拟化内核和硬件驱动（例如：VirtualBox Guest Kernel），Ring 2 大多用于加载 I/O 设备相关的驱动和一些被保护的函数库(I/O Privileged Code)，早期的 OS/2 的 Presentation Manager 代码便加载到这一层。个人认为，可以简单的理解为 Ring 1 、 Ring 2 和 Ring 0 的差异可以简化视为描述符不同的 Ring 0 层。</p>
+<h1 id="上下文-Context"><a href="#上下文-Context" class="headerlink" title="上下文 Context"></a>上下文 Context</h1><h2 id="明确相关概念"><a href="#明确相关概念" class="headerlink" title="明确相关概念"></a>明确相关概念</h2><p>上下文：是从英文 Context 翻译过来，指的是一种环境。相对于进程而言，就是进程执行时的环境；具体来说就是各个变量和数据，包括所有的寄存器变量、进程打开的文件、内存信息等。主要分为中断上下文、进程上下文、原子上下文。</p>
+<p>原子： Atom，本意是“不能被进一步分割的最小粒子”，而原子操作 (atomic operation) 意为”不可被中断的一个或一系列操作”。</p>
+<p>原子上下文：内核的一个原则是：在处理 IRQ 过程中、以及持有自旋锁 (spin_lock) 的过程中，内核不能访问用户空间，内核不能调用任何引起睡眠的函数。如果一个进程正在处于上述状态之一，且不能被中断，则称该进程正在进行原子操作，该进程此时对应的上下文为原子上下文。</p>
+<h3 id="原子上下文"><a href="#原子上下文" class="headerlink" title="原子上下文"></a>原子上下文</h3><p>Linux 提供了以下六个宏来判断是否处于原子上下文的情况： <a href="https://elixir.bootlin.com/linux/v5.0.6/source/include/linux/preempt.h#L87" target="_blank" rel="noopener">include/linux/preempt.h Line 87</a></p>
+<pre class="line-numbers language-c"><code class="language-c"><span class="token comment" spellcheck="true">/*
+ * Are we doing bottom half or hardware interrupt processing?
+ *
+ * in_irq()       - We're in (hard) IRQ context
+ * in_softirq()   - We have BH disabled, or are processing softirqs
+ * in_interrupt() - We're in NMI,IRQ,SoftIRQ context or have BH disabled
+ * in_serving_softirq() - We're in softirq context
+ * in_nmi()       - We're in NMI context
+ * in_task()      - We're in task context
+ *
+ * Note: due to the BH disabled confusion: in_softirq(),in_interrupt() really
+ *       should not be used in new code.
+ */</span>
+<span class="token macro property">#<span class="token directive keyword">define</span> in_irq()        (hardirq_count())</span>
+<span class="token macro property">#<span class="token directive keyword">define</span> in_softirq()        (softirq_count())</span>
+<span class="token macro property">#<span class="token directive keyword">define</span> in_interrupt()        (irq_count())</span>
+<span class="token macro property">#<span class="token directive keyword">define</span> in_serving_softirq()    (softirq_count() &amp; SOFTIRQ_OFFSET)</span>
+<span class="token macro property">#<span class="token directive keyword">define</span> in_nmi()        (preempt_count() &amp; NMI_MASK)</span>
+<span class="token macro property">#<span class="token directive keyword">define</span> in_task()        (!(preempt_count() &amp; \
+                   (NMI_MASK | HARDIRQ_MASK | SOFTIRQ_OFFSET)))</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p><a href="https://elixir.bootlin.com/linux/v5.0.6/source/include/linux/preempt.h#L142" target="_blank" rel="noopener">include/linux/preempt.h Line 142</a></p>
+<pre class="line-numbers language-c"><code class="language-c"><span class="token comment" spellcheck="true">/*
+ * Are we running in atomic context?  WARNING: this macro cannot
+ * always detect atomic context; in particular, it cannot know about
+ * held spinlocks in non-preemptible kernels.  Thus it should not be
+ * used in the general case to determine whether sleeping is possible.
+ * Do not use in_atomic() in driver code.
+ */</span>
+<span class="token macro property">#<span class="token directive keyword">define</span> in_atomic()    (preempt_count() != 0)</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>这些宏访问的地方都是： <code>thread_info-&gt;preempt_count</code> 这些中断计数和抢占计数任何地方返回不为 0 均为原子上下文，禁止违反上面说过的原则。令人奇怪的是，<code>in_atomic()</code> 这个宏提示是 unrealiable 的，为什么呢？</p>
+<blockquote>
+<p>但是，对于 <code>in_atomic()</code> 来说，在启用抢占的情况下，它工作的很好，可以告诉内核目前是否持有自旋锁，是否禁用抢占等。但是，在没有启用抢占的情况下， <code>spin_lock</code> 根本不修改 <code>preempt_count()</code> ，所以即使内核调用了 <code>spin_lock</code> ，持有了自旋锁，<code>in_atomic()</code> 仍然会返回 0，错误的告诉内核目前在非原子上下文中。所以凡是依赖 <code>in_atomic()</code> 来判断是否在原子上下文的代码，在禁止线程抢占的情况下都是不可靠的。具体的显式声明禁止线程抢占由 <code>preempt_disable()</code> 实现。</p>
+</blockquote>
+<h3 id="关于-Linux-Kernel-的-preempt-count"><a href="#关于-Linux-Kernel-的-preempt-count" class="headerlink" title="关于 Linux Kernel 的 preempt_count"></a>关于 Linux Kernel 的 preempt_count</h3><p><code>preempt_count</code> 是 Linux 的线程抢占计数器，不过多深入，之后讲到线程调度和预防死锁的时候我们会详细介绍。具体的 <code>preempt_count</code> 的内容定义在 Linux 内核源代码的这里可以查到：<a href="https://elixir.bootlin.com/linux/v5.0.6/source/include/linux/preempt.h#L13" target="_blank" rel="noopener">include/linux/preempt.h Line 13</a></p>
+<pre class="line-numbers language-c"><code class="language-c"><span class="token comment" spellcheck="true">/*
+ * We put the hardirq and softirq counter into the preemption
+ * counter. The bitmask has the following meaning:
+ *
+ * - bits 0-7 are the preemption count (max preemption depth: 256)
+ * - bits 8-15 are the softirq count (max # of softirqs: 256)
+ *
+ * The hardirq count could in theory be the same as the number of
+ * interrupts in the system, but we run all interrupt handlers with
+ * interrupts disabled, so we cannot have nesting interrupts. Though
+ * there are a few palaeontologic drivers which reenable interrupts in
+ * the handler, so we need more than one bit here.
+ *
+ *         PREEMPT_MASK:    0x000000ff
+ *         SOFTIRQ_MASK:    0x0000ff00
+ *         HARDIRQ_MASK:    0x000f0000
+ *             NMI_MASK:    0x00100000
+ * PREEMPT_NEED_RESCHED:    0x80000000
+ */</span>
+<span class="token macro property">#<span class="token directive keyword">define</span> PREEMPT_BITS    8</span>
+<span class="token macro property">#<span class="token directive keyword">define</span> SOFTIRQ_BITS    8</span>
+<span class="token macro property">#<span class="token directive keyword">define</span> HARDIRQ_BITS    4</span>
+<span class="token macro property">#<span class="token directive keyword">define</span> NMI_BITS    1</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>具体的自己看代码注释吧，懒得过多解释了。</p>
+<h2 id="上下文切换简述"><a href="#上下文切换简述" class="headerlink" title="上下文切换简述"></a>上下文切换简述</h2><p>TODO</p>
+<h2 id="Linux-Kernel-的上下文切换-context-switch-实现"><a href="#Linux-Kernel-的上下文切换-context-switch-实现" class="headerlink" title="Linux Kernel 的上下文切换 context_switch 实现"></a>Linux Kernel 的上下文切换 context_switch 实现</h2><p>TODO</p>
+<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><h4 id="各类博客"><a href="#各类博客" class="headerlink" title="各类博客"></a>各类博客</h4><p><a href="https://www.cnblogs.com/openix/archive/2013/03/09/2952057.html" target="_blank" rel="noopener">https://www.cnblogs.com/openix/archive/2013/03/09/2952057.html</a><br><a href="https://www.21qa.net/questions/167/167" target="_blank" rel="noopener">https://www.21qa.net/questions/167/167</a><br><a href="http://www.cnblogs.com/Anker/p/3269106.html" target="_blank" rel="noopener">http://www.cnblogs.com/Anker/p/3269106.html</a><br><a href="https://blog.csdn.net/zqixiao_09/article/details/50877756" target="_blank" rel="noopener">https://blog.csdn.net/zqixiao_09/article/details/50877756</a><br><a href="https://blog.csdn.net/gatieme/article/details/51872659" target="_blank" rel="noopener">https://blog.csdn.net/gatieme/article/details/51872659</a><br><a href="http://blog.sungju.org/2015/11/17/whats-virtual-address-limit-of-32bit64bit-linux-kernel-2/" target="_blank" rel="noopener">http://blog.sungju.org/2015/11/17/whats-virtual-address-limit-of-32bit64bit-linux-kernel-2/</a><br><a href="http://compgroups.net/comp.lang.asm.x86/privilege-levels-1-and-2/162524" target="_blank" rel="noopener">http://compgroups.net/comp.lang.asm.x86/privilege-levels-1-and-2/162524</a><br><a href="https://blog.csdn.net/baidu_17062867/article/details/37744863" target="_blank" rel="noopener">https://blog.csdn.net/baidu_17062867/article/details/37744863</a></p>
+<h4 id="专业的问答网站和第三方文档"><a href="#专业的问答网站和第三方文档" class="headerlink" title="专业的问答网站和第三方文档"></a>专业的问答网站和第三方文档</h4><p><a href="https://linux-kernel-labs.github.io" target="_blank" rel="noopener">https://linux-kernel-labs.github.io</a><br><a href="https://stackoverflow.com/questions/19349572/why-do-we-need-virtual-memory" target="_blank" rel="noopener">https://stackoverflow.com/questions/19349572/why-do-we-need-virtual-memory</a><br><a href="https://en.wikipedia.org/wiki/Virtual_memory" target="_blank" rel="noopener">https://en.wikipedia.org/wiki/Virtual_memory</a><br><a href="https://support.symantec.com/en_US/article.TECH244351.html" target="_blank" rel="noopener">https://support.symantec.com/en_US/article.TECH244351.html</a><br><a href="https://en.wikibooks.org/wiki/The_Linux_Kernel/Memory" target="_blank" rel="noopener">https://en.wikibooks.org/wiki/The_Linux_Kernel/Memory</a><br><a href="http://tldp.org/HOWTO/KernelAnalysis-HOWTO-7.html" target="_blank" rel="noopener">http://tldp.org/HOWTO/KernelAnalysis-HOWTO-7.html</a><br><a href="https://stackoverflow.com/questions/6710040/cpu-privilege-rings-why-rings-1-and-2-arent-used" target="_blank" rel="noopener">https://stackoverflow.com/questions/6710040/cpu-privilege-rings-why-rings-1-and-2-arent-used</a><br><a href="https://unix.stackexchange.com/questions/87625/what-is-difference-between-user-space-and-kernel-space" target="_blank" rel="noopener">https://unix.stackexchange.com/questions/87625/what-is-difference-between-user-space-and-kernel-space</a></p>
+<h4 id="Linux-内核源代码"><a href="#Linux-内核源代码" class="headerlink" title="Linux 内核源代码"></a>Linux 内核源代码</h4><p><a href="https://elixir.bootlin.com/linux/v5.0.6/source" target="_blank" rel="noopener">https://elixir.bootlin.com/linux/v5.0.6/source</a></p>
+<p>引用的图片和文字版权归原作者所有</p>
 
         
                 <blockquote style="margin: 2em 0 0;padding: 0.5em 1em;border-left: 3px solid #F44336;background-color: #F5F5F5;list-style: none;">
@@ -917,7 +729,7 @@ search
                             本博客所有文章，未经特殊说明，均使用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" target="_blank">CC BY-NC-SA 3.0 Unported License 授权</a>
                         </strong>
                         <br>
-                        <strong>本文链接：</strong><a href="https://www.kmahyyg.xyz/2018/KMP-BF-DataStru/">https://www.kmahyyg.xyz/2018/KMP-BF-DataStru/</a>
+                        <strong>本文链接：</strong><a href="https://www.kmahyyg.xyz/2019/os-process-context/">https://www.kmahyyg.xyz/2019/os-process-context/</a>
                     </p>
                 </blockquote>
         
@@ -973,8 +785,8 @@ search
 
 <script type="text/javascript">
     var disqus_config = function () {
-        this.page.url = 'https://www.kmahyyg.xyz/2018/KMP-BF-DataStru/';  // Replace PAGE_URL with your page's canonical URL variable
-        this.page.identifier = 'https://www.kmahyyg.xyz/2018/KMP-BF-DataStru/'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+        this.page.url = 'https://www.kmahyyg.xyz/2019/os-process-context/';  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = 'https://www.kmahyyg.xyz/2019/os-process-context/'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
     };
 </script>
 
@@ -1023,21 +835,13 @@ search
             <nav class="material-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
     <!-- Prev Nav -->
     
-        <a href="/2018/CAMAL-OfflineDL/" id="post_nav-newer" class="prev-content">
-            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
-                <i class="material-icons">arrow_back</i>
-            </button>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            新篇
-        </a>
-    
 
     <!-- Section Spacer -->
     <div class="section-spacer"></div>
 
     <!-- Next Nav -->
     
-        <a href="/2018/ASM-exp-report/" id="post_nav-older" class="next-content">
+        <a href="/2019/os-fsm/" id="post_nav-older" class="next-content">
             旧篇
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
