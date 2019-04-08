@@ -218,11 +218,52 @@ Linux 提供了以下六个宏来判断是否处于原子上下文的情况： [
 
 ## 上下文切换简述
 
-TODO
+### 进程上下文
+
+通过上面的介绍，我们知道处理器总处于下列三种状态的一种：
+
+- 内核态，运行于进程上下文，内核代表进程运行于内核空间。
+- 内核态，运行于中断上下文，内核代表硬件运行于内核空间。
+- 用户态，运行于用户空间。
+
+当用户需要请求某个物理设备或系统服务时，就需要通过系统调用使用户程序陷入内核空间后映射对应设备、服务地址到用户空间，才能继续执行。
+
+相对于进程而言，上下文就是进程执行时的环境。当一个进程在执行时, CPU 的所有寄存器中的值、进程的状态以及堆栈中的内容、优先级、调度信息、审计信息、I/O状态、信号与事件信息等等被称为该进程的上下文，是一种对进程执行活动全过程的静态描述。当内核需要切换到另一个进程时，它需要保存当前进程的所有状态，即保存当前进程的上下文，以便在再次执行该进程时，能够必得到切换时的状态执行下去。在 LINUX 中，当前进程上下文均保存在进程的任务数据结构中。在发生中断时，内核就在被中断进程的上下文中，在内核态下执行中断服务例程。但同时会保留所有需要用到的资源，以便中继服务结束时能恢复被中断进程的执行。一个进程的上下文可以分为三个部分:用户级上下文、寄存器上下文以及系统级上下文。
+
+（1）用户级上下文: 正文、数据、用户堆栈以及共享存储区；
+（2）寄存器上下文: 通用寄存器、程序寄存器(IP)、处理器状态寄存器(EFLAGS)、栈指针(ESP)；
+（3）系统级上下文: 进程控制块 task_struct、内存管理信息(mm_struct、vm_area_struct、pgd、pte)、内核栈。
+
+当发生进程调度时，进行进程切换就是上下文切换(context switch). 操作系统必须对上面提到的全部信息进行切换，新调度的进程才能运行。而系统调用进行的模式切换(mode switch)。模式切换与进程切换比较起来，容易很多，而且节省时间，因为模式切换最主要的任务只是切换进程寄存器上下文的切换。进程上下文主要保存的内容是异常处理程序与内核线程，在进程上下文中引用 current 是有意义的。上下文切换的一个活动流程是：
+
+- 挂起一个进程，将这个进程在 CPU 中的状态（上下文）存储于内存中的某处，
+- 在内存中检索下一个进程的上下文并将其在 CPU 的寄存器中恢复
+- 跳转到程序计数器所指向的位置（即跳转到进程被中断时的代码行），以恢复该进程
+
+由于需要访问 Process Table (Maintained by Kernel)，故 Context Switch 能且仅能在 内核中 进行。
+
+### 中断上下文
+
+硬件通过触发信号，导致内核调用中断处理程序，进入内核空间。这个过程中，硬件的一些变量和参数也要传递给内核，内核通过这些参数进行中断处理。所谓的 “中断上下文” ，其实也可以看作就是硬件传递过来的这些参数和内核需要保存的一些其他环境（主要是当前被打断执行的进程环境）。这样的一个中断信号的发生是 random 的，中断处理和软中断无法预测何时发生、什么设备（进程）触发了这个中断，这样的一种中断，引用 current 可以，但没有意义。而中断时，内核不代表任何进程运行，它一般只访问系统空间，而不会访问进程空间，内核在中断上下文中执行时一般不会阻塞。
+
+中断上下文是原子上下文的一部分，禁止被抢占，内核禁止其在中断上下文中执行下列操作：
+
+- 占用互斥体
+- 进入睡眠
+- 执行耗时长的任务
+- 访问用户空间
+- 不允许中断处理例程被递归或并行调用
+- 中断处理例程 **可以被更高级别 IRQ 中断**
+
+常见的一个例子是：A 进程期待一个 I/O 写完成中断，实际在 B 进程执行、A 进程睡眠时发生。此时的中断信号打断 B 进程，唤醒 A 进程。
 
 ## Linux Kernel 的上下文切换 context_switch 实现
 
-TODO
+Linux Kernel 的上下文切换需要详细了解 Linux 内核调度器，迫于时间压力，先暂时把内核源码放在这里，有时间的话在慢慢深究。
+
+[kernel/sched/core.c Line 2859: context_switch](https://elixir.bootlin.com/linux/v5.0.6/source/kernel/sched/core.c#L2859)
+
+[include/linux/sched.h Line 72: task_struct](https://elixir.bootlin.com/linux/latest/source/include/linux/sched.h)
 
 # Reference
 
@@ -247,6 +288,8 @@ https://en.wikibooks.org/wiki/The_Linux_Kernel/Memory
 http://tldp.org/HOWTO/KernelAnalysis-HOWTO-7.html
 https://stackoverflow.com/questions/6710040/cpu-privilege-rings-why-rings-1-and-2-arent-used
 https://unix.stackexchange.com/questions/87625/what-is-difference-between-user-space-and-kernel-space
+https://en.wikipedia.org/wiki/Context_switch
+https://www.quora.com/Does-context-switching-happen-in-the-the-kernel-mode
 
 #### Linux 内核源代码
 
