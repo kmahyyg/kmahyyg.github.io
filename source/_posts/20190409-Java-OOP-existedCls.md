@@ -16,7 +16,7 @@ Last Edited: Apr 09, 2019 1:02 AM
 ```java
     Date birthday;   // birthday doesn't refer to any object
     Date birthday = new Date();    // this is a new built variable
-    GregorianCalendar deadline = new GregorianCalendar(1999, Calendar.DECEMBER, 31, 23, 59, 59)
+    GregorianCalendar deadline = new GregorianCalendar(1999, Calendar.DECEMBER, 31, 23, 59, 59);
 ```
 
 最后一个实例使用的对应类封装了实例域，这个域保存了设置的信息，这样的一个类对外暴露了两个方法， `deadline.add(Calendar.MONTH, 3);` 和 `int weekday = birthday.get(Calendar.DAY_OF_WEEK);` 这两个方法，前者对实例与做出修改，称为更改器(mutator method)方法。后者仅访问实例域而不进行修改，称为访问器方法(accessor method)。对于实例化的类，我们需要关注的是类暴露出的方法而不是其内部实现。
