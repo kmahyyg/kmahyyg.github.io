@@ -32,6 +32,9 @@ deploy:
   committer-from-gh: true
   local-dir: public
 
+after_deploy:
+  - sleep 5 && curl -Lk http://filebin.kmahyyg.xyz/blogcron/yyg
+
 notifications:
   webhooks:
     urls:
