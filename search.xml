@@ -21,7 +21,7 @@
       <title>Java 语言笔记 - OOP - 相关概念综述</title>
       <link href="/2019/Java-OOP-concept/"/>
       <url>/2019/Java-OOP-concept/</url>
-      <content type="html"><![CDATA[<h1 id="Java-语言笔记-OOP-相关概念综述"><a href="#Java-语言笔记-OOP-相关概念综述" class="headerlink" title="Java 语言笔记 - OOP - 相关概念综述"></a>Java 语言笔记 - OOP - 相关概念综述</h1><p>Last Edited: Apr 08, 2019 10:11 PM</p><p>类(class)是构造(construct)实例(instance)的蓝图，类将对象(object)的数据和行为组合通过封装(encapsulation)组合在一个包中，一个对象中的数据称为实例域(instance fields)，操作数据的过程称为方法(method)，上述值的组合就是这个对象的当前状态。通过扩展一个类来建立另外一个类的过程，称为继承(inheritance)。</p><p>对象具有三个主要特性：</p><ul><li>行为 behavior: 可以施加的操作 or 方法</li><li>状态 state: 施加对应方法时对象如何相应</li><li>表示 identity: 辨别具有相同行为与状态的不同对象</li></ul><p>作为一个类的实例而存在的对象，每个对象的标识永远不同，状态也常常存在差异。</p><p>类之间的关系常见的包括：</p><ul><li>依赖(dopendence)：一个类的方法操作另一个类的对象</li><li>继承(aggregation)：类 A 的对象包含类 B 的对象</li><li>聚合(inheritance)：扩展原有类的对象和方法</li></ul><p>定义必须被严格遵循。</p>]]></content>
+      <content type="html"><![CDATA[<h1 id="Java-语言笔记-OOP-相关概念综述"><a href="#Java-语言笔记-OOP-相关概念综述" class="headerlink" title="Java 语言笔记 - OOP - 相关概念综述"></a>Java 语言笔记 - OOP - 相关概念综述</h1><p>Last Edited: Apr 08, 2019 10:11 PM</p><p>类(class)是构造(construct)实例(instance)的蓝图，类将对象(object)的数据和行为组合通过封装(encapsulation)组合在一个包中，一个对象中的数据称为实例域(instance fields)，操作数据的过程称为方法(method)，上述值的组合就是这个对象的当前状态。通过扩展一个类来建立另外一个类的过程，称为继承(inheritance)。</p><p>对象具有三个主要特性：</p><ul><li>行为 behavior: 可以施加的操作 or 方法</li><li>状态 state: 施加对应方法时对象如何相应</li><li>表示 identity: 辨别具有相同行为与状态的不同对象</li></ul><p>作为一个类的实例而存在的对象，每个对象的标识永远不同，状态也常常存在差异。</p><p>类之间的关系常见的包括：</p><ul><li>依赖(dependence)：一个类的方法操作另一个类的对象</li><li>继承(aggregation)：类 A 的对象包含类 B 的对象</li><li>聚合(inheritance)：扩展原有类的对象和方法</li></ul><p>定义必须被严格遵循。</p>]]></content>
       
       
         <tags>
