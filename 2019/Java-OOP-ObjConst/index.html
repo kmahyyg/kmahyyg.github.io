@@ -52,7 +52,7 @@
     
     <title>
         
-            一切归于平静 - 开学前的最后一篇博文 | 
+            Java 语言笔记 - OOP - 对象构造 | 
         
         Potato Online
     </title>
@@ -253,7 +253,7 @@
     <!-- WebAPP Icons -->
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="application-name" content="Potato Online">
-    <meta name="msapplication-starturl" content="https://www.kmahyyg.xyz/2018/Zoe-I-Departed/">
+    <meta name="msapplication-starturl" content="https://www.kmahyyg.xyz/2019/Java-OOP-ObjConst/">
     <meta name="msapplication-navbutton-color" content="#0097A7">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-title" content="Potato Online">
@@ -272,15 +272,15 @@
     
 
     <!-- The Open Graph protocol -->
-    <meta property="og:url" content="https://www.kmahyyg.xyz/2018/Zoe-I-Departed/">
+    <meta property="og:url" content="https://www.kmahyyg.xyz/2019/Java-OOP-ObjConst/">
     <meta property="og:type" content="blog">
-    <meta property="og:title" content="一切归于平静 - 开学前的最后一篇博文 | Potato Online">
+    <meta property="og:title" content="Java 语言笔记 - OOP - 对象构造 | Potato Online">
     <meta property="og:image" content="https://alicdn.kmahyyg.xyz/asset_files/avatar-yyg.jpg">
     <meta property="og:description" content="Resources determined everything.">
     <meta property="og:article:tag" content="School"> 
 
     
-        <meta property="article:published_time" content="Sun Aug 26 2018 20:05:16 GMT+0000">
+        <meta property="article:published_time" content="Wed Apr 10 2019 00:28:49 GMT+0000">
         <meta property="article:modified_time" content="Tue Apr 09 2019 16:35:05 GMT+0000">
     
 
@@ -289,7 +289,7 @@
 
     <!-- Add canonical link for SEO -->
     
-        <link rel="canonical" href="https://www.kmahyyg.xyz/2018/Zoe-I-Departed/index.html">
+        <link rel="canonical" href="https://www.kmahyyg.xyz/2019/Java-OOP-ObjConst/index.html">
     
 
     <!-- Structured-data for SEO -->
@@ -301,9 +301,9 @@
 {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
-    "mainEntityOfPage": "https://www.kmahyyg.xyz/2018/Zoe-I-Departed/index.html",
-    "headline": "一切归于平静 - 开学前的最后一篇博文",
-    "datePublished": "Sun Aug 26 2018 20:05:16 GMT+0000",
+    "mainEntityOfPage": "https://www.kmahyyg.xyz/2019/Java-OOP-ObjConst/index.html",
+    "headline": "Java 语言笔记 - OOP - 对象构造",
+    "datePublished": "Wed Apr 10 2019 00:28:49 GMT+0000",
     "dateModified": "Tue Apr 09 2019 16:35:05 GMT+0000",
     "author": {
         "@type": "Person",
@@ -347,7 +347,9 @@
     
 
 <link rel="stylesheet" href="/css/prism-vs.css" type="text/css">
-<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"><link rel="stylesheet" href="/assets/css/APlayer.min.css" class="aplayer-style-marker">
+<script src="/assets/js/APlayer.min.js" class="aplayer-script-marker"></script>
+</head>
 
 
     
@@ -396,7 +398,7 @@
     </button>
 
     <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn" style="max-height:80vh; overflow-y:scroll;">
-        <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#断开连接日"><span class="post-toc-number">1.</span> <span class="post-toc-text">断开连接日</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#身体"><span class="post-toc-number">2.</span> <span class="post-toc-text">身体</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#那些看起来美好的事物"><span class="post-toc-number">3.</span> <span class="post-toc-text">那些看起来美好的事物</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#The-reason-I-deleted-her"><span class="post-toc-number">3.1.</span> <span class="post-toc-text">The reason I deleted her</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#License"><span class="post-toc-number">4.</span> <span class="post-toc-text">License</span></a></li></ol>
+        <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Java-语言笔记-OOP-对象构造"><span class="post-toc-number">1.</span> <span class="post-toc-text">Java 语言笔记 - OOP - 对象构造</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#对象构造"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">对象构造</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#关于-Overloading-的实践"><span class="post-toc-number">1.1.1.</span> <span class="post-toc-text">关于 Overloading 的实践</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#析构器"><span class="post-toc-number">1.1.1.1.</span> <span class="post-toc-text">析构器</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#参考文献"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">参考文献</span></a></li></ol></li></ol>
     </ul>
     
 
@@ -428,7 +430,7 @@
         
     
             <p class="article-headline-p">
-                一切归于平静 - 开学前的最后一篇博文
+                Java 语言笔记 - OOP - 对象构造
             </p>
         </div>
 
@@ -447,7 +449,7 @@
     <!-- Author Name & Date -->
     <div>
         <strong>Patrick Young</strong>
-        <span>8月 26, 2018</span>
+        <span>4月 10, 2019</span>
     </div>
 
     <div class="section-spacer"></div>
@@ -469,7 +471,7 @@
 <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-qrcode-button">
     <li class="mdl-menu__item">在其它设备中阅读本文章</li>
     
-        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACeElEQVR42u3aQW7cMBAEwP3/p5NrAMdyN4eiBKN0WiysFUsHDt0znz+/+vrg4eHh4eHh4eG9jPeJr+/u+vr9fx75z/dfPydPKdaGh4eHd4T3w1ZbLi5f0Hd3ra0NDw8P7zwvWcT1N9dbdv4Lo7Xh4eHhvZK3dm/yOxtePR4eHt7LeLuO13kYgYeHh/dmXn78zbf19qD8cNaCh4eHF/Mmwevdn4/29/Dw8PAC3uJgU3wInrTEHpspw8PDw7vktZv1WqusDWrzhhkeHh7eeV6ycbcDBElwkEcYddsMDw8P7yFeu6wJoy0VdRiBh4eHdxsvf/wk/M15baMODw8P7yne9dbcLj2/N2puJSUHDw8P7wgvCReSaKCNEtpxrnpcFQ8PD+823vUmnh+s10LhtQBiMWvBw8PDG/Pyjbs9ds+P0fka8PDw8M7z8scnZSNntM2tOsbFw8PDu5k3H6uqlxKEEfXwAR4eHt7NvDyQbUOK+UvJSw4eHh7eSV5bGPKCsbbpt420zUdqPDw8vJiXlIe8eOSb/lprrf6PAQ8PD28rLz+qtsttB6qKFlc7GYGHh4e3lbfWvlrb7otAobzw8PDwTvJyQD5Umvx9O2I1aoDh4eHhbeVNRqYmh+BJjHt73cPDw8MrRwcm7fx8pCB5Wfkv4OHh4Z3kLf7Dvyl0yIPgUd3Dw8PDu4HXFoO9ZSAvDNHa8PDw8A7y5nHDJNTIC9UPT8TDw8N7GW8tmGhba48VBjw8PLzbzpzJK2jbZknBSF4HHh4e3knepOk1CWfb4rF4pMbDw8PbytsQAQThbE6NCsAd/T08PDy8G4au3n/h4eHh4eHh4eG94PoLK/foTD+Wx7wAAAAASUVORK5CYII=">
+        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACXElEQVR42u3aQXLDIBAEQP3/08kLoppZEFZczSnlkuVtDkCGvX6+elx4eHh4eHh4eHgv413xqH/mjzfcf75eGx4eHt4ZXlLoPSDntRPUPoOHh4d3kpcs2fdLefv8/UI/3E7w8PDwXs9Llv4cuVIbHh4e3n/htcEBHh4e3jfx8mU9KSgKDuKpPJS14OHh4cW8fCk///fR+z08PDy8gLfeEJBcg7XtBUsV4uHh4T3Myxfi9sCdP5O3Z0X14OHh4T3MW2kCyMOI9XbVJLzAw8PDew8vPzrnQcZsk4iO6Xh4eHgP85Ij7H1xxZJdBsR5bXh4eHif4rWNAvn1f34c39BMgIeHh/ch3mxjaIOM/A1FIIKHh4d3hNfGtTkvudxKNptio8LDw8M7wssbpPLotj2sz9oL8PDw8M7z2h9eoc6u2dp4Ag8PD+9pXrLUto0C7UG5bT7Aw8PD+yxvJdLNC22DjLwxKzpS4+Hh4W3lJT8/Cwh2hRd1KxgeHh7eEd7skj6foDwgzidxeL+Hh4eH9wAvL+u567EielhvusLDw8Mb8ZJNItk88iJmm8pwY8DDw8M7zmuvyqIigqPzrPUKDw8P7zyvDVJXot77KU5iiPpIjYeHh7fMa8dewK4pwMPDwzvJu+Kxi5p8N4kh6gswPDw8vK28NlzYG1u078TDw8N7Dy//5z9vM22vx2ZbFB4eHt7/4s3YeSNCfgTHw8PDez9vdhDfdfX1+MaAh4eHtymMaNuzdrUFFAExHh4e3hFeHgEkn+fvb985jHHx8PDwtvK+b+Dh4eHh4eHh4b1g/AJVQ9gkrn8M6QAAAABJRU5ErkJggg==">
     
 </ul>
 
@@ -503,7 +505,7 @@
 
     <!-- Share Twitter -->
     
-        <a class="post_share-link" href="https://twitter.com/intent/tweet?text=一切归于平静 - 开学前的最后一篇博文&url=https://www.kmahyyg.xyz/2018/Zoe-I-Departed/index.html&via=Patrick Young" target="_blank">
+        <a class="post_share-link" href="https://twitter.com/intent/tweet?text=Java 语言笔记 - OOP - 对象构造&url=https://www.kmahyyg.xyz/2019/Java-OOP-ObjConst/index.html&via=Patrick Young" target="_blank">
             <li class="mdl-menu__item">
                 分享到 Twitter
             </li>
@@ -512,7 +514,7 @@
 
     <!-- Share Facebook -->
     
-        <a class="post_share-link" href="https://www.facebook.com/sharer/sharer.php?u=https://www.kmahyyg.xyz/2018/Zoe-I-Departed/index.html" target="_blank">
+        <a class="post_share-link" href="https://www.facebook.com/sharer/sharer.php?u=https://www.kmahyyg.xyz/2019/Java-OOP-ObjConst/index.html" target="_blank">
             <li class="mdl-menu__item">
                 分享到 Facebook
             </li>
@@ -521,7 +523,7 @@
 
     <!-- Share Google+ -->
     
-        <a class="post_share-link" href="https://plus.google.com/share?url=https://www.kmahyyg.xyz/2018/Zoe-I-Departed/index.html" target="_blank">
+        <a class="post_share-link" href="https://plus.google.com/share?url=https://www.kmahyyg.xyz/2019/Java-OOP-ObjConst/index.html" target="_blank">
             <li class="mdl-menu__item">
                 分享到 Google+
             </li>
@@ -533,7 +535,7 @@
 
     <!-- Share QQ -->
     
-        <a class="post_share-link" href="http://connect.qq.com/widget/shareqq/index.html?site=Potato Online&title=一切归于平静 - 开学前的最后一篇博文&summary=Resources determined everything.&pics=https://www.kmahyyg.xyzhttps://alicdn.kmahyyg.xyz/asset_files/avatar-yyg.jpg&url=https://www.kmahyyg.xyz/2018/Zoe-I-Departed/index.html" target="_blank">
+        <a class="post_share-link" href="http://connect.qq.com/widget/shareqq/index.html?site=Potato Online&title=Java 语言笔记 - OOP - 对象构造&summary=Resources determined everything.&pics=https://www.kmahyyg.xyzhttps://alicdn.kmahyyg.xyz/asset_files/avatar-yyg.jpg&url=https://www.kmahyyg.xyz/2019/Java-OOP-ObjConst/index.html" target="_blank">
             <li class="mdl-menu__item">
                 分享到 QQ
             </li>
@@ -542,7 +544,7 @@
 
     <!-- Share Telegram -->
     
-        <a class="post_share-link" href="https://telegram.me/share/url?url=https://www.kmahyyg.xyz/2018/Zoe-I-Departed/index.html&text=一切归于平静 - 开学前的最后一篇博文" target="_blank">
+        <a class="post_share-link" href="https://telegram.me/share/url?url=https://www.kmahyyg.xyz/2019/Java-OOP-ObjConst/index.html&text=Java 语言笔记 - OOP - 对象构造" target="_blank">
             <li class="mdl-menu__item">
                 分享到 Telegram
             </li>
@@ -558,55 +560,87 @@
                 <!-- Post Content -->
                 <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
     
-        <p>限于版权保护，只能这样了……<br><a href="https://music.163.com/#/song?id=1304302909" target="_blank" rel="noopener">背景音乐 花粥 / 孟凡明 - 摸摸它</a></p>
-<h1 id="断开连接日"><a href="#断开连接日" class="headerlink" title="断开连接日"></a>断开连接日</h1><p>今天尝试了一次完全断开与世界的连接，由于昨天知道有两个快递要到，还是没有关手机。不过真的是停用了所有社交应用，今天专注于 Code 和 写作，只留下电子邮件的感觉非常好。</p>
-<p>我觉得我们已经过度信息化，信息超载早已成为定局，我们能做的就是尽量适应。同时尽可能地减少注意力的流失。这一点来说 Google 走在了几大厂商的前面，发布了 Digital Wellbeing，虽然目前只能 Pixel 设备使用，但仍然很有帮助，帮助我减少了很多不必要的查看手机的时间。</p>
-<p>完全使用现金支付，在节假日尽可能停用手机是完全可以做到，内心自然也会平静的。这样的确让人感觉非常专注，非常惬意。在魁阁的露台上，品茶、享受着和风，专心地做着自己喜欢的事情，有什么不好的呢？</p>
-<p>所以，我宣布：接下来的这个学期，每周六下课之后就进入 24 h 的断开连接状态！有急事需要找我的朋友，请联系我的私人号码或者发邮件给我，公用号码一样开机，只是会被直接 Ignore 罢了。</p>
-<h1 id="身体"><a href="#身体" class="headerlink" title="身体"></a>身体</h1><p>发现自己还是总算可以算得上能吃辣的了，略开心，不过嘛……吃太多对身体不好，熬夜也一样 XD</p>
-<p>晚上千万不能喝一整瓶的王老吉或者可乐，半夜三更拉肚子，睡不着觉，难受……</p>
-<p>忽然发现，喵喵真的好棒，好想马上就养一只猫，画个大大大的爱心～</p>
-<h1 id="那些看起来美好的事物"><a href="#那些看起来美好的事物" class="headerlink" title="那些看起来美好的事物"></a>那些看起来美好的事物</h1><p>本来懒得措辞了，希望就简短的回复一下，不过估计直接用中文回复的话，会简单地过分，甚至会有 offensive 的味道，想了想，还是用英文吧。</p>
-<p>Dear ZoeCat,</p>
-<p>Hope this letter finds you well. Thanks for your honesty. I’m in such a happy status that you’ve already learnt to be determined. First of all, Although things went as this, I still need the seat at the very first row in each class, hope you will not steal it from me.</p>
-<p>In the rest of the letter, it will be divided into three parts.</p>
-<p>Part one: Q&amp;A time</p>
+        <h1 id="Java-语言笔记-OOP-对象构造"><a href="#Java-语言笔记-OOP-对象构造" class="headerlink" title="Java 语言笔记 - OOP - 对象构造"></a>Java 语言笔记 - OOP - 对象构造</h1><p>Last Edited: Apr 10, 2019 12:26 AM</p>
+
+        <div id="aplayer-UFPAApSO" class="aplayer aplayer-tag-marker" style="margin-bottom: 20px;">
+            <pre class="aplayer-lrc-content"></pre>
+        </div>
+        <script>
+          var ap = new APlayer({
+            element: document.getElementById("aplayer-UFPAApSO"),
+            narrow: false,
+            autoplay: false,
+            showlrc: false,
+            music: {
+              title: "Lady of the Pier",
+              author: "Devotion OST",
+              url: "https://alicdn.kmahyyg.xyz/asset_files/LotP-Merged.mp3",
+              pic: "",
+              lrc: ""
+            }
+          });
+          window.aplayers || (window.aplayers = []);
+          window.aplayers.push(ap);
+        </script>
+<h2 id="对象构造"><a href="#对象构造" class="headerlink" title="对象构造"></a>对象构造</h2><p>(1) <code>overloading</code> 重载</p>
+<p>多个构造器方法有相同的名字、不同的参数，便产生了重载。编译器必须挑选出具体执行哪个方法。如果找不到匹配的参数，或者找到多个，就会产生编译时错误。 Java 允许重载任何方法，因此描述一个方法，必须完整指明参数名和参数类型。</p>
+<p>(2) 默认域</p>
+<p>若构造器中没有显式赋予初值，则默认数值型 <code>0</code> 、布尔值 <code>False</code> 、对象引用 <code>null</code> ，不建议默认不赋值。默认构造器，则是指默认没有参数的构造器。显式的域初始化在 Java 中是允许的，也是可行的。</p>
+<p>(3) 参数名</p>
+<p>为了避免隐式参数屏蔽实例域，可以采用 this 这个关键字进行访问。代码如下：</p>
+<pre class="line-numbers language-java"><code class="language-java">    <span class="token keyword">class</span> <span class="token class-name">Employee</span><span class="token punctuation">{</span>
+        <span class="token keyword">public</span> <span class="token function">Employee</span><span class="token punctuation">(</span>String aName<span class="token punctuation">,</span> <span class="token keyword">double</span> aSalary<span class="token punctuation">)</span><span class="token punctuation">{</span>
+            <span class="token keyword">this</span><span class="token punctuation">.</span>name <span class="token operator">=</span> aName<span class="token punctuation">;</span>
+            <span class="token keyword">this</span><span class="token punctuation">.</span>salary <span class="token operator">=</span> aSalary<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">private</span> String name<span class="token punctuation">;</span>
+        <span class="token keyword">private</span> <span class="token keyword">double</span> salary<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="关于-Overloading-的实践"><a href="#关于-Overloading-的实践" class="headerlink" title="关于 Overloading 的实践"></a>关于 Overloading 的实践</h3><p>使用 <code>this()</code> 调用同类中的不同构造器，其他构造器根据传入的参数返回实例化的对象：</p>
+<pre class="line-numbers language-java"><code class="language-java">    <span class="token keyword">import</span> java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>*<span class="token punctuation">;</span>
+
+    <span class="token keyword">class</span> <span class="token class-name">Employee</span> <span class="token punctuation">{</span>
+
+        <span class="token keyword">public</span> <span class="token function">Employee</span><span class="token punctuation">(</span><span class="token keyword">double</span> s<span class="token punctuation">)</span><span class="token punctuation">{</span>   <span class="token comment" spellcheck="true">// 构造器的使用与重载</span>
+            <span class="token keyword">this</span><span class="token punctuation">(</span><span class="token string">"John"</span><span class="token punctuation">,</span> s<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+
+        <span class="token keyword">public</span> <span class="token function">Employee</span><span class="token punctuation">(</span>String n<span class="token punctuation">,</span> <span class="token keyword">double</span> s<span class="token punctuation">)</span><span class="token punctuation">{</span>
+            name <span class="token operator">=</span> n<span class="token punctuation">;</span>
+            salary <span class="token operator">=</span> s<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+
+        <span class="token keyword">public</span> String <span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+            <span class="token keyword">return</span> name<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+
+        <span class="token keyword">private</span> String name <span class="token operator">=</span> <span class="token string">""</span><span class="token punctuation">;</span>
+        <span class="token keyword">private</span> <span class="token keyword">double</span> salary<span class="token punctuation">;</span>
+        <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">int</span> cmpid<span class="token punctuation">;</span>
+        <span class="token keyword">private</span> <span class="token keyword">int</span> id<span class="token punctuation">;</span>
+
+        <span class="token keyword">static</span> <span class="token punctuation">{</span>   <span class="token comment" spellcheck="true">// 静态初始化块</span>
+            Random generator <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Random</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            cmpid <span class="token operator">=</span> generator<span class="token punctuation">.</span><span class="token function">nextInt</span><span class="token punctuation">(</span><span class="token number">10000</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+
+        <span class="token punctuation">{</span>    <span class="token comment" spellcheck="true">// 实例域初始化块</span>
+            id <span class="token operator">=</span> cmpid <span class="token operator">+</span> <span class="token number">9</span><span class="token punctuation">;</span>
+            cmpid<span class="token operator">++</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>对于构造器的调用，其具体的处理步骤如下：</p>
 <ol>
-<li>Feel unhappy today?</li>
+<li>所有数据域初始化为默认值</li>
+<li>根据在类声明中出现的次序，依次执行所有域初始化语句和初始化块</li>
+<li>递归调用嵌套的构造器</li>
+<li>执行当前构造器</li>
 </ol>
-<blockquote>
-<p>Of course not, I just don’t want anybody to interupt my disconnected day.</p>
-</blockquote>
-<ol start="2">
-<li>What have you done to make me bored?</li>
-</ol>
-<blockquote>
-<p>Nothing.</p>
-</blockquote>
-<ol start="3">
-<li>Treat your cold and guessing……?</li>
-</ol>
-<blockquote>
-<p>That’s the most common way I treat each one in “unrelated people” list.</p>
-</blockquote>
-<ol start="4">
-<li>What’s the best relationship between to similar ones?</li>
-</ol>
-<blockquote>
-<p>Follow your hearts, Try your best and then listen to the fate.</p>
-</blockquote>
-<p>Part two: Thoughts</p>
-<p>I’ve already predicted this result at the very beginning of this summer holiday. But I still want to try to do some emergency saving for this relationship,<br>hope it lasts much longer or keep forever. Remember, I’ve told you some day that I have some hypothesis to prove. That’s it. Some friends have tried to persuade me not to pick you up at the airport. Finally, I still decided to go for it, to do a final confirmation. Saddest, I proved this hypothesis is definitely true. You already answered me several times on your face, so yesterday I told you, “The summer holiday ended, (maybe) see you next semester.” Until today, at the time I heard from you, I released, and knew my future plans still need a cleanup as predicted.</p>
-<p>Part three: My begging</p>
-<p>First of all, I have to inform you that you’ve already been tagged “blacklist” in my soul mate list after I picked you. You are a good friend, but not a good soul mate. I confirmed you are still a good friend. I’m really sad, but life still goes on. So I’m still happy, Cuz unhappy will only cost me all things without any return. Secondly, I hope there will be no more other reply. Thanks for your understanding.</p>
-<p>Hope you have a better day.</p>
-<p>Cordially,<br>Patrick Cat</p>
-<p>Written at Sun Aug 26 20:05:16 CST 2018</p>
-<h2 id="The-reason-I-deleted-her"><a href="#The-reason-I-deleted-her" class="headerlink" title="The reason I deleted her"></a>The reason I deleted her</h2><p>I didn’t want to do that at the very first time. I could understand that you’re protecting yourself. But you know that I won’t do any harm to you. You still chose to cheat me. I chose to exchange with my true heart, but you don’t even understand it a bit. That’s what I can’t stand.</p>
-<p>UPDATE： I just want a little bit response from heart to heart, but so hard to feel. See you. Thanks for your company and honesty.</p>
-<h1 id="License"><a href="#License" class="headerlink" title="License"></a>License</h1><p>YOU ARE NOT PERMITTED TO FORWARD IT ANYWHERE OR POST IT ANYWHERE ELSE (INCLUDING LINK TO THIS POST), NO DERIVS.</p>
-<p>Special License. </p>
-<p>All rights reserved. </p>
+<h4 id="析构器"><a href="#析构器" class="headerlink" title="析构器"></a>析构器</h4><p>析构器(deconstructor)， JVM 自己有 GC，所以 Java  不支持析构器。即使需要使用这一特性，Java 提供了 finalize() 方法，但是这个方法是不可靠、不安全的，无法确保被调用。如果使用了一些需要人工管理资源的类，请务必保证在使用完毕后调用类似 <code>dispose / close</code> 方法来完成相应清理操作。</p>
+<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><p><a href="https://stackoverflow.com/questions/2506488/when-is-the-finalize-method-called-in-java" target="_blank" rel="noopener">When is the finalize() method called in Java?</a></p>
+<p><a href="https://www.cnblogs.com/100thMountain/p/5374423.html" target="_blank" rel="noopener">Java 中的 static 使用之静态初始化块 - Mountain’s_blog - 博客园</a></p>
 
         
                 <blockquote style="margin: 2em 0 0;padding: 0.5em 1em;border-left: 3px solid #F44336;background-color: #F5F5F5;list-style: none;">
@@ -615,7 +649,7 @@
                             本博客所有文章，未经特殊说明，均使用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" target="_blank">CC BY-NC-SA 3.0 Unported License 授权</a>
                         </strong>
                         <br>
-                        <strong>本文链接：</strong><a href="https://www.kmahyyg.xyz/2018/Zoe-I-Departed/">https://www.kmahyyg.xyz/2018/Zoe-I-Departed/</a>
+                        <strong>本文链接：</strong><a href="https://www.kmahyyg.xyz/2019/Java-OOP-ObjConst/">https://www.kmahyyg.xyz/2019/Java-OOP-ObjConst/</a>
                     </p>
                 </blockquote>
         
@@ -671,8 +705,8 @@
 
 <script type="text/javascript">
     var disqus_config = function () {
-        this.page.url = 'https://www.kmahyyg.xyz/2018/Zoe-I-Departed/';  // Replace PAGE_URL with your page's canonical URL variable
-        this.page.identifier = 'https://www.kmahyyg.xyz/2018/Zoe-I-Departed/'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+        this.page.url = 'https://www.kmahyyg.xyz/2019/Java-OOP-ObjConst/';  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = 'https://www.kmahyyg.xyz/2019/Java-OOP-ObjConst/'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
     };
 </script>
 
@@ -721,21 +755,13 @@
             <nav class="material-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
     <!-- Prev Nav -->
     
-        <a href="/2018/Matlab-remVSmod/" id="post_nav-newer" class="prev-content">
-            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
-                <i class="material-icons">arrow_back</i>
-            </button>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            新篇
-        </a>
-    
 
     <!-- Section Spacer -->
     <div class="section-spacer"></div>
 
     <!-- Next Nav -->
     
-        <a href="/2018/Hexo-Travis/" id="post_nav-older" class="next-content">
+        <a href="/2019/Java-OOP-existedCls/" id="post_nav-older" class="next-content">
             旧篇
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
