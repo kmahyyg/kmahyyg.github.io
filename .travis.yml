@@ -3,7 +3,7 @@ sudo: required
 
 language: node_js
 node_js:
-  - "8.12.0"
+  - "8.15.0"
 
 cache:
   directories:
@@ -42,3 +42,5 @@ notifications:
     on_success: always
     on_failure: always
     on_start: never
+
+

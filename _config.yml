@@ -102,4 +102,7 @@ prism_plugin:
   mode: 'preprocess'    # realtime/preprocess
   theme: 'vs'
   line_number: true    # default false
-  
+
+aplayer:
+  meting: true
+
