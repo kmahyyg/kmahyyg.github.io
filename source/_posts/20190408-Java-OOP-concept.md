@@ -21,7 +21,7 @@ Last Edited: Apr 08, 2019 10:11 PM
 
 类之间的关系常见的包括：
 
-- 依赖(dopendence)：一个类的方法操作另一个类的对象
+- 依赖(dependence)：一个类的方法操作另一个类的对象
 - 继承(aggregation)：类 A 的对象包含类 B 的对象
 - 聚合(inheritance)：扩展原有类的对象和方法
 
