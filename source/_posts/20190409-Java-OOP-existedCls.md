@@ -1,13 +1,13 @@
 ---
 title: Java 语言笔记 - OOP - 使用现有的类与方法
-date: 2019-04-09 01:04:53
+date: 2019-04-09 20:28:14
 tags:
   - School
 ---
 
 # Java 语言笔记 - OOP - 使用现有的类与方法
 
-Last Edited: Apr 09, 2019 1:02 AM
+Last Edited: Apr 09, 2019 5:50 PM
 
 1. 现有的类
 
@@ -16,7 +16,7 @@ Last Edited: Apr 09, 2019 1:02 AM
 ```java
     Date birthday;   // birthday doesn't refer to any object
     Date birthday = new Date();    // this is a new built variable
-    GregorianCalendar deadline = new GregorianCalendar(1999, Calendar.DECEMBER, 31, 23, 59, 59);
+    GregorianCalendar deadline = new GregorianCalendar(1999, Calendar.DECEMBER, 31, 23, 59, 59)
 ```
 
 最后一个实例使用的对应类封装了实例域，这个域保存了设置的信息，这样的一个类对外暴露了两个方法， `deadline.add(Calendar.MONTH, 3);` 和 `int weekday = birthday.get(Calendar.DAY_OF_WEEK);` 这两个方法，前者对实例与做出修改，称为更改器(mutator method)方法。后者仅访问实例域而不进行修改，称为访问器方法(accessor method)。对于实例化的类，我们需要关注的是类暴露出的方法而不是其内部实现。
@@ -25,11 +25,11 @@ Java 中非常注重本地化输出，对于这类需要 i18n 输出的，应当
 
 2. 用户自定义类
 
-在一个包中，应当只有一个类有 `Main` 方法。JVM 在试图运行一个类之前，先检查该类是否包含一个特殊方法。这个方法必须是公有的，以便在任何位置都能访问得到。这个方法必须是 `static` 的，因为这个方法不能依赖任何该类的实例即可运行，而非 `static` 的方法，在运行之前要先创建该类的实例对象。
+在一个包中，应当只有一个类有 Main 方法。JVM 在试图运行一个类之前，先检查该类是否包含一个特殊方法。这个方法必须是公有的，以便在任何位置都能访问得到。这个方法必须是 static 的，因为这个方法不能依赖任何该类的实例即可运行，而非 static 的方法，在运行之前要先创建该类的实例对象。
 
-这样的自定义类，可能需要抽象类来进行辅助。抽象类一定是父类，不可创建实例，只有覆盖了抽象类的所有抽象方法之后的子类才可以实例化。抽象类的关键字是 `abstract`.
+这样的自定义类，可能需要抽象类来进行辅助。抽象类一定是父类，不可创建实例，只有覆盖了抽象类的所有抽象方法之后的子类才可以实例化。抽象类的关键字是 abstract.
 
-`abstract` 不能和哪些关键字一起用？
+abstract 不能和哪些关键字一起用？
 
 答：
 
@@ -92,7 +92,7 @@ public（访问控制符），将一个类声明为公共类，他可以被任�
 
 abstract，将一个类声明为抽象类，没有实现的方法，需要子类提供方法实现。
 
-final，将一个类生命为最终（即非继承类），表示他不能被其他类继承。
+final，将一个类声明为最终（即非继承类），表示他不能被其他类继承。
 
 friendly，默认的修饰符，只有在相同包中的对象才能使用这样的类。
 
@@ -130,6 +130,82 @@ synchronize，同步修饰符，在多个线程中，该修饰符用于在运行
 
 native，本地修饰符。指定此方法的方法体是用其他语言在程序外部编写的。
 
-## TODO: 未完待续
+代码示例1：
 
-TODO
+```java
+    import java.util.*;
+    
+    public class EmployeeTest {
+    	public static void main(String[] args){
+    		Employee staff = new Employee("hello",71000);
+    		staff.raiseSalary(80000);
+    		staff.getName();
+    	}
+    }
+    
+    class Employee {
+    	public Employee(String n, int s){
+    		name = n;
+    		salary = s;
+    	}
+    
+    	public String getName(){
+    		System.out.println("My name: " + this.name);
+    		return name;
+    	}
+    
+    	public double raiseSalary(int newsala){
+    		System.out.printf("My salary: %d \n", this.salary);
+    		this.salary = newsala;
+    		System.out.printf("My new salary: %d \n", this.salary);
+    		return salary;
+    	}
+    
+    	private String name;
+    	private int salary;
+    }
+```
+
+你会发现我在 EmployeeTest 里写了两个类，事实是：Java Compiler 会在启动时查找是否存在 Employee.class ，如果不存在就自动编译。末尾的 private 语句确保只有 Employee 类自身可以访问这些示例域，其他类的方法无法读写。
+
+让我们继续来分析这段代码：这段代码包括了一个构造器和一个 getter，一个 setter，构造器在 new 对象时被调用，构造器与类同名、每个类可以有一个以上构造器和多个参数，构造器没有返回值。构造器中不能定义与实例域重名的局部变量，这样的局部变量会屏蔽了同名的实例域。
+
+4.  显式参数与隐式参数
+
+上面的代码中的 newSalary() 方法有两个参数, 第一个参数是隐式参数（即 Employee 类），第二个参数是显式参数，即括号中的参数。
+
+5. 封装的优点
+
+确保实例域不被第三方类进行未授权修改，修改内部方法不影响外部实现的同时，也可以通过修改修改器方法实现对数据的检查。
+
+需要注意的一点是：不要编写返回引用可变对象的访问器方法，因为这样会同时更改一个可变对象，导致原有实例的私有域被更改。如果需要返回一个可变数据域的拷贝，可以使用克隆。
+
+```java
+    class Employee{
+    	public Date getHireday(){
+    			return (Date) hireDay.clone();	
+    	}
+    }
+```
+
+6. 静态
+
+声明静态常量: `public static final int PI=8.99;`
+
+使用静态方法: 这种方法仅适用于所需参数全部显式提供，并且只需要访问类的静态域的情况，例如 
+
+```java
+    public static int getNextID(){
+    	return NextID;   // NOT: this.NextID;
+    }
+```
+
+7. 一些特定的方法
+
+`NumberFormat` 类中使用 `factory` 方法产生不同风格的格式化对象。
+
+`Main` 方法是静态方法，不对任何对象进行操作。`Main` 方法的目的是执行并创建程序运行所需要的对象。
+
+8. 方法参数
+
+需要明确的一点是：Java 中和 C 中只存在 Call by Value&Reference, 不存在 Call by name 的情况。一个方法可以修改传递引用所对应的变量值，但是不能修改传递值。
