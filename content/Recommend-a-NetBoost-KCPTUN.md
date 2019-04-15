@@ -2,8 +2,8 @@
 title: "Recommend a NetBoost: KCPTUN"
 date: 2016-07-17T08:43:51
 description: "用于高延迟、不稳定网络的高速传输中间件 KCPTUN"
-featuredImage: "https://alicdn.kmahyyg.xyz/asset_files/aether/cat_tech.webp"
-categories: ["tech"]
+featuredImage: "https://alicdn.kmahyyg.xyz/asset_files/aether/cat_network.webp"
+categories: ["network"]
 draft: false
 displayInMenu: false
 displayInList: true

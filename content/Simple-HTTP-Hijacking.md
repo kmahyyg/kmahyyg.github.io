@@ -2,8 +2,8 @@
 title: Simple HTTP Hijacking
 date: 2018-06-08T11:01:11
 description: "运营商劫持了 HTTP 连接的内容，严重影响了网络的正常使用。"
-featuredImage: "https://alicdn.kmahyyg.xyz/asset_files/aether/cat_tech.webp"
-categories: ["tech"]
+featuredImage: "https://alicdn.kmahyyg.xyz/asset_files/aether/cat_network.webp"
+categories: ["network"]
 draft: false
 displayInMenu: false
 displayInList: true

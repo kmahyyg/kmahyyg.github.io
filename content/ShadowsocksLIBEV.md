@@ -2,8 +2,8 @@
 title: ShadowsocksR Installation - SS Dead
 date: 2017-10-12T04:44:35
 description: "从 Shadowsocks 迁移到 ShadowsocksR"
-featuredImage: "https://alicdn.kmahyyg.xyz/asset_files/aether/cat_code.webp"
-categories: ["code"]
+featuredImage: "https://alicdn.kmahyyg.xyz/asset_files/aether/cat_network.webp"
+categories: ["network"]
 draft: false
 displayInMenu: false
 displayInList: true

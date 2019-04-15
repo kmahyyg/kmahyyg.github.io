@@ -1,9 +1,9 @@
 ---
-title: Set up 6in4 Tunnel via OpenVPN
+title: "Set up 6in4 Tunnel via OpenVPN"
 date: 2018-05-24T11:24:20
 description: "一次关于 OpenVPN based 6in4 Tunnel 的尝试"
-featuredImage: "https://alicdn.kmahyyg.xyz/asset_files/aether/cat_tech.webp"
-categories: ["tech"]
+featuredImage: "https://alicdn.kmahyyg.xyz/asset_files/aether/cat_network.webp"
+categories: ["network"]
 draft: false
 displayInMenu: false
 displayInList: true

@@ -1,8 +1,8 @@
 ---
-title: Net-Speeder Shell Script[弃用]
+title: "Net-Speeder Shell Script[弃用]"
 description: "不建议使用: 使用 netspeeder 通过多倍发包加速网络"
-featuredImage: "https://alicdn.kmahyyg.xyz/asset_files/aether/cat_tech.webp"
-categories: ["tech"]
+featuredImage: "https://alicdn.kmahyyg.xyz/asset_files/aether/cat_network.webp"
+categories: ["network"]
 draft: false
 displayInMenu: false
 displayInList: true

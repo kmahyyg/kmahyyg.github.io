@@ -1,9 +1,9 @@
 ---
-title: DNS-Over-TLS Client Setup
+title: "DNS-Over-TLS Client Setup"
 date: 2018-04-02T11:22:47
 description: "DoT 是一项新兴的 DNS 查询方式，本文主要介绍作者尝试部署 DoT 服务器的一次实践。"
-featuredImage: "https://alicdn.kmahyyg.xyz/asset_files/aether/cat_tech.webp"
-categories: ["tech"]
+featuredImage: "https://alicdn.kmahyyg.xyz/asset_files/aether/cat_network.webp"
+categories: ["network"]
 draft: false
 displayInMenu: false
 displayInList: true

@@ -2,8 +2,8 @@
 title: 计算机网络期末复习稿
 date: 2019-01-09T00:06:43
 description: "计算机网络课程期末复习记录"
-featuredImage: "https://alicdn.kmahyyg.xyz/asset_files/aether/cat_school.webp"
-categories: ["school"]
+featuredImage: "https://alicdn.kmahyyg.xyz/asset_files/aether/cat_network.webp"
+categories: ["network"]
 draft: false
 displayInMenu: false
 displayInList: true
