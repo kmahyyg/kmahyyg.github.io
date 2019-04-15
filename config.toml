@@ -1,0 +1,16 @@
+baseURL = "https://www.kmahyyg.xyz/"
+languageCode = "zh-cn"
+title = "Pat~ Pat~ Meow~"
+theme = "aether"
+googleAnalytics = "UA-123948588-1"
+disqusShortname = "kmahyyg"
+enableEmoji = true
+enableRobotsTXT = true
+hasCJKLanguage = true
+paginate = 5
+
+[params]
+brand = "Patrick Young"
+description = "Trust but Verify"
+homeimg = "https://alicdn.kmahyyg.xyz/asset_files/aether/backtohome.webp"
+bgimg = "https://alicdn.kmahyyg.xyz/asset_files/aether/bgimg.webp"
