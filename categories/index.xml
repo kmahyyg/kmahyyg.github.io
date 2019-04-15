@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Categories - Pat~ Pat~ Meow~</title>
+    <link>https://www.kmahyyg.xyz/categories/</link>
+    <description>Recent content in Categories on Pat~ Pat~ Meow~</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    
+        <atom:link href="https://www.kmahyyg.xyz/categories/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Code</title>
+      <link>https://www.kmahyyg.xyz/categories/code/</link>
+      <pubDate>Wed, 10 Apr 2019 00:28:49 +0000</pubDate>
+      
+      <guid>https://www.kmahyyg.xyz/categories/code/</guid>
+      <description></description>
+    </item><item>
+      <title>Life</title>
+      <link>https://www.kmahyyg.xyz/categories/life/</link>
+      <pubDate>Sun, 07 Apr 2019 16:32:33 +0000</pubDate>
+      
+      <guid>https://www.kmahyyg.xyz/categories/life/</guid>
+      <description></description>
+    </item><item>
+      <title>Network</title>
+      <link>https://www.kmahyyg.xyz/categories/network/</link>
+      <pubDate>Mon, 21 May 2018 17:01:53 +0000</pubDate>
+      
+      <guid>https://www.kmahyyg.xyz/categories/network/</guid>
+      <description></description>
+    </item><item>
+      <title>School</title>
+      <link>https://www.kmahyyg.xyz/categories/school/</link>
+      <pubDate>Sat, 13 Apr 2019 23:19:40 +0000</pubDate>
+      
+      <guid>https://www.kmahyyg.xyz/categories/school/</guid>
+      <description></description>
+    </item><item>
+      <title>Tech</title>
+      <link>https://www.kmahyyg.xyz/categories/tech/</link>
+      <pubDate>Wed, 24 Oct 2018 10:31:57 +0000</pubDate>
+      
+      <guid>https://www.kmahyyg.xyz/categories/tech/</guid>
+      <description></description>
+    </item>
+  </channel>
+</rss>

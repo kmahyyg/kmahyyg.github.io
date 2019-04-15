@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="zh-cn" dir="ltr">
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>数据结构与算法课程 - Chap 2 线性表 &middot; Pat~ Pat~ Meow~</title>
+  <meta name="description" content="数据结构与算法课程期末复习记录 Chapter 2" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.css" integrity="sha384-9eLZqc9ds8eNjO3TmqPeYcDj8n+Qfa4nuSiGYa6DjLNcv9BtN69ZIulL9+8CqC9Y" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://www.kmahyyg.xyz/css/main.min.css" />
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-123948588-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+
+  <style>
+    body {
+      background: #ecedef url("https://alicdn.kmahyyg.xyz/asset_files/aether/bgimg.webp") repeat;
+    }
+  </style>
+</head>
+  <body class="single-body">
+    <nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="https://www.kmahyyg.xyz/" class="nav-text">Patrick Young</a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="https://www.kmahyyg.xyz/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://www.kmahyyg.xyz/express-page/" class="hamburger-menu-overlay-link">Express Inc</a></li>
+      <li><a href="https://www.kmahyyg.xyz/about-me-page/" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="https://www.kmahyyg.xyz/archlinux-bug-page/" class="hamburger-menu-overlay-link">Arch Linux</a></li>
+      <li><a href="https://www.kmahyyg.xyz/donate-page/" class="hamburger-menu-overlay-link">Donate</a></li>
+      <li><a href="https://www.kmahyyg.xyz/categories/code" class="hamburger-menu-overlay-link">Code</a></li><li><a href="https://www.kmahyyg.xyz/categories/life" class="hamburger-menu-overlay-link">Life</a></li><li><a href="https://www.kmahyyg.xyz/categories/network" class="hamburger-menu-overlay-link">Network</a></li><li><a href="https://www.kmahyyg.xyz/categories/school" class="hamburger-menu-overlay-link">School</a></li><li><a href="https://www.kmahyyg.xyz/categories/tech" class="hamburger-menu-overlay-link">Tech</a></li>
+    </ul>
+  </div>
+</nav>
+    <main class="content side-text-padding">
+      <article class="post ">
+        <header class="post-header">
+        	<h1 class="post-title">数据结构与算法课程 - Chap 2 线性表</h1>
+          <p class="post-date">Posted <time datetime="2019-01-05">Jan 5, 2019</time></p>
+        </header>
+        
+        <picture class="post-figure">
+            
+            <source srcset="https://alicdn.kmahyyg.xyz/asset_files/aether/cat_school.webp">
+          <img src="https://alicdn.kmahyyg.xyz/asset_files/aether/cat_school.webp" >
+        </picture>
+        
+        
+
+<h1 id="数据结构复习-chapter-2-线性表">数据结构复习 - Chapter 2 线性表</h1>
+
+<h2 id="定义">定义</h2>
+
+<p>回顾：</p>
+
+<p>线性结构：数据元素有序且有限，有且仅有一个起始节点与终端节点，并且每个节点最多只有一个直接前驱和直接后继，头节点没有直接前驱，尾节点没有直接后继。</p>
+
+<p>线性表：由 n 个同类型的数据元素组成的有限序列。 n 定义为表长度。可以灵活增长、缩短、CRUD。</p>
+
+<p>直接前驱与直接后继 用有序对表示：<a2,a3></p>
+
+<p>存在的应用方法：
+- 初始化
+- 求长度、判空、清空
+- 求所在位置序号、求前驱、求后继
+- 插入、删除、读取
+- 求交并</p>
+
+<h2 id="顺序表示">顺序表示</h2>
+
+<p>定义：按逻辑顺序依次存放在一组地址连续的存储单元。只存储本身的值，不存储逻辑关系，关系通过存储地址相邻来隐含表示。</p>
+
+<p><strong>注意：数组下表从 0 开始，顺序表位序从 1 开始</strong>。</p>
+
+<p>算法实现注意：
+1. 入参检查，传入参数不合法返回 -1.
+2. 置空 != 销毁
+3. 顺序表冒泡排序问题
+4. 合并线性表，先排序后合并。</p>
+
+<p>顺序存储：
+- 特征：逻辑相邻、物理相邻
+- 优点：随机查找快，O(1)，节省了存储关系的空间，结构简单、实现方便。
+- 缺点：插入删除慢，O(n)，不能充分利用所有空间，可能溢出。</p>
+
+<h2 id="链式表示">链式表示</h2>
+
+<p>定义：任意存储单元存储数据元素，线性表数据元素的逻辑次序和物理保存次序不一定相同。
+包括：单链表、双链表、多链表、循环链表。根据指针域数目和指向区分。</p>
+
+<p>存储结构：
+1. 区分头节点和首元节点。 空表的头节点，指针域为空，代表该链表为空（等价于头指针指向 NULL）。头指针指向头节点，作为首元结点的直接前驱。头节点的数据域可用于存储链表长度。</p>
+
+<p>查找：按位置、按 Value 查找。
+插入：指针修改是难点。</p>
+
+<h3 id="链表修改-节点插入与删除">链表修改： 节点插入与删除</h3>
+
+<p>原则：先空后实。先修改新建节点的数据域和指针域，再修改原链表中的元素。</p>
+
+<p>删除注意：保存现场，需要预保存指向下一元素的指针。</p>
+
+<p>C 语言背景：如果条件为真 ? 则值为 X : 否则值为 Y</p>
+
+<h3 id="循环链表与双向链表">循环链表与双向链表</h3>
+
+<p>循环链表：将终端指针域的 NULL 指向头节点，就得到了单链表。
+判断依据：指针指向元素的 next 域是否与头指针重合。
+特点：从任一节点出发均可找到表中的其他节点。</p>
+
+<p>双向链表： prior = next = NULL 即为空。
+插入删除遵循：先空后实。画图是关键。</p>
+
+<h2 id="实验回顾">实验回顾</h2>
+
+<p>注意 数据处理与 Error Handler，其他的都是常规操作。画图就对了。</p>
+
+      </article>
+      <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "kmahyyg" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </main>
+    <nav class="end-nav side-padding">
+      
+      <a ontouchstart="cardPressed.call(this)" ontouchend="cardReleased.call(this)" ontouchmove="cardReleased.call(this)" 
+  href="https://www.kmahyyg.xyz/" class="card home-card" style="background-image: url( https://alicdn.kmahyyg.xyz/asset_files/aether/backtohome.webp )" rel="bookmark" >
+  Home
+</a>
+    </nav>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/highlight.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.js" integrity="sha384-K3vbOmF2BtaVai+Qk37uypf7VrgBubhQreNQe9aGsz9lB63dIFiQVlJbr92dw2Lx" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/contrib/auto-render.min.js" integrity="sha384-kmZOZB5ObwgQnS/DuDg6TScgOiWWBiVt0plIRkZCmE6rDZGrEOQeHM5PcHi+nyqe" crossorigin="anonymous"
+    onload="renderMathInElement(document.body);"></script>
+<script src="https://www.kmahyyg.xyz/js/core.js"></script>
+<script>
+  hljs.initHighlightingOnLoad();
+</script>
+  </body>
+</html>

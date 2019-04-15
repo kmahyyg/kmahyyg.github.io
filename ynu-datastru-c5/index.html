@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="zh-cn" dir="ltr">
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>数据结构与算法课程 - Chap 5 数组和广义表 &middot; Pat~ Pat~ Meow~</title>
+  <meta name="description" content="数据结构与算法课程期末复习记录 Chapter 5" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.css" integrity="sha384-9eLZqc9ds8eNjO3TmqPeYcDj8n+Qfa4nuSiGYa6DjLNcv9BtN69ZIulL9+8CqC9Y" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://www.kmahyyg.xyz/css/main.min.css" />
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-123948588-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+
+  <style>
+    body {
+      background: #ecedef url("https://alicdn.kmahyyg.xyz/asset_files/aether/bgimg.webp") repeat;
+    }
+  </style>
+</head>
+  <body class="single-body">
+    <nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="https://www.kmahyyg.xyz/" class="nav-text">Patrick Young</a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="https://www.kmahyyg.xyz/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://www.kmahyyg.xyz/express-page/" class="hamburger-menu-overlay-link">Express Inc</a></li>
+      <li><a href="https://www.kmahyyg.xyz/about-me-page/" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="https://www.kmahyyg.xyz/archlinux-bug-page/" class="hamburger-menu-overlay-link">Arch Linux</a></li>
+      <li><a href="https://www.kmahyyg.xyz/donate-page/" class="hamburger-menu-overlay-link">Donate</a></li>
+      <li><a href="https://www.kmahyyg.xyz/categories/code" class="hamburger-menu-overlay-link">Code</a></li><li><a href="https://www.kmahyyg.xyz/categories/life" class="hamburger-menu-overlay-link">Life</a></li><li><a href="https://www.kmahyyg.xyz/categories/network" class="hamburger-menu-overlay-link">Network</a></li><li><a href="https://www.kmahyyg.xyz/categories/school" class="hamburger-menu-overlay-link">School</a></li><li><a href="https://www.kmahyyg.xyz/categories/tech" class="hamburger-menu-overlay-link">Tech</a></li>
+    </ul>
+  </div>
+</nav>
+    <main class="content side-text-padding">
+      <article class="post ">
+        <header class="post-header">
+        	<h1 class="post-title">数据结构与算法课程 - Chap 5 数组和广义表</h1>
+          <p class="post-date">Posted <time datetime="2019-01-05">Jan 5, 2019</time></p>
+        </header>
+        
+        <picture class="post-figure">
+            
+            <source srcset="https://alicdn.kmahyyg.xyz/asset_files/aether/cat_school.webp">
+          <img src="https://alicdn.kmahyyg.xyz/asset_files/aether/cat_school.webp" >
+        </picture>
+        
+        
+
+<h1 id="数据结构复习-chapter-5-数组和广义表">数据结构复习 - Chapter 5 数组和广义表</h1>
+
+<h2 id="数组">数组</h2>
+
+<p>高级语言中的数组一定是顺序结构，元素的值并非原子类型，可以再分解。 <strong>广义的线性表包括线性表元素组成的线性表</strong></p>
+
+<p><strong>这里的数组中的每一维度的元素长度是不相同的。</strong></p>
+
+<h3 id="数组的顺序保存结构的地址计算">数组的顺序保存结构的地址计算</h3>
+
+<ol>
+<li>多维数组的元素存储反复故事： 行优先/列优先。</li>
+<li>数组寻址格式： 起始位置 + 数组 A 前面保存的元素 × 元素的长度。</li>
+<li>画图！画图啊！</li>
+</ol>
+
+<h3 id="广义的数组顺序表示">广义的数组顺序表示</h3>
+
+<pre><code class="language-c">#include &lt;string.h&gt;
+#define MAX_ARRAY_DIM 8
+typedef struct{
+    ElemType *baseaddr;
+    int dim;
+    int *bounds;
+    int *constants;
+}Array;
+</code></pre>
+
+<p>Baseaddr: 存储数组的内存空间的基地址
+Dim: 数组的最高维度
+Bounds： 存储每一维数组长度的内存空间的基地址
+Constants： 存放各数据的内存空间的基地址</p>
+
+<h3 id="应用举例">应用举例</h3>
+
+<h4 id="可变长参数列表-stdarg-h">可变长参数列表 stdarg.h</h4>
+
+<p><a href="https://www.kmahyyg.xyz/2018/DS04-Maze-EXP/#stdarg-h-%E5%9C%A8-C-%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8">https://www.kmahyyg.xyz/2018/DS04-Maze-EXP/#stdarg-h-%E5%9C%A8-C-%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8</a></p>
+
+<pre><code class="language-cpp">#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+#include &lt;stdarg.h&gt;
+int echoinfo(char *strNotice, ...);
+int main(int argc, char *argv[]){
+    char noti[50] = {0};
+    strcpy(noti,&quot;The printout is&quot;);
+    echoinfo(noti, argv[1], argv[2], argv[3]);
+    return 0;
+}
+int echoinfo(char *strNotice, ...){
+    char *str0 = NULL;
+    char *str1 = NULL;
+    char *str2 = NULL;
+    va_list stArgv;         // define a param list
+    va_start(stArgv, strNotice);      // pass the fixed param to the function
+    str0 = va_arg(stArgv, char*);
+    str1 = va_arg(stArgv, char*);
+    str2 = va_arg(stArgv, char*);
+    printf(&quot;%s: %s %s %s&quot;, strNotice, str0, str1, str2);
+    va_end(stArgv);
+    return 0;
+}
+</code></pre>
+
+<h4 id="矩阵的压缩存储">矩阵的压缩存储</h4>
+
+<ul>
+<li>为多值相同的元素只分配一个存储空间</li>
+<li>对 0 元素不分配存储空间</li>
+<li>值相同或 0 元素在矩阵中的分布有一定规律，则称其为特殊矩阵，否则称之为稀疏矩阵。（也就是说正常的矩阵应当是稀疏的）</li>
+<li>保存格式 &lt;行，列，值&gt;</li>
+</ul>
+
+<h2 id="特殊矩阵">特殊矩阵</h2>
+
+<h3 id="三角矩阵">三角矩阵</h3>
+
+<p>数组保存的下标：
+  - 上三角：[列<em>(列-1)]/2+行
+  - 下三角：[行</em>(行-1)]/2+列</p>
+
+<h4 id="重点-矩阵的转置">重点：矩阵的转置</h4>
+
+<p>快速转置算法：</p>
+
+<p>每一列第一个非零元素保存个数位置 = 上一列第一个非零元素保存位置 + 上一列非零元素。</p>
+
+<p>num 数组 存储 M 中 第 col 列中非 0 元素个数
+cpot 数组 存储 M 中 第 col 列的非 0 元素在 T.data 中的保存位置。</p>
+
+<p>把转置后的位置放到 cpot 数组对应的位置，然后 cpot++;</p>
+
+<h4 id="稀疏矩阵的乘法">稀疏矩阵的乘法</h4>
+
+<p>矩阵乘法 = <strong>M 矩阵该行所有元素对应与 N 矩阵该列所有元素分别相乘之和</strong></p>
+
+<h4 id="十字链表">十字链表</h4>
+
+<p>[所在行，所在列，非零元素，向右域，向下域]</p>
+
+<h2 id="广义表">广义表</h2>
+
+<p>表头 = 头元素，第一个元素
+表尾 = <strong>后面的所有元素，表尾必须是一个广义表</strong></p>
+
+<p>广义表特点：有次序性、有长度、有深度、可以递归定义、可以共享。
+广义表的长度：最外层括号的元素个数
+广义表的深度：括号层数（有多少括号匹配）</p>
+
+<p>数据保存时，需要添加 tag 标志域，区分表节点与数据 (Atom) 节点。</p>
+
+<p>[tag=0,data=atom]
+[tag=1,headptr=head,endptr=tail]</p>
+
+<p>headptr 永远指向表或者表元素，也是唯一一个可以直接指向 atom 元素的指针。</p>
+
+<p>广义表中的数据元素有数据的相对次序，一个直接前驱、一个直接后继。</p>
+
+<p>广义表的 ADT 表示，借此复习 ADT 的表示方法：</p>
+
+<pre><code class="language-cpp">ADT Glist {
+    数据对象：
+    D＝{ei | i=1,2,..,n; n≥0; ei∈AtomSet或ei∈Glist}
+    数据关系：
+    LR＝{&lt;ei-1, ei&gt;| ei-1 ,ei ∈D,  2≤i≤n }
+    基本操作：
+    InitGList(&amp;L);          //创建空的广义表L。
+    DestroyGList(&amp;L)        //销毁广义表L。
+    CreateGList(&amp;L, S)      //由串S创建广义表L。
+    CopyGList(&amp;T, L)        // 由广义表L复制得到广义表T。
+    GListLength(L);  GListDepth(L);  GListEmpty(L);    // 判深、判空、判长
+    GetHead(L);             //取表头 (可能是原子或列表);
+    GetTail(L);             //取表尾 (一定是列表) 
+    InsertFirst_GL(&amp;L, e);  //插入元素e作为广义表L的第一元素。
+    DeleteFirst_GL(&amp;L, &amp;e)  //删除广义表L的第一元素，并用e返回其值。
+}ADT Glist
+</code></pre>
+
+      </article>
+      <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "kmahyyg" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </main>
+    <nav class="end-nav side-padding">
+      
+      <a ontouchstart="cardPressed.call(this)" ontouchend="cardReleased.call(this)" ontouchmove="cardReleased.call(this)" 
+  href="https://www.kmahyyg.xyz/" class="card home-card" style="background-image: url( https://alicdn.kmahyyg.xyz/asset_files/aether/backtohome.webp )" rel="bookmark" >
+  Home
+</a>
+    </nav>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/highlight.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.js" integrity="sha384-K3vbOmF2BtaVai+Qk37uypf7VrgBubhQreNQe9aGsz9lB63dIFiQVlJbr92dw2Lx" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/contrib/auto-render.min.js" integrity="sha384-kmZOZB5ObwgQnS/DuDg6TScgOiWWBiVt0plIRkZCmE6rDZGrEOQeHM5PcHi+nyqe" crossorigin="anonymous"
+    onload="renderMathInElement(document.body);"></script>
+<script src="https://www.kmahyyg.xyz/js/core.js"></script>
+<script>
+  hljs.initHighlightingOnLoad();
+</script>
+  </body>
+</html>

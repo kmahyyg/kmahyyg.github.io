@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="zh-cn" dir="ltr">
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Express Inc &middot; Pat~ Pat~ Meow~</title>
+  <meta name="description" content="快递公司 API 的相关描述" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.css" integrity="sha384-9eLZqc9ds8eNjO3TmqPeYcDj8n+Qfa4nuSiGYa6DjLNcv9BtN69ZIulL9+8CqC9Y" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://www.kmahyyg.xyz/css/main.min.css" />
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-123948588-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+
+  <style>
+    body {
+      background: #ecedef url("https://alicdn.kmahyyg.xyz/asset_files/aether/bgimg.webp") repeat;
+    }
+  </style>
+</head>
+  <body class="single-body">
+    <nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="https://www.kmahyyg.xyz/" class="nav-text">Patrick Young</a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="https://www.kmahyyg.xyz/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://www.kmahyyg.xyz/express-page/" class="hamburger-menu-overlay-link">Express Inc</a></li>
+      <li><a href="https://www.kmahyyg.xyz/about-me-page/" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="https://www.kmahyyg.xyz/archlinux-bug-page/" class="hamburger-menu-overlay-link">Arch Linux</a></li>
+      <li><a href="https://www.kmahyyg.xyz/donate-page/" class="hamburger-menu-overlay-link">Donate</a></li>
+      <li><a href="https://www.kmahyyg.xyz/categories/code" class="hamburger-menu-overlay-link">Code</a></li><li><a href="https://www.kmahyyg.xyz/categories/life" class="hamburger-menu-overlay-link">Life</a></li><li><a href="https://www.kmahyyg.xyz/categories/network" class="hamburger-menu-overlay-link">Network</a></li><li><a href="https://www.kmahyyg.xyz/categories/school" class="hamburger-menu-overlay-link">School</a></li><li><a href="https://www.kmahyyg.xyz/categories/tech" class="hamburger-menu-overlay-link">Tech</a></li>
+    </ul>
+  </div>
+</nav>
+    <main class="content side-text-padding">
+      <article class="post ">
+        <header class="post-header">
+        	<h1 class="post-title">Express Inc</h1>
+          <p class="post-date">Posted <time datetime="2019-01-26">Jan 26, 2019</time></p>
+        </header>
+        
+        <p>请使用 Control-F 之后输入你想查找的快递公司。
+获取到对应公司的快递代码后请使用 <code>/express &lt;快递单号&gt; &lt;公司代码&gt;</code> 来查询您的快递。</p>
+
+<p>Telegram bot: @lifehap4_yygbot</p>
+
+<table>
+<thead>
+<tr>
+<th align="center">快递公司</th>
+<th align="center">type缩写</th>
+<th align="center">快递公司</th>
+<th align="center">type缩写</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="center">AAE</td>
+<td align="center">AAEWEB</td>
+<td align="center">民航</td>
+<td align="center">CAE</td>
+</tr>
+
+<tr>
+<td align="center">Aramex</td>
+<td align="center">ARAMEX</td>
+<td align="center">能达</td>
+<td align="center">ND56</td>
+</tr>
+
+<tr>
+<td align="center">DHL</td>
+<td align="center">DHL国内件</td>
+<td align="center">DHL_EN</td>
+<td align="center">DHL国际件</td>
+</tr>
+
+<tr>
+<td align="center">DPEX</td>
+<td align="center">DPEX</td>
+<td align="center">平安快递</td>
+<td align="center">EFSPOST</td>
+</tr>
+
+<tr>
+<td align="center">D速</td>
+<td align="center">DEXP</td>
+<td align="center">秦远物流</td>
+<td align="center">CHINZ56</td>
+</tr>
+
+<tr>
+<td align="center">EMS</td>
+<td align="center">EMS</td>
+<td align="center">全晨</td>
+<td align="center">QCKD</td>
+</tr>
+
+<tr>
+<td align="center">EWE</td>
+<td align="center">EWE</td>
+<td align="center">全峰</td>
+<td align="center">QFKD</td>
+</tr>
+
+<tr>
+<td align="center">FedEx</td>
+<td align="center">FEDEX</td>
+<td align="center">全一</td>
+<td align="center">APEX</td>
+</tr>
+
+<tr>
+<td align="center">FedEx国际</td>
+<td align="center">FEDEXIN</td>
+<td align="center">如风达</td>
+<td align="center">RFD</td>
+</tr>
+
+<tr>
+<td align="center">PCA</td>
+<td align="center">PCA</td>
+<td align="center">三态</td>
+<td align="center">SFC</td>
+</tr>
+
+<tr>
+<td align="center">TNT</td>
+<td align="center">TNT</td>
+<td align="center">申通</td>
+<td align="center">STO</td>
+</tr>
+
+<tr>
+<td align="center">UPS</td>
+<td align="center">UPS</td>
+<td align="center">盛丰</td>
+<td align="center">SFWL</td>
+</tr>
+
+<tr>
+<td align="center">安捷</td>
+<td align="center">ANJELEX</td>
+<td align="center">盛辉</td>
+<td align="center">SHENGHUI</td>
+</tr>
+
+<tr>
+<td align="center">安能</td>
+<td align="center">ANE</td>
+<td align="center">顺达快递</td>
+<td align="center">SDEX</td>
+</tr>
+
+<tr>
+<td align="center">安能快递</td>
+<td align="center">ANEEX</td>
+<td align="center">顺丰</td>
+<td align="center">SFEXPRESS</td>
+</tr>
+
+<tr>
+<td align="center">安信达</td>
+<td align="center">ANXINDA</td>
+<td align="center">苏宁</td>
+<td align="center">SUNING</td>
+</tr>
+
+<tr>
+<td align="center">百福东方</td>
+<td align="center">EES</td>
+<td align="center">速尔</td>
+<td align="center">SURE</td>
+</tr>
+
+<tr>
+<td align="center">百世快递</td>
+<td align="center">HTKY</td>
+<td align="center">天地华宇</td>
+<td align="center">HOAU</td>
+</tr>
+
+<tr>
+<td align="center">百世快运</td>
+<td align="center">BSKY</td>
+<td align="center">天天</td>
+<td align="center">TTKDEX</td>
+</tr>
+
+<tr>
+<td align="center">程光</td>
+<td align="center">FLYWAYEX</td>
+<td align="center">万庚</td>
+<td align="center">VANGEN</td>
+</tr>
+
+<tr>
+<td align="center">大田</td>
+<td align="center">DTW</td>
+<td align="center">万家物流</td>
+<td align="center">WANJIA</td>
+</tr>
+
+<tr>
+<td align="center">德邦</td>
+<td align="center">DEPPON</td>
+<td align="center">万象</td>
+<td align="center">EWINSHINE</td>
+</tr>
+
+<tr>
+<td align="center">飞洋</td>
+<td align="center">GCE</td>
+<td align="center">文捷航空</td>
+<td align="center">GZWENJIE</td>
+</tr>
+
+<tr>
+<td align="center">凤凰</td>
+<td align="center">PHOENIXEXP</td>
+<td align="center">新邦</td>
+<td align="center">XBWL</td>
+</tr>
+
+<tr>
+<td align="center">富腾达</td>
+<td align="center">FTD</td>
+<td align="center">信丰</td>
+<td align="center">XFEXPRESS</td>
+</tr>
+
+<tr>
+<td align="center">共速达</td>
+<td align="center">GSD</td>
+<td align="center">亚风</td>
+<td align="center">BROADASIA</td>
+</tr>
+
+<tr>
+<td align="center">国通</td>
+<td align="center">GTO</td>
+<td align="center">宜送</td>
+<td align="center">YIEXPRESS</td>
+</tr>
+
+<tr>
+<td align="center">黑狗</td>
+<td align="center">BLACKDOG</td>
+<td align="center">易达通</td>
+<td align="center">QEXPRESS</td>
+</tr>
+
+<tr>
+<td align="center">恒路</td>
+<td align="center">HENGLU</td>
+<td align="center">易通达</td>
+<td align="center">ETD</td>
+</tr>
+
+<tr>
+<td align="center">鸿远</td>
+<td align="center">HYE</td>
+<td align="center">优速</td>
+<td align="center">UC56</td>
+</tr>
+
+<tr>
+<td align="center">华企</td>
+<td align="center">HQKY</td>
+<td align="center">邮政包裹</td>
+<td align="center">CHINAPOST</td>
+</tr>
+
+<tr>
+<td align="center">急先达</td>
+<td align="center">JOUST</td>
+<td align="center">原飞航</td>
+<td align="center">YFHEX</td>
+</tr>
+
+<tr>
+<td align="center">加运美</td>
+<td align="center">TMS</td>
+<td align="center">圆通</td>
+<td align="center">YTO</td>
+</tr>
+
+<tr>
+<td align="center">佳吉</td>
+<td align="center">JIAJI</td>
+<td align="center">源安达</td>
+<td align="center">YADEX</td>
+</tr>
+
+<tr>
+<td align="center">佳怡</td>
+<td align="center">JIAYI</td>
+<td align="center">远成</td>
+<td align="center">YCGWL</td>
+</tr>
+
+<tr>
+<td align="center">嘉里物流</td>
+<td align="center">KERRY</td>
+<td align="center">越丰</td>
+<td align="center">YFEXPRESS</td>
+</tr>
+
+<tr>
+<td align="center">锦程快递</td>
+<td align="center">HREX</td>
+<td align="center">运通</td>
+<td align="center">YTEXPRESS</td>
+</tr>
+
+<tr>
+<td align="center">晋越</td>
+<td align="center">PEWKEE</td>
+<td align="center">韵达</td>
+<td align="center">YUNDA</td>
+</tr>
+
+<tr>
+<td align="center">京东</td>
+<td align="center">JD</td>
+<td align="center">宅急送</td>
+<td align="center">ZJS</td>
+</tr>
+
+<tr>
+<td align="center">京广</td>
+<td align="center">KKE</td>
+<td align="center">芝麻开门</td>
+<td align="center">ZMKMEX</td>
+</tr>
+
+<tr>
+<td align="center">九曳</td>
+<td align="center">JIUYESCM</td>
+<td align="center">中国东方</td>
+<td align="center">COE</td>
+</tr>
+
+<tr>
+<td align="center">跨越速运</td>
+<td align="center">KYEXPRESS</td>
+<td align="center">中铁快运</td>
+<td align="center">CRE</td>
+</tr>
+
+<tr>
+<td align="center">快捷</td>
+<td align="center">FASTEXPRESS</td>
+<td align="center">中铁物流</td>
+<td align="center">ZTKY</td>
+</tr>
+
+<tr>
+<td align="center">蓝天</td>
+<td align="center">BLUESKY</td>
+<td align="center">中通</td>
+<td align="center">ZTO</td>
+</tr>
+
+<tr>
+<td align="center">联昊通龙邦</td>
+<td align="center">LTSLBEX</td>
+<td align="center">中通快运中邮</td>
+<td align="center">ZTO56CNPL</td>
+</tr>
+
+<tr>
+<td align="center">壹米滴答</td>
+<td align="center">YIMIDIDA</td>
+<td align="center">品骏快递</td>
+<td align="center">PJKD</td>
+</tr>
+
+<tr>
+<td align="center">日日顺物流</td>
+<td align="center">RRS</td>
+<td align="center">汇通快递</td>
+<td align="center">HTKY</td>
+</tr>
+
+<tr>
+<td align="center">宇鑫物流</td>
+<td align="center">YXWL</td>
+<td align="center">邮政国际包裹</td>
+<td align="center">INTMAIL</td>
+</tr>
+
+<tr>
+<td align="center">东骏快捷</td>
+<td align="center">DJ56</td>
+<td align="center">联邦快递</td>
+<td align="center">FEDEX</td>
+</tr>
+
+<tr>
+<td align="center">联邦快递国际</td>
+<td align="center">FEDEX_GJ</td>
+<td align="center">配思航宇</td>
+<td align="center">PEISI</td>
+</tr>
+
+<tr>
+<td align="center">澳邮专线</td>
+<td align="center">AYCA</td>
+<td align="center">八达通</td>
+<td align="center">BDT</td>
+</tr>
+
+<tr>
+<td align="center">城市100</td>
+<td align="center">CITY100</td>
+<td align="center">城际快递</td>
+<td align="center">CJKD</td>
+</tr>
+
+<tr>
+<td align="center">递四方速递</td>
+<td align="center">D4PX</td>
+<td align="center">飞康达</td>
+<td align="center">FKD</td>
+</tr>
+
+<tr>
+<td align="center">广通</td>
+<td align="center">GTSD</td>
+<td align="center">环球速运</td>
+<td align="center">HQSY</td>
+</tr>
+
+<tr>
+<td align="center">好来运快递</td>
+<td align="center">HYLSD</td>
+<td align="center">捷安达</td>
+<td align="center">JAD</td>
+</tr>
+
+<tr>
+<td align="center">捷特快递</td>
+<td align="center">JTKD</td>
+<td align="center">景光物流</td>
+<td align="center">JGWL</td>
+</tr>
+
+<tr>
+<td align="center">民邦快递</td>
+<td align="center">MB</td>
+<td align="center">美快</td>
+<td align="center">MK</td>
+</tr>
+
+<tr>
+<td align="center">明亮物流</td>
+<td align="center">MLWL</td>
+<td align="center">平安达腾飞快递</td>
+<td align="center">PADTF</td>
+</tr>
+
+<tr>
+<td align="center">泛捷快递</td>
+<td align="center">PANEX</td>
+<td align="center">全日通快递</td>
+<td align="center">QRT</td>
+</tr>
+
+<tr>
+<td align="center">全信通</td>
+<td align="center">QXT</td>
+<td align="center">瑞丰速递</td>
+<td align="center">RFEX</td>
+</tr>
+
+<tr>
+<td align="center">赛澳递</td>
+<td align="center">SAD</td>
+<td align="center">圣安物流</td>
+<td align="center">SAWL</td>
+</tr>
+
+<tr>
+<td align="center">上大物流</td>
+<td align="center">SDWL</td>
+<td align="center">速通物流</td>
+<td align="center">ST</td>
+</tr>
+
+<tr>
+<td align="center">速腾快递</td>
+<td align="center">STWL</td>
+<td align="center">速必达物流</td>
+<td align="center">SUBIDA</td>
+</tr>
+
+<tr>
+<td align="center">万家康</td>
+<td align="center">WJK</td>
+<td align="center">新杰物流</td>
+<td align="center">XJ</td>
+</tr>
+
+<tr>
+<td align="center">增益快递</td>
+<td align="center">ZENY</td>
+<td align="center">中邮物流</td>
+<td align="center">ZYWL</td>
+</tr>
+</tbody>
+</table>
+
+      </article>
+      <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "kmahyyg" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </main>
+    <nav class="end-nav side-padding">
+      
+      <a ontouchstart="cardPressed.call(this)" ontouchend="cardReleased.call(this)" ontouchmove="cardReleased.call(this)" 
+  href="https://www.kmahyyg.xyz/" class="card home-card" style="background-image: url( https://alicdn.kmahyyg.xyz/asset_files/aether/backtohome.webp )" rel="bookmark" >
+  Home
+</a>
+    </nav>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/highlight.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.js" integrity="sha384-K3vbOmF2BtaVai+Qk37uypf7VrgBubhQreNQe9aGsz9lB63dIFiQVlJbr92dw2Lx" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/contrib/auto-render.min.js" integrity="sha384-kmZOZB5ObwgQnS/DuDg6TScgOiWWBiVt0plIRkZCmE6rDZGrEOQeHM5PcHi+nyqe" crossorigin="anonymous"
+    onload="renderMathInElement(document.body);"></script>
+<script src="https://www.kmahyyg.xyz/js/core.js"></script>
+<script>
+  hljs.initHighlightingOnLoad();
+</script>
+  </body>
+</html>

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="zh-cn" dir="ltr">
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Arch Linux &middot; Pat~ Pat~ Meow~</title>
+  <meta name="description" content="" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.css" integrity="sha384-9eLZqc9ds8eNjO3TmqPeYcDj8n+Qfa4nuSiGYa6DjLNcv9BtN69ZIulL9+8CqC9Y" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://www.kmahyyg.xyz/css/main.min.css" />
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-123948588-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+
+  <style>
+    body {
+      background: #ecedef url("https://alicdn.kmahyyg.xyz/asset_files/aether/bgimg.webp") repeat;
+    }
+  </style>
+</head>
+  <body class="single-body">
+    <nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="https://www.kmahyyg.xyz/" class="nav-text">Patrick Young</a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="https://www.kmahyyg.xyz/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://www.kmahyyg.xyz/express-page/" class="hamburger-menu-overlay-link">Express Inc</a></li>
+      <li><a href="https://www.kmahyyg.xyz/about-me-page/" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="https://www.kmahyyg.xyz/archlinux-bug-page/" class="hamburger-menu-overlay-link">Arch Linux</a></li>
+      <li><a href="https://www.kmahyyg.xyz/donate-page/" class="hamburger-menu-overlay-link">Donate</a></li>
+      <li><a href="https://www.kmahyyg.xyz/categories/code" class="hamburger-menu-overlay-link">Code</a></li><li><a href="https://www.kmahyyg.xyz/categories/life" class="hamburger-menu-overlay-link">Life</a></li><li><a href="https://www.kmahyyg.xyz/categories/network" class="hamburger-menu-overlay-link">Network</a></li><li><a href="https://www.kmahyyg.xyz/categories/school" class="hamburger-menu-overlay-link">School</a></li><li><a href="https://www.kmahyyg.xyz/categories/tech" class="hamburger-menu-overlay-link">Tech</a></li>
+    </ul>
+  </div>
+</nav>
+    <main class="content side-text-padding">
+      <article class="post ">
+        <header class="post-header">
+        	<h1 class="post-title">Arch Linux</h1>
+          <p class="post-date">Posted <time datetime="0001-01-01">Jan 1, 0001</time></p>
+        </header>
+        
+        
+
+<h2 id="libvirt-4-6-0-2">libvirt 4.6.0-2</h2>
+
+<p>请使用 Arch Linux 的用户注意，不要更新 libvirt 4.6.0-2 ，更新此版本后出现了无法链接  qemu:///system 和  qemu:///sessions 的情况。官方确认是由于引入的 Jansson 无法解析 QEMU&rsquo;s quirky JSON 目前已经 Revert back 回 yajl 。</p>
+
+<p>请已更新的用户尽快升级至 4.6.0-3，该版本已经修复这个问题。</p>
+
+<h2 id="mesa-18-0-4-1">mesa 18.0.4-1</h2>
+
+<p>#Arch_Linux  FS#58933 (<a href="https://bugs.archlinux.org/task/58933">https://bugs.archlinux.org/task/58933</a>) 已经在 mesa 18.1.6-1  修复，使用 NVIDIA 显卡配合 primusrun 和最新 X.org Server 运行的用户可以尝试从 mesa 18.0.4-1 升级后无需任何手工操作即可体验。</p>
+
+<p>相关： Github: SegmentFault with primusrun+mesa+xorg-server (<a href="https://github.com/amonakov/primus/issues/201">https://github.com/amonakov/primus/issues/201</a>)</p>
+
+<h2 id="systemd-241-93">systemd 241.93</h2>
+
+<p>Failed to start Network Time Synchronization</p>
+
+<p>上游链接： <a href="https://github.com/systemd/systemd/issues/12131#issuecomment-477617212">https://github.com/systemd/systemd/issues/12131#issuecomment-477617212</a></p>
+
+<p>手动修复方案：</p>
+
+<pre><code class="language-bash">$ sudo rm /var/lib/systemd/timesync
+$ sudo systemctl restart systemd-timesyncd
+</code></pre>
+
+<p>预计修复版本：systemd v243</p>
+
+      </article>
+      <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "kmahyyg" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </main>
+    <nav class="end-nav side-padding">
+      
+      <a ontouchstart="cardPressed.call(this)" ontouchend="cardReleased.call(this)" ontouchmove="cardReleased.call(this)" 
+  href="https://www.kmahyyg.xyz/" class="card home-card" style="background-image: url( https://alicdn.kmahyyg.xyz/asset_files/aether/backtohome.webp )" rel="bookmark" >
+  Home
+</a>
+    </nav>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/highlight.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.js" integrity="sha384-K3vbOmF2BtaVai+Qk37uypf7VrgBubhQreNQe9aGsz9lB63dIFiQVlJbr92dw2Lx" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/contrib/auto-render.min.js" integrity="sha384-kmZOZB5ObwgQnS/DuDg6TScgOiWWBiVt0plIRkZCmE6rDZGrEOQeHM5PcHi+nyqe" crossorigin="anonymous"
+    onload="renderMathInElement(document.body);"></script>
+<script src="https://www.kmahyyg.xyz/js/core.js"></script>
+<script>
+  hljs.initHighlightingOnLoad();
+</script>
+  </body>
+</html>

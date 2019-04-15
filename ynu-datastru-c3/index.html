@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="zh-cn" dir="ltr">
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>数据结构与算法课程 - Chap 3 栈与队列 &middot; Pat~ Pat~ Meow~</title>
+  <meta name="description" content="数据结构与算法课程期末复习记录 Chapter 3" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.css" integrity="sha384-9eLZqc9ds8eNjO3TmqPeYcDj8n+Qfa4nuSiGYa6DjLNcv9BtN69ZIulL9+8CqC9Y" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://www.kmahyyg.xyz/css/main.min.css" />
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-123948588-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+
+  <style>
+    body {
+      background: #ecedef url("https://alicdn.kmahyyg.xyz/asset_files/aether/bgimg.webp") repeat;
+    }
+  </style>
+</head>
+  <body class="single-body">
+    <nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="https://www.kmahyyg.xyz/" class="nav-text">Patrick Young</a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="https://www.kmahyyg.xyz/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://www.kmahyyg.xyz/express-page/" class="hamburger-menu-overlay-link">Express Inc</a></li>
+      <li><a href="https://www.kmahyyg.xyz/about-me-page/" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="https://www.kmahyyg.xyz/archlinux-bug-page/" class="hamburger-menu-overlay-link">Arch Linux</a></li>
+      <li><a href="https://www.kmahyyg.xyz/donate-page/" class="hamburger-menu-overlay-link">Donate</a></li>
+      <li><a href="https://www.kmahyyg.xyz/categories/code" class="hamburger-menu-overlay-link">Code</a></li><li><a href="https://www.kmahyyg.xyz/categories/life" class="hamburger-menu-overlay-link">Life</a></li><li><a href="https://www.kmahyyg.xyz/categories/network" class="hamburger-menu-overlay-link">Network</a></li><li><a href="https://www.kmahyyg.xyz/categories/school" class="hamburger-menu-overlay-link">School</a></li><li><a href="https://www.kmahyyg.xyz/categories/tech" class="hamburger-menu-overlay-link">Tech</a></li>
+    </ul>
+  </div>
+</nav>
+    <main class="content side-text-padding">
+      <article class="post ">
+        <header class="post-header">
+        	<h1 class="post-title">数据结构与算法课程 - Chap 3 栈与队列</h1>
+          <p class="post-date">Posted <time datetime="2019-01-05">Jan 5, 2019</time></p>
+        </header>
+        
+        <picture class="post-figure">
+            
+            <source srcset="https://alicdn.kmahyyg.xyz/asset_files/aether/cat_school.webp">
+          <img src="https://alicdn.kmahyyg.xyz/asset_files/aether/cat_school.webp" >
+        </picture>
+        
+        
+
+<h1 id="数据结构复习-chapter-3-栈与队列">数据结构复习 - Chapter 3 栈与队列</h1>
+
+<p>区分：</p>
+
+<p>L = (a1 &hellip; an)</p>
+
+<p>线性表: 表头、表尾均可插入删除。</p>
+
+<p>栈：只能在表尾进行插入和删除。Last-in-First-Out.</p>
+
+<p>队列：表尾插入，表头删除。 First-in-First-Out.</p>
+
+<h2 id="栈">栈</h2>
+
+<p><strong>栈顶指针：总是指向栈顶元素之上的数组下标位置（最上一个可用空间）</strong>
+top == base 指针，则栈空。</p>
+
+<h2 id="函数调用问题">函数调用问题</h2>
+
+<ol>
+<li>将当前函数的控制转移到被调用函数的入口</li>
+<li>为被调用函数的局部变量分配存储区</li>
+<li>将实在参数、返回地址等信息传递给被调用参数保存</li>
+</ol>
+
+<h3 id="递归调用">递归调用</h3>
+
+<p>一个直接调用或通过一系列语句间接调用自己的函数成为递归函数。运行规则： <strong>后调用先返回</strong> ，被调用的函数占有的存储管理应当实行 “栈式存储”。</p>
+
+<p>调用顺序： F -&gt; F1 -&gt; F2
+返回顺序： F2 -&gt; F1 -&gt; F</p>
+
+<h2 id="队列">队列</h2>
+
+<p>空队列：队头和队尾指针都指向头节点。
+队头指针：永远指向出队的第一个元素位置
+队尾：永远指向出队的最后一个元素，判空方法 <code>Queue.rear == CurrentPtr</code></p>
+
+<h3 id="循环队列">循环队列</h3>
+
+<p>循环队列：即 设数组维数为 M，使数组下标为 M-1 的结点的指针域，指向数组下标为 0 的结点，从而连成一个环。</p>
+
+<p>若 rear+1 == M, 则令 rear == 0  ( mod 运算)</p>
+
+<p><strong>注：front 指向队首元素，rear 指向队尾元素的下一个位置</strong></p>
+
+<p>操作实现:</p>
+
+<pre><code>入队：sq[rear]=x    rear=(rear+1) % M
+出队：x=sq[front]   front=(front+1) % M
+区分队空队满：（用修改后的与不变的做比较）
+队空：rear==front        出队操作时才需判断队空
+队满：rear==(rear+1)% M  入队时判断队满，即 队头指针在队尾指针的下一个位置 （另外一个解决方案：Q.rear 所指向的单元恒为 NULL）
+              ↑
+        入队操作修改后的
+队列长度： [(Queue.rear - Queue.front + MaxQueueSize) % MaxQueueSize]
+</code></pre>
+
+      </article>
+      <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "kmahyyg" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </main>
+    <nav class="end-nav side-padding">
+      
+      <a ontouchstart="cardPressed.call(this)" ontouchend="cardReleased.call(this)" ontouchmove="cardReleased.call(this)" 
+  href="https://www.kmahyyg.xyz/" class="card home-card" style="background-image: url( https://alicdn.kmahyyg.xyz/asset_files/aether/backtohome.webp )" rel="bookmark" >
+  Home
+</a>
+    </nav>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/highlight.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.js" integrity="sha384-K3vbOmF2BtaVai+Qk37uypf7VrgBubhQreNQe9aGsz9lB63dIFiQVlJbr92dw2Lx" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/contrib/auto-render.min.js" integrity="sha384-kmZOZB5ObwgQnS/DuDg6TScgOiWWBiVt0plIRkZCmE6rDZGrEOQeHM5PcHi+nyqe" crossorigin="anonymous"
+    onload="renderMathInElement(document.body);"></script>
+<script src="https://www.kmahyyg.xyz/js/core.js"></script>
+<script>
+  hljs.initHighlightingOnLoad();
+</script>
+  </body>
+</html>

@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="zh-cn" dir="ltr">
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>数据结构实验 4 - 迷宫 &middot; Pat~ Pat~ Meow~</title>
+  <meta name="description" content="数据结构的迷宫实验的一个解法，有点复杂，记录一下" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.css" integrity="sha384-9eLZqc9ds8eNjO3TmqPeYcDj8n+Qfa4nuSiGYa6DjLNcv9BtN69ZIulL9+8CqC9Y" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://www.kmahyyg.xyz/css/main.min.css" />
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-123948588-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+
+  <style>
+    body {
+      background: #ecedef url("https://alicdn.kmahyyg.xyz/asset_files/aether/bgimg.webp") repeat;
+    }
+  </style>
+</head>
+  <body class="single-body">
+    <nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="https://www.kmahyyg.xyz/" class="nav-text">Patrick Young</a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="https://www.kmahyyg.xyz/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://www.kmahyyg.xyz/express-page/" class="hamburger-menu-overlay-link">Express Inc</a></li>
+      <li><a href="https://www.kmahyyg.xyz/about-me-page/" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="https://www.kmahyyg.xyz/archlinux-bug-page/" class="hamburger-menu-overlay-link">Arch Linux</a></li>
+      <li><a href="https://www.kmahyyg.xyz/donate-page/" class="hamburger-menu-overlay-link">Donate</a></li>
+      <li><a href="https://www.kmahyyg.xyz/categories/code" class="hamburger-menu-overlay-link">Code</a></li><li><a href="https://www.kmahyyg.xyz/categories/life" class="hamburger-menu-overlay-link">Life</a></li><li><a href="https://www.kmahyyg.xyz/categories/network" class="hamburger-menu-overlay-link">Network</a></li><li><a href="https://www.kmahyyg.xyz/categories/school" class="hamburger-menu-overlay-link">School</a></li><li><a href="https://www.kmahyyg.xyz/categories/tech" class="hamburger-menu-overlay-link">Tech</a></li>
+    </ul>
+  </div>
+</nav>
+    <main class="content side-text-padding">
+      <article class="post ">
+        <header class="post-header">
+        	<h1 class="post-title">数据结构实验 4 - 迷宫</h1>
+          <p class="post-date">Posted <time datetime="2018-10-18">Oct 18, 2018</time></p>
+        </header>
+        
+        <picture class="post-figure">
+            
+            <source srcset="https://alicdn.kmahyyg.xyz/asset_files/aether/cat_tech.webp">
+          <img src="https://alicdn.kmahyyg.xyz/asset_files/aether/cat_tech.webp" >
+        </picture>
+        
+        
+
+<h1 id="写在最前">写在最前</h1>
+
+<p>请先阅读 <a href="https://github.com/octowhale/Stop-Ask-Questions-The-Stupid-Ways/blob/master/README.md">我要提问</a> 之后再看下文。</p>
+
+<h1 id="数据结构实验-4-迷宫">数据结构实验 4 - 迷宫</h1>
+
+<p>实验代码和实验要求请参见 <a href="https://github.com/kmahyyg/datastru-ynu">我的 Github 项目 (Private)</a></p>
+
+<p>本篇博文将更加注重着眼于：</p>
+
+<ul>
+<li>具体迷宫生成实现</li>
+<li>自动完成迷宫实现</li>
+<li>实现过程中新学到的东西和踩的坑</li>
+</ul>
+
+<h1 id="stdarg-h">stdarg.h</h1>
+
+<h2 id="举一反三-python-non-keyword-argument">举一反三： Python - Non-keyword Argument</h2>
+
+<p>Pass the <strong>variable length argument list with single asterisk</strong>.</p>
+
+<p>Inside the function, we have a loop which adds the passed argument and prints the result. We passed 3 different tuples with variable length as an argument to the function.</p>
+
+<pre><code class="language-python">def adder(*num):
+    sum = 0
+    
+    for n in num:
+        sum = sum + n
+
+    print(&quot;Sum:&quot;,sum)
+
+adder(3,5)
+adder(4,5,6,7)
+adder(1,2,3,5,6)
+</code></pre>
+
+<pre><code>Sum: 8
+Sum: 22
+Sum: 17
+</code></pre>
+
+<h2 id="举一反三-python-keyword-argument">举一反三： Python - Keyword Argument</h2>
+
+<p>Use a <strong>dictionary-like parameters with double asterisk</strong> passed to the function.</p>
+
+<pre><code class="language-python">def intro(**data):
+    print(&quot;\nData type of argument:&quot;,type(data))
+
+    for key, value in data.items():                          # inside loop
+        print(&quot;{} is {}&quot;.format(key,value))
+
+intro(Firstname=&quot;Sita&quot;, Lastname=&quot;Sharma&quot;, Age=22, Phone=1234567890)
+intro(Firstname=&quot;John&quot;, Lastname=&quot;Wood&quot;, Email=&quot;johnwood@nomail.com&quot;, Country=&quot;Wakanda&quot;, Age=25, Phone=9876543210)
+</code></pre>
+
+<pre><code>Data type of argument: &lt;class 'dict'&gt;
+Firstname is Sita
+Lastname is Sharma
+Age is 22
+Phone is 1234567890
+
+Data type of argument: &lt;class 'dict'&gt;
+Firstname is John
+Lastname is Wood
+Email is johnwood@nomail.com
+Country is Wakanda
+Age is 25
+Phone is 9876543210
+</code></pre>
+
+<h2 id="stdarg-h-在-c-中的应用">stdarg.h 在 C 中的应用</h2>
+
+<p>建议少用或者尽量不用。</p>
+
+<h3 id="库变量与库宏">库变量与库宏</h3>
+
+<p><code>va_list</code> ： 适用于 <code>va_start() va_arg() va_end()</code> 三个宏存储信息的类型，可近似等价于可变链表。</p>
+
+<p><code>void va_start(va_list ap, last_arg);</code> 初始化 <code>ap</code> 变量，与 <code>va_arg</code> <code>va_end</code> 共同使用，<code>last_arg</code> 是最后一个传递给函数的已知的固定参数，即省略号前的参数。</p>
+
+<p><code>type va_arg(va_list ap, type);</code> 这个宏检索函数参数列表 <code>va_list ap</code> 中类型为 <code>type</code> 的 <strong>下一个参数</strong> 。 该函数应当理解为 <strong>指针</strong> ，函数返回为 <strong>有序列表中的符合对应类型的最近一个数据</strong>，函数参数以数据结构 <strong>栈</strong> 形式存储，从左向右入栈。</p>
+
+<p><code>void va_end(va_list ap);</code> 这个宏允许使用了带有 <code>va_start</code> 宏的带有可变参数的函数返回，若函数返回前未调用 <code>va_end</code> ，则结果为 <code>undefined</code>.</p>
+
+<h3 id="具体代码">具体代码</h3>
+
+<p>Compile ： <code>gcc -std=c99 test.c -o test</code></p>
+
+<p>test.c :</p>
+
+<pre><code class="language-c">#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+#include &lt;stdarg.h&gt;
+
+int echoinfo(char *strNotice, ...);
+
+int main(int argc, char *argv[]){
+    char noti[50] = {0};
+    strcpy(noti,&quot;The printout is&quot;);
+    echoinfo(noti, argv[1], argv[2], argv[3]);
+    return 0;
+}
+
+int echoinfo(char *strNotice, ...){
+    char *str0 = NULL;
+    char *str1 = NULL;
+    char *str2 = NULL;
+    va_list stArgv;         // define a param list
+    va_start(stArgv, strNotice);      // pass the fixed param to the function
+    str0 = va_arg(stArgv, char*);
+    str1 = va_arg(stArgv, char*);
+    str2 = va_arg(stArgv, char*);
+    printf(&quot;%s: %s %s %s&quot;, strNotice, str0, str1, str2);
+    va_end(stArgv);
+    return 0;
+}
+</code></pre>
+
+<h1 id="迷宫生成">迷宫生成</h1>
+
+<p>其实是一个 树/图 的遍历问题，这样也就关联上了两种常用算法：BFS（广度优先搜索）、DFS(深度优先搜索)，实际上就是一个 Single Source Shortest Path 寻找问题。</p>
+
+<p><img src="https://alicdn.kmahyyg.xyz/asset_files/2018-mazegen-01.webp" alt="gen-maze.png" /></p>
+
+<p><a href="https://alicdn.kmahyyg.xyz/asset_files/2018-mazegen.flv">点击此处查看视频演示</a></p>
+
+<h2 id="推荐的生成思路">推荐的生成思路</h2>
+
+<p>Once we have a grid filled with walls, we transform it into a maze as follows:</p>
+
+<ol>
+<li>We pick a random cell</li>
+<li>We select a random neighbouring cell that has not been visited</li>
+<li>We remove the wall between the two cells and add the neighbouring cell to the list of cells having been visited.</li>
+<li>If there are no unvisited neighbouring cell, we backtrack to one that has at least one unvisited neighbour; this is done until we backtrack to the original cell.</li>
+</ol>
+
+<h2 id="python">Python</h2>
+
+<p>由于之前完全没有接触过这类实现，本次实现将采用 Python 进行一次预实现。</p>
+
+<p><strong><a href="https://docs.python.org/3/library/stdtypes.html#common-sequence-operations">Python 多维数组的浅拷贝问题 - 关于列表</a></strong></p>
+
+<p><strong><a href="https://docs.python.org/3/faq/programming.html#faq-multidimensional-list">Python 多维数组的浅拷贝问题 - 官方 FAQ</a></strong></p>
+
+<p><strong><a href="http://www.runoob.com/python3/python3-func-zip.html">Python 3 zip() 函数</a></strong></p>
+
+<h3 id="关于-zip-函数">关于 zip 函数</h3>
+
+<p>定义：<code>zip([iterable, ...])</code></p>
+
+<p><code>zip()</code> 是 Python 的一个内建函数，它接受一系列可迭代的对象作为参数，将对象中对应的元素打包成一个个 tuple (元组)，然后返回由这些 tuples 组成的 list (列表)。若传入参数的长度不等，则返回 list 的长度和参数中长度最短的对象相同。利用 * 号操作符，可以将 list unzip (解压)，看下面的例子就明白了：</p>
+
+<pre><code class="language-python">&gt;&gt;&gt; a = [1,2,3]
+&gt;&gt;&gt; b = [4,5,6]
+&gt;&gt;&gt; c = [4,5,6,7,8]
+&gt;&gt;&gt; zipped = zip(a,b)
+[(1, 4), (2, 5), (3, 6)]
+&gt;&gt;&gt; zip(a,c)
+[(1, 4), (2, 5), (3, 6)]
+&gt;&gt;&gt; zip(*zipped)
+[(1, 2, 3), (4, 5, 6)]
+</code></pre>
+
+<h3 id="random-randrange">random.randrange()</h3>
+
+<pre><code>random.randrange(start, stop[, step])
+Return a randomly selected element from range(start, stop, step). 
+</code></pre>
+
+<h3 id="random-shuffle">random.shuffle()</h3>
+
+<pre><code>random.shuffle(x[, random])¶
+Shuffle the sequence x in place.
+
+The optional argument random is a 0-argument function returning a random float in [0.0, 1.0); by default, this is the function random().
+</code></pre>
+
+<h3 id="多维数组">多维数组</h3>
+
+<p>官方的建议：</p>
+
+<blockquote>
+<p>listA = [[None] *2] *3
+这样的使用 * 创建的一个列表，并没有创建内部列表的三次拷贝，而是创建了三次同样的链接到内部的列表。所以你如果修改任何一个内部列表，三个外部链接的值也会跟随改变。</p>
+</blockquote>
+
+<p>正确的做法是：</p>
+
+<ol>
+<li>使用 <code>numpy</code> 等提供矩阵类型的工具。</li>
+<li>使用下列代码：</li>
+</ol>
+
+<pre><code class="language-python">A = [None] * 3
+for i in range(3):
+    A[i] = [None] * 2
+</code></pre>
+
+<p>等价于：</p>
+
+<pre><code class="language-python">w, h = 2, 3
+A = [[None] * w for i in range(h)]
+</code></pre>
+
+<h1 id="迷宫自动完成">迷宫自动完成</h1>
+
+<p><img src="https://alicdn.kmahyyg.xyz/asset_files/2018-mazegen-02.webp" alt="autowalk-maze.png" /></p>
+
+<h1 id="编写过程中的实现问题">编写过程中的实现问题</h1>
+
+<h2 id="dirty-workaround-ycomlib-h">Dirty Workaround (ycomlib.h)</h2>
+
+<p>请参考 Github Repo 中的对应文件。</p>
+
+<h2 id="最大的问题">最大的问题</h2>
+
+<p>Python 预实现过后，进行面向 C 的迁移。很多方面，例如 二维数组的传递、数组 Index 超界、递归超过上限 问题，导致了许多的 SEGV，最后还是没有解决。时间太紧张了，没时间了。整体的思路还算清晰，请参考上面的附图。也欢迎您和我联系，交换您的想法。</p>
+
+<h1 id="acknowledgement">Acknowledgement</h1>
+
+<ul>
+<li><a href="https://docs.python.org/3/">Python official document list</a></li>
+<li><a href="https://blog.csdn.net/crystal_tyan/article/details/42523861">Recursive backtracker mtod for maze generation</a></li>
+<li><a href="https://blog.csdn.net/juzihongle1/article/details/73135920">Three widely used mtod for maze generation</a></li>
+</ul>
+
+      </article>
+      <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "kmahyyg" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </main>
+    <nav class="end-nav side-padding">
+      
+      <a ontouchstart="cardPressed.call(this)" ontouchend="cardReleased.call(this)" ontouchmove="cardReleased.call(this)" 
+  href="https://www.kmahyyg.xyz/" class="card home-card" style="background-image: url( https://alicdn.kmahyyg.xyz/asset_files/aether/backtohome.webp )" rel="bookmark" >
+  Home
+</a>
+    </nav>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/highlight.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.js" integrity="sha384-K3vbOmF2BtaVai+Qk37uypf7VrgBubhQreNQe9aGsz9lB63dIFiQVlJbr92dw2Lx" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/contrib/auto-render.min.js" integrity="sha384-kmZOZB5ObwgQnS/DuDg6TScgOiWWBiVt0plIRkZCmE6rDZGrEOQeHM5PcHi+nyqe" crossorigin="anonymous"
+    onload="renderMathInElement(document.body);"></script>
+<script src="https://www.kmahyyg.xyz/js/core.js"></script>
+<script>
+  hljs.initHighlightingOnLoad();
+</script>
+  </body>
+</html>

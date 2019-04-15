@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="zh-cn" dir="ltr">
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Recommend a NetBoost: KCPTUN &middot; Pat~ Pat~ Meow~</title>
+  <meta name="description" content="用于高延迟、不稳定网络的高速传输中间件 KCPTUN" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.css" integrity="sha384-9eLZqc9ds8eNjO3TmqPeYcDj8n+Qfa4nuSiGYa6DjLNcv9BtN69ZIulL9+8CqC9Y" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://www.kmahyyg.xyz/css/main.min.css" />
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-123948588-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+
+  <style>
+    body {
+      background: #ecedef url("https://alicdn.kmahyyg.xyz/asset_files/aether/bgimg.webp") repeat;
+    }
+  </style>
+</head>
+  <body class="single-body">
+    <nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="https://www.kmahyyg.xyz/" class="nav-text">Patrick Young</a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="https://www.kmahyyg.xyz/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://www.kmahyyg.xyz/express-page/" class="hamburger-menu-overlay-link">Express Inc</a></li>
+      <li><a href="https://www.kmahyyg.xyz/about-me-page/" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="https://www.kmahyyg.xyz/archlinux-bug-page/" class="hamburger-menu-overlay-link">Arch Linux</a></li>
+      <li><a href="https://www.kmahyyg.xyz/donate-page/" class="hamburger-menu-overlay-link">Donate</a></li>
+      <li><a href="https://www.kmahyyg.xyz/categories/code" class="hamburger-menu-overlay-link">Code</a></li><li><a href="https://www.kmahyyg.xyz/categories/life" class="hamburger-menu-overlay-link">Life</a></li><li><a href="https://www.kmahyyg.xyz/categories/network" class="hamburger-menu-overlay-link">Network</a></li><li><a href="https://www.kmahyyg.xyz/categories/school" class="hamburger-menu-overlay-link">School</a></li><li><a href="https://www.kmahyyg.xyz/categories/tech" class="hamburger-menu-overlay-link">Tech</a></li>
+    </ul>
+  </div>
+</nav>
+    <main class="content side-text-padding">
+      <article class="post ">
+        <header class="post-header">
+        	<h1 class="post-title">Recommend a NetBoost: KCPTUN</h1>
+          <p class="post-date">Posted <time datetime="2016-07-17">Jul 17, 2016</time></p>
+        </header>
+        
+        <picture class="post-figure">
+            
+            <source srcset="https://alicdn.kmahyyg.xyz/asset_files/aether/cat_tech.webp">
+          <img src="https://alicdn.kmahyyg.xyz/asset_files/aether/cat_tech.webp" >
+        </picture>
+        
+        
+
+<h1 id="background">Background</h1>
+
+<p>Protocol: <a href="https://github.com/skywind3000/kcp">https://github.com/skywind3000/kcp</a>
+Software: <a href="https://github.com/xtaci/kcptun">https://github.com/xtaci/kcptun</a></p>
+
+<p>加速效果极端明显，而且有基本利他性，与多倍发包无关！大力支持！拒绝 net-speeder！</p>
+
+<h1 id="初阶应用">初阶应用</h1>
+
+<h2 id="install">Install</h2>
+
+<p>以下以Debian8 x64,V20160922 为例</p>
+
+<h3 id="服务端">服务端</h3>
+
+<h4 id="下载解压-并以root登录">下载解压 并以root登录</h4>
+
+<pre><code class="language-bash">    cd ~
+    wget https://github.com/xtaci/kcptun/releases/download/v20160922/kcptun-linux-amd64-20160922.tar.gz
+    tar zxvf ./kcptun-linux-amd64-20160922.tar.gz
+    rm -rf ./client_linux_amd64
+    mkdir ./kcp-server
+    mv ./server_linux_amd64 ./kcpserv
+    chmod 700 ./kcpserv
+</code></pre>
+
+<h4 id="config-json">config.json</h4>
+
+<p>服务器端：</p>
+
+<pre><code class="language-json">    {
+        &quot;listen&quot;: &quot;:服务器监听端口&quot;,
+        &quot;target&quot;: &quot;127.0.0.1:转发端口&quot;,
+        &quot;key&quot;: &quot;密码&quot;,
+        &quot;crypt&quot;: &quot;加密方法&quot;,
+        &quot;mode&quot;: &quot;模式&quot;,
+        &quot;mtu&quot;: 1350,
+        &quot;sndwnd&quot;: 自行调整,
+        &quot;rcvwnd&quot;: 自行调整,
+        &quot;datashard&quot;: 10,
+        &quot;parityshard&quot;: 3,
+        &quot;dscp&quot;: 46,
+        &quot;nocomp&quot;: true,
+        &quot;acknodelay&quot;: false,
+        &quot;nodelay&quot;: 0,
+        &quot;interval&quot;: 40,
+        &quot;resend&quot;: 0,
+        &quot;nc&quot;: 0,
+        &quot;sockbuf&quot;: 4194304,
+        &quot;keepalive&quot;: 10
+    }
+</code></pre>
+
+<p>两端参数必须一致的有: datashard parityshard nocomp key crypt</p>
+
+<p>内置模式：</p>
+
+<p>响应速度: fast3 &gt; [fast2] &gt; fast &gt; normal &gt; default</p>
+
+<p>有效载荷比: default &gt; normal &gt; fast &gt; [fast2] &gt; fast3</p>
+
+<p>中间mode参数比较均衡，总之就是越快越浪费带宽，推荐模式 fast2</p>
+
+<p>更高级的 手动档 需要理解KCP协议，并通过 隐藏参数 调整，例如:</p>
+
+<pre><code>    -mode manual -nodelay 1 -resend 2 -nc 1 -interval 20
+</code></pre>
+
+<p>高丢包率的网络建议采用 fast2, 低丢包率的网络，建议采用 normal。</p>
+
+<p>客户端：</p>
+
+<pre><code class="language-json">    {
+        &quot;localaddr&quot;: &quot;:本地监听端口&quot;,
+        &quot;remoteaddr&quot;: &quot;服务器地址:监听端口&quot;,
+        &quot;key&quot;: &quot;密码&quot;,
+        &quot;crypt&quot;: &quot;加密&quot;,
+        &quot;mode&quot;: &quot;模式&quot;,
+        &quot;conn&quot;: 1,
+        &quot;autoexpire&quot;: 60,
+        &quot;mtu&quot;: 1350,
+        &quot;sndwnd&quot;: 自行调整,
+        &quot;rcvwnd&quot;: 自行调整,
+        &quot;datashard&quot;: 10,
+        &quot;parityshard&quot;: 3,
+        &quot;dscp&quot;: 46,
+        &quot;nocomp&quot;: true,
+        &quot;acknodelay&quot;: false,
+        &quot;nodelay&quot;: 0,
+        &quot;interval&quot;: 40,
+        &quot;resend&quot;: 0,
+        &quot;nc&quot;: 0,
+        &quot;sockbuf&quot;: 4194304,
+        &quot;keepalive&quot;: 10
+    }
+</code></pre>
+
+<h4 id="启动参数-写入-etc-rc-local">启动参数，写入 <code>/etc/rc.local</code></h4>
+
+<p>此处以 100M 电信光纤为例</p>
+
+<p><strong>带$的均为变量，请根据自己的具体信息更改</strong></p>
+
+<pre><code class="language-bash">    nohup /root/kcpserv -c /root/config.json -log /root/kcplog.log &gt;&gt; /dev/null
+</code></pre>
+
+<h2 id="usage">Usage</h2>
+
+<h3 id="客户端">客户端</h3>
+
+<h4 id="pc下">PC下：</h4>
+
+<p>创建一个 bat，写入：</p>
+
+<pre><code class="language-bash">    client_windows_386.exe -c ./config.json
+</code></pre>
+
+<p>将其置于与客户端同一文件夹，每次先启动 ss 再运行此 bat 即可。</p>
+
+<p>后面的各项参数除 <code>--rcvwnd</code> <code>--sndwnd</code>外均必须与服务器保持一致！具体的参数配置请参见进阶应用部分。</p>
+
+<h4 id="ss本地设置">SS本地设置</h4>
+
+<p>本地SS客户端设置：</p>
+
+<blockquote>
+<p>主机： 127.0.0.1
+端口： kcptun 的客户端监听的端口
+其余的不变</p>
+</blockquote>
+
+<h1 id="进阶应用">进阶应用</h1>
+
+<h2 id="自行调整的参数">自行调整的参数</h2>
+
+<p>第一步：同时在两端逐步增大 client <code>rcvwnd</code> 和 server <code>sndwnd</code>;
+第二步：尝试下载，观察如果带宽利用率（服务器＋客户端两端都要观察）接近物理带宽则停止，否则跳转到第一步。</p>
+
+<h2 id="手动调整参数">手动调整参数</h2>
+
+<blockquote>
+<h1 id="协议配置">协议配置</h1>
+
+<p>协议默认模式是一个标准的 ARQ，需要通过配置打开各项加速开关：
+1. 工作模式：</p>
+
+<pre><code class="language-cpp">   int ikcp_nodelay(ikcpcb *kcp, int nodelay, int interval, int resend, int nc)
+</code></pre>
+
+<ul>
+<li>nodelay ：是否启用 nodelay模式，0不启用；1启用。</li>
+<li>interval ：协议内部工作的 interval，单位毫秒，比如 10ms或者 20ms</li>
+<li>resend ：快速重传模式，默认0关闭，可以设置2（2次ACK跨越将会直接重传）</li>
+<li>nc ：是否关闭流控，默认是0代表不关闭，1代表关闭。</li>
+<li>普通模式：`ikcp_nodelay(kcp, 0, 40, 0, 0);</li>
+<li>极速模式： ikcp_nodelay(kcp, 1, 10, 2, 1);</li>
+</ul>
+
+<ol>
+<li><p>最大窗口：</p>
+
+<pre><code class="language-cpp">int ikcp_wndsize(ikcpcb *kcp, int sndwnd, int rcvwnd);
+</code></pre>
+
+<p>该调用将会设置协议的最大发送窗口和最大接收窗口大小，默认为32. 这个可以理解为 TCP的 SND_BUF 和 RCV_BUF，只不过单位不一样 SND/RCV_BUF 单位是字节，这个单位是包。</p></li>
+
+<li><p>最大传输单元：
+纯算法协议并不负责探测 MTU，默认 mtu是1400字节，可以使用ikcp_setmtu来设置该值。该值将会影响数据包归并及分片时候的最大传输单元。</p></li>
+
+<li><p>最小RTO：
+不管是 TCP还是 KCP计算 RTO时都有最小 RTO的限制，即便计算出来RTO为40ms，由于默认的 RTO是100ms，协议只有在100ms后才能检测到丢包，快速模式下为30ms，可以手动更改该值：</p>
+
+<pre><code class="language-cpp">kcp-&gt;rx_minrto = 10;
+</code></pre></li>
+</ol>
+
+<h1 id="文档索引">文档索引</h1>
+
+<p>协议的使用和配置都是很简单的，大部分情况看完上面的内容基本可以使用了。如果你需要进一步进行精细的控制，比如改变 KCP的内存分配器，或者你需要更有效的大规模调度 KCP链接（比如 3500个以上），或者如何更好的同 TCP结合，那么可以继续延伸阅读：</p>
+
+<ul>
+<li><a href="https://github.com/skywind3000/kcp/wiki">Wiki Home</a></li>
+<li><a href="https://github.com/skywind3000/kcp/wiki/KCP-Best-Practice">KCP 最佳实践</a></li>
+<li><a href="https://github.com/skywind3000/kcp/wiki/Cooperate-With-Tcp-Server">同现有TCP服务器集成</a></li>
+<li><a href="https://github.com/skywind3000/kcp/wiki/Network-Encryption">传输数据加密</a></li>
+<li><a href="https://github.com/skywind3000/kcp/wiki/Flow-Control-for-Users">应用层流量控制</a></li>
+<li><a href="https://github.com/skywind3000/kcp/wiki/KCP-Benchmark">性能评测</a></li>
+</ul>
+</blockquote>
+
+<h1 id="enjoy-it">Enjoy It!</h1>
+
+      </article>
+      <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "kmahyyg" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </main>
+    <nav class="end-nav side-padding">
+      
+      <a ontouchstart="cardPressed.call(this)" ontouchend="cardReleased.call(this)" ontouchmove="cardReleased.call(this)" 
+  href="https://www.kmahyyg.xyz/" class="card home-card" style="background-image: url( https://alicdn.kmahyyg.xyz/asset_files/aether/backtohome.webp )" rel="bookmark" >
+  Home
+</a>
+    </nav>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/highlight.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.js" integrity="sha384-K3vbOmF2BtaVai+Qk37uypf7VrgBubhQreNQe9aGsz9lB63dIFiQVlJbr92dw2Lx" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/contrib/auto-render.min.js" integrity="sha384-kmZOZB5ObwgQnS/DuDg6TScgOiWWBiVt0plIRkZCmE6rDZGrEOQeHM5PcHi+nyqe" crossorigin="anonymous"
+    onload="renderMathInElement(document.body);"></script>
+<script src="https://www.kmahyyg.xyz/js/core.js"></script>
+<script>
+  hljs.initHighlightingOnLoad();
+</script>
+  </body>
+</html>

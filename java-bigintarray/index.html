@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="zh-cn" dir="ltr">
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Java 语言笔记 - 大数与数组 &middot; Pat~ Pat~ Meow~</title>
+  <meta name="description" content="Java 语言关于大数与数组的课程笔记" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.css" integrity="sha384-9eLZqc9ds8eNjO3TmqPeYcDj8n+Qfa4nuSiGYa6DjLNcv9BtN69ZIulL9+8CqC9Y" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://www.kmahyyg.xyz/css/main.min.css" />
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-123948588-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+
+  <style>
+    body {
+      background: #ecedef url("https://alicdn.kmahyyg.xyz/asset_files/aether/bgimg.webp") repeat;
+    }
+  </style>
+</head>
+  <body class="single-body">
+    <nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="https://www.kmahyyg.xyz/" class="nav-text">Patrick Young</a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="https://www.kmahyyg.xyz/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://www.kmahyyg.xyz/express-page/" class="hamburger-menu-overlay-link">Express Inc</a></li>
+      <li><a href="https://www.kmahyyg.xyz/about-me-page/" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="https://www.kmahyyg.xyz/archlinux-bug-page/" class="hamburger-menu-overlay-link">Arch Linux</a></li>
+      <li><a href="https://www.kmahyyg.xyz/donate-page/" class="hamburger-menu-overlay-link">Donate</a></li>
+      <li><a href="https://www.kmahyyg.xyz/categories/code" class="hamburger-menu-overlay-link">Code</a></li><li><a href="https://www.kmahyyg.xyz/categories/life" class="hamburger-menu-overlay-link">Life</a></li><li><a href="https://www.kmahyyg.xyz/categories/network" class="hamburger-menu-overlay-link">Network</a></li><li><a href="https://www.kmahyyg.xyz/categories/school" class="hamburger-menu-overlay-link">School</a></li><li><a href="https://www.kmahyyg.xyz/categories/tech" class="hamburger-menu-overlay-link">Tech</a></li>
+    </ul>
+  </div>
+</nav>
+    <main class="content side-text-padding">
+      <article class="post ">
+        <header class="post-header">
+        	<h1 class="post-title">Java 语言笔记 - 大数与数组</h1>
+          <p class="post-date">Posted <time datetime="2019-04-08">Apr 8, 2019</time></p>
+        </header>
+        
+        <picture class="post-figure">
+            
+            <source srcset="https://alicdn.kmahyyg.xyz/asset_files/aether/cat_code.webp">
+          <img src="https://alicdn.kmahyyg.xyz/asset_files/aether/cat_code.webp" >
+        </picture>
+        
+        
+
+<h1 id="java-语言笔记-大数与数组">Java 语言笔记 - 大数与数组</h1>
+
+<p>Last Edited: Apr 08, 2019 6:30 PM</p>
+
+<p>一、大数运算</p>
+
+<p>类似于 Python，Java 的 java.math 包提供了实现了任意精度的整数和浮点数运算。使用静态的 ValueOf 方法可以将常规的数值转化为大数。</p>
+
+<pre><code class="language-java">    import java.util.*;
+    import java.math.*;
+    
+    
+    public class BigIntegerTest {
+        public static void main(String[] args){
+            Scanner in = new Scanner(System.in);
+            System.out.print(&quot;How many numbers do you need to draw?&quot;);
+            int k  = in.nextInt();
+            System.out.print(&quot;What's the highest one?&quot;);
+            int n = in.nextInt();
+            BigInteger lotteryOdds = BigInteger.valueOf(1);
+            for (int i=1; i &lt;= k; i ++){
+                lotteryOdds = lotteryOdds.multiply(BigInteger.valueOf(n - i + 1)).divide(BigInteger.valueOf(1));
+            }
+            System.out.println(&quot;Your odds are 1 in &quot; + lotteryOdds + &quot;. Good luck!&quot;);
+        }
+    }
+</code></pre>
+
+<p>大数运算中没有常见的运算符，需要使用对应类的对应方法完成运算。详情请参考 Java API Reference</p>
+
+<p>二、数组</p>
+
+<p>数组的声明方式为： 数据类型 - 数组名。同样可以使用 C-like 的方式声明，但是，更多的时候我们推荐采用 Java-like 的方式声明。</p>
+
+<p>对于数组的长度获取，我们可以通过 array.length 方法获取长度。</p>
+
+<p>（1）for-each 循环</p>
+
+<p>类似于 Python，这样的循环可以用下列形式表示：  for (int element : array){do sth;}</p>
+
+<p>for-each 循环会尝试遍历数组中每一个元素，而不用接触他们的下标值。</p>
+
+<p>如果你需要打印数组中的所有值（像 Python List 一样），你可以使用 <code>Arrays.toString()</code> 方法。需要注意的是，这个 <code>toString</code> 方法仅适用于一维数组，如果你需要对二维数组使用，你需要使用 <code>Arrays.deepToString()</code> 方法。二维数组的声明是 <code>int[][] magicSquare;</code></p>
+
+<p>Java 还可以通过类似的代码初始化一个匿名数组：</p>
+
+<pre><code class="language-java">    int[] smallPrimes = {2,3,4,5};
+    new int[] {17,191,23};  // 新建一个匿名数组
+    smallPrimes = new int[] {17,23,56,98};
+    
+    // Java 中允许数组中的长度允许为 0, 但不能为 null
+    new elementType[0];
+    
+    // 数组的浅拷贝与深拷贝
+    import java.util.Arrays;
+    
+    public class ArrayCopyTest {
+        public static void main(String[] args) {
+            int[] anonymous = {17, 18, 19};
+            System.out.println(Arrays.toString(anonymous));
+            int[] anon = new int[]{17, 19, 20};
+            int[] smallprime = anon;
+            smallprime[1] = 66;
+            int[] copiedNumbers = Arrays.copyOf(anon, anon.length);   // Deepcopy
+            copiedNumbers[0] = 58;
+            System.out.println(Arrays.toString(copiedNumbers));
+            System.out.println(Arrays.toString(smallprime));
+            System.out.println(Arrays.toString(anon));
+        }
+    }
+    // 数组元素到元素拷贝还可以使用 
+    // java.lang.System.arraycopy(object from, int fromindex, object to, int toindex, int count);
+</code></pre>
+
+<p>(2) 命令行参数</p>
+
+<p>Java 的 main 方法中，程序名不存储在 args 中，如果你使用下列方法运行一个应用， <code>java Massage -g critical</code> , args[0] 的值为 <code>-g</code></p>
+
+<p>(3) 数组的排序问题</p>
+
+<p>Java 中如果你需要对数值型数组数组进行排序，官方在 Arrays 类中提供了优化的快速排序算法，  <code>Arrays.sort()</code></p>
+
+<p>(4) 不规则数组</p>
+
+<p>Java 中实际并不存在多维数组，二维数组实际被同 Python 类似的理解为数组中的数组。</p>
+
+<p>Java 中的声明 <code>double[][] balances = new double[10][6];</code> 实际等价于C的是 <code>double** balances = new doubles*[10]; for(i=0;i &lt; 10;i++){balances[i] = new double[6];}</code></p>
+
+      </article>
+      <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "kmahyyg" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </main>
+    <nav class="end-nav side-padding">
+      
+      <a ontouchstart="cardPressed.call(this)" ontouchend="cardReleased.call(this)" ontouchmove="cardReleased.call(this)" 
+  href="https://www.kmahyyg.xyz/" class="card home-card" style="background-image: url( https://alicdn.kmahyyg.xyz/asset_files/aether/backtohome.webp )" rel="bookmark" >
+  Home
+</a>
+    </nav>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/highlight.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.js" integrity="sha384-K3vbOmF2BtaVai+Qk37uypf7VrgBubhQreNQe9aGsz9lB63dIFiQVlJbr92dw2Lx" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/contrib/auto-render.min.js" integrity="sha384-kmZOZB5ObwgQnS/DuDg6TScgOiWWBiVt0plIRkZCmE6rDZGrEOQeHM5PcHi+nyqe" crossorigin="anonymous"
+    onload="renderMathInElement(document.body);"></script>
+<script src="https://www.kmahyyg.xyz/js/core.js"></script>
+<script>
+  hljs.initHighlightingOnLoad();
+</script>
+  </body>
+</html>

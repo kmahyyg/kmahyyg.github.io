@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="zh-cn" dir="ltr">
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>YNU - 汇编语言程序设计实验报告 4-5 &middot; Pat~ Pat~ Meow~</title>
+  <meta name="description" content="学校汇编语言课程的实验报告 2" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.css" integrity="sha384-9eLZqc9ds8eNjO3TmqPeYcDj8n+Qfa4nuSiGYa6DjLNcv9BtN69ZIulL9+8CqC9Y" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://www.kmahyyg.xyz/css/main.min.css" />
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-123948588-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+
+  <style>
+    body {
+      background: #ecedef url("https://alicdn.kmahyyg.xyz/asset_files/aether/bgimg.webp") repeat;
+    }
+  </style>
+</head>
+  <body class="single-body">
+    <nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="https://www.kmahyyg.xyz/" class="nav-text">Patrick Young</a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="https://www.kmahyyg.xyz/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://www.kmahyyg.xyz/express-page/" class="hamburger-menu-overlay-link">Express Inc</a></li>
+      <li><a href="https://www.kmahyyg.xyz/about-me-page/" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="https://www.kmahyyg.xyz/archlinux-bug-page/" class="hamburger-menu-overlay-link">Arch Linux</a></li>
+      <li><a href="https://www.kmahyyg.xyz/donate-page/" class="hamburger-menu-overlay-link">Donate</a></li>
+      <li><a href="https://www.kmahyyg.xyz/categories/code" class="hamburger-menu-overlay-link">Code</a></li><li><a href="https://www.kmahyyg.xyz/categories/life" class="hamburger-menu-overlay-link">Life</a></li><li><a href="https://www.kmahyyg.xyz/categories/network" class="hamburger-menu-overlay-link">Network</a></li><li><a href="https://www.kmahyyg.xyz/categories/school" class="hamburger-menu-overlay-link">School</a></li><li><a href="https://www.kmahyyg.xyz/categories/tech" class="hamburger-menu-overlay-link">Tech</a></li>
+    </ul>
+  </div>
+</nav>
+    <main class="content side-text-padding">
+      <article class="post ">
+        <header class="post-header">
+        	<h1 class="post-title">YNU - 汇编语言程序设计实验报告 4-5</h1>
+          <p class="post-date">Posted <time datetime="2019-01-11">Jan 11, 2019</time></p>
+        </header>
+        
+        <picture class="post-figure">
+            
+            <source srcset="https://alicdn.kmahyyg.xyz/asset_files/aether/cat_code.webp">
+          <img src="https://alicdn.kmahyyg.xyz/asset_files/aether/cat_code.webp" >
+        </picture>
+        
+        
+
+<h2 id="license">License</h2>
+
+<p>如未署名，所有 *.kmahyyg.xyz 的域名下的版权均为本人所有，遵循对应站点下的授权协议。</p>
+
+<p>本篇文章授权 采用 CC BY-NC-ND 3.0 Unported 协议，禁止转载。</p>
+
+<h1 id="experiment-4">Experiment 4</h1>
+
+<h2 id="实验目的">实验目的</h2>
+
+<p>使用虚拟机 Qemu-KVM 和调试器 Bochs，执行，调试 MBR 扇区代码，了解计算机启动的原理和 MBR 扇区代码的功能。</p>
+
+<h2 id="实验内容">实验内容</h2>
+
+<ol>
+<li>阅读参考源程序并增加注释；</li>
+<li>在参考源程序中增加指令(不要改变原程序的功能)，为程序增加功能：输出你的学号和姓名拼音；</li>
+</ol>
+
+<p>SRC:     <a href="https://gist.github.com/kmahyyg/ce0d0e3079363f7be5d91f7ace0d9c0d">https://gist.github.com/kmahyyg/ce0d0e3079363f7be5d91f7ace0d9c0d</a></p>
+
+<ol>
+<li>使用 NASM 工具将修改后的实验源程序编译为 .bin 文件；</li>
+<li>将 .bin 文件用 dd 写入虚拟机硬盘 MBR 扇区；</li>
+<li>使用 Qemu-KVM 虚拟机观察写入 .bin 文件的执行结果；</li>
+</ol>
+
+<p>Tutorial:    <a href="https://blog.kmahyyg.xyz/2018/ASM-exp-report/#%E5%AE%9E%E9%AA%8C%E6%93%8D%E4%BD%9C%EF%BC%9A%E7%BC%96%E8%AF%91%E5%AE%8C%E6%88%90%E5%90%8E%E7%9A%84-BOCHS-%E5%AF%BC%E5%85%A5">https://blog.kmahyyg.xyz/2018/ASM-exp-report/#%E5%AE%9E%E9%AA%8C%E6%93%8D%E4%BD%9C%EF%BC%9A%E7%BC%96%E8%AF%91%E5%AE%8C%E6%88%90%E5%90%8E%E7%9A%84-BOCHS-%E5%AF%BC%E5%85%A5</a></p>
+
+<ol>
+<li>关闭 Qemu-KVM，使用 BochsDBG 虚拟机调试写入在虚拟硬盘 MBR 扇区中的程序；</li>
+</ol>
+
+<p><img src="https://alicdn.kmahyyg.xyz/asset_files/2018-asmexp3-02.webp" alt="2018-asmexp3-02.png" /></p>
+
+<h2 id="思考题">思考题</h2>
+
+<ol>
+<li>计算机如何在屏幕上显示字符？</li>
+</ol>
+
+<p><a href="https://asm.kmahyyg.xyz/exps/exp7-transfer.html#quiz-2%EF%BC%9A-%E6%A0%B9%E6%8D%AE%E6%9D%90%E6%96%99%E7%BC%96%E7%A8%8B">https://asm.kmahyyg.xyz/exps/exp7-transfer.html#quiz-2%EF%BC%9A-%E6%A0%B9%E6%8D%AE%E6%9D%90%E6%96%99%E7%BC%96%E7%A8%8B</a></p>
+
+<ol>
+<li>如何输入输出 10 进制数据？如何输入数字、字符串？</li>
+</ol>
+
+<p><a href="https://computer.howstuffworks.com/bios1.htm">https://computer.howstuffworks.com/bios1.htm</a></p>
+
+<p><a href="https://blog.csdn.net/qq_28598203/article/details/51081368">https://blog.csdn.net/qq_28598203/article/details/51081368</a></p>
+
+<p>结合中断向量表实现。</p>
+
+<ol>
+<li>MBR 扇区有什么特点？MBR 扇区中的代码实现什么功能？</li>
+</ol>
+
+<p><a href="https://wiki.osdev.org/MBR_(x86">https://wiki.osdev.org/MBR_(x86</a>)</p>
+
+<ol>
+<li>简述计算机复位后的启动过程。</li>
+</ol>
+
+<p><a href="https://wiki.osdev.org/Boot_Sequence">https://wiki.osdev.org/Boot_Sequence</a></p>
+
+<h1 id="experiment-5">Experiment 5</h1>
+
+<h2 id="实验目的-1">实验目的</h2>
+
+<p>了解计算机屏幕显示的原理，编程实现显存映射与中断 <code>int 10H</code> 式。</p>
+
+<h2 id="实验内容-1">实验内容</h2>
+
+<ol>
+<li>使用控制显存显示内容。</li>
+</ol>
+
+<blockquote>
+<p>略，之前的实现均使用的这种方式。MASM 与 NASM 的差异，在使用这种方式时差异不大，此处略去不表。</p>
+</blockquote>
+
+<ol>
+<li>使用 <code>int 10H</code> 方式显示数据。</li>
+</ol>
+
+<p>看这里！这里有代码：</p>
+
+<p>MASM: <a href="https://gist.github.com/kmahyyg/4e8dc523f513ff78a53c18e4234460af">https://gist.github.com/kmahyyg/4e8dc523f513ff78a53c18e4234460af</a></p>
+
+<p>NASM: <a href="https://gist.github.com/kmahyyg/4e8dc523f513ff78a53c18e4234460af">https://gist.github.com/kmahyyg/4e8dc523f513ff78a53c18e4234460af</a></p>
+
+<h2 id="思考题-1">思考题</h2>
+
+<ol>
+<li>注释源程序</li>
+</ol>
+
+<p>已经注释了，懒得多写废话，具体的详细文档自己看后面的 Reference。这里略微一提， BIOS 是一个最小型的系统，在硬件支持 int 13h 对应的显示模式的前提下，可以通过 BIOS 中断向量 int 10h 调用显示 API。</p>
+
+<p>具体参考这里 <a href="https://protas.pypt.lt/informatika/assembler/writing_to_the_screen">https://protas.pypt.lt/informatika/assembler/writing_to_the_screen</a></p>
+
+<p>2.显示字符的方式</p>
+
+<p>就两种，实验目的里写的很清楚，具体的自己去查资料。</p>
+
+<h1 id="experiment-6">Experiment 6</h1>
+
+<h2 id="实验目的-2">实验目的</h2>
+
+<p>接受键盘输入，保存到磁盘；从磁盘读取，显示到屏幕。</p>
+
+<h2 id="实验实现">实验实现</h2>
+
+<p>目前问题：</p>
+
+<p>Can： 接受输入、保存到 FDD，从磁盘读取，读取到指定的具体的固定 RAM 地址并显示。</p>
+
+<p><del>Cannot： 读取到变量对应的地址并显示，读取 FDD 成功但写入 RAM 失败&hellip; 已修复： dx 和 bx 两个寄存器中传入的地址存在问题</del></p>
+
+<p>接受输入，写入 FDD 的代码：</p>
+
+<pre><code class="language-asm6502">dataarea segment
+    buffer db 64   ; max 63 bytes string
+           db ?
+    string db 64 dup ('$')  ; preallocated with '$', int 21h/0ah output
+dataarea ends
+
+codesg segment
+
+;START PROC
+main proc far
+    assume cs:codesg,ds:dataarea
+    
+start:
+
+;SAVE THE CURRENT SITUATION FOR RET
+    push ds
+    sub ax,ax
+    push ax
+    
+;POINT CORRESPONDING DATA REGISTER
+    mov ax,dataarea
+    mov ds,ax
+
+;GET INPUT FROM KEYBOARD
+    lea dx,buffer
+    mov ah,0ah
+    int 21h
+    
+;PREPARE ES:BX to where data to be wrote into
+    mov ax,dataarea
+    mov es,ax
+    lea bx,string
+    
+;WRITE DATA TO FDD, 0 Cylinder: 0 Track: 4 Sector
+;Each sector has 512 bytes
+    mov ah,3  ; 3 for write
+    mov al,1  ; how many sectors to write
+    mov dh,0  ; cylinder
+    mov ch,0  ; track
+    mov cl,4  ; sector
+    mov dl,0  ; drive no. 
+    ;0:FDD-A, 1:FDD-B, 80H:HDD-C, 81H:HDD-D
+    int 13h 
+    
+    ret
+main endp
+codesg ends
+    end start 
+</code></pre>
+
+<p>从 FDD 中读取内容并显示在屏幕上：</p>
+
+<pre><code class="language-asm6502">datasg segment
+    readout db 512 dup ('$')
+datasg ends
+
+codesg segment
+
+start:
+        mov ax,datasg
+        mov ds,ax
+        mov es,ax
+        lea bx,readout   ;ready for read buffer
+        
+        mov ah,2
+        mov al,1
+        mov dh,0
+        mov ch,0
+        mov cl,4
+        mov dl,0
+        int 13h
+        
+        mov dx,offset readout
+        mov ah,9
+        int 21h
+        
+        mov ax,4c00h
+        int 21h
+
+codesg ends
+end start
+</code></pre>
+
+<h3 id="reference">Reference</h3>
+
+<p>接受输入之后回显打印：</p>
+
+<pre><code class="language-asm6502">;sudo mount -o loop,offset=$(python -c 'print(512*63)') /var/lib/libvirt/images/dosdata.img /mnt/nfs1
+
+dataarea segment
+    buffer db 64
+           db ?
+    string db 64 dup ('$')
+    hint   db 10,13,'$'
+dataarea ends
+
+codesg segment
+main proc far
+    assume cs:codesg,ds:dataarea
+start:
+    push ds
+    sub ax,ax
+    push ax
+
+    mov ax,dataarea
+    mov ds,ax
+
+    lea dx,buffer
+    mov ah,0ah
+    int 21h
+
+    mov cx,2
+    
+newl:
+    lea dx,hint
+    mov ah,9h
+    int 21h
+
+    loop newl
+    
+    lea dx,string
+    mov ah,9h
+    int 21h
+    
+    ret
+main endp
+codesg ends
+    end start 
+</code></pre>
+
+<p><strong>不要忘记打末尾的 <code>h</code></strong></p>
+
+<pre><code>INT 13h / AH = 02h - read disk sectors into memory.
+INT 13h / AH = 03h - write disk sectors.
+    input:
+AL = number of sectors to read/write (must be nonzero)
+CH = cylinder number (0..79).
+CL = sector number (1..18).
+DH = head number (0..1).
+DL = drive number (0..3 , for the emulator it depends on quantity of FLOPPY_ files).
+ES:BX points to data buffer.
+    return:
+CF set on error.
+CF clear if successful.
+AH = status (0 - if successful).
+AL = number of sectors transferred. 
+Note: each sector has 512 bytes.
+</code></pre>
+
+<pre><code>INT 21h / AH=9 - output of a string at DS:DX. String must be terminated by '$'. 
+example:
+        org 100h
+        mov dx, offset msg
+        mov ah, 9
+        int 21h
+        ret
+        msg db &quot;hello world $&quot;
+</code></pre>
+
+<pre><code>INT 21h / AH=0Ah - input of a string to DS:DX, fist byte is buffer size, second byte is number of chars actually read. this function does not add '$' in the end of string. to print using INT 21h / AH=9 you must set dollar character at the end of it and start printing from address DS:DX + 2. 
+</code></pre>
+
+<h1 id="end">END</h1>
+
+<p>本学期的汇编课程所有的的随堂实验就到此告一段落，感谢 王逍 老师的精心付出。
+和 钰 在各方面的帮助，爱你！</p>
+
+<p>Updated on 2019-01-11 20:58:01
+Rev. 11</p>
+
+<h1 id="reference-1">Reference</h1>
+
+<p><a href="https://thestarman.pcministry.com/asm/mbr/STDMBR.htm">https://thestarman.pcministry.com/asm/mbr/STDMBR.htm</a></p>
+
+<p><a href="https://thestarman.pcministry.com/asm/bios/index.html">https://thestarman.pcministry.com/asm/bios/index.html</a></p>
+
+<p><a href="https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-823-computer-system-architecture-fall-2005/index.htm">https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-823-computer-system-architecture-fall-2005/index.htm</a></p>
+
+<p><a href="https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-828-operating-system-engineering-fall-2012/index.htm">https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-828-operating-system-engineering-fall-2012/index.htm</a></p>
+
+<p><a href="https://stackoverflow.com/questions/41196376/int-10h-13h-bios-string-output-not-working">https://stackoverflow.com/questions/41196376/int-10h-13h-bios-string-output-not-working</a></p>
+
+<p><a href="http://www.ablmcc.edu.hk/~scy/CIT/8086_bios_and_dos_interrupts.htm">http://www.ablmcc.edu.hk/~scy/CIT/8086_bios_and_dos_interrupts.htm</a></p>
+
+<p><a href="https://wiki.osdev.org/ATA_PIO_Mode">https://wiki.osdev.org/ATA_PIO_Mode</a></p>
+
+<p><a href="https://stackoverflow.com/questions/8461363/access-harddrive-using-assembly">https://stackoverflow.com/questions/8461363/access-harddrive-using-assembly</a></p>
+
+      </article>
+      <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "kmahyyg" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </main>
+    <nav class="end-nav side-padding">
+      
+      <a ontouchstart="cardPressed.call(this)" ontouchend="cardReleased.call(this)" ontouchmove="cardReleased.call(this)" 
+  href="https://www.kmahyyg.xyz/" class="card home-card" style="background-image: url( https://alicdn.kmahyyg.xyz/asset_files/aether/backtohome.webp )" rel="bookmark" >
+  Home
+</a>
+    </nav>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/highlight.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.js" integrity="sha384-K3vbOmF2BtaVai+Qk37uypf7VrgBubhQreNQe9aGsz9lB63dIFiQVlJbr92dw2Lx" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/contrib/auto-render.min.js" integrity="sha384-kmZOZB5ObwgQnS/DuDg6TScgOiWWBiVt0plIRkZCmE6rDZGrEOQeHM5PcHi+nyqe" crossorigin="anonymous"
+    onload="renderMathInElement(document.body);"></script>
+<script src="https://www.kmahyyg.xyz/js/core.js"></script>
+<script>
+  hljs.initHighlightingOnLoad();
+</script>
+  </body>
+</html>

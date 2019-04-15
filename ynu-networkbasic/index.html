@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="zh-cn" dir="ltr">
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>计算机网络期末复习稿 &middot; Pat~ Pat~ Meow~</title>
+  <meta name="description" content="计算机网络课程期末复习记录" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.css" integrity="sha384-9eLZqc9ds8eNjO3TmqPeYcDj8n+Qfa4nuSiGYa6DjLNcv9BtN69ZIulL9+8CqC9Y" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://www.kmahyyg.xyz/css/main.min.css" />
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-123948588-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+
+  <style>
+    body {
+      background: #ecedef url("https://alicdn.kmahyyg.xyz/asset_files/aether/bgimg.webp") repeat;
+    }
+  </style>
+</head>
+  <body class="single-body">
+    <nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="https://www.kmahyyg.xyz/" class="nav-text">Patrick Young</a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="https://www.kmahyyg.xyz/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://www.kmahyyg.xyz/express-page/" class="hamburger-menu-overlay-link">Express Inc</a></li>
+      <li><a href="https://www.kmahyyg.xyz/about-me-page/" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="https://www.kmahyyg.xyz/archlinux-bug-page/" class="hamburger-menu-overlay-link">Arch Linux</a></li>
+      <li><a href="https://www.kmahyyg.xyz/donate-page/" class="hamburger-menu-overlay-link">Donate</a></li>
+      <li><a href="https://www.kmahyyg.xyz/categories/code" class="hamburger-menu-overlay-link">Code</a></li><li><a href="https://www.kmahyyg.xyz/categories/life" class="hamburger-menu-overlay-link">Life</a></li><li><a href="https://www.kmahyyg.xyz/categories/network" class="hamburger-menu-overlay-link">Network</a></li><li><a href="https://www.kmahyyg.xyz/categories/school" class="hamburger-menu-overlay-link">School</a></li><li><a href="https://www.kmahyyg.xyz/categories/tech" class="hamburger-menu-overlay-link">Tech</a></li>
+    </ul>
+  </div>
+</nav>
+    <main class="content side-text-padding">
+      <article class="post ">
+        <header class="post-header">
+        	<h1 class="post-title">计算机网络期末复习稿</h1>
+          <p class="post-date">Posted <time datetime="2019-01-09">Jan 9, 2019</time></p>
+        </header>
+        
+        <picture class="post-figure">
+            
+            <source srcset="https://alicdn.kmahyyg.xyz/asset_files/aether/cat_school.webp">
+          <img src="https://alicdn.kmahyyg.xyz/asset_files/aether/cat_school.webp" >
+        </picture>
+        
+        
+
+<h1 id="computer-network-chapter-1-basic-concepts">Computer Network - Chapter 1 - Basic Concepts</h1>
+
+<p>Host: End System.</p>
+
+<p>Routers: Forward packets(chunks) of data through network.</p>
+
+<p>Protocols: Control sending and receiving of messages. A protocol is a set of rules that govern data communication. It is an agreement between the communication entities. The elements of protocol are syntax, semantics, and timing.</p>
+
+<ul>
+<li>Syntax: Data structure or format.</li>
+<li>Semantics: the meaning of each section of bits.</li>
+<li>Timing: When to send and how fast it should be.</li>
+</ul>
+
+<p>C/S: Client/Server Model: Client host requests, receives service from server.</p>
+
+<p>Peer2Peer model: Minimal (or no) use of dedicated server.</p>
+
+<h2 id="level-5-7-layers-important">Level <sup>5</sup>&frasl;<sub>7</sub> Layers (Important)</h2>
+
+<p>Level 5:</p>
+
+<p>TCP/IP Layer:</p>
+
+<table>
+<thead>
+<tr>
+<th align="center">Application Layer</th>
+<th align="center">Message</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="center">Transport Layer</td>
+<td align="center">Segment</td>
+</tr>
+
+<tr>
+<td align="center">Network Layer</td>
+<td align="center">Datagram</td>
+</tr>
+
+<tr>
+<td align="center">Link Layer</td>
+<td align="center">Frame</td>
+</tr>
+</tbody>
+</table>
+
+<p>ISO/OSI Layer:</p>
+
+<table>
+<thead>
+<tr>
+<th align="center">Application Layer</th>
+<th align="center">应用软件接口</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="center">Presentation Layer</td>
+<td align="center">转换格式并封包</td>
+</tr>
+
+<tr>
+<td align="center">Session Layer</td>
+<td align="center">维护会话状态</td>
+</tr>
+
+<tr>
+<td align="center">Transport Layer</td>
+<td align="center">添加传输表头形成片</td>
+</tr>
+
+<tr>
+<td align="center">Network Layer</td>
+<td align="center">形成数据报，决定路径选择与转发</td>
+</tr>
+
+<tr>
+<td align="center">Data link Layer</td>
+<td align="center">网络寻址，错误纠正，形成帧</td>
+</tr>
+
+<tr>
+<td align="center">Physical Layer</td>
+<td align="center">与硬件直接互通</td>
+</tr>
+</tbody>
+</table>
+
+<h2 id="store-and-forward-important">Store and Forward (Important)</h2>
+
+<p>Circuit Switching: A dedicated circuit per call as telephone net.</p>
+
+<ul>
+<li>End to end resources served for &ldquo;call&rdquo;</li>
+<li>Link Bandwidth, Switch Capacity</li>
+<li>Dedicated Resouces</li>
+<li>Circuit-like (guaranteed) performance</li>
+<li>Call setup required</li>
+</ul>
+
+<p>Example: TDM&amp;FDM, Datagram network <strong>is neither connection-oriented or connection-less</strong></p>
+
+<p>Packet Switching: Data sent through net in discrete &ldquo;chunks&rdquo;</p>
+
+<p>Pros:</p>
+
+<ul>
+<li>Divided data stream into packets</li>
+<li>Shared network resources</li>
+<li>each packet uses full link bandwidth</li>
+<li>resources used as needed</li>
+</ul>
+
+<p>Cons:</p>
+
+<ul>
+<li>Aggregate resource demand can exceed amount available</li>
+<li>Congestion Control</li>
+<li>Node receives complete packet before forwarding, store and forward</li>
+</ul>
+
+<h3 id="delay-important">Delay (Important)</h3>
+
+<p>Transmission 传输 Delay: From the first sent bit to the last sent bit (Check header and calculate checksum)</p>
+
+<p>Propagation 传播 Delay: From the first sent bit to the first received bit</p>
+
+<p>Queuing Delay: From entering queue to send</p>
+
+<p>Processing Delay: From Send process to queue entrance</p>
+
+<p>Total delay: the sum of the four delays above.</p>
+
+<h2 id="communication">Communication</h2>
+
+<p>Full Duplex: Client&amp;Server transfer in 2 directions at the same time.</p>
+
+<p>Half Deplex: Only Client/Server can transfer at the same time but allow 2 directions.</p>
+
+<p>Simplex: Only single directions can be used for transmission. (eg. Radio Station)</p>
+
+<p>Connection Media:</p>
+
+<p>UnGuided media:
+- Wireless network
+- Satellite radio</p>
+
+<p>Guided media:
+- Twisted-Pair Wire
+- Coaxial cable
+- Fiber optics</p>
+
+<h1 id="computer-network-chapter-2-application-layer">Computer network - Chapter 2 - Application Layer</h1>
+
+<p>Due to the well-known, this part will be simplified.</p>
+
+<h2 id="process">Process</h2>
+
+<p>Process: Progam running within a host, a instance.</p>
+
+<p>Two processes communicate through IPC. Inter-process communicate by exchanging message.</p>
+
+<h2 id="application-service-you-may-need-to-know">Application Service you may need to know</h2>
+
+<h3 id="http">HTTP</h3>
+
+<p>URL: Protocol + Hostname + Path name</p>
+
+<p>Pipeline + Connection-alive(Persistent HTTP with single TCP conn) + Stateless</p>
+
+<p><strong>RTT</strong> : Round-Trip Time. 1 RTT = Send out and get back. Total RTT for HTTP: 2 RTT(1 for initiate conn, one for first request) + Transfer.</p>
+
+<p>Request Packet Format:</p>
+
+<pre><code>[METHOD] [PATH NAME] [HTTP Version][\r\n]
+[Headers][\r\n]
+[Data body][\r\n]
+</code></pre>
+
+<p>Response Packet Format:</p>
+
+<pre><code>[HTTP Version] [Status code] [Status Phrase][\r\n]
+[Headers][\r\n]
+[Data: Entity body][\r\n]
+</code></pre>
+
+<p>Authentication:
+<img src="https://mdn.mozillademos.org/files/14689/HTTPAuth.png" alt="MDN HTTP 403" /></p>
+
+<p>Conditional GET:
+Related Header: <code>If-modified-since:</code> <code>304 Not Modified / 200 OK</code></p>
+
+<h3 id="ftp">FTP</h3>
+
+<p>Out of band communication: Port 20 for data transfer, Port 21 for command transfer</p>
+
+<h2 id="email">Email</h2>
+
+<p>Major Components: User agents + Mail server + DNS + Protocol (SMTP/IMAP/POP3)</p>
+
+<p>SMTP(25 / 465 SSL / 587 TLS): Push to server. (Send only for now)</p>
+
+<p>IMAP(143/ 993 Encrypted) &amp; POP3(110/ 995 Encrypted): Pull from client. (Receive at client, IMAP recommended)</p>
+
+<p>Message in SMTP: 7-bit ASCII Code with Extended S/MIME via Base64 Encode</p>
+
+<p>SMTP:</p>
+
+<pre><code>-- Header lines --
+To:   
+From:  
+Subject:   
+-- Header lines --
+DATA BODY  [\r\n][\r\n]
+</code></pre>
+
+<h2 id="dns">DNS</h2>
+
+<p>Provide:
+- Distributed database based name resolver (Map from domain name to IP address)
+- Host aliasing via CNAME
+- Mail server aliasing via MX and PTR
+- Load distribution</p>
+
+<p>53/UDP with iterated query, 8 Global Root Server.</p>
+
+<h2 id="socket">Socket</h2>
+
+<p>Socket: The interface (sends to / receives from), middle-man in process and system TCP buffers.
+Socket Pair: [IP Address:Port]</p>
+
+<p>Server:</p>
+
+<pre><code class="language-python">import socket
+import sys
+import time
+
+HOST = '0.0.0.0'
+PORT = 23301
+
+
+lsock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)   # Define protocal stack as IPV4
+lsock.bind((HOST, PORT))  # Bind IP and port
+lsock.listen(65535)  # max connection number
+conn, addr = lsock.accept()  # Accept Connection
+data = conn.recv(1492)  # receive data with MTU 1492
+conn.sendall(data)  # send data
+conn.close()
+</code></pre>
+
+<p>Client:</p>
+
+<pre><code class="language-python">import socket
+import sys
+import time
+
+HOST = '127.0.0.1'
+PORT = 23301
+
+recsock = socket.socket(socket.AF_INET, socket.SOCK_STREAM) 
+recsock.connect_ex((HOST,PORT))   # Connect to server
+recsock.sendall(b'HelloWorld!')
+data=recsock.recv(1492)
+recsock.close()
+</code></pre>
+
+<h1 id="computer-network-chapter-3-transport-layer-really-matters">Computer Network - Chapter 3 - Transport layer (Really matters)</h1>
+
+<p>Transport layer: logical communication between processes</p>
+
+<p>Network layer: logical communication between hosts</p>
+
+<h2 id="multiplex-and-demultiplex">Multiplex and Demultiplex</h2>
+
+<p>Demultiplex: delivering received segments to correct socket.</p>
+
+<p>Multiplex: Gather data from multi sockets and enveloping data with header.</p>
+
+<p>IP Datagram format: <code>Header fields | 32 Bits SRC IP | 32 Bits DEST IP | DATA</code></p>
+
+<p>UDP socket: identified by <code>dest IP | dest port</code>
+TCP socket: identified by <code>src IP | src port</code></p>
+
+<h2 id="transport-service">Transport service</h2>
+
+<p>An app needed:</p>
+
+<ul>
+<li>Data loss control</li>
+<li>Bandwidth</li>
+<li>Timing(Low delay)</li>
+</ul>
+
+<h3 id="tcp-service-important">TCP Service (Important)</h3>
+
+<ul>
+<li>Connection-oriented, full duplex data, pipeline</li>
+<li>Reliable Transport with point to point and in-order</li>
+<li>Flow control</li>
+<li>Congestion control with buffers</li>
+</ul>
+
+<p>MSS: Max segment size, default 536 Bytes</p>
+
+<p>Segment Structure:</p>
+
+<pre><code>| source port | dest port |
+| sequence no | ack no    |
+| head len  | 0 | UAPRSF  |
+|Receive window | checksum|
+|Urg data pointer| options|
+|        body : data      |
+</code></pre>
+
+<h4 id="reliable-data-transfer">Reliable data transfer</h4>
+
+<p>Sequence No. = 第一个字节号</p>
+
+<p>Piggybacked &amp; Cumulative ACKs: ACK No.: 下一个待传字节号</p>
+
+<p>TCP 超时重传： Timeout events &amp; Duplicate ACKs</p>
+
+<p>MSL: Max segment lifetime</p>
+
+<p><img src="https://alicdn.kmahyyg.xyz/asset_files/tcp-handshake-conn.jpg" alt="TCP_CONN" /></p>
+
+<p>SYN_SENT -&gt; SYN_RCVD -&gt; ESTABLISHED -&gt; ESTABLISHED</p>
+
+<p><img src="https://alicdn.kmahyyg.xyz/asset_files/tcp-handshake-disconn.jpg" alt="TCP_DISCONN" /></p>
+
+<p>FIN_WAIT_1 -&gt; CLOSE_WAIT -&gt; FIN_WAIT_2 -&gt; LAST_ACK -&gt; TIME_WAIT -&gt; CLOSED</p>
+
+<h4 id="checksum">Checksum</h4>
+
+<p>IEEE 802.3 CRC32</p>
+
+<h3 id="udp-service-important">UDP Service (Important)</h3>
+
+<ul>
+<li>Unreliable, unordered delivery (data may be lost)</li>
+<li>Connection-less (no handshake, each segment handled by app): Simple and smaller header</li>
+<li>No congestion control with best-effort</li>
+</ul>
+
+<p>Used for:</p>
+
+<ul>
+<li>Loss tolerant, rate sensitive(streaming and multimedia)</li>
+<li>DNS &amp; SNMP</li>
+</ul>
+
+<p>Packet format:</p>
+
+<pre><code>        src port        |    dest port    |
+length including header |    checksum     |
+</code></pre>
+
+<p>Checksum:</p>
+
+<p>Divided data into 16-bit groups and add each one, wrap around if additional bit get.
+checksum is sum get reversed.</p>
+
+<h1 id="computer-network-chapter-4-network-layer">Computer network - Chapter 4 - Network Layer</h1>
+
+<h2 id="network-layer-function">Network Layer Function</h2>
+
+<ul>
+<li>Routing: determine which route should be taken</li>
+<li>Forwarding: process to next hop</li>
+</ul>
+
+<p>BTW, Virtual circuit networking: router must maintain connection state information, contains path from src to desc, vc no, entries in fwd tables.</p>
+
+<h2 id="ip-internet-protocol">IP: Internet protocol</h2>
+
+<h3 id="data-structure">Data structure</h3>
+
+<pre><code>version | head length | type of service |       length      |
+identifier      |        flags      |   fragment offset     |
+  TTL     |     Upper Layer         |   IP Checksum         |
+                            SRC IP                          |
+                            DEST IP                         |
+                            Options                         |
+                            DATA                            |
+</code></pre>
+
+<p>Identifier: Used for reassemale segment</p>
+
+<p>Header len: Min 20 Bytes = 5, Max 60 Bytes = 15;</p>
+
+<p>Flag: | Reserved 0 | Don&rsquo;t Fragment (1,DF) | Last Fragment (0,More_F)|</p>
+
+<p>Type of service: Used for QOS,
+| Precendence (0-2 bits) | Normal delay (0) | High throughput (1) | High Reliability(1) | Reserved (6-7 Bits) |</p>
+
+<p>Fragment Offset:</p>
+
+<p><strong>数据部分切割，不含报头长度</strong> = (PacketLength - HeaderLength) / 8</p>
+
+<h3 id="addr">Addr</h3>
+
+<p>IPv4 Addr is 32 Bits.</p>
+
+<p>In binary:</p>
+
+<p>Class A = 0 + Netid + Hostid
+Class B = 10 + Netid + Hostid
+Class C = 110 + Netid + Hostid</p>
+
+<p>Class D = 1110 + xx (Multicast Addr)
+Class E = 1111 + yy (Reserved Addr)</p>
+
+<p>CIDR: 192.168.200.0/24  24:Network mask, previous 24 bits of mask is 1.</p>
+
+<p>Minimum IP is Subnet Addr, Last IP is multicast IP.</p>
+
+<p>IP Address AND network mask is CIDR ADDR.</p>
+
+<h3 id="hierarchical-addressing-route-aggregation">Hierarchical Addressing: Route Aggregation</h3>
+
+<p>Autonomous System: An aggregation of routers that they run the same routing algorithm, and one or more of the routers ( is called gateway router) can routing packets to other networks. Use Intra-AS routing protocol for peering with another AS.</p>
+
+<h2 id="routing-algorithms">Routing Algorithms</h2>
+
+<p>Global: Link state algorithm (Dijkstra)</p>
+
+<p>Decentralized: Distance vector Algorithm (Bellman-Ford Equation)</p>
+
+<h3 id="dijkstra">Dijkstra</h3>
+
+<p>TALK IS CHEAP, SHOW ME THE CODE!</p>
+
+<pre><code class="language-python">#!/usr/bin/env python3
+# -*- encoding:utf-8 -*-
+
+import sys
+
+class Graph():
+    def __init__(self,vertices):
+        self.V = vertices   # initiate 2D arrays with the number of vertexes
+        self.graph = [[0 for column in range(vertices)] for row in range(vertices)]
+
+    def printSolution(self,dist):
+        print(&quot;  Vertex\tDistance from src&quot;)   # print the solution, loop all vertexes
+        for node in range(self.V):
+            print(&quot;\t&quot;,node,&quot;\t\t\t&quot;,dist[node])
+
+    def minDistance(self,dist,sptSet):
+        min = sys.maxsize  # assume that all paths have the maximum length
+        min_index = None   # initial var to avoid non-sense error
+        for v in range(self.V):
+            # find the vertex with minDist from not in sTree
+            if dist[v] &lt; min and sptSet[v] == False:
+                min = dist[v]
+                min_index = v
+        if min_index == None:
+            raise NotImplementedError
+        return min_index
+
+    def dijkstra(self,src):
+        dist = [sys.maxsize] * self.V
+        dist[src] = 0  # vertex to itself should be zero
+        sptSet = [False] * self.V  # Shortest path tree set, initiate
+
+        # choose a vertex
+        for cout in range(self.V):
+            # pick the minDist vertex from not accessed vertexes, first time == src
+            u = self.minDistance(dist,sptSet)
+            # the minDist vertex put into shortest path tree
+            sptSet[u] = True
+            # only when current vertex &gt; new vertex, and the vertex not in sptset,
+            # update the picked vertex's neighbor's distance (new distance with new node as a relay)
+            for v in range(self.V):
+                if self.graph[u][v] &gt; 0 and sptSet[v] == False and dist[v] &gt; dist[u] + self.graph[u][v]:
+                    dist[v] = dist[u] + self.graph[u][v]
+        self.printSolution(dist)
+
+if __name__ == '__main__':
+    g = Graph(6)
+    g.graph = [
+        [0,2,5,1,0,0], #A, and no-route should be zero.
+        [2,0,3,2,0,0], #B
+        [5,3,0,3,1,5], #C
+        [1,2,3,0,1,0], #D
+        [0,0,1,1,0,2], #E
+        [0,0,5,0,2,0]  #F
+    ]
+    g.dijkstra(0) # source is A
+</code></pre>
+
+<h3 id="distance-vector-algorithm-bellman-ford-equation">Distance vector Algorithm (Bellman-Ford Equation)</h3>
+
+<p>D (X to Y) = min {neiborhood V} -&gt; cost(x,v) + cost(v,y)
+重点：结点获得最短路径的下一跳, 该信息用于转发表中！</p>
+
+<p>异步迭代:</p>
+
+<ul>
+<li>引发每次局部迭代的因素</li>
+<li>局部链路费用改变</li>
+<li>来自邻居的DV更新</li>
+</ul>
+
+<p>分布式:</p>
+
+<ul>
+<li>每个结点只当DV变化时才通告给邻居</li>
+<li>邻居在必要时（其DV更新后发生改变）再通告它们的邻居</li>
+</ul>
+
+<h1 id="computer-network-chapter-5-link-layer">Computer Network - Chapter 5 - Link Layer</h1>
+
+<h2 id="introduction">Introduction</h2>
+
+<p>Nodes: Hosts and routers</p>
+
+<p>Links: Communication channels that connect adjacent nodes along communication path.</p>
+
+<p>Farme: Layer-2 Packet, PDF, encapsulates datagram.</p>
+
+<p>Responsible for : transfer datagram from one node to adjacent node over a link</p>
+
+<h2 id="error-detection-and-correlation">Error Detection and Correlation</h2>
+
+<h3 id="parity-bit">Parity Bit</h3>
+
+<p>奇校验 是 奇数个 1 得到的校验位为 0，偶校验 是 偶数个 1 得到的校验位 为 0</p>
+
+<h3 id="crc-cyclic-redundancy-check">CRC: Cyclic Redundancy Check</h3>
+
+<p>G:1001=x^3+x^0=x^3+1 D:101110</p>
+
+<p>G 的最高位恒为 1, D 左移 (len(G)-1) 位后对 G 作 XOR 除法运算，最终得到余数即为 Checksum.</p>
+
+<p>检验无误： D 左移 (len(G)-1) 位后加上 Checksum 对 G 作 XOR 除法，余数为 0 则正常。</p>
+
+<h2 id="arp">ARP</h2>
+
+<p>Address Resolution Protocol: IP/MAC address mapping for lan nodes</p>
+
+<p>ARP Table builder:</p>
+
+<ul>
+<li>A Broadcast: B&rsquo;s IP Addr is blahblah，but I don&rsquo;t know B&rsquo;s MAC (Dest IP: 192.168.200.255, Dest MAC: FFFFFFFFFFFF)</li>
+<li>B Receive, then replies to A with B&rsquo;s MAC (unicast)</li>
+</ul>
+
+      </article>
+      <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "kmahyyg" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </main>
+    <nav class="end-nav side-padding">
+      
+      <a ontouchstart="cardPressed.call(this)" ontouchend="cardReleased.call(this)" ontouchmove="cardReleased.call(this)" 
+  href="https://www.kmahyyg.xyz/" class="card home-card" style="background-image: url( https://alicdn.kmahyyg.xyz/asset_files/aether/backtohome.webp )" rel="bookmark" >
+  Home
+</a>
+    </nav>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/highlight.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.js" integrity="sha384-K3vbOmF2BtaVai+Qk37uypf7VrgBubhQreNQe9aGsz9lB63dIFiQVlJbr92dw2Lx" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/contrib/auto-render.min.js" integrity="sha384-kmZOZB5ObwgQnS/DuDg6TScgOiWWBiVt0plIRkZCmE6rDZGrEOQeHM5PcHi+nyqe" crossorigin="anonymous"
+    onload="renderMathInElement(document.body);"></script>
+<script src="https://www.kmahyyg.xyz/js/core.js"></script>
+<script>
+  hljs.initHighlightingOnLoad();
+</script>
+  </body>
+</html>

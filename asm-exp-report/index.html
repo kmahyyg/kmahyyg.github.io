@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html lang="zh-cn" dir="ltr">
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>YNU - 汇编语言程序设计实验报告 1~3 &middot; Pat~ Pat~ Meow~</title>
+  <meta name="description" content="学校汇编语言课程的实验报告 1" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.css" integrity="sha384-9eLZqc9ds8eNjO3TmqPeYcDj8n+Qfa4nuSiGYa6DjLNcv9BtN69ZIulL9+8CqC9Y" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://www.kmahyyg.xyz/css/main.min.css" />
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-123948588-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+
+  <style>
+    body {
+      background: #ecedef url("https://alicdn.kmahyyg.xyz/asset_files/aether/bgimg.webp") repeat;
+    }
+  </style>
+</head>
+  <body class="single-body">
+    <nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="https://www.kmahyyg.xyz/" class="nav-text">Patrick Young</a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="https://www.kmahyyg.xyz/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://www.kmahyyg.xyz/express-page/" class="hamburger-menu-overlay-link">Express Inc</a></li>
+      <li><a href="https://www.kmahyyg.xyz/about-me-page/" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="https://www.kmahyyg.xyz/archlinux-bug-page/" class="hamburger-menu-overlay-link">Arch Linux</a></li>
+      <li><a href="https://www.kmahyyg.xyz/donate-page/" class="hamburger-menu-overlay-link">Donate</a></li>
+      <li><a href="https://www.kmahyyg.xyz/categories/code" class="hamburger-menu-overlay-link">Code</a></li><li><a href="https://www.kmahyyg.xyz/categories/life" class="hamburger-menu-overlay-link">Life</a></li><li><a href="https://www.kmahyyg.xyz/categories/network" class="hamburger-menu-overlay-link">Network</a></li><li><a href="https://www.kmahyyg.xyz/categories/school" class="hamburger-menu-overlay-link">School</a></li><li><a href="https://www.kmahyyg.xyz/categories/tech" class="hamburger-menu-overlay-link">Tech</a></li>
+    </ul>
+  </div>
+</nav>
+    <main class="content side-text-padding">
+      <article class="post ">
+        <header class="post-header">
+        	<h1 class="post-title">YNU - 汇编语言程序设计实验报告 1~3</h1>
+          <p class="post-date">Posted <time datetime="2018-10-16">Oct 16, 2018</time></p>
+        </header>
+        
+        <picture class="post-figure">
+            
+            <source srcset="https://alicdn.kmahyyg.xyz/asset_files/aether/cat_code.webp">
+          <img src="https://alicdn.kmahyyg.xyz/asset_files/aether/cat_code.webp" >
+        </picture>
+        
+        
+
+<h1 id="unrelated">Unrelated</h1>
+
+<h2 id="preface">Preface</h2>
+
+<p>由于过去不努力和各种原因，导致没有选到汇编课程。旁听课程，保存下了逍爷的 PPT，积极参与实验和旁听课程。</p>
+
+<p>这就是我现在能做的，感谢王逍老师的辛勤付出。感谢我亲爱的钰帮我做的一切，么么哒！</p>
+
+<p>也感谢 RainbowTrash23333 一直以来对我的帮助，没有他们，就没有现在的我。</p>
+
+<p>本站所有图片和其他资源文件使用阿里云国际版的 OSS 存储与 CDN 加速，前端公共库使用 jsDelivr。</p>
+
+<p>废话不多说，上实验报告。这里由于并不提交正式的实验报告，就只是简单记录下实验步骤和踩的坑了，</p>
+
+<p>用于抄袭后交作业者请自觉绕道，发现必将严惩。</p>
+
+<h2 id="license">License</h2>
+
+<p>本篇文章授权 采用 CC BY-NC-ND 3.0 Unported 协议，禁止转载。</p>
+
+<h2 id="experiment-environment">Experiment Environment</h2>
+
+<p>Windows? 不可能的，不到 Linux 下完全没有替代工具或者我完全没时间折腾的时候我是打死都不会用的。</p>
+
+<blockquote>
+<p>Linus Torvalds: Your PC is like air-conditioning — it becomes useless when you open Windows.</p>
+</blockquote>
+
+<p>So: 实验虚拟机全部采用 KVM 搭建，目前有 MSDOS 7.11 和 Windows XP SP3.</p>
+
+<pre><code>                   -`                    kmahyyg@PatrickY 
+                  .o+`                   ---------------- 
+                 `ooo/                   OS: Arch Linux x86_64 
+                `+oooo:                  Host: Lenovo XiaoXin CHAO 7000 
+               `+oooooo:                 Kernel: 4.18.14-arch1-1-ARCH 
+               -+oooooo+:                Uptime: 1 hour, 25 mins 
+             `/:-:++oooo+:               Packages: 1626 (pacman) 
+            `/++++/+++++++:              Shell: zsh 5.6.2 
+           `/++++++++++++++:             Resolution: 1920x1080, 1920x1080 
+          `/+++ooooooooooooo/`           DE: KDE 
+         ./ooosssso++osssssso+`          WM: KWin 
+        .oossssso-````/ossssss+`         WM Theme: Arc-OSX-Dark-Transparent 
+       -osssssso.      :ssssssso.        Theme: Breeze [KDE], deepin [GTK2/3] 
+      :osssssss/        osssso+++.       Icons: Macos-sierra-CT-0.8.1 [KDE], appmenu-gtk-module [GTK2], deepin [GTK3] 
+     /ossssssss/        +ssssooo/-       Terminal: konsole 
+   `/ossssso+/:-        -:/+osssso+-     Terminal Font: Hack [simp] 11 
+  `+sso+:-`                 `.-/+oso:    CPU: Intel i5-7200U (4) @ 3.100GHz 
+ `++:.                           `-/+/   GPU: NVIDIA GeForce 940MX 
+ .`                                 `/   GPU: Intel HD Graphics 620 
+                                         Memory: 2296MiB / 7905MiB 
+
+</code></pre>
+
+<h1 id="experiment-1">Experiment 1</h1>
+
+<h2 id="实验用到的软件环境">实验用到的软件环境</h2>
+
+<p>gcc (GCC) 8.2.1 20180831</p>
+
+<p>Kate - Advanced Text Editor Version 18.08.2</p>
+
+<h2 id="实验要求">实验要求</h2>
+
+<p>C 语言编写：</p>
+
+<pre><code class="language-c">int x=学号后三位;
+int y=学号后去掉最后一位的后四位;
+int z=x+y;
+printf(&quot;%d %d %d&quot;,x,y,z);
+return 0;
+</code></pre>
+
+<p>之后编译生成 ASM 文件，查看并尝试解释 ASM 与 C 源代码的关系。</p>
+
+<h2 id="实验代码">实验代码</h2>
+
+<p>C语言:</p>
+
+<pre><code class="language-c">#include &lt;stdio.h&gt;
+
+int main(void){
+        int x=152;    // 数据已经经过变换处理以保护隐私
+        int y=2011;
+        int z=x+y;
+        printf(&quot;%d %d %d&quot;,x,y,z);
+        return 0;
+}
+</code></pre>
+
+<p>编译： <code>gcc -O -fverbose-asm -S -fno-pic -fno-plt -fno-pie -nodefaultlibs -std=c99 exp1.c -o exp1.noplt.s</code></p>
+
+<p>得到的 ASM 文件：</p>
+
+<pre><code class="language-asm6502">        .file   &quot;exp1.c&quot;
+# GNU C99 (GCC) version 8.2.1 20180831 (x86_64-pc-linux-gnu)
+#       compiled by GNU C version 8.2.1 20180831, GMP version 6.1.2, MPFR version 4.0.1, MPC version 1.1.0, isl version isl-0.19-GMP
+
+# Here is the default compiler options which was builtin while compiler compile itself. Just delete them to reduce the text size.
+
+        .text
+        .section        .rodata.str1.1,&quot;aMS&quot;,@progbits,1
+.LC0:
+        .string &quot;%d %d %d&quot;
+        .text
+        .globl  main
+        .type   main, @function
+main:
+.LFB3:
+        .cfi_startproc
+        subq    $8, %rsp        #,               ; 修改堆栈基址寄存器，进入过程。
+        .cfi_def_cfa_offset 16
+# exp1.c:7:     printf(&quot;%d %d %d&quot;,x,y,z);
+        movl    $2163, %ecx     #,               ; 根据显示顺序，编译器预先完成加法计算后写入 ASM， 并将数据写入到对应寄存器
+        movl    $2014, %edx     #,               ; 传递立即数到指定寄存器
+        movl    $149, %esi      #,
+        movl    $.LC0, %edi     #,               ; Read-Only Text data to be passed to the function
+        movl    $0, %eax        #,               ; Pass the beginning address to the EAX register
+        call    *printf@GOTPCREL(%rip)  #        ; 调用系统标准C语言库中预定义好的 printf 宏实现打印到屏幕，具体请参考 GLIBC 的 stdio 实现
+# exp1.c:9: }
+        movl    $0, %eax        #,               ; 0 传入 EAX，保存程序执行得到的返回值
+        addq    $8, %rsp        #,               ; 自加8 传入 栈基址寄存器 RSP，设置堆栈指针。主要用于实现堆栈平衡，即 程序执行前后 ESP 不变。
+        .cfi_def_cfa_offset 8
+        ret                                      ; 使用栈中的数据修改 IP，实现近转移，最终返回父进程。
+        .cfi_endproc
+.LFE3:
+        .size   main, .-main
+        .ident  &quot;GCC: (GNU) 8.2.1 20180831&quot;
+        .section        .note.GNU-stack,&quot;&quot;,@progbits
+</code></pre>
+
+<h2 id="实验分析">实验分析</h2>
+
+<p>请参见上方的 ASM 中 <code>;</code> 开头的代码注释。</p>
+
+<h2 id="实验总结">实验总结</h2>
+
+<p>体验 C 到 ASM 的转化，为之后的反编译和逆向打下基础。</p>
+
+<h1 id="experiment-2">Experiment 2</h1>
+
+<h2 id="实验用到的软件环境-1">实验用到的软件环境</h2>
+
+<p>gcc (GCC) 8.2.1 20180831</p>
+
+<p>Bochs x86 Emulator 2.6.9</p>
+
+<p>bximage 和 dd 工具</p>
+
+<p>Kate - Advanced Text Editor Version 18.08.2</p>
+
+<h2 id="实验目的">实验目的</h2>
+
+<p>练习使用 Bochs 的调试功能，为接下来的调试操作系统或者底层代码做准备。</p>
+
+<h2 id="实验要求-1">实验要求</h2>
+
+<p>使用 NASM 编译给出的源代码，在计算机启动时打印你的学号。使用 BochsDBG 进行调试。</p>
+
+<h2 id="实验源代码">实验源代码</h2>
+
+<pre><code class="language-asm6502">MOV AX,0xb810            ; move to the screen buffer
+MOV DS,AX                ; move the base addr to the buffer
+
+MOV BYTE[0x00], '2'      ; put the data into the buffer
+MOV BYTE[0x02], 'A'
+MOV BYTE[0x04], 'B'
+MOV BYTE[0x06], 'C'
+MOV BYTE[0x08], '1'
+MOV BYTE[0x0A], 'W'      ; student id data hidden for privacy protection
+MOV BYTE[0x0C], 'O'
+MOV BYTE[0x0E], 'R'
+MOV BYTE[0x10], '1'
+MOV BYTE[0x12], 'L'
+MOV BYTE[0x14], 'D'
+
+JMP $                    ; loop the above code and done for fatal error
+
+TIMES 510 - ($-$$) DB 0  ; pad remainder of boot sectors with 0
+DB 0x55,0xAA             ; the standard PC boot signature
+</code></pre>
+
+<p>编译： <code>nasm ./exp2.asm -fbin -owx -lwx.lst</code></p>
+
+<p>产生的 wx 文件：<code>DOS/MBR boot sector</code></p>
+
+<h2 id="实验操作-编译完成后的-bochs-导入">实验操作：编译完成后的 BOCHS 导入</h2>
+
+<p><strong>请先查阅 Bochs 手册和对应工具的 manpage 以熟悉基础操作。</strong></p>
+
+<h3 id="1-写-bochs-rc-虚拟机启动配置文件">1. 写 Bochs RC 虚拟机启动配置文件</h3>
+
+<p>范例文件请参考： <code>/etc/bochsrc-sample.txt</code></p>
+
+<pre><code class="language-yaml">floppy_bootsig_check: disabled=1
+boot: floppy, disk, cdrom
+floppya: image=&quot;boot.img&quot;, status=inserted
+ata0-master: type=disk, mode=flat, path=&quot;boot.img&quot;, cylinders=0
+</code></pre>
+
+<p>最后两行二选一，建立 1.44M 镜像。</p>
+
+<h3 id="2-建立虚拟机磁盘镜像并写入对应的-boot-sector">2. 建立虚拟机磁盘镜像并写入对应的 Boot Sector</h3>
+
+<p>目的：建立 BOCHS 允许体积的镜像用于虚拟机启动，修改 0 扇区以实现 MBR 启动。</p>
+
+<ul>
+<li>bximage 创建镜像</li>
+</ul>
+
+<p>type: fd, size: 1.44, name: boot.img, Done.</p>
+
+<p>请根据 <code>bximage</code> 的输出修改你的 Bochs RC 文件。</p>
+
+<ul>
+<li>dd 写入镜像</li>
+</ul>
+
+<pre><code class="language-bash">$ dd if=wx.bin of=boot.img bs=512 count=1 conv=notrunc oflag=direct
+</code></pre>
+
+<h3 id="3-启动虚拟机">3. 启动虚拟机</h3>
+
+<pre><code class="language-bash">$ bochs -q -f new.bochsrc
+</code></pre>
+
+<h3 id="备用-挂载修改镜像">备用：挂载修改镜像</h3>
+
+<pre><code class="language-bash">$ sudo mount ./floppya.img /mnt/floppy/ -o loop
+</code></pre>
+
+<h2 id="实验结果与分析总结">实验结果与分析总结</h2>
+
+<p>源代码相关总结请参见前文。</p>
+
+<h3 id="part-1-启动成功">Part 1: 启动成功</h3>
+
+<p><img src="https://alicdn.kmahyyg.xyz/asset_files/2018-asmexp1.webp" alt="STARTUP EXP02" /></p>
+
+<p>踩了很多坑，主要是镜像建立和不截断写入数据。</p>
+
+<h3 id="part-2-关于-bochs-的使用">Part 2: 关于 Bochs 的使用</h3>
+
+<p>BIOS 执行完成后，会跳转到 0x7c00 位置，我们使用 <code>b 0x7c00</code> 在这里下断。</p>
+
+<blockquote>
+<p>BOCHS 简易指南
+命令 c  运行程序，相当于windbg的g以及OD的F9
+命令 s  即step，单步执行程序
+命令 p  单步执行，步过函数
+命令 q  退出bochs并关闭虚拟机
+命令 b  下断点命令，如本例中：b 0x7c00
+命令 blist  显示断点状态
+命令 watch  显示当前所有读写断点
+命令 r  显示寄存器的值
+命令 u  反汇编代码，可设定起始和结束位置
+命令 info 根据参数不同显示相关信息</p>
+</blockquote>
+
+<p>接下来交替使用 s 和 p 交替执行，直到 BIOS 加载完成。因为现有知识不足以看清楚 BIOS 加载和启动过程，我们直接使用 c 执行 BIOS 程序直到断点。</p>
+
+<p><img src="https://alicdn.kmahyyg.xyz/asset_files/2018-asmexp2.webp" alt="BOCHSDBG EXP02" /></p>
+
+<p>到达断点处，可以看到我们编写的汇编程序源代码。最终会陷入死循环（看起来就是没动静），这时候，如果 Bochs 调试器不处于等待输入状态，则使用 Ctrl-C 跳回解释器，接下来使用 q 命令退出。</p>
+
+<p>简单调试完成。对应截图中可能涉及隐私泄露的信息已经打码，很抱歉给各位带来的糟糕的体验。</p>
+
+<h1 id="experiment-3">Experiment 3</h1>
+
+<h2 id="实验用到的软件环境-2">实验用到的软件环境</h2>
+
+<p>请参见我 <a href="https://asm.kmahyyg.xyz">假期的汇编笔记</a></p>
+
+<h2 id="实验要求-2">实验要求</h2>
+
+<p>在 MSDOS DEBUG 环境中运行汇编语句。</p>
+
+<h2 id="实验准备">实验准备</h2>
+
+<h3 id="语句准备">语句准备</h3>
+
+<p>请参考 <a href="https://asminst.kmahyyg.xyz">Intel Pentium Instruction Set Reference</a></p>
+
+<h3 id="操作准备">操作准备</h3>
+
+<p>请参考 <a href="https://asm.kmahyyg.xyz/exps/exp1-dosdbg.html">DEBUG 实验记录</a></p>
+
+<p>请参考 <a href="https://asm.kmahyyg.xyz/exps/exp1-debugref.html">DEBUG 操作参考文档</a></p>
+
+<p>请参考<a href="https://thestarman.pcministry.com/asm/debug/8086REGs.htm">8086 CPU 寄存器在 Debug 中的查看</a> : <code>NV UP EI PL NZ NA PO NC</code></p>
+
+<h2 id="实验操作">实验操作</h2>
+
+<h3 id="通用代码模板">通用代码模板</h3>
+
+<pre><code class="language-asm6502">assume cs:codesg
+codesg segment
+    &lt;CODE HERE&gt;
+codesg ends
+end
+</code></pre>
+
+<p><strong>请不要把所有实验用到的代码写在同一个文件里统一编译执行，具体原因是前面的溢出置 OF=1 会导致后面的本不应该显示 OF = 1 的语句显示出错误结果</strong></p>
+
+<h3 id="验证类">验证类</h3>
+
+<p>以下均使用 OP 替代操作码，请根据实验要求自行替换。</p>
+
+<ol>
+<li>寄存器查看并分析</li>
+</ol>
+
+<pre><code class="language-asm6502">MOV AX,0A95B
+OP AX,8CA2
+</code></pre>
+
+<table>
+<thead>
+<tr>
+<th align="center">OP</th>
+<th align="center">AX</th>
+<th align="center">OF</th>
+<th align="center">SF</th>
+<th align="center">ZF</th>
+<th align="center">AF</th>
+<th align="center">PF</th>
+<th align="center">CF</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="center">ADD</td>
+<td align="center">35FD</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+
+<tr>
+<td align="center">SUB</td>
+<td align="center">1CB9</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+</tbody>
+</table>
+
+<ol>
+<li>寄存器查看并分析</li>
+</ol>
+
+<pre><code class="language-asm6502">MOV AX,96
+MOV BX,12
+OP BL
+</code></pre>
+
+<table>
+<thead>
+<tr>
+<th align="center">OP</th>
+<th align="center">AX</th>
+<th align="center">OF</th>
+<th align="center">SF</th>
+<th align="center">ZF</th>
+<th align="center">AF</th>
+<th align="center">PF</th>
+<th align="center">CF</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="center">MUL</td>
+<td align="center">0480</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+
+<tr>
+<td align="center">IMUL</td>
+<td align="center">0480</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+
+<tr>
+<td align="center">DIV</td>
+<td align="center">0008</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+
+<tr>
+<td align="center">IDIV</td>
+<td align="center">0008</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+</tbody>
+</table>
+
+<ol>
+<li>寄存器查看并分析</li>
+</ol>
+
+<pre><code class="language-asm6502">MOV DX,0B9
+MOV CL,3
+OP
+</code></pre>
+
+<table>
+<thead>
+<tr>
+<th>OP</th>
+<th>AX</th>
+<th>OF</th>
+<th>SF</th>
+<th>ZF</th>
+<th>AF</th>
+<th>PF</th>
+<th>CF</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>STC</td>
+<td>0000</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+
+<tr>
+<td>SHR DX,1</td>
+<td>0000</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+
+<tr>
+<td>SAR DX,CL</td>
+<td>0000</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+
+<tr>
+<td>SHL DX,CL</td>
+<td>0000</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+
+<tr>
+<td>ROR DX,CL</td>
+<td>0000</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+
+<tr>
+<td>ROL DL,CL</td>
+<td>0000</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+
+<tr>
+<td>RCL DX,CL</td>
+<td>0000</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+
+<tr>
+<td>RCR DL,1</td>
+<td>0000</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+
+<ol>
+<li>请选择能够转移到 L1 单元的条件转移指令下打勾并分析。</li>
+</ol>
+
+<pre><code class="language-asm6502">MOV AX,?
+MOV BX,?
+CMP AX,BX
+OP L1
+</code></pre>
+
+<table>
+<thead>
+<tr>
+<th align="center">AX</th>
+<th align="center">BX</th>
+<th align="center">JB</th>
+<th align="center">JNB</th>
+<th align="center">JBE</th>
+<th align="center">JA</th>
+<th align="center">JL</th>
+<th align="center">JNL</th>
+<th align="center">JLE</th>
+<th align="center">JG</th>
+<th align="center">CMP Result</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="center">1F52H</td>
+<td align="center">1F52H</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+
+<tr>
+<td align="center">0FF82H</td>
+<td align="center">007EH</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+
+<tr>
+<td align="center">58BAH</td>
+<td align="center">020EH</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+
+<tr>
+<td align="center">09A0H</td>
+<td align="center">1E97H</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+
+<tr>
+<td align="center">FF5CH</td>
+<td align="center">FF8BH</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+
+<tr>
+<td align="center">8AEAH</td>
+<td align="center">FC29H</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+</tbody>
+</table>
+
+<h3 id="编程类">编程类</h3>
+
+<ol>
+<li>将下列数组中的第六个数据放在 BL 寄存器中。</li>
+</ol>
+
+<pre><code class="language-asm6502">winder DW 1234H, 5678H, 'AB', 'CD'
+</code></pre>
+
+<p>寄存器间接寻址方式：</p>
+
+<pre><code class="language-asm6502">mov ax,datasg
+mov ds,ax
+lea si, winder
+add si,6
+mov bl,[si]
+</code></pre>
+
+<p>寄存器相对寻址方式：</p>
+
+<pre><code class="language-asm6502">mov ax,datasg
+mov ds,ax
+lea si, winder
+mov bl,[si+6]
+</code></pre>
+
+<p>基址与变址寻址：</p>
+
+<pre><code class="language-asm6502">mov ax,datasg
+mov ds,ax
+lea si, winder
+mov dx, 6
+mov si, dx
+mov bl,ds:[si]
+</code></pre>
+
+<ol>
+<li>按要求编写指令</li>
+</ol>
+
+<p>AX 高三位为 0： <code>and ah, 00011111B</code></p>
+
+<p>BX 高三位为 1： <code>or bh, 11100000B</code></p>
+
+<p>CX 高三位取反： <code>xor ch, 11100000B</code></p>
+
+<p>测试 DX 的 D3  位： <code>test dl,00001000B</code></p>
+
+<p>AX 中与 BX 中不同的位均为 1：   <code>or ax,bx</code></p>
+
+<pre><code class="language-asm6502">mov dx,ax
+xor ax,bx
+or ax,dx
+</code></pre>
+
+<h2 id="实验结果与分析总结-1">实验结果与分析总结</h2>
+
+<h3 id="验证类-1">验证类</h3>
+
+<p><img src="https://alicdn.kmahyyg.xyz/asset_files/2018-asmexp3.webp" alt="EXP3-01" /></p>
+
+<p>我承认这里我偷了个懒，没有把 EXP 4 对应的可用跳转指令列表，不过，我想，我已经把需要的寄存器告诉你了，你自己对一下吧。</p>
+
+<h3 id="编程类-1">编程类</h3>
+
+<p>见上</p>
+
+<h1 id="分割线">分割线</h1>
+
+<p>（前三个实验到此完结）</p>
+
+<p>Updated on Mon Nov 19 13:08:16 CST 2018</p>
+
+<p>Rev.10</p>
+
+<h1 id="reference">Reference</h1>
+
+<p><a href="https://stackoverflow.com/questions/35762970/jmp-in-nasm-bootloader">https://stackoverflow.com/questions/35762970/jmp-in-nasm-bootloader</a></p>
+
+<p><a href="https://stackoverflow.com/questions/137038/how-do-you-get-assembler-output-from-c-c-source-in-gcc">https://stackoverflow.com/questions/137038/how-do-you-get-assembler-output-from-c-c-source-in-gcc</a></p>
+
+<p><a href="https://stackoverflow.com/questions/38335212/calling-printf-in-x86-64-using-gnu-assembler">https://stackoverflow.com/questions/38335212/calling-printf-in-x86-64-using-gnu-assembler</a></p>
+
+<p><a href="https://stackoverflow.com/questions/37902940/disable-got-in-gcc">https://stackoverflow.com/questions/37902940/disable-got-in-gcc</a></p>
+
+<p><a href="https://stackoverflow.com/questions/35762970/jmp-in-nasm-bootloader">https://stackoverflow.com/questions/35762970/jmp-in-nasm-bootloader</a></p>
+
+<p><a href="https://www.nasm.us/doc/nasmdo12.html">https://www.nasm.us/doc/nasmdo12.html</a></p>
+
+<p><a href="https://www.cnblogs.com/chengxuyuancc/archive/2013/05/13/3076524.html">https://www.cnblogs.com/chengxuyuancc/archive/2013/05/13/3076524.html</a></p>
+
+<p><a href="https://stackoverflow.com/questions/9617877/assembly-jg-jnle-jl-jnge-after-cmp">https://stackoverflow.com/questions/9617877/assembly-jg-jnle-jl-jnge-after-cmp</a></p>
+
+<p><a href="https://blog.csdn.net/richerg85/article/details/27558005">https://blog.csdn.net/richerg85/article/details/27558005</a></p>
+
+<p><a href="http://www.iteedu.com/plang/asm/index.php">http://www.iteedu.com/plang/asm/index.php</a></p>
+
+      </article>
+      <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "kmahyyg" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </main>
+    <nav class="end-nav side-padding">
+      
+      <a ontouchstart="cardPressed.call(this)" ontouchend="cardReleased.call(this)" ontouchmove="cardReleased.call(this)" 
+  href="https://www.kmahyyg.xyz/" class="card home-card" style="background-image: url( https://alicdn.kmahyyg.xyz/asset_files/aether/backtohome.webp )" rel="bookmark" >
+  Home
+</a>
+    </nav>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/highlight.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.js" integrity="sha384-K3vbOmF2BtaVai+Qk37uypf7VrgBubhQreNQe9aGsz9lB63dIFiQVlJbr92dw2Lx" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/contrib/auto-render.min.js" integrity="sha384-kmZOZB5ObwgQnS/DuDg6TScgOiWWBiVt0plIRkZCmE6rDZGrEOQeHM5PcHi+nyqe" crossorigin="anonymous"
+    onload="renderMathInElement(document.body);"></script>
+<script src="https://www.kmahyyg.xyz/js/core.js"></script>
+<script>
+  hljs.initHighlightingOnLoad();
+</script>
+  </body>
+</html>
