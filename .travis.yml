@@ -14,7 +14,7 @@ install:
   - go version
 
 script:
-  - hugo --minify --gc
+  - hugo --gc
 
 deploy:
   provider: pages
