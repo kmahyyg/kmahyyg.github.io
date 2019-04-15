@@ -1,5 +1,5 @@
 ---
-title: 6in4 Tunnel
+title: "6in4 Tunnel"
 date: 2018-05-21T17:01:53
 description: "在 IPv4 Only 网络中尝试构建 6in4 隧道"
 featuredImage: "https://alicdn.kmahyyg.xyz/asset_files/aether/cat_network.webp"
@@ -34,4 +34,4 @@ dropCap: false
 
 # PT站点支持情况
 
-六维空间禁止隧道，南洋PT看起来正常且官方提供NAT端口转发教程。
+六维空间禁止隧道，南洋PT看起来正常且官方提供 NAT 端口转发教程。

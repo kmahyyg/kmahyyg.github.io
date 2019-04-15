@@ -1,5 +1,5 @@
 ---
-title: Network Source Collection[CN]
+title: "Network Source Collection[CN]"
 description: "网络资源搜集与整合"
 featuredImage: "https://alicdn.kmahyyg.xyz/asset_files/aether/cat_school.webp"
 categories: ["school"]
