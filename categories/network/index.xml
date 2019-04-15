@@ -6,17 +6,45 @@
     <description>Recent content in Network on Pat~ Pat~ Meow~</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Mon, 21 May 2018 17:01:53 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 09 Jan 2019 00:06:43 +0000</lastBuildDate>
     
         <atom:link href="https://www.kmahyyg.xyz/categories/network/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
+      <title>计算机网络期末复习稿</title>
+      <link>https://www.kmahyyg.xyz/ynu-networkbasic/</link>
+      <pubDate>Wed, 09 Jan 2019 00:06:43 +0000</pubDate>
+      
+      <guid>https://www.kmahyyg.xyz/ynu-networkbasic/</guid>
+      <description>计算机网络课程期末复习记录</description>
+    </item><item>
+      <title>Simple HTTP Hijacking</title>
+      <link>https://www.kmahyyg.xyz/simple-http-hijacking/</link>
+      <pubDate>Fri, 08 Jun 2018 11:01:11 +0000</pubDate>
+      
+      <guid>https://www.kmahyyg.xyz/simple-http-hijacking/</guid>
+      <description>运营商劫持了 HTTP 连接的内容，严重影响了网络的正常使用。</description>
+    </item><item>
+      <title>Set up 6in4 Tunnel via OpenVPN</title>
+      <link>https://www.kmahyyg.xyz/set-up-6in4-tunnel-via-openvpn/</link>
+      <pubDate>Thu, 24 May 2018 11:24:20 +0000</pubDate>
+      
+      <guid>https://www.kmahyyg.xyz/set-up-6in4-tunnel-via-openvpn/</guid>
+      <description>一次关于 OpenVPN based 6in4 Tunnel 的尝试</description>
+    </item><item>
       <title>6in4 Tunnel</title>
       <link>https://www.kmahyyg.xyz/6in4-tunnel/</link>
       <pubDate>Mon, 21 May 2018 17:01:53 +0000</pubDate>
       
       <guid>https://www.kmahyyg.xyz/6in4-tunnel/</guid>
       <description>在 IPv4 Only 网络中尝试构建 6in4 隧道</description>
+    </item><item>
+      <title>DNS-Over-TLS Client Setup</title>
+      <link>https://www.kmahyyg.xyz/dns-over-tls/</link>
+      <pubDate>Mon, 02 Apr 2018 11:22:47 +0000</pubDate>
+      
+      <guid>https://www.kmahyyg.xyz/dns-over-tls/</guid>
+      <description>DoT 是一项新兴的 DNS 查询方式，本文主要介绍作者尝试部署 DoT 服务器的一次实践。</description>
     </item>
   </channel>
 </rss>
