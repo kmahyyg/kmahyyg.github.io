@@ -6,11 +6,18 @@
     <description>Recent content in Code on Pat~ Pat~ Meow~</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Wed, 10 Apr 2019 00:28:49 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 16 Apr 2019 08:58:13 +0800</lastBuildDate>
     
         <atom:link href="https://www.kmahyyg.xyz/categories/code/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
+      <title>Java 语言笔记 - OOP - 包与包文档</title>
+      <link>https://www.kmahyyg.xyz/java-oop-packagendocs/</link>
+      <pubDate>Tue, 16 Apr 2019 08:58:13 +0800</pubDate>
+      
+      <guid>https://www.kmahyyg.xyz/java-oop-packagendocs/</guid>
+      <description>Java 语言面向对象编程中包和包文档的相关内容</description>
+    </item><item>
       <title>Java 语言笔记 - OOP - 对象构造</title>
       <link>https://www.kmahyyg.xyz/java-oop-objconst/</link>
       <pubDate>Wed, 10 Apr 2019 00:28:49 +0000</pubDate>
@@ -38,13 +45,6 @@
       
       <guid>https://www.kmahyyg.xyz/java-bigintarray/</guid>
       <description>Java 语言关于大数与数组的课程笔记</description>
-    </item><item>
-      <title>Java 语言笔记 - 控制流程</title>
-      <link>https://www.kmahyyg.xyz/java-controlproc/</link>
-      <pubDate>Sat, 30 Mar 2019 15:20:58 +0000</pubDate>
-      
-      <guid>https://www.kmahyyg.xyz/java-controlproc/</guid>
-      <description>Java 语言关于控制流程的课程笔记</description>
     </item>
   </channel>
 </rss>

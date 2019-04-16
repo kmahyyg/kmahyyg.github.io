@@ -4,8 +4,8 @@
   <meta charset="utf-8" />
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>Java 语言笔记 - OOP - 对象构造 &middot; Pat~ Pat~ Meow~</title>
-  <meta name="description" content="Java 语言面向对象编程中一些基础的对象构造" />
+  <title>Java 语言笔记 - OOP - 包与包文档 &middot; Pat~ Pat~ Meow~</title>
+  <meta name="description" content="Java 语言面向对象编程中包和包文档的相关内容" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.css" integrity="sha384-9eLZqc9ds8eNjO3TmqPeYcDj8n+Qfa4nuSiGYa6DjLNcv9BtN69ZIulL9+8CqC9Y" crossorigin="anonymous">
   <link rel="stylesheet" href="https://www.kmahyyg.xyz/css/main.min.css" />
@@ -50,8 +50,8 @@ if (!doNotTrack) {
     <main class="content side-text-padding">
       <article class="post ">
         <header class="post-header">
-        	<h1 class="post-title">Java 语言笔记 - OOP - 对象构造</h1>
-          <p class="post-date">Posted <time datetime="2019-04-10">Apr 10, 2019</time></p>
+        	<h1 class="post-title">Java 语言笔记 - OOP - 包与包文档</h1>
+          <p class="post-date">Posted <time datetime="2019-04-16">Apr 16, 2019</time></p>
         </header>
         
         <picture class="post-figure">
@@ -62,92 +62,89 @@ if (!doNotTrack) {
         
         
 
-<h1 id="java-语言笔记-oop-对象构造">Java 语言笔记 - OOP - 对象构造</h1>
+<h1 id="java-中的包与包管理">Java 中的包与包管理</h1>
 
-<p>Last Edited: Apr 10, 2019 12:26 AM</p>
+<h2 id="类的使用-导入-存储">类的使用、导入、存储</h2>
 
-<h2 id="对象构造">对象构造</h2>
+<p>Java 中使用文件目录嵌套来作为一个包的存储结构，包与嵌套的包没有任何关系。包的包名应当以 <code>逆序域名 + 包的名称</code> 形式完成，例如：<code>xyz.kmahyyg.testpackage</code></p>
 
-<p>(1) <code>overloading</code> 重载</p>
+<p>Java 中对于包的导入和 Python 一致，不再过多叙述。需要注意的是，Java 的包导入只能导入一个包，不能递归导入。因为 Java 存在 <code>static</code> 的方法和域，所以 <code>import static</code> 也是可行的。博主个人不建议带 <code>static</code> 使用 <code>import</code>。</p>
 
-<p>多个构造器方法有相同的名字、不同的参数，便产生了重载。编译器必须挑选出具体执行哪个方法。如果找不到匹配的参数，或者找到多个，就会产生编译时错误。 Java 允许重载任何方法，因此描述一个方法，必须完整指明参数名和参数类型。</p>
+<p>Java 当中，如果一个类归属于一个包，需要在存储结构上置于同一目录之后，在类定义文件的首行加上 <code>package xyz.kmahyyg.testpackage;</code></p>
 
-<p>(2) 默认域</p>
+<p>Java 对于类的路径使用 <code>classpath</code> 环境变量，编译器会自动在当前目录寻找相应文件，但 JVM 在 <code>classpath</code> 中没有包含 <code>.</code> 的情况下，不会查找当前目录。当然你可以在运行时添加 <code>-classpath</code> 参数显式指定，参数的内部分隔符是 <code>:</code>。</p>
 
-<p>若构造器中没有显式赋予初值，则默认数值型 <code>0</code> 、布尔值 <code>False</code> 、对象引用 <code>null</code> ，不建议默认不赋值。默认构造器，则是指默认没有参数的构造器。显式的域初始化在 Java 中是允许的，也是可行的。</p>
+<h1 id="javadocs">JavaDocs</h1>
 
-<p>(3) 参数名</p>
+<p>JavaDocs utility 从代码中抽取信息：</p>
 
-<p>为了避免隐式参数屏蔽实例域，可以采用 this 这个关键字进行访问。代码如下：</p>
+<ul>
+<li>包</li>
+<li>公有类和接口</li>
+<li>公有和受保护的方法</li>
+<li>公有和受保护的域</li>
+</ul>
 
-<pre><code class="language-java">    class Employee{
-    	public Employee(String aName, double aSalary){
-    		this.name = aName;
-    		this.salary = aSalary;
-    	}
-    	private String name;
-    	private double salary;
-    }
-</code></pre>
+<p>这样的几个部分的信息，应当使用 <code>/**.....*/</code> 的格式包含在注释中，注释中的文本标记使用的是 <code>@</code> 开头的 自由格式文本(free-form text)，兼容 HTML 语言。</p>
 
-<p>方法中的参数的一律采取 R-C-U 的方式实现，即：Read - Copy - Update (- Destroy)，再一次印证了 <strong>Java 的对象引用的实质是值传递。</strong></p>
+<p>类的注释必须放在 <code>import</code> 语句之后，类定义之前。域的注释应当只为静态域建立。</p>
 
-<h3 id="关于-overloading-的实践">关于 Overloading 的实践</h3>
+<h2 id="注释的撰写">注释的撰写</h2>
 
-<p>使用 <code>this()</code> 调用同类中的不同构造器，其他构造器根据传入的参数返回实例化的对象：</p>
+<h3 id="方法的注释">方法的注释</h3>
 
-<pre><code class="language-java">    import java.util.*;
-    
-    class Employee {
-    
-    	public Employee(double s){   // 构造器的使用与重载
-    		this(&quot;John&quot;, s);
-    	}
-    
-    	public Employee(String n, double s){
-    		name = n;
-    		salary = s;
-    	}
-    	
-    	public String getName(){
-    		return name;
-    	}
-    
-    	private String name = &quot;&quot;;
-    	private double salary;
-    	private static int cmpid;
-    	private int id;
-    	
-    	static {   // 静态初始化块
-    		Random generator = new Random();
-    		cmpid = generator.nextInt(10000);
-    	}
-    
-    	{    // 实例域初始化块
-    		id = cmpid + 9;
-    		cmpid++;
-    	}
-    }
-</code></pre>
+<p>方法的注释可以使用下列标记，应当放置在 方法定义 之前。</p>
 
-<p>对于构造器的调用，其具体的处理步骤如下：</p>
+<ul>
+<li><code>@param var desc</code></li>
+<li><code>@return desc</code></li>
+<li><code>@throws class exception-desc</code></li>
+</ul>
 
-<ol>
-<li>所有数据域初始化为默认值</li>
-<li>根据在类声明中出现的次序，依次执行所有域初始化语句和初始化块</li>
-<li>递归调用嵌套的构造器</li>
-<li>执行当前构造器</li>
-</ol>
+<h3 id="通用注释文本">通用注释文本</h3>
 
-<h4 id="析构器">析构器</h4>
+<ul>
+<li><code>@author author-name</code></li>
+<li><code>@version text</code></li>
+<li><code>@since version-text</code></li>
+<li><code>@deprecated migrate-help-text</code></li>
+<li><code>@see reference-link</code>  See also, 可以使用类似 HTML 的 CSS Selector 的方式跳转到其他类的注释，多个 <code>@see</code> 标记必须放在一起</li>
+</ul>
 
-<p>析构器(deconstructor)， JVM 自己有 GC，所以 Java  不支持析构器。即使需要使用这一特性，Java 提供了 finalize() 方法，但是这个方法是不可靠、不安全的，无法确保被调用。如果使用了一些需要人工管理资源的类，请务必保证在使用完毕后调用类似 <code>dispose / close</code> 方法来完成相应清理操作。</p>
+<h3 id="包与概念注释">包与概念注释</h3>
 
-<h2 id="参考文献">参考文献</h2>
+<p>包的注释，有两种办法：</p>
 
-<p><a href="https://stackoverflow.com/questions/2506488/when-is-the-finalize-method-called-in-java">When is the finalize() method called in Java?</a></p>
+<ul>
+<li>添加 <code>package.html</code> 在 <code>&lt;body&gt;</code> 标签之内的文本都会被抽取</li>
+<li>添加 <code>package-info.java</code> 在 <code>package xyz.kmahyyg.testpackage;</code> 之后仅包含代码注释。</li>
+</ul>
 
-<p><a href="https://www.cnblogs.com/100thMountain/p/5374423.html">Java 中的 static 使用之静态初始化块 - Mountain&rsquo;s_blog - 博客园</a></p>
+<p>对于一个总体上的文档说明，应当放置在 <code>overview.html</code> 中，同样的，在 <code>&lt;body&gt;</code> 中的注释会被抽取。</p>
+
+<h2 id="utility-的用法">utility 的用法</h2>
+
+<ul>
+<li>官方有提供一个叫做 DocCheck 的小工具帮助对遗漏的文档注释搜索一组源程序文件</li>
+<li><code>cd &quot;xyz/kmahyyg/testpackage/../../../&quot; &amp;&amp; javadocs -d docDirectory &lt;PackageName1 PackageName2 *.java&gt;</code></li>
+</ul>
+
+<p><code>javadocs</code> 还可以使用 <code>-link https://docs.oracle.com/javase/8/docs/api/ *.java</code> 为标准库的函数添加文档超链接，倘若你需要查看源代码，也可以转而使用 <code>-linksource</code> 选项，代码会被转换为类纯文本的 HTML 文件保存在 <code>docDirectory</code> 中。</p>
+
+<h1 id="一些传统推荐的类设计的实践">一些传统推荐的类设计的实践</h1>
+
+<ul>
+<li>为了保证封装性，类中的数据建议设为 <code>private</code></li>
+<li>一定要对数据进行初始化</li>
+<li>不要在类中使用过多的基本数据类型</li>
+<li>不是所有的域都需要独立的 <code>getter</code> 和 <code>setter</code> ，但仍需遵循 JPA 标准</li>
+<li>使用下列格式和顺序书写：&rdquo;public 访问特性 - 包作用域的访问特性 - private 访问特性&rdquo;</li>
+<li>每一个上述特性的部分，应当使用： &ldquo;实例方法 - 静态方法 - 实例域 - 静态域&rdquo;</li>
+<li>将职责过多的类进行分解，尽可能模块化</li>
+<li>命名注意类名和方法名应当能体现他们的职责</li>
+</ul>
+
+<p>(END)</p>
 
       </article>
       <div id="disqus_thread"></div>
