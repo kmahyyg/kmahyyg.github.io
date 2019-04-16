@@ -39,6 +39,8 @@ Last Edited: Apr 10, 2019 12:26 AM
     }
 ```
 
+方法中的参数的一律采取 R-C-U 的方式实现，即：Read - Copy - Update (- Destroy)，再一次印证了 **Java 的对象引用的实质是值传递。**
+
 ### 关于 Overloading 的实践
 
 使用 `this()` 调用同类中的不同构造器，其他构造器根据传入的参数返回实例化的对象：
