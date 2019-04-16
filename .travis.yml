@@ -4,14 +4,16 @@ sudo: required
 language: go
 go: "1.12"
 
+cache:
+  directories:
+    - /home/travis/.hugopkg/
+
 before_install:
   - echo "Start Build for Hugo Blog, kmahyyg.github.io"
 
 install:
-  - sudo apt-get update && sudo apt-get install wget ca-certificates -y
-  - wget -N --no-check-certificate https://github.com/gohugoio/hugo/releases/download/v0.54.0/hugo_0.54.0_Linux-64bit.deb -O /tmp/hugo.deb && sudo dpkg -i /tmp/hugo.deb
-  - hugo version
-  - go version
+  - bash ./.download-deps.sh
+  - hugo version && go version
 
 script:
   - hugo --gc
