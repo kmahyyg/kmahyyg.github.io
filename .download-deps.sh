@@ -3,14 +3,13 @@
 HUGODEB=/home/travis/.hugopkg/hugo.deb
 STASHA2DEB=5d3f7e565bc3224f744bef2c07bedf3e8c7d821a9d757bde6db46ff5e96e179a
 
-sudo apt-get update && sudo apt-get install wget ca-certificates -y
 mkdir -p /home/travis/.hugopkg/
-
 cd /home/travis/.hugopkg
 
 if [ -f "$HUGODEB" ]; then
     CURSHA2DEB=`sha256sum ${HUGODEB} | awk '{print $1}'`
     if [ ${CURSHA2DEB} == ${STASHA2DEB} ]; then
+        echo "Hugo 0.54 Debian Package Checksum correct and cache worked."
         exit 0
     fi
 else 
