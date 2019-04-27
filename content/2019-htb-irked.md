@@ -24,6 +24,7 @@ dropCap: false
 - https://www.hackingarticles.in/linux-privilege-escalation-using-suid-binaries/
 - https://www.rapid7.com/db/modules/exploit/unix/irc/unreal_ircd_3281_backdoor
 - https://futureboy.us/stegano/decinput.html
+- https://jhalon.github.io/OSCP-Review/
 
 # 注册
 
