@@ -109,6 +109,22 @@ if (!doNotTrack) {
 
 <p>（完） 2019.4.27</p>
 
+<h1 id="netmon">NetMon</h1>
+
+<h2 id="第一关-扫扫扫">第一关：扫扫扫</h2>
+
+<p>Nmap 来一下，发现开放了一些端口。可以有匿名目录列举和文件下载。轻易拿到 User 权限。</p>
+
+<h2 id="第二关-netmon">第二关：NetMon</h2>
+
+<p>正如其名，开了个 NetMon，这个 NetMon 的问题很多。首先版本号带了好几个 CVE，然后有明文的密钥存储，再然后有权限控制不严导致的 Remote Code Execution。</p>
+
+<h2 id="第三关-手写-payload">第三关：手写 Payload</h2>
+
+<p>既然有 RCE，那就要手写 Payload，相关的漏洞也有 CVE，搜索一下软件名，然后通过文件下载服务拿到那个文件，分析源代码直接构造一个 Payload 就行。</p>
+
+<p>（完） 2019.4.28</p>
+
       </article>
       <div id="disqus_thread"></div>
 <script type="application/javascript">
