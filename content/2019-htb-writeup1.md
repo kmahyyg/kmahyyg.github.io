@@ -73,7 +73,7 @@ Nmap 来一下，发现开放了一些端口。可以有匿名目录列举和文
 
 Think Simple, Try Harder. --OffSEC
 
-{{<aplayer title="Try Harder" author="Offsensive Security" musicurl="https://www.offensive-security.com/wp-content/uploads/2015/01/Try_Harder_2.0.mp3">}}
+{{<aplayer title="Try Harder" author="Offensive Security" musicurl="https://www.offensive-security.com/wp-content/uploads/2015/01/Try_Harder_2.0.mp3">}}
 
 ## 第一关：First FootHold
 
@@ -92,7 +92,7 @@ Nmap 扫描常见端口，CentOS 7, 有 80 、22、 LDAP。 80 访问之后有�
 
 然后访问论坛查找提示，发现有这样一个提示：
 
-> Keep quiet, and you will listen more. (some peneration test may be needed.)
+> The quieter you become, the more you are able to hear. (some peneration test may be needed.)
 
 接下来你需要上传一个 `tcpdump` ，并监听在 `lo` 接口，然后尝试访问所有 80 端口的页面，可能需要多访问几次。这样，你就会抓到 `ld*******2` 这个用户的登录凭据， `su` 切换，获得 `user.txt`。
 
