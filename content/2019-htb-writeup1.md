@@ -1,5 +1,5 @@
 ---
-title: "HackTheBox - IRKed"
+title: "HackTheBox - WriteUp 1"
 date: 2019-04-27T19:18:00+08:00
 description: "HackTheBox 第一次练手"
 featuredImage: "https://alicdn.kmahyyg.xyz/asset_files/aether/cat_tech.webp"
@@ -68,3 +68,46 @@ Nmap 来一下，发现开放了一些端口。可以有匿名目录列举和文
 既然有 RCE，那就要手写 Payload，相关的漏洞也有 CVE，搜索一下软件名，然后通过文件下载服务拿到那个文件，分析源代码直接构造一个 Payload 就行。
 
 （完） 2019.4.28
+
+# Lightweight
+
+Think Simple, Try Harder. --OSCP
+
+## 第一关：First FootHold
+
+Nmap 扫描常见端口，CentOS 7, 有 80 、22、 LDAP。 80 访问之后有个网站，仔细阅读每个页面，获得最低登陆凭据。
+
+## 第二关：Normal User Privilege
+
+查看登陆用户，发现普通权限，没有 sudoer，SELinux 处于 Enforcing 状态。搜索可读目录，发现 `/tmp/b****p.7z`。下载，带密码。找个字典，跑 john，密码得到，是个单词 `de***e`。
+
+解压文件，拿到普通用户 `ld******1`。（ 127.0.0.1 那个账户是没用的，LDAP 服务器的作用是拿普通用户权限，不要想太多）。最骚的操作就在这里，找了半天没发现 `user.txt`，一问才知道，在另外一个普通用户里。
+
+继续返回 80 浏览整个网站，发现有这样一段话：
+
+> This server is protected against some kinds of threats, for instance, bruteforcing. If you try to bruteforce some of the exposed services you may be banned up to 5 minutes.
+> We strongly suggest you to change your password as soon as you get in the box.
+
+然后访问论坛查找提示，发现有这样一个提示：
+
+> Keep quiet, and you will listen more. (some peneration test may be needed.)
+
+接下来你需要上传一个 `tcpdump` ，并监听在 `lo` 接口，然后尝试访问所有 80 端口的页面，可能需要多访问几次。这样，你就会抓到 `ld*******2` 这个用户的登录凭据， `su` 切换，获得 `user.txt`。
+
+## 第三关：Root User Privilege
+
+观察 `ld******1` 的家目录，发现有些奇怪的一个 binary，叫做 `o*******l` ，`ls -Zlha` 发现没有可疑点， SELinux Context 正常， `getcap` 进一步检查发现具有 `ep` 权限位。使用对应命令监听可得到 root 权限的 reverse shell，使用对应命令可以直接读取 `/root/root.txt` 拿到 root 用户的 flag。至此，渗透完成。
+
+## Reference
+
+- Use `id` to get selinux contents for user
+- Use `getcap` to get the linux capabilities for a file: https://www.insecure.ws/linux/getcap_setcap.html
+- Linux manual about capabilities: http://man7.org/linux/man-pages/man7/capabilities.7.html
+- Check here for more details about linux command utils: https://gtfobins.github.io/
+- Useless rabbit hole: https://www.exploit-db.com/exploits/38835
+- Local Linux Enumeration & Privilege Escalation Script: http://www.rebootuser.com
+- 提权那一步，很多人连 DirtyCow 都用上了，真是让人震惊。其实 LDAP 在这里并没有什么卵用。
+
+(完) 2019.4.29 
+
+
