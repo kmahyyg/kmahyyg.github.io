@@ -142,7 +142,7 @@ if (!doNotTrack) {
         container: document.getElementById(ap_new_id),
         audio: [{
             name: "Try Harder",
-            artist: "Offsensive Security",
+            artist: "Offensive Security",
             url: "https://www.offensive-security.com/wp-content/uploads/2015/01/Try_Harder_2.0.mp3",
             mutex: true
         }]
@@ -172,7 +172,7 @@ We strongly suggest you to change your password as soon as you get in the box.</
 <p>然后访问论坛查找提示，发现有这样一个提示：</p>
 
 <blockquote>
-<p>Keep quiet, and you will listen more. (some peneration test may be needed.)</p>
+<p>The quieter you become, the more you are able to hear. (some peneration test may be needed.)</p>
 </blockquote>
 
 <p>接下来你需要上传一个 <code>tcpdump</code> ，并监听在 <code>lo</code> 接口，然后尝试访问所有 80 端口的页面，可能需要多访问几次。这样，你就会抓到 <code>ld*******2</code> 这个用户的登录凭据， <code>su</code> 切换，获得 <code>user.txt</code>。</p>
