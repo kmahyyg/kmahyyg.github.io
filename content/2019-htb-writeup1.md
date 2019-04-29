@@ -71,7 +71,9 @@ Nmap 来一下，发现开放了一些端口。可以有匿名目录列举和文
 
 # Lightweight
 
-Think Simple, Try Harder. --OSCP
+Think Simple, Try Harder. --OffSEC
+
+{{<aplayer title="Try Harder" author="Offsensive Security" musicurl="https://www.offensive-security.com/wp-content/uploads/2015/01/Try_Harder_2.0.mp3">}}
 
 ## 第一关：First FootHold
 
