@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>HackTheBox - IRKed &middot; Pat~ Pat~ Meow~</title>
+  <title>HackTheBox - WriteUp 1 &middot; Pat~ Pat~ Meow~</title>
   <meta name="description" content="HackTheBox 第一次练手" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.css" integrity="sha384-9eLZqc9ds8eNjO3TmqPeYcDj8n+Qfa4nuSiGYa6DjLNcv9BtN69ZIulL9+8CqC9Y" crossorigin="anonymous">
@@ -50,7 +50,7 @@ if (!doNotTrack) {
     <main class="content side-text-padding">
       <article class="post ">
         <header class="post-header">
-        	<h1 class="post-title">HackTheBox - IRKed</h1>
+        	<h1 class="post-title">HackTheBox - WriteUp 1</h1>
           <p class="post-date">Posted <time datetime="2019-04-27">Apr 27, 2019</time></p>
         </header>
         
@@ -124,6 +124,53 @@ if (!doNotTrack) {
 <p>既然有 RCE，那就要手写 Payload，相关的漏洞也有 CVE，搜索一下软件名，然后通过文件下载服务拿到那个文件，分析源代码直接构造一个 Payload 就行。</p>
 
 <p>（完） 2019.4.28</p>
+
+<h1 id="lightweight">Lightweight</h1>
+
+<p>Think Simple, Try Harder. &ndash;OSCP</p>
+
+<h2 id="第一关-first-foothold">第一关：First FootHold</h2>
+
+<p>Nmap 扫描常见端口，CentOS 7, 有 80 、22、 LDAP。 80 访问之后有个网站，仔细阅读每个页面，获得最低登陆凭据。</p>
+
+<h2 id="第二关-normal-user-privilege">第二关：Normal User Privilege</h2>
+
+<p>查看登陆用户，发现普通权限，没有 sudoer，SELinux 处于 Enforcing 状态。搜索可读目录，发现 <code>/tmp/b****p.7z</code>。下载，带密码。找个字典，跑 john，密码得到，是个单词 <code>de***e</code>。</p>
+
+<p>解压文件，拿到普通用户 <code>ld******1</code>。（ 127.0.0.1 那个账户是没用的，LDAP 服务器的作用是拿普通用户权限，不要想太多）。最骚的操作就在这里，找了半天没发现 <code>user.txt</code>，一问才知道，在另外一个普通用户里。</p>
+
+<p>继续返回 80 浏览整个网站，发现有这样一段话：</p>
+
+<blockquote>
+<p>This server is protected against some kinds of threats, for instance, bruteforcing. If you try to bruteforce some of the exposed services you may be banned up to 5 minutes.
+We strongly suggest you to change your password as soon as you get in the box.</p>
+</blockquote>
+
+<p>然后访问论坛查找提示，发现有这样一个提示：</p>
+
+<blockquote>
+<p>Keep quiet, and you will listen more. (some peneration test may be needed.)</p>
+</blockquote>
+
+<p>接下来你需要上传一个 <code>tcpdump</code> ，并监听在 <code>lo</code> 接口，然后尝试访问所有 80 端口的页面，可能需要多访问几次。这样，你就会抓到 <code>ld*******2</code> 这个用户的登录凭据， <code>su</code> 切换，获得 <code>user.txt</code>。</p>
+
+<h2 id="第三关-root-user-privilege">第三关：Root User Privilege</h2>
+
+<p>观察 <code>ld******1</code> 的家目录，发现有些奇怪的一个 binary，叫做 <code>o*******l</code> ，<code>ls -Zlha</code> 发现没有可疑点， SELinux Context 正常， <code>getcap</code> 进一步检查发现具有 <code>ep</code> 权限位。使用对应命令监听可得到 root 权限的 reverse shell，使用对应命令可以直接读取 <code>/root/root.txt</code> 拿到 root 用户的 flag。至此，渗透完成。</p>
+
+<h2 id="reference-1">Reference</h2>
+
+<ul>
+<li>Use <code>id</code> to get selinux contents for user</li>
+<li>Use <code>getcap</code> to get the linux capabilities for a file: <a href="https://www.insecure.ws/linux/getcap_setcap.html">https://www.insecure.ws/linux/getcap_setcap.html</a></li>
+<li>Linux manual about capabilities: <a href="http://man7.org/linux/man-pages/man7/capabilities.7.html">http://man7.org/linux/man-pages/man7/capabilities.7.html</a></li>
+<li>Check here for more details about linux command utils: <a href="https://gtfobins.github.io/">https://gtfobins.github.io/</a></li>
+<li>Useless rabbit hole: <a href="https://www.exploit-db.com/exploits/38835">https://www.exploit-db.com/exploits/38835</a></li>
+<li>Local Linux Enumeration &amp; Privilege Escalation Script: <a href="http://www.rebootuser.com">http://www.rebootuser.com</a></li>
+<li>提权那一步，很多人连 DirtyCow 都用上了，真是让人震惊。其实 LDAP 在这里并没有什么卵用。</li>
+</ul>
+
+<p>(完) 2019.4.29</p>
 
       </article>
       <div id="disqus_thread"></div>
