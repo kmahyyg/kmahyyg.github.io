@@ -112,4 +112,29 @@ Nmap 扫描常见端口，CentOS 7, 有 80 、22、 LDAP。 80 访问之后有�
 
 (完) 2019.4.29 
 
+# LaCasaDePapel
 
+## Step 1: 信息收集
+
+Nmap 走起，80/443/21/22 常见端口开启。（其实这里漏了一个）
+
+## Step 2: 获取普通用户
+
+检测到 21 使用的是有后门的 VSFtpd，启动 MSF，自动化渗透。发现渗透无法建立 Session，进一步检查发现后门端口被其他程序占用，也就是我上面说漏了的那一个。连接后门，发现是一个 PHP REPL，查询各类环境变量和信息，读取到一个相关的函数。一时间没想到能拿来干嘛，访问 443, 发现问题。
+
+读取函数内容之后使用 PHP 函数获取到对应密钥，本地生成需要的验证凭据。生成后的凭据需要转换成对应格式才能被对应应用程序识别。
+
+凭据生成完成，访问 443, 正确登陆。是个目录列表，观察发现下载地址的特征，是 `/files/xxxxxx` ，其中 `xxxxx` 是一个常见的编码后的字符串。进一步观察并检测，发现存在任意目录枚举。至此拿到普通用户。
+
+## Step 3：获取 Root 用户
+
+两句 Hints：
+
+> The quieter you become, the more you are able to hear.
+> The folder you have write permission, you can rename any files in it.
+
+拿到普通用户后，继续利用枚举漏洞，发现一个 SSH 登陆凭据，通过 REPL 枚举当前系统用户，至此拿到普通用户 Interactive Shell，运行 LinEnum.sh 一无所获。利用 Hint 2, 重写某个配置文件，该配置文件被一个守护进程重复以 Root 权限运行，可能需要用到 pspy，至此完成提权。（你要拿 Flag 或者建立 Shell 那就随你咯）
+
+> 吐槽：这个机器的 443 端口存在不正确编码导致 Web 服务器崩溃的问题，很不稳定。另外，Rabbit Hole 剧多，小心啊。
+
+（完） 2019.5.3
