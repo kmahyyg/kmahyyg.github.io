@@ -18,7 +18,9 @@ dropCap: false
 
 在上面修改之后，完成一个一次性 50+ 机器的扫描，然后直接关闭浏览器。浏览器设置正确的情况下，Cookie 可以写入，但是后端验证请求合法性过程中 Token 传丢，导致系统报错。
 
-查看认证日志：可以发现有认证成功字样。更改日志级别为 Debug，进一步检查发现在获取前端资源的过程中 `openvas_validate` 传丢 Token。
+查看认证日志：可以发现有认证成功字样。更改日志级别为 Debug，进一步检查发现在获取前端资源的过程中 `openvas_validate` 传丢 Token。前端提示为： Cookie missing or bad, please try again.
+
+另外：使用 `openvas-manage-cert -af` 生成的证书，在 Chrome 75+(Dev) 版本上提示 `ERR_SSL_INCOMPATITABLE_KEY_USAGE`， 在 Chrome 73(Stable)、74(Chromium) 无限跳转死循环在证书无法验证页面，在 FF 63 ESR 上工作正常，CURL 访问工作正常。如 CURL 访问出现 403 错误，请手动添加 `--allow-header-host <YOUR HOSTNAME>` 选项在 `openvas-gsad.service` 的 `ExecStart` 部分解决。
 
 已前往官方开启 Issue： https://github.com/greenbone/gsa/issues/1364
 
@@ -27,6 +29,8 @@ dropCap: false
 # 当前的解决方案
 
 自己写一个 Dockerfile，抛弃 OpenVAS 9，跟进上游新版 GVM 10。
+
+上游新版 GVM 10 CE 对 OpenVAS Scanner、Manager 进行了更新，前端 GSA 使用 ReactJS 进行了完全重写，抛弃了 XSLT 生成的页面并修复了 Bug。
 
 当前进度：正在进行 CI 编译，等待上线测试。
 
