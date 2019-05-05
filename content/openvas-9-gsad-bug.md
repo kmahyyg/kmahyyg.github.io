@@ -32,6 +32,6 @@ dropCap: false
 
 上游新版 GVM 10 CE 对 OpenVAS Scanner、Manager 进行了更新，前端 GSA 使用 ReactJS 进行了完全重写，抛弃了 XSLT 生成的页面并修复了 Bug。
 
-当前进度：正在进行 CI 编译，等待上线测试。
+当前进度：正在进行 [CI 编译](https://cloud.docker.com/repository/docker/kmahyyg/gvm10-docker-pgsql/builds)，等待上线测试。
 
 (END) 2019.5.5
