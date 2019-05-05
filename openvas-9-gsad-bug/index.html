@@ -4,12 +4,11 @@
   <meta charset="utf-8" />
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>Categories &middot; Pat~ Pat~ Meow~</title>
-  <meta name="description" content="" />
+  <title>OpenVAS9 的 GSAD 频死或无法登陆 Bug &middot; Pat~ Pat~ Meow~</title>
+  <meta name="description" content="OpenVAS 作为 Nessus 的完全社区化版本，可供用于大批量的自有大规模网络的漏洞扫描，是一款相对易于使用的软件" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.css" integrity="sha384-9eLZqc9ds8eNjO3TmqPeYcDj8n+Qfa4nuSiGYa6DjLNcv9BtN69ZIulL9+8CqC9Y" crossorigin="anonymous">
   <link rel="stylesheet" href="https://www.kmahyyg.xyz/css/main.min.css" />
-  <link rel="alternate" type="application/rss+xml" href="https://www.kmahyyg.xyz/categories/index.xml" title="Pat~ Pat~ Meow~" />
   
 <script type="application/javascript">
 var doNotTrack = false;
@@ -30,7 +29,7 @@ if (!doNotTrack) {
     }
   </style>
 </head>
-  <body class="list-body">
+  <body class="single-body">
     <nav class="nav-bar side-padding">
   <h1 class="nav-header"><a href="https://www.kmahyyg.xyz/" class="nav-text">Patrick Young</a></h1>
   <div class="hamburger-menu">
@@ -48,68 +47,72 @@ if (!doNotTrack) {
     </ul>
   </div>
 </nav>
-    <main class="card-container side-gutter">
-      <header class="list-header">
-        <p class="list-header-subtext"></p>
-        <h1 class="list-header-title">Categories</h1>
-      </header>
-      <a ontouchstart="cardPressed.call(this)" ontouchend="cardReleased.call(this)" ontouchmove="cardReleased.call(this)" 
-  href="https://www.kmahyyg.xyz/categories/code/" class="card blog-card" rel="bookmark" >
+    <main class="content side-text-padding">
+      <article class="post ">
+        <header class="post-header">
+        	<h1 class="post-title">OpenVAS9 的 GSAD 频死或无法登陆 Bug</h1>
+          <p class="post-date">Posted <time datetime="2019-05-05">May 5, 2019</time></p>
+        </header>
+        
+        <picture class="post-figure">
+            
+            <source srcset="https://alicdn.kmahyyg.xyz/asset_files/aether/cat_code.webp">
+          <img src="https://alicdn.kmahyyg.xyz/asset_files/aether/cat_code.webp" >
+        </picture>
+        
+        
+
+<h1 id="前情提要">前情提要</h1>
+
+<p><a href="https://www.kmahyyg.xyz/installation-of-openvas/#prevent-suddenly-crash">Openvas 9 的安装实践</a> 这篇文章中的最后一个部分记录了一些常见的遇到的 Scanner 卡死的问题。</p>
+
+<h1 id="问题表现">问题表现</h1>
+
+<p>在上面修改之后，完成一个一次性 50+ 机器的扫描，然后直接关闭浏览器。浏览器设置正确的情况下，Cookie 可以写入，但是后端验证请求合法性过程中 Token 传丢，导致系统报错。</p>
+
+<p>查看认证日志：可以发现有认证成功字样。更改日志级别为 Debug，进一步检查发现在获取前端资源的过程中 <code>openvas_validate</code> 传丢 Token。</p>
+
+<p>已前往官方开启 Issue： <a href="https://github.com/greenbone/gsa/issues/1364">https://github.com/greenbone/gsa/issues/1364</a></p>
+
+<p>等待修复。</p>
+
+<h1 id="当前的解决方案">当前的解决方案</h1>
+
+<p>自己写一个 Dockerfile，抛弃 OpenVAS 9，跟进上游新版 GVM 10。</p>
+
+<p>当前进度：正在进行 CI 编译，等待上线测试。</p>
+
+<p>(END) 2019.5.5</p>
+
+      </article>
+      <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
     
-  <article class="card-body">
-    <h2 class="card-title">Code</h2>
-    <p class="card-text"></p>
-    <div class="card-subtext muted-text">
-      <p>Posted <time datetime="2019-05-05">May 5, 2019</time></p>
-      
-    </div>
-  </article>
-</a><a ontouchstart="cardPressed.call(this)" ontouchend="cardReleased.call(this)" ontouchmove="cardReleased.call(this)" 
-  href="https://www.kmahyyg.xyz/categories/life/" class="card blog-card" rel="bookmark" >
     
-  <article class="card-body">
-    <h2 class="card-title">Life</h2>
-    <p class="card-text"></p>
-    <div class="card-subtext muted-text">
-      <p>Posted <time datetime="2019-04-07">Apr 7, 2019</time></p>
-      
-    </div>
-  </article>
-</a><a ontouchstart="cardPressed.call(this)" ontouchend="cardReleased.call(this)" ontouchmove="cardReleased.call(this)" 
-  href="https://www.kmahyyg.xyz/categories/network/" class="card blog-card" rel="bookmark" >
     
-  <article class="card-body">
-    <h2 class="card-title">Network</h2>
-    <p class="card-text"></p>
-    <div class="card-subtext muted-text">
-      <p>Posted <time datetime="2019-01-09">Jan 9, 2019</time></p>
-      
-    </div>
-  </article>
-</a><a ontouchstart="cardPressed.call(this)" ontouchend="cardReleased.call(this)" ontouchmove="cardReleased.call(this)" 
-  href="https://www.kmahyyg.xyz/categories/school/" class="card blog-card" rel="bookmark" >
-    
-  <article class="card-body">
-    <h2 class="card-title">School</h2>
-    <p class="card-text"></p>
-    <div class="card-subtext muted-text">
-      <p>Posted <time datetime="2019-04-16">Apr 16, 2019</time></p>
-      
-    </div>
-  </article>
-</a><a ontouchstart="cardPressed.call(this)" ontouchend="cardReleased.call(this)" ontouchmove="cardReleased.call(this)" 
-  href="https://www.kmahyyg.xyz/categories/tech/" class="card blog-card" rel="bookmark" >
-    
-  <article class="card-body">
-    <h2 class="card-title">Tech</h2>
-    <p class="card-text"></p>
-    <div class="card-subtext muted-text">
-      <p>Posted <time datetime="2019-04-27">Apr 27, 2019</time></p>
-      
-    </div>
-  </article>
-</a>
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "kmahyyg" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
     </main>
+    <nav class="end-nav side-padding">
+      
+      <a ontouchstart="cardPressed.call(this)" ontouchend="cardReleased.call(this)" ontouchmove="cardReleased.call(this)" 
+  href="https://www.kmahyyg.xyz/" class="card home-card" style="background-image: url( https://alicdn.kmahyyg.xyz/asset_files/aether/backtohome.webp )" rel="bookmark" >
+  Home
+</a>
+    </nav>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/highlight.min.js"></script>
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.js" integrity="sha384-K3vbOmF2BtaVai+Qk37uypf7VrgBubhQreNQe9aGsz9lB63dIFiQVlJbr92dw2Lx" crossorigin="anonymous"></script>
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/contrib/auto-render.min.js" integrity="sha384-kmZOZB5ObwgQnS/DuDg6TScgOiWWBiVt0plIRkZCmE6rDZGrEOQeHM5PcHi+nyqe" crossorigin="anonymous"
