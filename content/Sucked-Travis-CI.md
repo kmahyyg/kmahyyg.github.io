@@ -1,6 +1,6 @@
 ---
 title: 见鬼的 Travis CI
-date: 2018-08-18T07:39:24
+date: 2018-08-18T07:39:24+08:00
 description: "Travis CI 自动化 Hexo 博客部署实践的又一次踩坑"
 featuredImage: "https://alicdn.kmahyyg.xyz/asset_files/aether/cat_code.webp"
 categories: ["code"]
