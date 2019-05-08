@@ -6,7 +6,7 @@ featuredImage: "https://alicdn.kmahyyg.xyz/asset_files/aether/cat_code.webp"
 categories: ["code"]
 draft: false
 displayInMenu: false
-displayInList: false
+displayInList: true
 dropCap: false
 ---
 
@@ -45,5 +45,7 @@ $ sudo update-mime-database /usr/share/mime
 ```bash
 $ kbuildsycoca5 
 ```
+
+如果不行的话，你可能还需要手动在 KDE 的开始菜单找到 `Charles` ，右键选择 `Edit Application`，然后找到 `Application`，自己添加对应的 MIME Type 到 App.
 
 (完) 2019.5.9
