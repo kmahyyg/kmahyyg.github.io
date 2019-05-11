@@ -138,3 +138,45 @@ Nmap 走起，80/443/21/22 常见端口开启。（其实这里漏了一个）
 > 吐槽：这个机器的 443 端口存在不正确编码导致 Web 服务器崩溃的问题，很不稳定。另外，Rabbit Hole 剧多，小心啊。
 
 （完） 2019.5.3
+
+# Bastion
+
+## Step 1: 信息收集
+
+Nmap 扫描，开放了一堆端口，还有一些连续的，然而都没什么卵用。
+
+检测到 SMB 打开，允许 Guest 访问，访问查看，有备份的 VHD，使用 `smbclient` / `mount -t cifs` 挂载到本地之后，使用 `guestmount` / `qemu-nbd -c /dev/nbd0` 进一步挂载，检查发现 SAM 文件。
+
+## Step 2: 普通用户
+
+挂载点下查找 SYSTEM+SAM 文件，在对应目录下直接执行 `samdump2 SYSTEM SAM`，无需单独 dump syskey，直接得到 NTLM Hash，格式是： `Status Username:Salt:Password Hash`
+
+使用 `john pwdhash.txt -format=NT -users=L*****e --wordlist 227mword.lst` 破解得到普通用户密码。个人推荐这个： https://hashkiller.co.uk/Cracker/NTLM
+
+拿到之后根据之前扫描到的 22,连接 SSH，得到 CMD interactive shell on Windows.
+
+## Step 3: 超管
+
+### 常规方法
+
+在 `%appdata` 下找到备份，拉回本地，在 VM 中安装相同版本软件，导入后以明文导出凭据，密码到手。
+
+### HardCore 程序员
+
+审阅源代码： https://github.com/mRemoteNG/mRemoteNG/tree/release/v1.76
+
+相关密钥生成与加解密的代码：
+
+https://github.com/mRemoteNG/mRemoteNG/tree/release/v1.76/mRemoteV1/Security/KeyDerivation
+
+https://github.com/mRemoteNG/mRemoteNG/tree/release/v1.76/mRemoteV1/Security/SymmetricEncryption
+
+审阅代码后自行实现的解密软件：
+
+我写好的解密代码： https://github.com/kmahyyg/mremoteng-decrypt
+
+## Step 4: End
+
+拿到密码之后同样 SSH 上去拿到 Shell，读取 root.txt ，渗透完成。
+
+(END) 2019.5.11
