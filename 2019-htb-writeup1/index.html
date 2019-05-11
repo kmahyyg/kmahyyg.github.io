@@ -226,6 +226,48 @@ The folder you have write permission, you can rename any files in it.</p>
 
 <p>（完） 2019.5.3</p>
 
+<h1 id="bastion">Bastion</h1>
+
+<h2 id="step-1-信息收集-1">Step 1: 信息收集</h2>
+
+<p>Nmap 扫描，开放了一堆端口，还有一些连续的，然而都没什么卵用。</p>
+
+<p>检测到 SMB 打开，允许 Guest 访问，访问查看，有备份的 VHD，使用 <code>smbclient</code> / <code>mount -t cifs</code> 挂载到本地之后，使用 <code>guestmount</code> / <code>qemu-nbd -c /dev/nbd0</code> 进一步挂载，检查发现 SAM 文件。</p>
+
+<h2 id="step-2-普通用户">Step 2: 普通用户</h2>
+
+<p>挂载点下查找 SYSTEM+SAM 文件，在对应目录下直接执行 <code>samdump2 SYSTEM SAM</code>，无需单独 dump syskey，直接得到 NTLM Hash，格式是： <code>Status Username:Salt:Password Hash</code></p>
+
+<p>使用 <code>john pwdhash.txt -format=NT -users=L*****e --wordlist 227mword.lst</code> 破解得到普通用户密码。个人推荐这个： <a href="https://hashkiller.co.uk/Cracker/NTLM">https://hashkiller.co.uk/Cracker/NTLM</a></p>
+
+<p>拿到之后根据之前扫描到的 22,连接 SSH，得到 CMD interactive shell on Windows.</p>
+
+<h2 id="step-3-超管">Step 3: 超管</h2>
+
+<h3 id="常规方法">常规方法</h3>
+
+<p>在 <code>%appdata</code> 下找到备份，拉回本地，在 VM 中安装相同版本软件，导入后以明文导出凭据，密码到手。</p>
+
+<h3 id="hardcore-程序员">HardCore 程序员</h3>
+
+<p>审阅源代码： <a href="https://github.com/mRemoteNG/mRemoteNG/tree/release/v1.76">https://github.com/mRemoteNG/mRemoteNG/tree/release/v1.76</a></p>
+
+<p>相关密钥生成与加解密的代码：</p>
+
+<p><a href="https://github.com/mRemoteNG/mRemoteNG/tree/release/v1.76/mRemoteV1/Security/KeyDerivation">https://github.com/mRemoteNG/mRemoteNG/tree/release/v1.76/mRemoteV1/Security/KeyDerivation</a></p>
+
+<p><a href="https://github.com/mRemoteNG/mRemoteNG/tree/release/v1.76/mRemoteV1/Security/SymmetricEncryption">https://github.com/mRemoteNG/mRemoteNG/tree/release/v1.76/mRemoteV1/Security/SymmetricEncryption</a></p>
+
+<p>审阅代码后自行实现的解密软件：</p>
+
+<p>我写好的解密代码： <a href="https://github.com/kmahyyg/mremoteng-decrypt">https://github.com/kmahyyg/mremoteng-decrypt</a></p>
+
+<h2 id="step-4-end">Step 4: End</h2>
+
+<p>拿到密码之后同样 SSH 上去拿到 Shell，读取 root.txt ，渗透完成。</p>
+
+<p>(END) 2019.5.11</p>
+
       </article>
       <div id="disqus_thread"></div>
 <script type="application/javascript">
