@@ -6,11 +6,18 @@
     <description>Recent content on Pat~ Pat~ Meow~</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Thu, 09 May 2019 00:17:51 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 13 May 2019 22:20:40 +0800</lastBuildDate>
     
         <atom:link href="https://www.kmahyyg.xyz/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
+      <title>HackTheBox - WriteUp 2</title>
+      <link>https://www.kmahyyg.xyz/2019-htb-writeup2/</link>
+      <pubDate>Mon, 13 May 2019 22:20:40 +0800</pubDate>
+      
+      <guid>https://www.kmahyyg.xyz/2019-htb-writeup2/</guid>
+      <description>HackTheBox 练手</description>
+    </item><item>
       <title>给 Charles Proxy 的 chls 文件添加 MIME 关联</title>
       <link>https://www.kmahyyg.xyz/add-mime-for-charles/</link>
       <pubDate>Thu, 09 May 2019 00:17:51 +0800</pubDate>
@@ -38,13 +45,6 @@
       
       <guid>https://www.kmahyyg.xyz/2019-htb-writeup1/</guid>
       <description>HackTheBox 第一次练手</description>
-    </item><item>
-      <title>Java 语言笔记 - OOP - 包与包文档</title>
-      <link>https://www.kmahyyg.xyz/java-oop-packagendocs/</link>
-      <pubDate>Tue, 16 Apr 2019 08:58:13 +0800</pubDate>
-      
-      <guid>https://www.kmahyyg.xyz/java-oop-packagendocs/</guid>
-      <description>Java 语言面向对象编程中包和包文档的相关内容</description>
     </item>
   </channel>
 </rss>

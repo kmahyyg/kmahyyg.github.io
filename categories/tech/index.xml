@@ -6,11 +6,18 @@
     <description>Recent content in Tech on Pat~ Pat~ Meow~</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Sat, 27 Apr 2019 19:18:00 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 13 May 2019 22:20:40 +0800</lastBuildDate>
     
         <atom:link href="https://www.kmahyyg.xyz/categories/tech/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
+      <title>HackTheBox - WriteUp 2</title>
+      <link>https://www.kmahyyg.xyz/2019-htb-writeup2/</link>
+      <pubDate>Mon, 13 May 2019 22:20:40 +0800</pubDate>
+      
+      <guid>https://www.kmahyyg.xyz/2019-htb-writeup2/</guid>
+      <description>HackTheBox 练手</description>
+    </item><item>
       <title>HackTheBox - WriteUp 1</title>
       <link>https://www.kmahyyg.xyz/2019-htb-writeup1/</link>
       <pubDate>Sat, 27 Apr 2019 19:18:00 +0800</pubDate>
@@ -38,13 +45,6 @@
       
       <guid>https://www.kmahyyg.xyz/infosec-xss/</guid>
       <description>信息安全导论 - XSS 攻击相关文献</description>
-    </item><item>
-      <title>InfoSec-CSRF and MISC</title>
-      <link>https://www.kmahyyg.xyz/infosec_csrf/</link>
-      <pubDate>Fri, 06 Jul 2018 01:03:26 +0000</pubDate>
-      
-      <guid>https://www.kmahyyg.xyz/infosec_csrf/</guid>
-      <description>信息安全导论 - CSRF 攻击相关文献</description>
     </item>
   </channel>
 </rss>
