@@ -11,6 +11,13 @@
         <atom:link href="https://www.kmahyyg.xyz/categories/tech/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
+      <title>HackTheBox - WriteUp 1</title>
+      <link>https://www.kmahyyg.xyz/2019-htb-writeup1/</link>
+      <pubDate>Sat, 27 Apr 2019 19:18:00 +0800</pubDate>
+      
+      <guid>https://www.kmahyyg.xyz/2019-htb-writeup1/</guid>
+      <description>HackTheBox 第一次练手</description>
+    </item><item>
       <title>将 CUPS 共享的打印机转为 Airprint 适用</title>
       <link>https://www.kmahyyg.xyz/cups2airprint/</link>
       <pubDate>Wed, 24 Oct 2018 10:31:57 +0000</pubDate>
@@ -38,13 +45,6 @@
       
       <guid>https://www.kmahyyg.xyz/infosec_csrf/</guid>
       <description>信息安全导论 - CSRF 攻击相关文献</description>
-    </item><item>
-      <title>2018 YNU CTF 信息安全铁人三项赛数据赛</title>
-      <link>https://www.kmahyyg.xyz/2018-ynu-ctf-01/</link>
-      <pubDate>Sun, 01 Jul 2018 06:38:45 +0000</pubDate>
-      
-      <guid>https://www.kmahyyg.xyz/2018-ynu-ctf-01/</guid>
-      <description>2018 云南大学铁人三项 CTF 校内赛数据赛部分的解析</description>
     </item>
   </channel>
 </rss>
