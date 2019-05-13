@@ -52,6 +52,9 @@ Why do I modify this file?  Check the last reference.
 
 Run the script and go to the admin panel to do the next step.
 
+> NOTE: IF YOU MET 503 ERROR, SOMEONE MUST MODIFY THE `index.php` IN A WRONG WAY! RESET THE BOX!
+> So, please be patient if you are a free user. Or just buy a VIP like what I do.
+
 ## Step 3: Normal User
 
 Execute the Python Script. Use "forme:forme" to login `/downloader` administration extension panel.
