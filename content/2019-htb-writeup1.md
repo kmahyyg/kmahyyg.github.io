@@ -153,7 +153,7 @@ Nmap 扫描，开放了一堆端口，还有一些连续的，然而都没什么
 
 使用 `john pwdhash.txt -format=NT -users=L*****e --wordlist 227mword.lst` 破解得到普通用户密码。个人推荐这个： https://hashkiller.co.uk/Cracker/NTLM
 
-拿到之后根据之前扫描到的 22,连接 SSH，得到 CMD interactive shell on Windows.
+拿到之后根据之前扫描到的 22，连接 SSH，得到 CMD interactive shell on Windows.
 
 ## Step 3: 超管
 
