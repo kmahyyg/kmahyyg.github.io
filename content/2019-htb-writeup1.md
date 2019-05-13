@@ -6,7 +6,7 @@ featuredImage: "https://alicdn.kmahyyg.xyz/asset_files/aether/cat_tech.webp"
 categories: ["tech"]
 draft: false
 displayInMenu: false
-displayInList: false
+displayInList: true
 dropCap: false
 ---
 
