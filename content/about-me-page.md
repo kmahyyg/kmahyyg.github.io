@@ -7,6 +7,8 @@ displayInList: false
 dropCap: false
 ---
 
+<script src="https://www.hackthebox.eu/badge/129727"></script>
+
  Patrick Young, 1999, Spring.
  Kunming.
  Tech-Addicted, Love my cat.
