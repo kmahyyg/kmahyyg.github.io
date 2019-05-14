@@ -6,11 +6,18 @@
     <description>Recent content in Tech on Pat~ Pat~ Meow~</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Mon, 13 May 2019 22:20:40 +0800</lastBuildDate>
+    <lastBuildDate>Tue, 14 May 2019 23:00:45 +0800</lastBuildDate>
     
         <atom:link href="https://www.kmahyyg.xyz/categories/tech/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
+      <title>HackTheBox - WriteUp 3</title>
+      <link>https://www.kmahyyg.xyz/welovecode/2019-htb-writeup3/</link>
+      <pubDate>Tue, 14 May 2019 23:00:45 +0800</pubDate>
+      
+      <guid>https://www.kmahyyg.xyz/welovecode/2019-htb-writeup3/</guid>
+      <description>HackTheBox 练手</description>
+    </item><item>
       <title>HackTheBox - WriteUp 2</title>
       <link>https://www.kmahyyg.xyz/welovecode/2019-htb-writeup2/</link>
       <pubDate>Mon, 13 May 2019 22:20:40 +0800</pubDate>
@@ -38,13 +45,6 @@
       
       <guid>https://www.kmahyyg.xyz/welovecode/camal-offlinedl/</guid>
       <description>活着就是折腾，关于 Linux 远程下载服务器全家桶的部署</description>
-    </item><item>
-      <title>InfoSec-XSS Attack</title>
-      <link>https://www.kmahyyg.xyz/tech/infosec-xss/</link>
-      <pubDate>Sun, 08 Jul 2018 14:08:00 +0000</pubDate>
-      
-      <guid>https://www.kmahyyg.xyz/tech/infosec-xss/</guid>
-      <description>信息安全导论 - XSS 攻击相关文献</description>
     </item>
   </channel>
 </rss>

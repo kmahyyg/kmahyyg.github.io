@@ -6,11 +6,18 @@
     <description>Recent content in School on Pat~ Pat~ Meow~</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Tue, 16 Apr 2019 08:58:13 +0800</lastBuildDate>
+    <lastBuildDate>Tue, 14 May 2019 09:11:09 +0800</lastBuildDate>
     
         <atom:link href="https://www.kmahyyg.xyz/categories/school/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
+      <title>Java 语言笔记 - 继承与类</title>
+      <link>https://www.kmahyyg.xyz/welovecode/java-oop-inheritance-class/</link>
+      <pubDate>Tue, 14 May 2019 09:11:09 +0800</pubDate>
+      
+      <guid>https://www.kmahyyg.xyz/welovecode/java-oop-inheritance-class/</guid>
+      <description>Java 语言字符串处理和对终端 STDIN STDOUT 流的处理</description>
+    </item><item>
       <title>Java 语言笔记 - OOP - 包与包文档</title>
       <link>https://www.kmahyyg.xyz/welovecode/java-oop-packagendocs/</link>
       <pubDate>Tue, 16 Apr 2019 08:58:13 +0800</pubDate>
@@ -38,13 +45,6 @@
       
       <guid>https://www.kmahyyg.xyz/welovecode/java-oop-existedcls/</guid>
       <description>Java 语言的使用已有类和方法的一些基础代码</description>
-    </item><item>
-      <title>Java 语言笔记 - OOP - 相关概念综述</title>
-      <link>https://www.kmahyyg.xyz/welovecode/java-oop-concept/</link>
-      <pubDate>Mon, 08 Apr 2019 22:12:45 +0000</pubDate>
-      
-      <guid>https://www.kmahyyg.xyz/welovecode/java-oop-concept/</guid>
-      <description>Java 语言的一些面向对象编程的基础概念</description>
     </item>
   </channel>
 </rss>

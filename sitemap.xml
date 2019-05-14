@@ -3,6 +3,16 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://www.kmahyyg.xyz/welovecode/2019-htb-writeup3/</loc>
+    <lastmod>2019-05-14T23:00:45+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.kmahyyg.xyz/welovecode/java-oop-inheritance-class/</loc>
+    <lastmod>2019-05-14T09:11:09+08:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://www.kmahyyg.xyz/welovecode/openvas-9-gsad-bug/</loc>
     <lastmod>2019-05-14T08:59:26+08:00</lastmod>
   </url>
@@ -490,7 +500,7 @@
   
   <url>
     <loc>https://www.kmahyyg.xyz/categories/code/</loc>
-    <lastmod>2019-05-14T08:59:26+08:00</lastmod>
+    <lastmod>2019-05-14T09:11:09+08:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -524,13 +534,13 @@
   
   <url>
     <loc>https://www.kmahyyg.xyz/</loc>
-    <lastmod>2019-05-14T08:59:26+08:00</lastmod>
+    <lastmod>2019-05-14T23:00:45+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://www.kmahyyg.xyz/categories/school/</loc>
-    <lastmod>2019-04-16T08:58:13+08:00</lastmod>
+    <lastmod>2019-05-14T09:11:09+08:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -541,7 +551,7 @@
   
   <url>
     <loc>https://www.kmahyyg.xyz/categories/tech/</loc>
-    <lastmod>2019-05-13T22:20:40+08:00</lastmod>
+    <lastmod>2019-05-14T23:00:45+08:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -553,7 +563,7 @@
   
   <url>
     <loc>https://www.kmahyyg.xyz/welovecode/</loc>
-    <lastmod>2019-05-14T08:59:26+08:00</lastmod>
+    <lastmod>2019-05-14T23:00:45+08:00</lastmod>
     <priority>0</priority>
   </url>
   
