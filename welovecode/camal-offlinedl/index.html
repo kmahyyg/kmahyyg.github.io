@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="zh-cn" dir="ltr">
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>CAMAL 离线下载套件 &middot; Pat~ Pat~ Meow~</title>
+  <meta name="description" content="活着就是折腾，关于 Linux 远程下载服务器全家桶的部署" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.css" integrity="sha384-9eLZqc9ds8eNjO3TmqPeYcDj8n+Qfa4nuSiGYa6DjLNcv9BtN69ZIulL9+8CqC9Y" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://www.kmahyyg.xyz/css/main.min.css" />
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-123948588-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+
+  <style>
+    body {
+      background: #ecedef url("https://alicdn.kmahyyg.xyz/asset_files/aether/bgimg.webp") repeat;
+    }
+  </style>
+</head>
+  <body class="single-body">
+    <nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="https://www.kmahyyg.xyz/" class="nav-text">Patrick Young</a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="https://www.kmahyyg.xyz/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://www.kmahyyg.xyz/express-page/" class="hamburger-menu-overlay-link">Express Inc</a></li>
+      <li><a href="https://www.kmahyyg.xyz/about-me-page/" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="https://www.kmahyyg.xyz/archlinux-bug-page/" class="hamburger-menu-overlay-link">Arch Linux</a></li>
+      <li><a href="https://www.kmahyyg.xyz/donate-page/" class="hamburger-menu-overlay-link">Donate</a></li>
+      <li><a href="https://www.kmahyyg.xyz/categories/code" class="hamburger-menu-overlay-link">Code</a></li><li><a href="https://www.kmahyyg.xyz/categories/life" class="hamburger-menu-overlay-link">Life</a></li><li><a href="https://www.kmahyyg.xyz/categories/network" class="hamburger-menu-overlay-link">Network</a></li><li><a href="https://www.kmahyyg.xyz/categories/school" class="hamburger-menu-overlay-link">School</a></li><li><a href="https://www.kmahyyg.xyz/categories/tech" class="hamburger-menu-overlay-link">Tech</a></li>
+    </ul>
+  </div>
+</nav>
+    <main class="content side-text-padding">
+      <article class="post ">
+        <header class="post-header">
+        	<h1 class="post-title">CAMAL 离线下载套件</h1>
+          <p class="post-date">Posted <time datetime="2018-10-18">Oct 18, 2018</time></p>
+        </header>
+        
+        <picture class="post-figure">
+            
+            <source srcset="https://alicdn.kmahyyg.xyz/asset_files/aether/cat_tech.webp">
+          <img src="https://alicdn.kmahyyg.xyz/asset_files/aether/cat_tech.webp" >
+        </picture>
+        
+        
+
+<h1 id="前言">前言</h1>
+
+<p>CAMAL 离线下载套件，顾名思义：Caddy + AriaNG + Mldonkey(ED2K) + Aria2(BT+PT+HTTP+FTP+MAGNET) + Linux 用于简单搭建一个离线下载系统。</p>
+
+<p>上述提到的软件均将运行在 x86_64 架构的计算机上。请在部署时注意您和您所租用的离线下载服务器所在地的法律法规，本人不承担任何相关的法律责任。</p>
+
+<p>如您需要 不接受 DMCA 争议的离岸服务器，请参考本人最后一个参考文献。</p>
+
+<h1 id="软件下载与基础部署">软件下载与基础部署</h1>
+
+<p>示例环境：Ubuntu 18.04.1 LTS Full Installation via LXC Virtualization</p>
+
+<ul>
+<li>Caddy Webserver with FileManager</li>
+</ul>
+
+<pre><code class="language-bash"># apt update -y
+# apt install curl wget ca-certificates -y
+# curl https://getcaddy.com | bash -s personal http.filemanager,http.forwardproxy,http.ipfilter,http.login,http.minify,http.nobots,http.upload,tls.dns.rfc2136
+$ # 编辑配置文件 /etc/Caddyfile
+</code></pre>
+
+<p>启动：<code>nohup caddy -conf /etc/Caddyfile &gt; /dev/null 2&gt;&amp;1 &amp;</code></p>
+
+<p>关于 CaddyServer 的 systmed 后台守护，请参见 <a href="https://github.com/mholt/caddy/tree/master/dist/init/linux-systemd">此处</a></p>
+
+<ul>
+<li><p><a href="https://github.com/mayswind/AriaNg/releases/download/0.5.0/AriaNg-0.5.0.zip">AriaNG Web前端</a></p></li>
+
+<li><p>Aria2</p></li>
+</ul>
+
+<p>推荐使用参考文献中对应的一键脚本直接部署，方便简洁快速。如果您熟悉相关配置，您也可以选择从软件仓库安装之后手动配置。</p>
+
+<pre><code class="language-bash">$ sudo apt update -y
+$ sudo apt install aria2 -y
+$ # 编辑配置文件
+$ aria2c -D --conf-path &lt;Config file path&gt;
+</code></pre>
+
+<p>一键脚本链接：</p>
+
+<pre><code class="language-bash"># wget -N --no-check-certificate https://raw.githubusercontent.com/ToyoDAdoubi/doubi/master/aria2.sh &amp;&amp; chmod +x aria2.sh &amp;&amp; bash aria2.sh
+</code></pre>
+
+<ul>
+<li>MlDonkey</li>
+</ul>
+
+<p>从软件仓库安装并启动：</p>
+
+<pre><code class="language-bash">$ sudo apt update -y
+$ sudo apt install mldonkey-server -y
+$ # 编辑系统配置文件 /var/lib/mldonkey/downloads.ini
+$ sudo systemctl enable mldonkey-server
+$ sudo systemctl start mldonkey-server
+</code></pre>
+
+<h2 id="部分配置文件">部分配置文件</h2>
+
+<p>以下仅展示可运行的最简配置文件，更多详情请参考软件的 Manual Page.</p>
+
+<p>部分文件由于默认配置过长，仅展示修改过的部分。</p>
+
+<h3 id="caddy-caddyfile">Caddy (Caddyfile)</h3>
+
+<p>由于一般情况下，对于一些特大文件的传输，在运营商不存在劫持或文件过于冷门，且不存在文件审查的情况下，就使用 HTTP 传输就可以了，没必要对这类文件使用 HTTPS。</p>
+
+<p><code>/aria</code> 为 AriaNG 入口。</p>
+
+<pre><code>https://你的回源二级域名 {
+  root &lt;保存下载路径的上级目录&gt;
+  redir /aria &lt;AriaNG 的 index.html 相对 root 的路径&gt; 302
+  timeouts none
+  gzip
+  tls &lt;证书&gt; &lt;私钥&gt;
+  header / {
+    Strict-Transport-Security &quot;max-age=31536000;&quot;
+    X-XSS-Protection &quot;1; mode=block&quot;
+    X-Content-Type-Options &quot;nosniff&quot;
+    X-Frame-Options &quot;DENY&quot;
+  }
+  filemanager &lt;网盘入口相对路径&gt; {
+    database &lt;网盘数据库文件保存位置&gt;/filemgr.db
+  }
+}
+
+
+http://你的CDN加速域名 {
+  root &lt;保存下载路径的上级目录&gt;
+  redir /aria &lt;AriaNG 的 index.html 相对路径&gt; 302
+  timeouts none
+  gzip
+  filemanager &lt;网盘入口相对路径&gt; {
+    database &lt;网盘数据库文件保存位置&gt;/filemgr.db
+  }
+}
+</code></pre>
+
+<p><strong>请在下载目录下执行运行 Caddy 的命令，以避免一些问题。</strong></p>
+
+<h3 id="aria2-aria2-conf">Aria2 (aria2.conf)</h3>
+
+<pre><code>## 文件保存相关 ##
+
+# 文件的保存路径(可使用绝对路径或相对路径), 默认: 当前启动位置
+dir=&lt;保存下载路径&gt;
+# 启用磁盘缓存, 0为禁用缓存, 需1.16以上版本, 默认:16M
+disk-cache=32M
+# 文件预分配方式, 能有效降低磁盘碎片, 默认:prealloc
+# 预分配所需时间: none &lt; falloc ? trunc &lt; prealloc
+# falloc和trunc则需要文件系统和内核支持
+# NTFS建议使用falloc, EXT3/4建议trunc, MAC 下需要注释此项
+file-allocation=trunc
+# 断点续传
+continue=true
+
+## 下载连接相关 ##
+
+# 最大同时下载任务数, 运行时可修改, 默认:5
+max-concurrent-downloads=5
+# 同一服务器连接数, 添加时可指定, 默认:1
+max-connection-per-server=16
+# 最小文件分片大小, 添加时可指定, 取值范围1M -1024M, 默认:20M
+# 假定size=10M, 文件为20MiB 则使用两个来源下载; 文件为15MiB 则使用一个来源下载
+min-split-size=10M
+# 单个任务最大线程数, 添加时可指定, 默认:5
+split=20
+# 整体下载速度限制, 运行时可修改, 默认:0
+#max-overall-download-limit=0
+# 单个任务下载速度限制, 默认:0
+#max-download-limit=0
+# 整体上传速度限制, 运行时可修改, 默认:0
+#max-overall-upload-limit=1M
+# 单个任务上传速度限制, 默认:0
+#max-upload-limit=1000
+# 禁用IPv6, 默认:false
+disable-ipv6=false
+
+## 进度保存相关 ##
+
+# 从会话文件中读取下载任务
+input-file=/root/.aria2/aria2.session
+# 在Aria2退出时保存`错误/未完成`的下载任务到会话文件
+save-session=/root/.aria2/aria2.session
+# 定时保存会话, 0为退出时才保存, 需1.16.1以上版本, 默认:0
+#save-session-interval=60
+
+## RPC相关设置 ##
+
+# 启用RPC, 默认:false
+enable-rpc=true
+# 允许所有来源, 默认:false
+rpc-allow-origin-all=true
+# 允许非外部访问, 默认:false
+rpc-listen-all=true
+# 事件轮询方式, 取值:[epoll, kqueue, port, poll, select], 不同系统默认值不同
+#event-poll=select
+# RPC监听端口, 端口被占用时可以修改, 默认:6800
+rpc-listen-port=&lt;修改为你要的端口&gt;
+# 设置的RPC授权令牌, v1.18.4新增功能, 取代 --rpc-user 和 --rpc-passwd 选项
+rpc-secret=&lt;远程管理密码&gt;
+# 设置的RPC访问用户名, 此选项新版已废弃, 建议改用 --rpc-secret 选项
+#rpc-user=&lt;USER&gt;
+# 设置的RPC访问密码, 此选项新版已废弃, 建议改用 --rpc-secret 选项
+#rpc-passwd=&lt;PASSWD&gt;
+# 是否启用 RPC 服务的 SSL/TLS 加密,
+# 启用加密后 RPC 服务需要使用 https 或者 wss 协议连接
+rpc-secure=true
+# 在 RPC 服务中启用 SSL/TLS 加密时的证书文件(.pem/.crt)
+rpc-certificate=&lt;CADDY 申请的 TLS 证书文件&gt;
+# 在 RPC 服务中启用 SSL/TLS 加密时的私钥文件(.key)
+rpc-private-key=&lt;CADDY 申请的 TLS 证书私钥文件&gt;
+
+## BT/PT下载相关 ##
+
+# 当下载的是一个种子(以.torrent结尾)时, 自动开始BT任务, 默认:true
+follow-torrent=true
+# BT监听端口, 当端口被屏蔽时使用, 默认:6881-6999
+listen-port=51413
+# 单个种子最大连接数, 默认:55
+bt-max-peers=500
+# 打开DHT功能, PT需要禁用, 默认:true
+enable-dht=true
+# 打开IPv6 DHT功能, PT需要禁用
+enable-dht6=true
+# DHT网络监听端口, 默认:6881-6999
+#dht-listen-port=6881-6999
+# 本地节点查找, PT需要禁用, 默认:false
+#bt-enable-lpd=true
+# 种子交换, PT需要禁用, 默认:true
+enable-peer-exchange=true
+# 每个种子限速, 对少种的PT很有用, 默认:50K
+#bt-request-peer-speed-limit=50K
+# 客户端伪装, PT需要
+peer-id-prefix=-TR2770-
+user-agent=Transmission/2.77
+# 当种子的分享率达到这个数时, 自动停止做种, 0为一直做种, 默认:1.0
+seed-ratio=1.5
+# 强制保存会话, 即使任务已经完成, 默认:false
+# 较新的版本开启后会在任务完成后依然保留.aria2文件
+#force-save=false
+# BT校验相关, 默认:true
+bt-hash-check-seed=true
+# 继续之前的BT任务时, 无需再次校验, 默认:false
+bt-seed-unverified=true
+# 保存磁力链接元数据为种子文件(.torrent文件), 默认:false
+#bt-save-metadata=true
+bt-tracker=udp://tracker.coppersurfer.tk:6969/announce,udp://tracker.opentrackr.org:1337/announce,udp://tracker.internetwarriors.net:1337/announce,http://tracker.internetwarriors.net:1337/announce,udp://9.rarbg.to:2710/announce,udp://exodus.desync.com:6969/announce,udp://explodie.org:6969/announce,http://explodie.org:6969/announce,udp://tracker.vanitycore.co:6969/announce,udp://public.popcorn-tracker.org:6969/announce,http://tracker.vanitycore.co:6969/announce,udp://mgtracker.org:6969/announce,http://mgtracker.org:6969/announce,udp://tracker1.itzmx.com:8080/announce,udp://ipv4.tracker.harry.lu:80/announce,http://tracker3.itzmx.com:6961/announce,http://tracker1.itzmx.com:8080/announce,udp://tracker.torrent.eu.org:451/announce,udp://tracker.tiny-vps.com:6969/announce,udp://open.stealth.si:80/announce,udp://tracker.port443.xyz:6969/announce,udp://open.demonii.si:1337/announce,udp://denis.stalker.upeer.me:6969/announce,udp://bt.xxx-tracker.com:2710/announce,http://tracker.port443.xyz:6969/announce,http://open.acgnxtracker.com:80/announce,udp://retracker.lanta-net.ru:2710/announce,http://retracker.telecom.by:80/announce,udp://thetracker.org:80/announce,http://torrent.nwps.ws:80/announce,http://0d.kebhana.mx:443/announce,udp://tracker.uw0.xyz:6969/announce,udp://tracker.cypherpunks.ru:6969/announce,https://tracker.fastdownload.xyz:443/announce,https://opentracker.xyz:443/announce,http://tracker.cypherpunks.ru:6969/announce,http://opentracker.xyz:80/announce,http://open.trackerlist.xyz:80/announce,udp://zephir.monocul.us:6969/announce,udp://tracker.ds.is:6969/announce,wss://ltrackr.iamhansen.xyz:443/announce,udp://tracker2.itzmx.com:6961/announce,udp://tracker.tvunderground.org.ru:3218/announce,udp://tracker.toss.li:6969/announce,udp://tracker.swateam.org.uk:2710/announce,udp://tracker.kamigami.org:2710/announce,udp://tracker.iamhansen.xyz:2000/announce,https://2.track.ga:443/announce,http://wegkxfcivgx.chickenkiller.com:80/announce,http://tracker4.itzmx.com:2710/announce,http://tracker2.itzmx.com:6961/announce,http://tracker.tvunderground.org.ru:3218/announce,http://tracker.torrentyorg.pl:80/announce,http://tracker.city9x.com:2710/announce,http://t.nyaatracker.com:80/announce,http://retracker.mgts.by:80/announce,http://open.acgtracker.com:1096/announce,http://node.611.to:9000/announce,wss://tracker.fastcast.nz:443/announce,wss://tracker.btorrent.xyz:443/announce,udp://tracker.justseed.it:1337/announce,udp://packages.crunchbangplusplus.org:6969/announce,https://1337.abcvg.info:443/announce,http://share.camoe.cn:8080/announce,http://fxtt.ru:80/announce
+</code></pre>
+
+<p>将 Aria2NG 解压到网站根目录下，从浏览器访问，然后配置对应 Aria2 本地配置项：</p>
+
+<ul>
+<li>使用协议</li>
+<li>域名 地址 端口</li>
+<li>RPC 密钥</li>
+</ul>
+
+<p>即可使用。</p>
+
+<h3 id="aria2-trackers-all-txt">Aria2 (trackers_all.txt)</h3>
+
+<p>来源：<a href="https://raw.githubusercontent.com/ngosang/trackerslist/master/trackers_all.txt">https://raw.githubusercontent.com/ngosang/trackerslist/master/trackers_all.txt</a></p>
+
+<h3 id="mldonkey-var-lib-mldonkey-downloads-ini">MLdonkey (/var/lib/mldonkey/downloads.ini)</h3>
+
+<pre><code>allowed_ips = [&quot;0.0.0.0/0&quot;;]
+
+ shared_directories = [
+  {     dirname = shared
+     strategy = all_files
+     priority = 0
+};
+  {     dirname = &quot;&lt;下载文件保存目录&gt;&quot;
+     strategy = incoming_files
+     priority = 0
+};
+  {     dirname = &quot;incoming/directories&quot;
+     strategy = incoming_directories
+     priority = 0
+};]
+</code></pre>
+
+<p>保存目录可以自由修改，需要注意文件夹权限问题。</p>
+
+<h3 id="mldonkey-的进一步配置">MLDonkey 的进一步配置</h3>
+
+<p>在完成上面的配置之后，我们来添加管理员账户并设置一个普通用户。</p>
+
+<p>同时对 ED2K 服务器列表 server.met 进行一次更新。</p>
+
+<pre><code class="language-bash">$ telnet localhost 4000
+&gt; useradd admin &lt;你的管理员密码&gt;
+&gt; quit
+$ sudo systemctl restart mldonkey-server
+$ telnet localhost 4000
+&gt; auth admin &lt;你的管理员密码&gt;
+&gt; d http://ed2k.2x4u.de/v1s4vbaf/max/server.met
+&gt; useradd 普通用户名 普通用户密码
+&gt; quit
+</code></pre>
+
+<p>经过上述设置之后，你可以通过 <code>http://&lt;你的IP&gt;:4080</code> 来登陆 WebUI 进行下载了。</p>
+
+<p>注意每次拷贝下载完成的文件之前要去 WebUI 右上角命令框里输入一次 <code>commit</code>.</p>
+
+<h4 id="mldonkey-忘记管理员密码">MLDonkey 忘记管理员密码</h4>
+
+<p><code>/var/lib/mldonkey/users.ini</code> 里：</p>
+
+<p>将对应 <code>user_name = admin</code> 的 <code>user_pass</code> 清空后重启服务。</p>
+
+<h2 id="关于后台进程守护">关于后台进程守护</h2>
+
+<p>建议参考 阮一峰老师的 Systemd 相关教程和 计算器启动 与 后台守护相关文章</p>
+
+<ul>
+<li><p><a href="http://www.ruanyifeng.com/blog/2016/02/linux-daemon.html">Linux 后台守护</a></p></li>
+
+<li><p><a href="http://www.ruanyifeng.com/blog/2013/02/booting.html">计算机是如何启动的</a></p></li>
+
+<li><p><a href="http://www.ruanyifeng.com/blog/2013/08/linux_boot_process.html">Linux 是如何启动的</a></p></li>
+</ul>
+
+<blockquote>
+<p>Unix 哲学: Keep simple, keep stupid.</p>
+</blockquote>
+
+<ul>
+<li><p><a href="http://www.ruanyifeng.com/blog/2016/03/systemd-tutorial-commands.html">Systemd Commands</a></p></li>
+
+<li><p><a href="http://www.ruanyifeng.com/blog/2016/03/systemd-tutorial-part-two.html">Systemd Services</a></p></li>
+
+<li><p><a href="http://www.ruanyifeng.com/blog/2018/03/systemd-timer.html">Systemd Timer (You could also use crontab)</a></p></li>
+</ul>
+
+<p>如果你想学习更多的内容，也欢迎你前往 <a href="https://wiki.archlinux.org/">Arch Linux Wiki</a> 那里有最详细的人类友好型文档，Arch Wiki 中的大多数内容对基于 Systemd 的发行版均是适用的。</p>
+
+<h1 id="cdn-中转加速">CDN 中转加速</h1>
+
+<h2 id="准备域名">准备域名</h2>
+
+<p>如果你还没有域名，你需要注册一个域名，个人推荐 <a href="https://www.namesilo.com/register.php?rid=bd46d72xg">NameSilo</a> ，便宜，附送 WHOIS 隐私保护，支持支付宝。</p>
+
+<p>然后建议将域名托管到 <a href="https://dns.he.net">https://dns.he.net</a> ，分别添加一个指向 @ 和 www 的 A 记录。再添加一个 cf_www 和 回源二级域名 的 A 记录。</p>
+
+<p>注册一个 Cloudflare 账户，注册完成后不做任何配置。</p>
+
+<h2 id="cname-接入-cloudflare-加速">CNAME 接入 Cloudflare 加速</h2>
+
+<ol>
+<li>寻找一家 Cloudflare Partner，并确保您的域名 <strong>没有</strong> 在 Cloudflare 注册过或正在处于 Cloudflare 服务之下。</li>
+<li>按照提示添加域名，之后按照 Partner 提示设置 www 记录的回源地址为 cf_www 地址。</li>
+<li>添加一个 CDN 加速域名，此 CDN 加速域名的回源地址指向 回源二级域名 地址。</li>
+<li>前往您的域名托管商，本例中是 HE，添加一个 CNAME 记录，从 CDN 加速域名 指向 <code>cdn.cf-a.x-gslb.com</code> 或者 <code>cdn.cf-b.x-gslb.com</code> 。</li>
+<li>通过 CDN 加速域名下载文件即可。</li>
+</ol>
+
+<h1 id="完">完</h1>
+
+<p>还有问题？请使用评论框。</p>
+
+<p>公告：本站评论 <strong>不对</strong> 使用中国大陆 IP 地址访问本站的用户开放。</p>
+
+<h2 id="hostsolutions-关于-fuse-无法使用的问题">Hostsolutions 关于 FUSE 无法使用的问题</h2>
+
+<p>该站的老板不是专业的 IDC，是个 Oneman，工单回复时效基本按月计算。需要使用 FUSE 进行 rclone 等操作的用户请先工单请求开启 FUSE，然后在 <code>/etc/systemd/system/hostsolutions-enable-fuse.service</code> 中插入下列内容后：</p>
+
+<pre><code class="language-systemd">[Unit]
+Description=Hostsolutions' LXC VPS - Enable FUSE
+After=basic.target
+Wants=local-fs.target basic.target
+
+[Service]
+User=root
+Group=root
+ExecStart=/bin/mknod -m 666 /dev/fuse c 10 229
+Type=oneshot
+
+[Install]
+WantedBy=multi-user.target
+</code></pre>
+
+<p>执行</p>
+
+<pre><code class="language-bash"># systemctl daemon-reload
+# systemctl start hostsolutions-enable-fuse.service 
+# systemctl enable hostsolutions-enable-fuse.service 
+</code></pre>
+
+<p>之后使用 <code>ls -alh /dev</code> 检查输出是否为 <code>crw-rw-rw-   1 root root      10,   229 Jan 29 21:13 fuse</code></p>
+
+<h1 id="参考文献">参考文献</h1>
+
+<ul>
+<li><a href="https://caddyserver.com/docs">Caddy Server Documentation</a></li>
+<li><a href="https://doub.io/goflyway-jc3/">Doubi Location</a></li>
+<li><a href="https://www.dcc.cat/cloudflare/">Cloudflare $5000 Route</a></li>
+<li><a href="https://dns.he.net/">HE.net DNS</a></li>
+<li><a href="https://doub.io/jzzy-3/">Caddy Filemanager</a></li>
+<li><a href="https://doub.io/shell-jc4/">Aria 2 Onekey Script</a></li>
+<li><a href="https://github.com/mayswind/AriaNg">AriaNG WebUI</a></li>
+<li><a href="http://mldonkey.sourceforge.net/Allowed_ips">MLDonkey Config</a></li>
+<li><a href="https://secure.hostsolutions.ro/aff.php?aff=513&amp;pid=271">Hostsolutions Anti-DMCA VPS</a></li>
+</ul>
+
+      </article>
+      <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "kmahyyg" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </main>
+    <nav class="end-nav side-padding">
+      
+      <a ontouchstart="cardPressed.call(this)" ontouchend="cardReleased.call(this)" ontouchmove="cardReleased.call(this)" 
+  href="https://www.kmahyyg.xyz/welovecode/baidu-ocrapi/" class="card blog-card" rel="bookmark" >
+    
+    <div class="card-img-container">
+      <p class="card-img-overlay">Next Article</p>
+      <picture>
+        
+        <source srcset="https://alicdn.kmahyyg.xyz/asset_files/aether/cat_code.webp">
+        <img src="https://alicdn.kmahyyg.xyz/asset_files/aether/cat_code.webp" class="card-img" >
+      </picture>
+    </div>
+    
+  <article class="card-body">
+    <h2 class="card-title">Baidu OCR Restful API 的几个大坑</h2>
+    <p class="card-text">Baidu 云端 OCR 的官方文档真是烂到极致，踩来很多坑，写篇博客记录一下</p>
+    <div class="card-subtext muted-text">
+      <p>Posted <time datetime="2018-09-09 99:00">Sep 9, 2018</time></p>
+      <p>#code </p>
+    </div>
+  </article>
+</a>
+      
+      <a ontouchstart="cardPressed.call(this)" ontouchend="cardReleased.call(this)" ontouchmove="cardReleased.call(this)" 
+  href="https://www.kmahyyg.xyz/" class="card home-card" style="background-image: url( https://alicdn.kmahyyg.xyz/asset_files/aether/backtohome.webp )" rel="bookmark" >
+  Home
+</a>
+    </nav>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/highlight.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.js" integrity="sha384-K3vbOmF2BtaVai+Qk37uypf7VrgBubhQreNQe9aGsz9lB63dIFiQVlJbr92dw2Lx" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/contrib/auto-render.min.js" integrity="sha384-kmZOZB5ObwgQnS/DuDg6TScgOiWWBiVt0plIRkZCmE6rDZGrEOQeHM5PcHi+nyqe" crossorigin="anonymous"
+    onload="renderMathInElement(document.body);"></script>
+<script src="https://www.kmahyyg.xyz/js/core.js"></script>
+<script>
+  hljs.initHighlightingOnLoad();
+</script>
+  </body>
+</html>

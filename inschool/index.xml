@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Inschools - Pat~ Pat~ Meow~</title>
+    <link>https://www.kmahyyg.xyz/inschool/</link>
+    <description>Recent content in Inschools on Pat~ Pat~ Meow~</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Sat, 13 Apr 2019 23:19:40 +0000</lastBuildDate>
+    
+        <atom:link href="https://www.kmahyyg.xyz/inschool/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>操作系统原理 - PV原语与互斥锁、信号量</title>
+      <link>https://www.kmahyyg.xyz/inschool/os-pvnmutex/</link>
+      <pubDate>Sat, 13 Apr 2019 23:19:40 +0000</pubDate>
+      
+      <guid>https://www.kmahyyg.xyz/inschool/os-pvnmutex/</guid>
+      <description>A reference list about PV signal and mutex</description>
+    </item><item>
+      <title>操作系统原理 - 用户空间、内核空间与上下文</title>
+      <link>https://www.kmahyyg.xyz/inschool/os-process-context/</link>
+      <pubDate>Mon, 08 Apr 2019 00:51:52 +0000</pubDate>
+      
+      <guid>https://www.kmahyyg.xyz/inschool/os-process-context/</guid>
+      <description>Kernel Space &amp; User Space &amp; Context Switch</description>
+    </item><item>
+      <title>操作系统原理 - 有限状态机</title>
+      <link>https://www.kmahyyg.xyz/inschool/os-fsm/</link>
+      <pubDate>Sun, 07 Apr 2019 20:05:37 +0000</pubDate>
+      
+      <guid>https://www.kmahyyg.xyz/inschool/os-fsm/</guid>
+      <description>有限状态机的基础概念的一些思考</description>
+    </item><item>
+      <title>计算机网络期末复习稿</title>
+      <link>https://www.kmahyyg.xyz/inschool/ynu-networkbasic/</link>
+      <pubDate>Wed, 09 Jan 2019 00:06:43 +0000</pubDate>
+      
+      <guid>https://www.kmahyyg.xyz/inschool/ynu-networkbasic/</guid>
+      <description>计算机网络课程期末复习记录</description>
+    </item><item>
+      <title>数据结构与算法课程 - Chap 10 排序</title>
+      <link>https://www.kmahyyg.xyz/inschool/ynu-datastru-c10/</link>
+      <pubDate>Sun, 06 Jan 2019 14:49:29 +0000</pubDate>
+      
+      <guid>https://www.kmahyyg.xyz/inschool/ynu-datastru-c10/</guid>
+      <description>数据结构与算法课程期末复习记录 Chapter 10</description>
+    </item>
+  </channel>
+</rss>

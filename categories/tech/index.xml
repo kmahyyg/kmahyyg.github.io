@@ -12,38 +12,38 @@
     
     <item>
       <title>HackTheBox - WriteUp 2</title>
-      <link>https://www.kmahyyg.xyz/2019-htb-writeup2/</link>
+      <link>https://www.kmahyyg.xyz/welovecode/2019-htb-writeup2/</link>
       <pubDate>Mon, 13 May 2019 22:20:40 +0800</pubDate>
       
-      <guid>https://www.kmahyyg.xyz/2019-htb-writeup2/</guid>
+      <guid>https://www.kmahyyg.xyz/welovecode/2019-htb-writeup2/</guid>
       <description>HackTheBox 练手</description>
     </item><item>
       <title>HackTheBox - WriteUp 1</title>
-      <link>https://www.kmahyyg.xyz/2019-htb-writeup1/</link>
+      <link>https://www.kmahyyg.xyz/welovecode/2019-htb-writeup1/</link>
       <pubDate>Sat, 27 Apr 2019 19:18:00 +0800</pubDate>
       
-      <guid>https://www.kmahyyg.xyz/2019-htb-writeup1/</guid>
+      <guid>https://www.kmahyyg.xyz/welovecode/2019-htb-writeup1/</guid>
       <description>HackTheBox 第一次练手</description>
     </item><item>
       <title>将 CUPS 共享的打印机转为 Airprint 适用</title>
-      <link>https://www.kmahyyg.xyz/cups2airprint/</link>
+      <link>https://www.kmahyyg.xyz/welovecode/cups2airprint/</link>
       <pubDate>Wed, 24 Oct 2018 10:31:57 +0000</pubDate>
       
-      <guid>https://www.kmahyyg.xyz/cups2airprint/</guid>
+      <guid>https://www.kmahyyg.xyz/welovecode/cups2airprint/</guid>
       <description>将 CUPS 共享的打印机转为 Airprint 适用，用于 Linux 环境下分享不支持 Airprint 的打印机到网络</description>
     </item><item>
       <title>CAMAL 离线下载套件</title>
-      <link>https://www.kmahyyg.xyz/camal-offlinedl/</link>
+      <link>https://www.kmahyyg.xyz/welovecode/camal-offlinedl/</link>
       <pubDate>Thu, 18 Oct 2018 13:26:19 +0000</pubDate>
       
-      <guid>https://www.kmahyyg.xyz/camal-offlinedl/</guid>
+      <guid>https://www.kmahyyg.xyz/welovecode/camal-offlinedl/</guid>
       <description>活着就是折腾，关于 Linux 远程下载服务器全家桶的部署</description>
     </item><item>
       <title>InfoSec-XSS Attack</title>
-      <link>https://www.kmahyyg.xyz/infosec-xss/</link>
+      <link>https://www.kmahyyg.xyz/tech/infosec-xss/</link>
       <pubDate>Sun, 08 Jul 2018 14:08:00 +0000</pubDate>
       
-      <guid>https://www.kmahyyg.xyz/infosec-xss/</guid>
+      <guid>https://www.kmahyyg.xyz/tech/infosec-xss/</guid>
       <description>信息安全导论 - XSS 攻击相关文献</description>
     </item>
   </channel>

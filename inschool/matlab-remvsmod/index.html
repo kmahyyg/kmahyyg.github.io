@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="zh-cn" dir="ltr">
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>rem() 与 mod() 函数的区别 &middot; Pat~ Pat~ Meow~</title>
+  <meta name="description" content="Matlab 里一些函数的使用与区别 1" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.css" integrity="sha384-9eLZqc9ds8eNjO3TmqPeYcDj8n+Qfa4nuSiGYa6DjLNcv9BtN69ZIulL9+8CqC9Y" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://www.kmahyyg.xyz/css/main.min.css" />
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-123948588-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+
+  <style>
+    body {
+      background: #ecedef url("https://alicdn.kmahyyg.xyz/asset_files/aether/bgimg.webp") repeat;
+    }
+  </style>
+</head>
+  <body class="single-body">
+    <nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="https://www.kmahyyg.xyz/" class="nav-text">Patrick Young</a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="https://www.kmahyyg.xyz/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://www.kmahyyg.xyz/express-page/" class="hamburger-menu-overlay-link">Express Inc</a></li>
+      <li><a href="https://www.kmahyyg.xyz/about-me-page/" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="https://www.kmahyyg.xyz/archlinux-bug-page/" class="hamburger-menu-overlay-link">Arch Linux</a></li>
+      <li><a href="https://www.kmahyyg.xyz/donate-page/" class="hamburger-menu-overlay-link">Donate</a></li>
+      <li><a href="https://www.kmahyyg.xyz/categories/code" class="hamburger-menu-overlay-link">Code</a></li><li><a href="https://www.kmahyyg.xyz/categories/life" class="hamburger-menu-overlay-link">Life</a></li><li><a href="https://www.kmahyyg.xyz/categories/network" class="hamburger-menu-overlay-link">Network</a></li><li><a href="https://www.kmahyyg.xyz/categories/school" class="hamburger-menu-overlay-link">School</a></li><li><a href="https://www.kmahyyg.xyz/categories/tech" class="hamburger-menu-overlay-link">Tech</a></li>
+    </ul>
+  </div>
+</nav>
+    <main class="content side-text-padding">
+      <article class="post ">
+        <header class="post-header">
+        	<h1 class="post-title">rem() 与 mod() 函数的区别</h1>
+          <p class="post-date">Posted <time datetime="2018-08-26">Aug 26, 2018</time></p>
+        </header>
+        
+        <picture class="post-figure">
+            
+            <source srcset="https://alicdn.kmahyyg.xyz/asset_files/aether/cat_school.webp">
+          <img src="https://alicdn.kmahyyg.xyz/asset_files/aether/cat_school.webp" >
+        </picture>
+        
+        <blockquote>
+<p>转载自: <a href="http://blog.sina.com.cn/s/blog_633750d90100gs8p.html">http://blog.sina.com.cn/s/blog_633750d90100gs8p.html</a>
+国内各大博客关的关，停的停，干脆转过来存档
+版权归原作者所有</p>
+</blockquote>
+
+<p>取模（mod）与取余（rem）的区别 —— Matlab 学习笔记【09-11-15】</p>
+
+<p>本帖来自:数学中国 作者: 木长春 日期: 2009-11-15 19:51</p>
+
+<p>昨天在学习 Matlab 的数学函数时，教程中提到取模（mod）与取余（rem）是不同的，今天在网上具体查了一下：</p>
+
+<p>通常取模运算也叫取余运算，它们返回结果都是余数. rem 和 mod 唯一的区别在于:</p>
+
+<p>x 和 y 的正负号一样的时候，两个函数结果是等同的；当 x 和 y 的符号不同时，rem 函数结果的符号和x的一样，而 mod 和 y 一样。</p>
+
+<p>这是由于这两个函数的生成机制不同，rem 函数采用 fix 函数，而 mod 函数采用了 floor 函数（这两个函数是用来取整的，fix 函数向 0 方向舍入，floor 函数向无穷小方向舍入）。
+rem（x，y） 命令返回的是 x-n.*y ，如果 y 不等于0，其中的n = fix(x./y)，而 mod(x,y) 返回的是 x-n.*y，当 y 不等于 0 时，n = floor(x./y)</p>
+
+<p>两个异号整数取模取值规律            （当是小数时也是这个运算规律，这一点好像与C语言的不太一样）</p>
+
+<p>先将两个整数看作是正数，再作除法运算</p>
+
+<p>①能整除时，其值为0</p>
+
+<p>②不能整除时，其值=除数×(整商+1)-被除数</p>
+
+<p>例：mod(36,-10)=-4</p>
+
+<p>即：36除以10的整数商为3，加1后为4；其与除数之积为40；再与被数之差为（40-36=4）；取除数的符号。所以值为-4。</p>
+
+<p>例：mod(9,1.2)=0.6</p>
+
+<p>例：</p>
+
+<blockquote>
+<blockquote>
+<p>mod(5,2)
+ans =1                   %“除数”是正，“余数”就是正</p>
+
+<p>mod(-5,2)
+ans =1</p>
+
+<p>mod(5,-2)
+ans =-1                  %“除数”是负，“余数‘就是负</p>
+
+<p>mod(-5,-2)
+ans =-1                  %用rem时，不管“除数”是正是负，“余数”的符号与“被除数”的符号相同</p>
+
+<p>rem(5,2)
+ans =1                   %“被除数”是正，“余数”就是正</p>
+
+<p>rem(5,-2)
+ans =1</p>
+
+<p>rem(-5,2)
+ans =-1                 %“被除数”是负，“余数”就是负</p>
+
+<p>rem(-5,-2)
+ans =-1</p>
+</blockquote>
+</blockquote>
+
+      </article>
+      <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "kmahyyg" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </main>
+    <nav class="end-nav side-padding">
+      
+      <a ontouchstart="cardPressed.call(this)" ontouchend="cardReleased.call(this)" ontouchmove="cardReleased.call(this)" 
+  href="https://www.kmahyyg.xyz/inschool/shu2ics-tutorial/" class="card blog-card" rel="bookmark" >
+    
+    <div class="card-img-container">
+      <p class="card-img-overlay">Next Article</p>
+      <picture>
+        
+        <source srcset="https://alicdn.kmahyyg.xyz/asset_files/aether/cat_code.webp">
+        <img src="https://alicdn.kmahyyg.xyz/asset_files/aether/cat_code.webp" class="card-img" >
+      </picture>
+    </div>
+    
+  <article class="card-body">
+    <h2 class="card-title">爬取课表并转换为 ICS 文件</h2>
+    <p class="card-text">充满广告的课程表应用令人心烦，本文是 shu2ics 和 ynu2gcalendar 的使用文档</p>
+    <div class="card-subtext muted-text">
+      <p>Posted <time datetime="2018-08-10 810:00">Aug 10, 2018</time></p>
+      <p>#code </p>
+    </div>
+  </article>
+</a>
+      
+      <a ontouchstart="cardPressed.call(this)" ontouchend="cardReleased.call(this)" ontouchmove="cardReleased.call(this)" 
+  href="https://www.kmahyyg.xyz/" class="card home-card" style="background-image: url( https://alicdn.kmahyyg.xyz/asset_files/aether/backtohome.webp )" rel="bookmark" >
+  Home
+</a>
+    </nav>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/highlight.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.js" integrity="sha384-K3vbOmF2BtaVai+Qk37uypf7VrgBubhQreNQe9aGsz9lB63dIFiQVlJbr92dw2Lx" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/contrib/auto-render.min.js" integrity="sha384-kmZOZB5ObwgQnS/DuDg6TScgOiWWBiVt0plIRkZCmE6rDZGrEOQeHM5PcHi+nyqe" crossorigin="anonymous"
+    onload="renderMathInElement(document.body);"></script>
+<script src="https://www.kmahyyg.xyz/js/core.js"></script>
+<script>
+  hljs.initHighlightingOnLoad();
+</script>
+  </body>
+</html>

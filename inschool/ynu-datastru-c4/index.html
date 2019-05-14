@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="zh-cn" dir="ltr">
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>数据结构与算法课程 - Chap 4 串 &middot; Pat~ Pat~ Meow~</title>
+  <meta name="description" content="数据结构与算法课程期末复习记录 Chapter 4" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.css" integrity="sha384-9eLZqc9ds8eNjO3TmqPeYcDj8n+Qfa4nuSiGYa6DjLNcv9BtN69ZIulL9+8CqC9Y" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://www.kmahyyg.xyz/css/main.min.css" />
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-123948588-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+
+  <style>
+    body {
+      background: #ecedef url("https://alicdn.kmahyyg.xyz/asset_files/aether/bgimg.webp") repeat;
+    }
+  </style>
+</head>
+  <body class="single-body">
+    <nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="https://www.kmahyyg.xyz/" class="nav-text">Patrick Young</a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="https://www.kmahyyg.xyz/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://www.kmahyyg.xyz/express-page/" class="hamburger-menu-overlay-link">Express Inc</a></li>
+      <li><a href="https://www.kmahyyg.xyz/about-me-page/" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="https://www.kmahyyg.xyz/archlinux-bug-page/" class="hamburger-menu-overlay-link">Arch Linux</a></li>
+      <li><a href="https://www.kmahyyg.xyz/donate-page/" class="hamburger-menu-overlay-link">Donate</a></li>
+      <li><a href="https://www.kmahyyg.xyz/categories/code" class="hamburger-menu-overlay-link">Code</a></li><li><a href="https://www.kmahyyg.xyz/categories/life" class="hamburger-menu-overlay-link">Life</a></li><li><a href="https://www.kmahyyg.xyz/categories/network" class="hamburger-menu-overlay-link">Network</a></li><li><a href="https://www.kmahyyg.xyz/categories/school" class="hamburger-menu-overlay-link">School</a></li><li><a href="https://www.kmahyyg.xyz/categories/tech" class="hamburger-menu-overlay-link">Tech</a></li>
+    </ul>
+  </div>
+</nav>
+    <main class="content side-text-padding">
+      <article class="post ">
+        <header class="post-header">
+        	<h1 class="post-title">数据结构与算法课程 - Chap 4 串</h1>
+          <p class="post-date">Posted <time datetime="2019-01-05">Jan 5, 2019</time></p>
+        </header>
+        
+        <picture class="post-figure">
+            
+            <source srcset="https://alicdn.kmahyyg.xyz/asset_files/aether/cat_school.webp">
+          <img src="https://alicdn.kmahyyg.xyz/asset_files/aether/cat_school.webp" >
+        </picture>
+        
+        
+
+<h1 id="数据结构复习-chapter-4-串">数据结构复习 - Chapter 4 串</h1>
+
+<h2 id="本质区分-c-语言">本质区分 （C 语言）</h2>
+
+<p>字符串：  &ldquo; &rdquo; 中间，本质是 <strong>字符数组</strong> ，本质是线性表结构，结尾 &lsquo;\0&rsquo; 不计入长度
+字符： &lsquo; &rsquo; 中间的元素</p>
+
+<h2 id="基本操作">基本操作</h2>
+
+<pre><code class="language-c">StrAssign(&amp;T, chars);  // 给字符串赋值
+StrCpy(&amp;T, S);   // 复制 S 到 T
+StrCmp(S,T);     // 比较二进制的字符串是否符合
+StrConcat(&amp;T, S1, S2);   // 链接 S1 S2 至 T
+Strlen(&amp;S);      // 字符串长度
+SubStr(&amp;Sub,S, Pos,Len);   // 返回 S 中 pos 位（含）起长度为 len 的子串至 Sub
+StrDestroy(&amp;S);   // 销毁串 S
+StrIsEmpty(&amp;S);   // 串 S 判空
+StrIndex(S, T, pos);   // 返回 T 在 S 的 pos 位置之后第一次出现的位置
+StrIns(&amp;S, pos, T);   // 串 S 的第 pos 个字符之前插入串 T
+StrReplace(&amp;S,T,V);   // 用 V 替换 S 中 符合 T 的串
+</code></pre>
+
+<h2 id="表示与实现">表示与实现</h2>
+
+<h3 id="机内表示">机内表示</h3>
+
+<ul>
+<li>定长顺序表示： 静态存储，地址连续的存储单元。</li>
+<li>堆分配存储： 动态分配的一块地址连续的存储单元。</li>
+<li>串的块链存储表示：链式存储，块链存储，以 <strong>“串的整体”作为操作对象</strong> 。</li>
+</ul>
+
+<h4 id="块链结构">块链结构</h4>
+
+<ol>
+<li>每个节点存放多个字符合理，多个是几个？存储密度计算：串值存储位/实际分配存储位。</li>
+</ol>
+
+<p>块链结构描述：</p>
+
+<ul>
+<li>每个结点存放多个字符</li>
+<li>结点中空位采用特殊符号填充</li>
+<li>设置 tail 指针指向链表中的最后一个节点位置，方便进行串链接操作，需要注意处理串尾的第一个无效字符。</li>
+</ul>
+
+<h2 id="模式匹配算法">模式匹配算法</h2>
+
+<p>BruteForce &amp; KMP:</p>
+
+<p><a href="https://www.kmahyyg.xyz/2018/KMP-BF-DataStru/">https://www.kmahyyg.xyz/2018/KMP-BF-DataStru/</a></p>
+
+      </article>
+      <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "kmahyyg" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </main>
+    <nav class="end-nav side-padding">
+      
+      <a ontouchstart="cardPressed.call(this)" ontouchend="cardReleased.call(this)" ontouchmove="cardReleased.call(this)" 
+  href="https://www.kmahyyg.xyz/inschool/ynu-datastru-c3/" class="card blog-card" rel="bookmark" >
+    
+    <div class="card-img-container">
+      <p class="card-img-overlay">Next Article</p>
+      <picture>
+        
+        <source srcset="https://alicdn.kmahyyg.xyz/asset_files/aether/cat_school.webp">
+        <img src="https://alicdn.kmahyyg.xyz/asset_files/aether/cat_school.webp" class="card-img" >
+      </picture>
+    </div>
+    
+  <article class="card-body">
+    <h2 class="card-title">数据结构与算法课程 - Chap 3 栈与队列</h2>
+    <p class="card-text">数据结构与算法课程期末复习记录 Chapter 3</p>
+    <div class="card-subtext muted-text">
+      <p>Posted <time datetime="2019-01-05 15:00">Jan 5, 2019</time></p>
+      <p>#school </p>
+    </div>
+  </article>
+</a>
+      
+      <a ontouchstart="cardPressed.call(this)" ontouchend="cardReleased.call(this)" ontouchmove="cardReleased.call(this)" 
+  href="https://www.kmahyyg.xyz/" class="card home-card" style="background-image: url( https://alicdn.kmahyyg.xyz/asset_files/aether/backtohome.webp )" rel="bookmark" >
+  Home
+</a>
+    </nav>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/highlight.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.js" integrity="sha384-K3vbOmF2BtaVai+Qk37uypf7VrgBubhQreNQe9aGsz9lB63dIFiQVlJbr92dw2Lx" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/contrib/auto-render.min.js" integrity="sha384-kmZOZB5ObwgQnS/DuDg6TScgOiWWBiVt0plIRkZCmE6rDZGrEOQeHM5PcHi+nyqe" crossorigin="anonymous"
+    onload="renderMathInElement(document.body);"></script>
+<script src="https://www.kmahyyg.xyz/js/core.js"></script>
+<script>
+  hljs.initHighlightingOnLoad();
+</script>
+  </body>
+</html>

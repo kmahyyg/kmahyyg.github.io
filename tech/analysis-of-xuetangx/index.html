@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="zh-cn" dir="ltr">
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>学堂在线 MOOC 视频观看系统分析 &middot; Pat~ Pat~ Meow~</title>
+  <meta name="description" content="学堂在线的慕课真是让人伤心，考虑自己写程序来免看慕课，本文是对心跳包的分析" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.css" integrity="sha384-9eLZqc9ds8eNjO3TmqPeYcDj8n+Qfa4nuSiGYa6DjLNcv9BtN69ZIulL9+8CqC9Y" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://www.kmahyyg.xyz/css/main.min.css" />
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-123948588-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+
+  <style>
+    body {
+      background: #ecedef url("https://alicdn.kmahyyg.xyz/asset_files/aether/bgimg.webp") repeat;
+    }
+  </style>
+</head>
+  <body class="single-body">
+    <nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="https://www.kmahyyg.xyz/" class="nav-text">Patrick Young</a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="https://www.kmahyyg.xyz/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://www.kmahyyg.xyz/express-page/" class="hamburger-menu-overlay-link">Express Inc</a></li>
+      <li><a href="https://www.kmahyyg.xyz/about-me-page/" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="https://www.kmahyyg.xyz/archlinux-bug-page/" class="hamburger-menu-overlay-link">Arch Linux</a></li>
+      <li><a href="https://www.kmahyyg.xyz/donate-page/" class="hamburger-menu-overlay-link">Donate</a></li>
+      <li><a href="https://www.kmahyyg.xyz/categories/code" class="hamburger-menu-overlay-link">Code</a></li><li><a href="https://www.kmahyyg.xyz/categories/life" class="hamburger-menu-overlay-link">Life</a></li><li><a href="https://www.kmahyyg.xyz/categories/network" class="hamburger-menu-overlay-link">Network</a></li><li><a href="https://www.kmahyyg.xyz/categories/school" class="hamburger-menu-overlay-link">School</a></li><li><a href="https://www.kmahyyg.xyz/categories/tech" class="hamburger-menu-overlay-link">Tech</a></li>
+    </ul>
+  </div>
+</nav>
+    <main class="content side-text-padding">
+      <article class="post ">
+        <header class="post-header">
+        	<h1 class="post-title">学堂在线 MOOC 视频观看系统分析</h1>
+          <p class="post-date">Posted <time datetime="2017-12-05">Dec 5, 2017</time></p>
+        </header>
+        
+        <picture class="post-figure">
+            
+            <source srcset="https://alicdn.kmahyyg.xyz/asset_files/aether/cat_code.webp">
+          <img src="https://alicdn.kmahyyg.xyz/asset_files/aether/cat_code.webp" >
+        </picture>
+        
+        
+
+<p>学堂在线 MOOC 视频观看系统分析</p>
+
+<h1 id="前言">前言</h1>
+
+<blockquote>
+<p>基础地址： <a href="http://ynu.xuetangx.com/courses/course-v1:TsinghuaX+y10_010610183_2X+2017_T2/courseware/a0c88e15f0724905bdae5001ae905a15/4a819651df914e8e944be7e00f248d35/">http://ynu.xuetangx.com/courses/course-v1:TsinghuaX+y10_010610183_2X+2017_T2/courseware/a0c88e15f0724905bdae5001ae905a15/4a819651df914e8e944be7e00f248d35/</a></p>
+
+<p>鸣谢： <a href="https://github.com/wangqr/proto_xuetangx">https://github.com/wangqr/proto_xuetangx</a></p>
+</blockquote>
+
+<p>因为学校垃圾校园网闪断问题频发，加上学堂在线 MOOC 系统设计存在重大缺陷，导致经常性无法正常记录学生的观看记录。</p>
+
+<p>人懒，遂操起工具，分析视频观看记录系统。</p>
+
+<h1 id="加载页面">加载页面</h1>
+
+<p>加载页面常用 JS、CSS、HTML 完成，看到是自己写的成绩记录系统 + XHR动态刷新 + OpenEDX 魔改而成。</p>
+
+<p>加载完成后 访问  <a href="http://ynu.xuetangx.com/event">http://ynu.xuetangx.com/event</a> ，然后 POST 一个 CDN_PREF数据到此处获取视频ID并加载视频，这里并不重要</p>
+
+<h1 id="播放视频全过程">播放视频全过程</h1>
+
+<h2 id="心跳包解构">心跳包解构</h2>
+
+<h3 id="基础-浏览器环境">基础：浏览器环境</h3>
+
+<p>浏览器 Request Header：</p>
+
+<pre><code>Accept:*/*
+Accept-Encoding:gzip, deflate
+Accept-Language:en-US,en;q=0.9,zh-CN;q=0.8,zh;q=0.7
+Cookie:UM_distinctid=1601d25d955992-041780ba866e8-102c1709-1fa400-1601d25d9561182; _spoc_lms_cms_sessionid=8a1bc8065611bd8d6d347b9ae538f14f; _log_user_id=15490f8b4640272d3085687db3630f8a
+DNT:1
+Host:log.xuetangx.com
+Proxy-Connection:keep-alive
+Referer:http://ynu.xuetangx.com/courses/course-v1:TsinghuaX+y10_010610183_2X+2017_T2/courseware/a0c88e15f0724905bdae5001ae905a15/4a819651df914e8e944be7e00f248d35/
+User-Agent:Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.62 Safari/537.36
+</code></pre>
+
+<p>Response Header :</p>
+
+<pre><code>Connection:keep-alive
+Content-Length:7
+Content-Type:application/octet-stream
+Content-Type:application/json
+Date:Tue, 05 Dec 2017 12:35:29 GMT
+Server:nginx
+Via:1.1 ubuntu (squid/3.3.8)
+X-Cache:MISS from ubuntu
+X-Cache-Lookup:MISS from ubuntu:3128
+</code></pre>
+
+<h3 id="heartbeat">Heartbeat</h3>
+
+<h4 id="起始播放">　起始播放</h4>
+
+<p>Base URL: <code>http://log.xuetangx.com/heartbeat</code>
+方式： POST</p>
+
+<pre><code>i:5 						// 心跳间隔： 5s
+et:play                                  // 操作类型：play/seeking/pause/videoend/heartbeat
+p:web　　　　　　　　// 终端：web/android
+cp:0                                       //发生此行为的视频地址
+fp:0					//拖拽起始
+tp:0					//拖拽终止
+sp:1.5					//播放倍速
+ts:1512477329562　　　// 当前用户系统时间
+u:7717027                            //用户ID
+c:course-v1:TsinghuaX+y10_010610183_2X+2017_T2          // 课程ID
+v:6e9bf023d8cf4744b7add14a3ab932d8                                 //课程结构中的视频ID
+cc:B304B0428B631CD59C33DC5901307461　　　　　　//CC上存储的视频ID
+d:519.4　　　　　　　　　　　//视频时长
+pg:6e9bf023d8cf4744b7add14a3ab932d8_16uiv     //页面编号
+sq:1					// 操作序号：自增ID
+callback:c　　　　　　  //无意义：回调值恒为ｃ
+_:1512477329564		//猜测是服务器时间戳，与系统时间戳+1/0
+</code></pre>
+
+<p>需要注意一点：　　页面编号:</p>
+
+<pre><code class="language-javascript">var salt = Math.floor((1 + Math.random()) * 0x100000).toString(36);
+// salt = (下舍入((1+ 一个0~1间的小数随机数) * 1048576)).转换为36进制
+var pg = v + salt
+</code></pre>
+
+<h4 id="event-1-play-video">Event 1 : Play_video</h4>
+
+<p>Base URL : <code>http://ynu.xuetangx.com/event</code>
+方式：　GET</p>
+
+<p>Request Header:</p>
+
+<pre><code>Accept:application/json, text/javascript, */*; q=0.01
+Accept-Encoding:gzip, deflate
+Accept-Language:en-US,en;q=0.9,zh-CN;q=0.8,zh;q=0.7
+Content-Length:318
+Content-Type:application/x-www-form-urlencoded; charset=UTF-8
+Cookie:UM_distinctid=1601d25d955992-041780ba866e8-102c1709-1fa400-1601d25d9561182; _spoc_lms_cms_sessionid=8a1bc8065611bd8d6d347b9ae538f14f; sessionid=8a1bc8065611bd8d6d347b9ae538f14f; CNZZDATA1261596198=1201952707-1512317271-%7C1512476093; csrftoken=RrcGA18IeDhImhGwG6eDhoZbPViPyle7; user_id=7717027; _log_user_id=15490f8b4640272d3085687db3630f8a
+DNT:1
+Host:ynu.xuetangx.com
+Origin:http://ynu.xuetangx.com
+Proxy-Connection:keep-alive
+Referer:http://ynu.xuetangx.com/courses/course-v1:TsinghuaX+y10_010610183_2X+2017_T2/courseware/a0c88e15f0724905bdae5001ae905a15/4a819651df914e8e944be7e00f248d35/
+User-Agent:Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.62 Safari/537.36
+X-CSRFToken:RrcGA18IeDhImhGwG6eDhoZbPViPyle7
+X-Requested-With:XMLHttpRequest
+</code></pre>
+
+<p>POST Form:</p>
+
+<pre><code>event_type:play_video
+page:http://ynu.xuetangx.com/courses/course-v1:TsinghuaX+y10_010610183_2X+2017_T2/courseware/a0c88e15f0724905bdae5001ae905a15/4a819651df914e8e944be7e00f248d35/
+event:{&quot;id&quot;:&quot;6e9bf023d8cf4744b7add14a3ab932d8&quot;,&quot;code&quot;:&quot;html5&quot;,&quot;currentTime&quot;:0}
+</code></pre>
+
+<pre><code>event_type:cdn_perf
+page:http://ynu.xuetangx.com/courses/course-v1:TsinghuaX+y10_010610183_2X+2017_T2/courseware/a0c88e15f0724905bdae5001ae905a15/4a819651df914e8e944be7e00f248d35/
+event:{&quot;event&quot;:&quot;canplaythrough&quot;,&quot;id&quot;:&quot;6e9bf023d8cf4744b7add14a3ab932d8_16uiv&quot;,&quot;expgroup&quot;:&quot;spoc&quot;,&quot;value&quot;:111457,&quot;page&quot;:&quot;B304B0428B631CD59C33DC5901307461&quot;,&quot;count&quot;:2}
+</code></pre>
+
+<h4 id="心跳连续打点">心跳连续打点</h4>
+
+<pre><code>et= heartbeat
+cp= 当前视频时间（单位秒）    //两个cp间隔= i * sp
+ts= 当前系统时间戳 (Unix Timestamp，单位ms)                      // 两个ts间隔 = 5s
+sq= 自增id
+_=时间戳                                     //同样=ts
+</code></pre>
+
+<h2 id="播放完成">播放完成</h2>
+
+<h3 id="保存用户状态并暂停-同时发送event">保存用户状态并暂停，同时发送event</h3>
+
+<h4 id="save-user-state">save_user_state</h4>
+
+<pre><code>POST http://ynu.xuetangx.com/courses/course-v1:TsinghuaX+y10_010610183_2X+2017_T2/xblock/block-v1:TsinghuaX+y10_010610183_2X+2017_T2+type@video+block@6e9bf023d8cf4744b7add14a3ab932d8/handler/xmodule_handler/save_user_state HTTP/1.1
+
+Content-Length: 33
+Referer: http://ynu.xuetangx.com/courses/course-v1:TsinghuaX+y10_010610183_2X+2017_T2/courseware/a0c88e15f0724905bdae5001ae905a15/4a819651df914e8e944be7e00f248d35/
+</code></pre>
+
+<p>FORM Data:</p>
+
+<pre><code>saved_video_position:00:08:39
+saved_video_position=00%3A08%3A39
+</code></pre>
+
+<p>注意几点：</p>
+
+<ol>
+<li>Base URL: <code>http://ynu.xuetangx.com/courses/</code> +  c + <code>/xblock/block-v1:</code> + c + <code>type@video+block@</code>+ v +<code>/handler/xmodule_handler/save_user_state</code></li>
+</ol>
+
+<h4 id="heartbeat-event-2">( Heartbeat + event ) * 2</h4>
+
+<h5 id="heartbeat-get">Heartbeat ( GET )</h5>
+
+<pre><code class="language-javascript">et : pause
+ts : (+1.5s) 
+_ : (+1.5s)
+</code></pre>
+
+<h5 id="event-post">event (post)</h5>
+
+<pre><code>event_type:pause_video
+page:http://ynu.xuetangx.com/courses/course-v1:TsinghuaX+y10_010610183_2X+2017_T2/courseware/a0c88e15f0724905bdae5001ae905a15/4a819651df914e8e944be7e00f248d35/
+event:{&quot;id&quot;:&quot;6e9bf023d8cf4744b7add14a3ab932d8&quot;,&quot;code&quot;:&quot;html5&quot;,&quot;currentTime&quot;:519.36}
+</code></pre>
+
+<p>id = v</p>
+
+<h5 id="heartbeat-get-1">Heartbeat ( GET )</h5>
+
+<pre><code class="language-javascript">et : pause
+ts : (+15ms) 
+_ : (+15ms)
+</code></pre>
+
+<h5 id="event-post-1">event (post)</h5>
+
+<pre><code>event_type:stop_video
+page:http://ynu.xuetangx.com/courses/course-v1:TsinghuaX+y10_010610183_2X+2017_T2/courseware/a0c88e15f0724905bdae5001ae905a15/4a819651df914e8e944be7e00f248d35/
+event:{&quot;id&quot;:&quot;6e9bf023d8cf4744b7add14a3ab932d8&quot;,&quot;code&quot;:&quot;html5&quot;,&quot;currentTime&quot;:519.36}
+</code></pre>
+
+<h1 id="后续">后续</h1>
+
+<p>拉起 Python 3，使用 Requests 库准备动手。后续详情请查看 <a href="https://github.com/kmahyyg/proto_xuetangx">https://github.com/kmahyyg/proto_xuetangx</a> 的 <code>MASTER</code> 分支。</p>
+
+      </article>
+      <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "kmahyyg" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </main>
+    <nav class="end-nav side-padding">
+      
+      <a ontouchstart="cardPressed.call(this)" ontouchend="cardReleased.call(this)" ontouchmove="cardReleased.call(this)" 
+  href="https://www.kmahyyg.xyz/tech/discrete-math/" class="card blog-card" rel="bookmark" >
+    
+    <div class="card-img-container">
+      <p class="card-img-overlay">Next Article</p>
+      <picture>
+        
+        <source srcset="https://alicdn.kmahyyg.xyz/asset_files/aether/cat_school.webp">
+        <img src="https://alicdn.kmahyyg.xyz/asset_files/aether/cat_school.webp" class="card-img" >
+      </picture>
+    </div>
+    
+  <article class="card-body">
+    <h2 class="card-title">Discrete Math - CP</h2>
+    <p class="card-text">离散数学的 CP 规则</p>
+    <div class="card-subtext muted-text">
+      <p>Posted <time datetime="2017-11-04 114:00">Nov 4, 2017</time></p>
+      <p>#school </p>
+    </div>
+  </article>
+</a>
+      
+      <a ontouchstart="cardPressed.call(this)" ontouchend="cardReleased.call(this)" ontouchmove="cardReleased.call(this)" 
+  href="https://www.kmahyyg.xyz/" class="card home-card" style="background-image: url( https://alicdn.kmahyyg.xyz/asset_files/aether/backtohome.webp )" rel="bookmark" >
+  Home
+</a>
+    </nav>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/highlight.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.js" integrity="sha384-K3vbOmF2BtaVai+Qk37uypf7VrgBubhQreNQe9aGsz9lB63dIFiQVlJbr92dw2Lx" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/contrib/auto-render.min.js" integrity="sha384-kmZOZB5ObwgQnS/DuDg6TScgOiWWBiVt0plIRkZCmE6rDZGrEOQeHM5PcHi+nyqe" crossorigin="anonymous"
+    onload="renderMathInElement(document.body);"></script>
+<script src="https://www.kmahyyg.xyz/js/core.js"></script>
+<script>
+  hljs.initHighlightingOnLoad();
+</script>
+  </body>
+</html>

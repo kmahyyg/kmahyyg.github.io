@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="zh-cn" dir="ltr">
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>操作系统原理 - 有限状态机 &middot; Pat~ Pat~ Meow~</title>
+  <meta name="description" content="有限状态机的基础概念的一些思考" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.css" integrity="sha384-9eLZqc9ds8eNjO3TmqPeYcDj8n+Qfa4nuSiGYa6DjLNcv9BtN69ZIulL9+8CqC9Y" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://www.kmahyyg.xyz/css/main.min.css" />
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-123948588-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+
+  <style>
+    body {
+      background: #ecedef url("https://alicdn.kmahyyg.xyz/asset_files/aether/bgimg.webp") repeat;
+    }
+  </style>
+</head>
+  <body class="single-body">
+    <nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="https://www.kmahyyg.xyz/" class="nav-text">Patrick Young</a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="https://www.kmahyyg.xyz/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://www.kmahyyg.xyz/express-page/" class="hamburger-menu-overlay-link">Express Inc</a></li>
+      <li><a href="https://www.kmahyyg.xyz/about-me-page/" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="https://www.kmahyyg.xyz/archlinux-bug-page/" class="hamburger-menu-overlay-link">Arch Linux</a></li>
+      <li><a href="https://www.kmahyyg.xyz/donate-page/" class="hamburger-menu-overlay-link">Donate</a></li>
+      <li><a href="https://www.kmahyyg.xyz/categories/code" class="hamburger-menu-overlay-link">Code</a></li><li><a href="https://www.kmahyyg.xyz/categories/life" class="hamburger-menu-overlay-link">Life</a></li><li><a href="https://www.kmahyyg.xyz/categories/network" class="hamburger-menu-overlay-link">Network</a></li><li><a href="https://www.kmahyyg.xyz/categories/school" class="hamburger-menu-overlay-link">School</a></li><li><a href="https://www.kmahyyg.xyz/categories/tech" class="hamburger-menu-overlay-link">Tech</a></li>
+    </ul>
+  </div>
+</nav>
+    <main class="content side-text-padding">
+      <article class="post ">
+        <header class="post-header">
+        	<h1 class="post-title">操作系统原理 - 有限状态机</h1>
+          <p class="post-date">Posted <time datetime="2019-04-07">Apr 7, 2019</time></p>
+        </header>
+        
+        <picture class="post-figure">
+            
+            <source srcset="https://alicdn.kmahyyg.xyz/asset_files/aether/cat_school.webp">
+          <img src="https://alicdn.kmahyyg.xyz/asset_files/aether/cat_school.webp" >
+        </picture>
+        
+        
+
+<h2 id="前言">前言</h2>
+
+<p>本学期的重点之一就是这一门操作系统课程。这个系列的文章会一直坚持写下去，记录我在学习过程中不断探索、询问的过程。</p>
+
+<p>今天是这个系列的第一篇文章，讲述有限状态机，有限状态机为后面的多线程与进程调度做下铺垫。</p>
+
+<p>本系列的所有文章的代码均在 GNU GCC 8.2.1 下编译通过，本地使用的 Linux Kernel 为 5.0.6 及以上版本，跟随 Arch Linux 稳定 core 仓库更新。 <strong>不提供 Windows 支持。</strong></p>
+
+<h1 id="正文">正文</h1>
+
+<h2 id="定义">定义</h2>
+
+<p><img src="https://alicdn.kmahyyg.xyz/asset_files/fsm_01_ryf.webp" alt="FSM RYF" /></p>
+
+<p>定义：有限状态机（英语：finite-state machine，缩写：FSM）又称有限状态自动机，简称状态机，是表示有限个状态以及在这些状态之间的转移和动作等行为的数学模型。</p>
+
+<p>简单说，它有三个特征：</p>
+
+<ul>
+<li>状态总数（state）是有限的。</li>
+<li>任一时刻，只处在一种状态之中。</li>
+<li>某种条件下（当前 state + 特定 event），会从一种状态转变（transition）到另一种状态。</li>
+</ul>
+
+<p>对，就是这么简单。</p>
+
+<h2 id="fsm-的几种实现">FSM 的几种实现</h2>
+
+<h3 id="if-else-实现">if+else 实现</h3>
+
+<p>大量的 <code>if</code> <code>else if</code> <code>else</code> 语句，程序简单易懂，但是代码执行效率不高，过于低端的同时造成了代码膨胀。如果状态的较少可以采用，但如果状态很多，就非常难受了。这类实现是我们这类初学者经常采用的。</p>
+
+<h3 id="case-switch-实现">case+switch 实现</h3>
+
+<pre><code class="language-c">switch(state){
+    case status1:
+        dosth();
+        state = status2;
+        break;
+    case status2:
+        dosth2();
+        state = status3;
+        break;
+        ...
+    default:
+        printf(&quot;error&quot;);
+        break;
+}
+</code></pre>
+
+<p>这样的实现较上一种实现方法看起来简洁很多，代码执行效率有所提高，但主要存在两个问题：（1）规模难以扩大和维护  （2）忘写 <code>break;</code> 可能造成灾难性后果。所以也不推荐在大型项目或者操作系统层面使用。</p>
+
+<h3 id="fsm-表实现">FSM 表实现</h3>
+
+<p>使用函数指针实现 FSM 的思路：建立相应的状态表和动作查询表，根据状态表、事件、动作表定位相应的动作处理函数，执行完成后再进行状态的切换。</p>
+
+<p>当然使用函数指针实现的 FSM 的过程还是比较费时费力，但是这一切都是值得的，因为当你的程序规模大的时候，基于这种表结构的状态机，维护程序起来也是得心应手。</p>
+
+<pre><code class="language-c">#include &lt;stdio.h&gt;
+#include &lt;unistd.h&gt;
+
+void haltmc() {  // define what to do when triggered
+    printf(&quot;Machine halted...\n&quot;);
+}
+
+void pwron() {
+    printf(&quot;Powered on.\n&quot;);
+}
+
+void postchk() {
+    printf(&quot;POST Successfully finished. Hardware OK!\n&quot;);
+}
+
+void start_os() {
+    printf(&quot;Trying to boot up with kernel...\n&quot;);
+    printf(&quot;Kernel prepared for calling up DE...\n&quot;);
+}
+
+void user_clickoff() {
+    printf(&quot;DE called up and running smoothly.\n&quot;);
+    sleep(3);
+    printf(&quot;User clicked to power off...\n&quot;);
+    printf(&quot;Software stopped...Disassembling stacked devices...\n&quot;);
+    haltmc();
+}
+
+enum {
+    POWER_ON,
+    POST,
+    INITIALIZE,
+    USER_TURN_OFF,
+};   // EVENTS
+
+enum {
+    POST_DONE,
+    STARTED,
+    USER_OFF,
+    HALTED
+}; // STATUS
+
+typedef struct fsmtb_s {
+    int event;
+    int currstatus;
+    void (*dosth)();
+    int nextstatus;
+} fsmtb_t, *fsmtb_ptr;   // fsm status table
+
+fsmtb_t PCRUN[] = {
+        // coming event, current status, to do sth, next status
+        {POWER_ON,      HALTED,       pwron,         POST_DONE},
+        {POST,          POST_DONE,    postchk,       STARTED},
+        {INITIALIZE,    STARTED,      start_os,      USER_OFF},
+        {USER_TURN_OFF, USER_OFF,     user_clickoff, HALTED},
+};
+
+typedef struct fsm_s {
+    fsmtb_ptr fsm_status_tb;
+    int currstatus;
+}fsm_t, *fsm_ptr;    // machine status
+
+int max_state_tb;   // max status in the status table
+
+void initMC(fsm_ptr machine){
+    max_state_tb = sizeof(PCRUN) / sizeof(fsmtb_t);
+    machine-&gt;currstatus = HALTED;
+    machine-&gt;fsm_status_tb = PCRUN;   // link status table to machine
+}
+
+void FSMNext(fsm_ptr machine, int state){
+    machine-&gt;currstatus = state;
+}
+
+void FSMHandle(fsm_ptr machine, int event){
+    fsmtb_ptr actTable = machine-&gt;fsm_status_tb;   // bind the whole status
+    void (*eventAct)() = NULL;   // init a do something function ptr
+    int nextStatus;
+    int currentStatus = machine-&gt;currstatus;
+    int done = 0;
+    for (int i = 0; i &lt; max_state_tb; i++){
+        fsmtb_ptr currentActTable = &amp;actTable[i];   // trying to recursive read the status table
+        // and check if the status and event is corresponding: if true, dosth()
+        if (event == currentActTable-&gt;event &amp;&amp; currentStatus == currentActTable-&gt;currstatus){
+            done = 1;
+            eventAct = currentActTable-&gt;dosth;
+            nextStatus = currentActTable-&gt;nextstatus;
+            break;
+        }
+    }
+
+    if (done){   // if status-event pair is satisfied
+        if (eventAct){  // if action is not null
+            eventAct();
+        }
+        FSMNext(machine, nextStatus);   // if done, transfer to next status
+    }
+    else {
+        void;   // do nothing
+    }
+}
+
+void gogogo(int *evnt){   // manually trigger the event
+    if (*evnt == 3){*evnt = 0;}
+    else {(*evnt)++;}
+}
+
+int main(){
+    fsm_t machine;
+    initMC(&amp;machine);
+    int startevnt = POWER_ON;
+    while (1){
+        // printf(&quot;EVENT 0: 开机, 1: 自检，2：加载，3: 用户关闭 \n&quot;);
+        printf(&quot;----------------------------------\n&quot;);
+        printf(&quot;Event %d is coming...\n&quot;, startevnt);
+        FSMHandle(&amp;machine, startevnt);
+        // printf(&quot;STATUS 0: 自检完成，1: 开机运行，2: 用户关闭，3: 已关闭\n&quot;);
+        printf(&quot;Current Status is %d...\n&quot;, machine.currstatus);
+        printf(&quot;----------------------------------\n&quot;);
+        gogogo(&amp;startevnt);
+        sleep(2);
+    }
+    return 0;
+}
+</code></pre>
+
+<p>阅读代码可以看出，当且仅当在指定的状态下来了指定的事件才会发生函数的执行以及状态的转移，否则不会发生状态的跳转。这种机制使得这个状态机不停地自动运转，有条不絮地完成任务。</p>
+
+<p>与前两种方法相比，使用函数指针实现FSM能很好用于大规模的切换流程，只要我们实现搭好了FSM框架，以后进行扩展就很简单了（只要在状态表里加一行来写入新的状态处理就可以了）。</p>
+
+<h3 id="reference">Reference</h3>
+
+<p><a href="https://www.ruanyifeng.com/blog/2013/09/finite-state_machine_for_javascript.html">https://www.ruanyifeng.com/blog/2013/09/finite-state_machine_for_javascript.html</a>
+<a href="https://zh.wikipedia.org/wiki/%E6%9C%89%E9%99%90%E7%8A%B6%E6%80%81%E6%9C%BA">https://zh.wikipedia.org/wiki/%E6%9C%89%E9%99%90%E7%8A%B6%E6%80%81%E6%9C%BA</a>
+<a href="http://www.cnblogs.com/skyfsm/p/7071386.html">http://www.cnblogs.com/skyfsm/p/7071386.html</a>
+<a href="https://github.com/AstarLight/FSM-framework">https://github.com/AstarLight/FSM-framework</a></p>
+
+<p>图片版权归原作者所有</p>
+
+      </article>
+      <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "kmahyyg" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </main>
+    <nav class="end-nav side-padding">
+      
+      <a ontouchstart="cardPressed.call(this)" ontouchend="cardReleased.call(this)" ontouchmove="cardReleased.call(this)" 
+  href="https://www.kmahyyg.xyz/inschool/ynu-networkbasic/" class="card blog-card" rel="bookmark" >
+    
+    <div class="card-img-container">
+      <p class="card-img-overlay">Next Article</p>
+      <picture>
+        
+        <source srcset="https://alicdn.kmahyyg.xyz/asset_files/aether/cat_network.webp">
+        <img src="https://alicdn.kmahyyg.xyz/asset_files/aether/cat_network.webp" class="card-img" >
+      </picture>
+    </div>
+    
+  <article class="card-body">
+    <h2 class="card-title">计算机网络期末复习稿</h2>
+    <p class="card-text">计算机网络课程期末复习记录</p>
+    <div class="card-subtext muted-text">
+      <p>Posted <time datetime="2019-01-09 19:00">Jan 9, 2019</time></p>
+      <p>#network </p>
+    </div>
+  </article>
+</a>
+      
+      <a ontouchstart="cardPressed.call(this)" ontouchend="cardReleased.call(this)" ontouchmove="cardReleased.call(this)" 
+  href="https://www.kmahyyg.xyz/" class="card home-card" style="background-image: url( https://alicdn.kmahyyg.xyz/asset_files/aether/backtohome.webp )" rel="bookmark" >
+  Home
+</a>
+    </nav>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/highlight.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.js" integrity="sha384-K3vbOmF2BtaVai+Qk37uypf7VrgBubhQreNQe9aGsz9lB63dIFiQVlJbr92dw2Lx" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/contrib/auto-render.min.js" integrity="sha384-kmZOZB5ObwgQnS/DuDg6TScgOiWWBiVt0plIRkZCmE6rDZGrEOQeHM5PcHi+nyqe" crossorigin="anonymous"
+    onload="renderMathInElement(document.body);"></script>
+<script src="https://www.kmahyyg.xyz/js/core.js"></script>
+<script>
+  hljs.initHighlightingOnLoad();
+</script>
+  </body>
+</html>

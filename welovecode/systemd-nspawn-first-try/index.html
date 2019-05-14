@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="zh-cn" dir="ltr">
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Systemd-nSpawn 容器初体验 - Arch Inside Ubuntu &middot; Pat~ Pat~ Meow~</title>
+  <meta name="description" content="Docker 的无守护设计理念也实在是让人难受，Systemd-NSpawn 完全虚拟了文件系统架构并限制了对 sysfs 的写操作实现了一个轻量化的命名空间级别的容器" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.css" integrity="sha384-9eLZqc9ds8eNjO3TmqPeYcDj8n+Qfa4nuSiGYa6DjLNcv9BtN69ZIulL9+8CqC9Y" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://www.kmahyyg.xyz/css/main.min.css" />
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-123948588-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+
+  <style>
+    body {
+      background: #ecedef url("https://alicdn.kmahyyg.xyz/asset_files/aether/bgimg.webp") repeat;
+    }
+  </style>
+</head>
+  <body class="single-body">
+    <nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="https://www.kmahyyg.xyz/" class="nav-text">Patrick Young</a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="https://www.kmahyyg.xyz/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://www.kmahyyg.xyz/express-page/" class="hamburger-menu-overlay-link">Express Inc</a></li>
+      <li><a href="https://www.kmahyyg.xyz/about-me-page/" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="https://www.kmahyyg.xyz/archlinux-bug-page/" class="hamburger-menu-overlay-link">Arch Linux</a></li>
+      <li><a href="https://www.kmahyyg.xyz/donate-page/" class="hamburger-menu-overlay-link">Donate</a></li>
+      <li><a href="https://www.kmahyyg.xyz/categories/code" class="hamburger-menu-overlay-link">Code</a></li><li><a href="https://www.kmahyyg.xyz/categories/life" class="hamburger-menu-overlay-link">Life</a></li><li><a href="https://www.kmahyyg.xyz/categories/network" class="hamburger-menu-overlay-link">Network</a></li><li><a href="https://www.kmahyyg.xyz/categories/school" class="hamburger-menu-overlay-link">School</a></li><li><a href="https://www.kmahyyg.xyz/categories/tech" class="hamburger-menu-overlay-link">Tech</a></li>
+    </ul>
+  </div>
+</nav>
+    <main class="content side-text-padding">
+      <article class="post ">
+        <header class="post-header">
+        	<h1 class="post-title">Systemd-nSpawn 容器初体验 - Arch Inside Ubuntu</h1>
+          <p class="post-date">Posted <time datetime="2019-05-05">May 5, 2019</time></p>
+        </header>
+        
+        <picture class="post-figure">
+            
+            <source srcset="https://alicdn.kmahyyg.xyz/asset_files/aether/cat_code.webp">
+          <img src="https://alicdn.kmahyyg.xyz/asset_files/aether/cat_code.webp" >
+        </picture>
+        
+        
+
+<h1 id="reference">Reference</h1>
+
+<p>放在最前，权威参考毕竟更实在：</p>
+
+<ul>
+<li><a href="https://wiki.archlinux.org/index.php/Systemd-nspawn">https://wiki.archlinux.org/index.php/Systemd-nspawn</a></li>
+<li><a href="https://blog.felixc.at/2019/04/nspawn-org-simple-container-for-systemd-distributions/">https://blog.felixc.at/2019/04/nspawn-org-simple-container-for-systemd-distributions/</a></li>
+<li><a href="https://gist.github.com/artizirk/0d800be97bcdb35fb7bfd9755208e0e8">https://gist.github.com/artizirk/0d800be97bcdb35fb7bfd9755208e0e8</a></li>
+<li><a href="https://github.com/systemd/systemd/issues/1968">https://github.com/systemd/systemd/issues/1968</a></li>
+<li>慎重使用: <a href="http://www.jinbuguo.com/systemd/systemd-nspawn.html">http://www.jinbuguo.com/systemd/systemd-nspawn.html</a></li>
+</ul>
+
+<h1 id="写在最前">写在最前</h1>
+
+<p>受这篇 <a href="https://abcdabcd987.com/setup-shared-gpu-server-for-labs/">为实验室建立公用 GPU 服务器</a> 的启发，加之最近 Arch 群里开始掀起一股推广 <code>底裤d-nSpawn</code> 容器(2017 年就开始开发了耶) 的热潮，配合上我对 Ubuntu 16.04 （迫于应用环境，无法升级）的 Canonical 魔改的厌恶 <del>Ubuntu 你尽管用，内部不错算我输.jpg</del> ，和 <a href="https://www.kmahyyg.xyz/openvas-9-gsad-bug/">OpenVAS 9 老旧、各种玄学 Bug</a> 的问题。我尝试在 Ubuntu 16.04 上开启 systemd-nspawn 容器启用 Arch Linux 进行错误查找。因而有了这篇文章。</p>
+
+<h1 id="环境说明">环境说明</h1>
+
+<p>Systemd 229, Linux Kernel 4.4.0-146, Ubuntu 16.04.6 LTS, Xen 虚拟化架构的 Huawei Fusion-Compute-Based VM</p>
+
+<h1 id="预备">预备</h1>
+
+<pre><code class="language-bash">$ cd /usr/local/bin
+$ wget https://raw.githubusercontent.com/nspawn/nspawn/master/nspawn
+$ chmod +x nspawn
+</code></pre>
+
+<p>下载第三方提供的快速配置工具，由 Arch Linux Trusted User 带来，稳稳的。主要是简化了配置和拉取镜像及附带了一些常见问题的“预防针”。不建议手动 <code>pacstrap</code>，因为需要手动安装很多组件。</p>
+
+<h2 id="安装依赖">安装依赖</h2>
+
+<pre><code class="language-bash">$ sudo apt update -y 
+$ sudo apt install systemd-container -y
+</code></pre>
+
+<h2 id="修改内核参数">修改内核参数</h2>
+
+<pre><code class="language-bash">$ sudo sysctl -w net.ipv4.ip_forward=1
+$ sudo sysctl -w net.ipv6.conf.all.forwarding=1
+</code></pre>
+
+<h2 id="建立网卡">建立网卡</h2>
+
+<p>Systemd-nSpawn 的原理是把容器里的应用包装为 Systemd Service 在以独立的命名空间后台运行</p>
+
+<p>Systemd-nSpawn 默认的联网方式是 veth，即默认在模板 <code>/lib/systemd/system/systemd-nspawn@.service</code> 中已经使用了参数 <code>-n</code>， 你也可以选择删除后根据 Arch Wiki 的提示直接使用 host 的网卡，个人不推荐这样做。</p>
+
+<h3 id="host">HOST</h3>
+
+<p>使用 <code>systemd-networkd</code> 建立网桥：</p>
+
+<p><code>/etc/systemd/network/br0.netdev</code></p>
+
+<pre><code> # Tell systemd-networkd to create a bridge device
+ [NetDev]
+ Name=br0
+ Kind=bridge
+</code></pre>
+
+<p>配置网桥的 IP 地址：</p>
+
+<p><code>/etc/systemd/network/br0.network</code></p>
+
+<pre><code> # Configure ip address for the bridge
+ [Match]
+ Name=br0
+ 
+ [Network]
+ Address=172.23.0.1/24
+ LinkLocalAddressing=yes
+ IPMasquerade=yes
+ LLDP=yes
+ EmitLLDP=customer-bridge
+</code></pre>
+
+<p>配置完成后调整防火墙，手动启用 NAT，在 Debian-Based 分发版上，<code>IPMasquerade</code> 参数因为 Bug 不会自动生效。这里的示例是 80 端口转发。</p>
+
+<pre><code>$ sudo iptables -t nat -A POSTROUTING -s 172.23.0.0/24 -j MASQUERADE 
+$ sudo iptables -t nat -A PREROUTING -p tcp -m tcp --dport 80 -m addrtype --dst-type LOCAL -j DNAT --to-destination 172.23.0.2:80 
+</code></pre>
+
+<p>接下来启用 <code>systemd-networkd</code> 即可。</p>
+
+<pre><code class="language-bash">$ sudo systemctl enable --now systemd-networkd
+$ sudo systemctl restart systemd-networkd
+</code></pre>
+
+<p>编辑 <code>systemd-nspawn@.service</code> 模板：</p>
+
+<pre><code class="language-yaml"> [Service]
+ ExecStart=&lt;current execstart line&gt; --network-bridge=br0
+</code></pre>
+
+<h1 id="部署">部署</h1>
+
+<p>这里，我们以 Arch 容器为例，容器内部为私有 IP + 静态手动指定的方式。如果你想要 DHCP 方式，请自行部署 DNSMASQ.</p>
+
+<h2 id="运行工具">运行工具</h2>
+
+<pre><code class="language-bash">$ sudo nspawn init archlinux/archlinux/tar
+$ sudo machinectl list-transfers
+</code></pre>
+
+<p>镜像列表参见： <a href="https://nspawn.org">https://nspawn.org</a> (由 Arch Linux Trusted User @shibumi 为你带来)
+传输过程略慢，等待传输完成即可开启</p>
+
+<h2 id="开启容器">开启容器</h2>
+
+<pre><code class="language-bash">$ sudo machinectl start archlinux-archlinux-tar
+$ sudo machinectl shell archlinux-archlinux-tar
+</code></pre>
+
+<p>至此，容器成功启动。容器文件保存在： <code>/var/lib/machines/archlinux-archlinux-tar/</code> 下。退出 Shell，请快速连续按 <code>Ctrl + ]</code> 三次。</p>
+
+<p>关闭容器：<code>sudo machinectl poweroff archlinux-archlinux-tar</code></p>
+
+<p>销毁容器：<code>sudo machinectl terminate archlinux-archlinux-tar</code></p>
+
+<h2 id="提升磁盘限制">提升磁盘限制</h2>
+
+<pre><code class="language-bash">$ sudo machinectl set-limit infinity   # if this not work, try next one
+$ sudo machinectl set-limit 16G
+</code></pre>
+
+<p>检测是否提升成功： <code>sudo machinectl image-status</code></p>
+
+<h2 id="对接网络配置">对接网络配置</h2>
+
+<h3 id="container">Container</h3>
+
+<p>建立并写入：</p>
+
+<p><code>/etc/systemd/network/20-wired.network</code></p>
+
+<pre><code>[Match]
+Name=host0
+
+[Network]
+Address=172.23.0.2/24
+Gateway=172.23.0.1
+DNS=119.29.29.29
+</code></pre>
+
+<p>请注意检查文件夹下有没有其他配置文件默认指定了网卡使用 DHCP 方式，若有，请手动删除或修改为 <code>no</code>.</p>
+
+<p>供你参考：<a href="https://wiki.archlinux.org/index.php/Systemd-networkd">Arch wiki - systemd-networkd</a></p>
+
+<p>网卡显示为： <code>host0@if6</code> 表示容器内网卡名为 <code>host0</code> ，连接到 host 的 第 6 个 slot，host 端执行 ip link 应当能看到多出一个 <code>ve-xxx</code> 的网卡。</p>
+
+<p>接下来启动服务：</p>
+
+<pre><code class="language-bash">$ sudo systemctl enable --now systemd-networkd
+$ sudo systemctl restart systemd-networkd
+</code></pre>
+
+<h3 id="dns">DNS</h3>
+
+<p>自行编辑 <code>/etc/systemd/resolved.conf</code> 之后执行：</p>
+
+<pre><code class="language-bash">$ sudo systemctl enable systemd-resolved
+$ sudo systemctl start systemd-resolved
+</code></pre>
+
+<p>供你参考： <a href="https://wiki.archlinux.org/index.php/Systemd-resolved">Arch Wiki - Systemd-resolved</a></p>
+
+<p>配置工具是 <code>resolvectl</code>.</p>
+
+<h3 id="端口转发的自动化配置">端口转发的自动化配置</h3>
+
+<p>注意：Debian-Based 系统的 Bug 导致你仍需要手动前往 iptables 指明 NAT 和端口转发:</p>
+
+<p><code>/etc/systemd/nspawn/http.nspawn</code></p>
+
+<pre><code>  [Network]
+  Port=tcp:80:80
+  Port=tcp:443:443
+</code></pre>
+
+<h2 id="进一步共享文件">进一步共享文件</h2>
+
+<p>在下列文件中写入下列内容：</p>
+
+<p><code>/etc/systemd/nspawn/my-container.nspawn</code></p>
+
+<pre><code>[Files]
+Bind=/var/cache/pacman/pkg
+BindReadOnly=/var/cache/read-only-data
+</code></pre>
+
+<h1 id="写在文末">写在文末</h1>
+
+<p>这样一番操作之后你就可以开始体验 Arch 了，记得先装 <code>glibc</code> &hellip;&hellip;</p>
+
+<p>一些进阶操作的话就烦请移步 <a href="https://www.freedesktop.org/software/systemd/man/systemd-nspawn.html">Manual page</a> ，快照和临时隔离什么的也是可以有的。</p>
+
+<p>有了 <code>systemd-nspawn</code> 以后，容器里也有独立的 <code>systemd</code> ，就非常香了。由于这样的轻量级容器系统开销极小，因此个人估计在未来会作为主力的环境隔离器使用。</p>
+
+<p>（END） 2019.5.5</p>
+
+      </article>
+      <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "kmahyyg" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </main>
+    <nav class="end-nav side-padding">
+      
+      <a ontouchstart="cardPressed.call(this)" ontouchend="cardReleased.call(this)" ontouchmove="cardReleased.call(this)" 
+  href="https://www.kmahyyg.xyz/welovecode/2019-htb-writeup1/" class="card blog-card" rel="bookmark" >
+    
+    <div class="card-img-container">
+      <p class="card-img-overlay">Next Article</p>
+      <picture>
+        
+        <source srcset="https://alicdn.kmahyyg.xyz/asset_files/aether/cat_tech.webp">
+        <img src="https://alicdn.kmahyyg.xyz/asset_files/aether/cat_tech.webp" class="card-img" >
+      </picture>
+    </div>
+    
+  <article class="card-body">
+    <h2 class="card-title">HackTheBox - WriteUp 1</h2>
+    <p class="card-text">HackTheBox 第一次练手</p>
+    <div class="card-subtext muted-text">
+      <p>Posted <time datetime="2019-04-27 427:00">Apr 27, 2019</time></p>
+      <p>#tech </p>
+    </div>
+  </article>
+</a>
+      
+      <a ontouchstart="cardPressed.call(this)" ontouchend="cardReleased.call(this)" ontouchmove="cardReleased.call(this)" 
+  href="https://www.kmahyyg.xyz/" class="card home-card" style="background-image: url( https://alicdn.kmahyyg.xyz/asset_files/aether/backtohome.webp )" rel="bookmark" >
+  Home
+</a>
+    </nav>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/highlight.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.js" integrity="sha384-K3vbOmF2BtaVai+Qk37uypf7VrgBubhQreNQe9aGsz9lB63dIFiQVlJbr92dw2Lx" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/contrib/auto-render.min.js" integrity="sha384-kmZOZB5ObwgQnS/DuDg6TScgOiWWBiVt0plIRkZCmE6rDZGrEOQeHM5PcHi+nyqe" crossorigin="anonymous"
+    onload="renderMathInElement(document.body);"></script>
+<script src="https://www.kmahyyg.xyz/js/core.js"></script>
+<script>
+  hljs.initHighlightingOnLoad();
+</script>
+  </body>
+</html>

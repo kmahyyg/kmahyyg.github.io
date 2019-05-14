@@ -6,44 +6,44 @@
     <description>Recent content on Pat~ Pat~ Meow~</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Mon, 13 May 2019 22:20:40 +0800</lastBuildDate>
+    <lastBuildDate>Tue, 14 May 2019 08:59:26 +0800</lastBuildDate>
     
         <atom:link href="https://www.kmahyyg.xyz/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
+      <title>OpenVAS9 的 GSAD 频死或无法登陆 Bug</title>
+      <link>https://www.kmahyyg.xyz/welovecode/openvas-9-gsad-bug/</link>
+      <pubDate>Tue, 14 May 2019 08:59:26 +0800</pubDate>
+      
+      <guid>https://www.kmahyyg.xyz/welovecode/openvas-9-gsad-bug/</guid>
+      <description>OpenVAS 作为 Nessus 的完全社区化版本，可供用于大批量的自有大规模网络的漏洞扫描，是一款相对易于使用的软件</description>
+    </item><item>
       <title>HackTheBox - WriteUp 2</title>
-      <link>https://www.kmahyyg.xyz/2019-htb-writeup2/</link>
+      <link>https://www.kmahyyg.xyz/welovecode/2019-htb-writeup2/</link>
       <pubDate>Mon, 13 May 2019 22:20:40 +0800</pubDate>
       
-      <guid>https://www.kmahyyg.xyz/2019-htb-writeup2/</guid>
+      <guid>https://www.kmahyyg.xyz/welovecode/2019-htb-writeup2/</guid>
       <description>HackTheBox 练手</description>
     </item><item>
       <title>给 Charles Proxy 的 chls 文件添加 MIME 关联</title>
-      <link>https://www.kmahyyg.xyz/add-mime-for-charles/</link>
+      <link>https://www.kmahyyg.xyz/dailylife/add-mime-for-charles/</link>
       <pubDate>Thu, 09 May 2019 00:17:51 +0800</pubDate>
       
-      <guid>https://www.kmahyyg.xyz/add-mime-for-charles/</guid>
+      <guid>https://www.kmahyyg.xyz/dailylife/add-mime-for-charles/</guid>
       <description>给 Linux 添加 Charles Proxy 的文件关联的办法</description>
     </item><item>
-      <title>OpenVAS9 的 GSAD 频死或无法登陆 Bug</title>
-      <link>https://www.kmahyyg.xyz/openvas-9-gsad-bug/</link>
-      <pubDate>Sun, 05 May 2019 11:35:19 +0800</pubDate>
-      
-      <guid>https://www.kmahyyg.xyz/openvas-9-gsad-bug/</guid>
-      <description>OpenVAS 作为 Nessus 的完全社区化版本，可供用于大批量的自有大规模网络的漏洞扫描，是一款相对易于使用的软件</description>
-    </item><item>
       <title>Systemd-nSpawn 容器初体验 - Arch Inside Ubuntu</title>
-      <link>https://www.kmahyyg.xyz/systemd-nspawn-first-try/</link>
+      <link>https://www.kmahyyg.xyz/welovecode/systemd-nspawn-first-try/</link>
       <pubDate>Sun, 05 May 2019 10:56:22 +0800</pubDate>
       
-      <guid>https://www.kmahyyg.xyz/systemd-nspawn-first-try/</guid>
+      <guid>https://www.kmahyyg.xyz/welovecode/systemd-nspawn-first-try/</guid>
       <description>Docker 的无守护设计理念也实在是让人难受，Systemd-NSpawn 完全虚拟了文件系统架构并限制了对 sysfs 的写操作实现了一个轻量化的命名空间级别的容器</description>
     </item><item>
       <title>HackTheBox - WriteUp 1</title>
-      <link>https://www.kmahyyg.xyz/2019-htb-writeup1/</link>
+      <link>https://www.kmahyyg.xyz/welovecode/2019-htb-writeup1/</link>
       <pubDate>Sat, 27 Apr 2019 19:18:00 +0800</pubDate>
       
-      <guid>https://www.kmahyyg.xyz/2019-htb-writeup1/</guid>
+      <guid>https://www.kmahyyg.xyz/welovecode/2019-htb-writeup1/</guid>
       <description>HackTheBox 第一次练手</description>
     </item>
   </channel>

@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="zh-cn" dir="ltr">
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Set up 6in4 Tunnel via OpenVPN &middot; Pat~ Pat~ Meow~</title>
+  <meta name="description" content="一次关于 OpenVPN based 6in4 Tunnel 的尝试" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.css" integrity="sha384-9eLZqc9ds8eNjO3TmqPeYcDj8n+Qfa4nuSiGYa6DjLNcv9BtN69ZIulL9+8CqC9Y" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://www.kmahyyg.xyz/css/main.min.css" />
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-123948588-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+
+  <style>
+    body {
+      background: #ecedef url("https://alicdn.kmahyyg.xyz/asset_files/aether/bgimg.webp") repeat;
+    }
+  </style>
+</head>
+  <body class="single-body">
+    <nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="https://www.kmahyyg.xyz/" class="nav-text">Patrick Young</a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="https://www.kmahyyg.xyz/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://www.kmahyyg.xyz/express-page/" class="hamburger-menu-overlay-link">Express Inc</a></li>
+      <li><a href="https://www.kmahyyg.xyz/about-me-page/" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="https://www.kmahyyg.xyz/archlinux-bug-page/" class="hamburger-menu-overlay-link">Arch Linux</a></li>
+      <li><a href="https://www.kmahyyg.xyz/donate-page/" class="hamburger-menu-overlay-link">Donate</a></li>
+      <li><a href="https://www.kmahyyg.xyz/categories/code" class="hamburger-menu-overlay-link">Code</a></li><li><a href="https://www.kmahyyg.xyz/categories/life" class="hamburger-menu-overlay-link">Life</a></li><li><a href="https://www.kmahyyg.xyz/categories/network" class="hamburger-menu-overlay-link">Network</a></li><li><a href="https://www.kmahyyg.xyz/categories/school" class="hamburger-menu-overlay-link">School</a></li><li><a href="https://www.kmahyyg.xyz/categories/tech" class="hamburger-menu-overlay-link">Tech</a></li>
+    </ul>
+  </div>
+</nav>
+    <main class="content side-text-padding">
+      <article class="post ">
+        <header class="post-header">
+        	<h1 class="post-title">Set up 6in4 Tunnel via OpenVPN</h1>
+          <p class="post-date">Posted <time datetime="2018-05-24">May 24, 2018</time></p>
+        </header>
+        
+        <picture class="post-figure">
+            
+            <source srcset="https://alicdn.kmahyyg.xyz/asset_files/aether/cat_network.webp">
+          <img src="https://alicdn.kmahyyg.xyz/asset_files/aether/cat_network.webp" >
+        </picture>
+        
+        
+
+<h1 id="linux-iproute2-method">Linux - iproute2 method</h1>
+
+<p><a href="https://github.com/kmahyyg/6in4/">https://github.com/kmahyyg/6in4/</a></p>
+
+<p>More details: <a href="https://www.kmahyyg.xyz/2018/6in4-Tunnel/">https://www.kmahyyg.xyz/2018/6in4-Tunnel/</a></p>
+
+<h1 id="nix-win-openvpn-method">*nix/Win - OpenVPN method</h1>
+
+<h2 id="prerequisite">Prerequisite</h2>
+
+<ul>
+<li>A Server with IPv4 and native IPv6</li>
+<li>A Client with at least a connection to server via IPv4</li>
+<li>OpenVPN and its hosting OS with TUN support</li>
+</ul>
+
+<h2 id="deployment">Deployment</h2>
+
+<p>Test Environment: Ubuntu 18.04 LTS (Server) &amp; DSM 5.2 also with a Arch Linux PC (Client)</p>
+
+<h3 id="server-easy-and-simple">Server: Easy and simple</h3>
+
+<h4 id="install-openvpn">Install OpenVPN</h4>
+
+<pre><code class="language-bash">root@testsrv: apt update -y &amp;&amp; sudo apt install dist-upgrade -y
+root@testsrv: apt install openvpn easy-rsa -y
+root@testsrv: apt install dnsmasq -y  # Optional
+</code></pre>
+
+<h4 id="generate-a-server-client-key-pair">Generate a server&amp;client key pair</h4>
+
+<pre><code class="language-bash">root@testsrv: mkdir /etc/openvpn/easy-rsa  # new directory to save keys
+root@testsrv: cp -r /usr/share/easy-rsa/* /etc/openvpn/easy-rsa # copy sample configs
+root@testsrv: vim /etc/openvpn/easy-rsa/vars
+</code></pre>
+
+<p>Edit the file opened to give your certs and keys&rsquo; properties:</p>
+
+<pre><code>vim /etc/openvpn/easy-rsa/vars
+</code></pre>
+
+<pre><code>&gt;export KEY_COUNTRY=&quot;GR&quot;       # International country code
+&gt;export KEY_PROVINCE=&quot;Central Macedonia&quot;    # Province
+&gt;export KEY_CITY=&quot;Thessaloniki&quot;     # City
+&gt;export KEY_ORG=&quot;Parabing Creations&quot;     # Organization
+&gt;export KEY_EMAIL=&quot;nobody@parabing.com&quot;    # Email
+&gt;export KEY_CN=&quot;VPNsRUS&quot;      # Common name, recommend use your server hostname
+&gt;export KEY_NAME=&quot;VPNsRUS&quot;    # as you want
+&gt;export KEY_OU=&quot;Parabing&quot;     # Organization unit name
+&gt;export KEY_ALTNAMES=&quot;VPNsRUS&quot;    # as you want, keep it default if you don't know much about it
+</code></pre>
+
+<p>Generator start:</p>
+
+<pre><code class="language-bash">root@testsrv: cp /etc/openvpn/easy-rsa/openssl-1.0.0.cnf /etc/openvpn/easy-rsa/openssl.cnf    # openssl config, keep it unmodified
+root@testsrv: cd /etc/openvpn/easy-rsa
+root@testsrv: source vars
+root@testsrv: ./clean-all
+root@testsrv: ./build-ca
+root@testsrv: ./build-key-server delta   # delta should be the server name you like
+root@testsrv: ./build-dh
+root@testsrv: openvpn --genkey --secret /etc/openvpn/easy-rsa/keys/ta.key
+</code></pre>
+
+<p>Copy the <code>ca.crt ca.key delta.crt delta.key dh2048.pem ta.key</code> from <code>/etc/openvpn/easy-rsa/keys</code> to <code>/etc/openvpn/easy-rsa/</code></p>
+
+<h4 id="openvpn-server-config-and-start">OpenVPN server config and start</h4>
+
+<p>Config file: (save to <code>/etc/openvpn/server.conf</code>)</p>
+
+<pre><code>server 10.0.8.0 255.255.255.0         # VPN Client IPv4 subnet
+topology subnet
+server-ipv6 fc00:aaff:ffac::13:0/64   # VPN Client IPv6 subnet
+port 10666
+proto udp   
+dev tun
+auth SHA1
+# Ensure IPv4 is open for connection
+push &quot;redirect-gateway autolocal def1 bypass-dhcp&quot;
+push &quot;topology subnet&quot;
+push &quot;dhcp-option DNS 223.5.5.5&quot;
+push &quot;dhcp-option DNS 119.29.29.29&quot;
+# IPv6 DNS
+push &quot;dhcp-option DNS 2001:da8::666&quot;
+push &quot;dhcp-option DNS 2001:4860:4860::8888&quot;
+push &quot;ping 5&quot;
+push &quot;ping-restart 30&quot;
+keepalive 30 120
+duplicate-cn
+client-to-client
+persist-key
+persist-tun
+group nogroup
+user nobody
+tls-auth ta.key 0
+ca ca.crt
+cert server.crt
+key server.key
+dh dh2048.pem
+cipher AES-256-GCM
+comp-lzo
+verb 3
+fast-io
+explicit-exit-notify 1
+</code></pre>
+
+<p>Start Service:</p>
+
+<pre><code class="language-bash">root@testsrv: ip6tables -t nat -A POSTROUTING -j SNAT --to-source &lt;SERVER EXACT IPv6 ADDRESS&gt;
+root@testsrv: systemctl start openvpn@server
+root@testsrv: systemctl enable openvpn@server
+</code></pre>
+
+<h3 id="client-simply-copy-paste">Client: Simply Copy&amp;Paste</h3>
+
+<h4 id="generate-client-key-pair-server">Generate client key pair@server</h4>
+
+<p>Generator start:</p>
+
+<pre><code class="language-bash">root@testsrv: ./build-key laptop
+</code></pre>
+
+<p>Copy the <code>ca.crt laptop.crt laptop.key dh2048.pem ta.key</code> from <code>/etc/openvpn/easy-rsa/keys</code> to your client machine.</p>
+
+<h4 id="openvpn-client-config">OpenVPN client config</h4>
+
+<p>Client config file: (save to current working directory named <code>v4Tv6.ovpn</code>)</p>
+
+<pre><code>client
+proto udp
+dev tun
+verb 3
+remote x.x.x.x 10666 udp
+keepalive 30 120
+route 0.0.0.0 0.0.0.0 net_gateway  # route IPv4 traffic to server
+route-ipv6 ::/0 net_gateway     # route IPv6 traffic to server
+script-security 2
+ca ca.crt
+cert client.crt
+key client.key
+tls-auth ta.key 1
+cipher AES-256-GCM
+nobind
+auth SHA1
+comp-lzo
+auth-nocache
+fast-io
+verb 3
+</code></pre>
+
+<h4 id="start-openvpn-and-enjoy">Start OpenVPN and enjoy</h4>
+
+<pre><code class="language-bash">user@tstclient: sudo openvpn ./v4Tv6.ovpn
+</code></pre>
+
+<h1 id="acknowledgement-successive-rankings">Acknowledgement: (Successive Rankings)</h1>
+
+<ul>
+<li><a href="http://www.strrl.com/2018/05/24/%E4%BD%BF%E7%94%A8OpenVPN%E7%9A%84tun%E6%A8%A1%E5%BC%8F%E5%BB%BA%E7%AB%8B4to6%E9%9A%A7%E9%81%93/">http://www.strrl.com/2018/05/24/%E4%BD%BF%E7%94%A8OpenVPN%E7%9A%84tun%E6%A8%A1%E5%BC%8F%E5%BB%BA%E7%AB%8B4to6%E9%9A%A7%E9%81%93/</a></li>
+<li><a href="https://fangdingjun.blogspot.com/2015/11/openvpnipv6.html">https://fangdingjun.blogspot.com/2015/11/openvpnipv6.html</a></li>
+<li><a href="https://unix.stackexchange.com/questions/136211/routing-public-ipv6-traffic-through-openvpn-tunnel">https://unix.stackexchange.com/questions/136211/routing-public-ipv6-traffic-through-openvpn-tunnel</a></li>
+<li><a href="https://freeaqingme.tweakblogs.net/blog/9237/openvpn-ipv6-with-ula-and-nat.html">https://freeaqingme.tweakblogs.net/blog/9237/openvpn-ipv6-with-ula-and-nat.html</a></li>
+<li><a href="https://serverfault.com/questions/237851/how-can-i-setup-openvpn-with-ipv4-and-ipv6-using-a-tap-device">https://serverfault.com/questions/237851/how-can-i-setup-openvpn-with-ipv4-and-ipv6-using-a-tap-device</a></li>
+<li><a href="https://techblog.synagila.com/2016/02/24/build-a-openvpn-server-on-ubuntu-to-provide-a-ipv6-tunnel-over-ipv4/">https://techblog.synagila.com/2016/02/24/build-a-openvpn-server-on-ubuntu-to-provide-a-ipv6-tunnel-over-ipv4/</a></li>
+<li><a href="https://wiki.archlinux.org/index.php/Easy-RSA">https://wiki.archlinux.org/index.php/Easy-RSA</a></li>
+<li><a href="https://linux.cn/article-3706-1.html">https://linux.cn/article-3706-1.html</a></li>
+</ul>
+
+      </article>
+      <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "kmahyyg" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </main>
+    <nav class="end-nav side-padding">
+      
+      <a ontouchstart="cardPressed.call(this)" ontouchend="cardReleased.call(this)" ontouchmove="cardReleased.call(this)" 
+  href="https://www.kmahyyg.xyz/welovecode/python-c-formatting-characters/" class="card blog-card" rel="bookmark" >
+    
+    <div class="card-img-container">
+      <p class="card-img-overlay">Next Article</p>
+      <picture>
+        
+        <source srcset="https://alicdn.kmahyyg.xyz/asset_files/aether/cat_code.webp">
+        <img src="https://alicdn.kmahyyg.xyz/asset_files/aether/cat_code.webp" class="card-img" >
+      </picture>
+    </div>
+    
+  <article class="card-body">
+    <h2 class="card-title">Python struct.pack() formatting characters</h2>
+    <p class="card-text">Python 2 的占位模板符</p>
+    <div class="card-subtext muted-text">
+      <p>Posted <time datetime="2018-04-29 429:00">Apr 29, 2018</time></p>
+      <p>#code </p>
+    </div>
+  </article>
+</a>
+      
+      <a ontouchstart="cardPressed.call(this)" ontouchend="cardReleased.call(this)" ontouchmove="cardReleased.call(this)" 
+  href="https://www.kmahyyg.xyz/" class="card home-card" style="background-image: url( https://alicdn.kmahyyg.xyz/asset_files/aether/backtohome.webp )" rel="bookmark" >
+  Home
+</a>
+    </nav>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/highlight.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.js" integrity="sha384-K3vbOmF2BtaVai+Qk37uypf7VrgBubhQreNQe9aGsz9lB63dIFiQVlJbr92dw2Lx" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/contrib/auto-render.min.js" integrity="sha384-kmZOZB5ObwgQnS/DuDg6TScgOiWWBiVt0plIRkZCmE6rDZGrEOQeHM5PcHi+nyqe" crossorigin="anonymous"
+    onload="renderMathInElement(document.body);"></script>
+<script src="https://www.kmahyyg.xyz/js/core.js"></script>
+<script>
+  hljs.initHighlightingOnLoad();
+</script>
+  </body>
+</html>

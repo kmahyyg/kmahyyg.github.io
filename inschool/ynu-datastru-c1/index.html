@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="zh-cn" dir="ltr">
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>数据结构与算法课程 - Chap 1 序言 &middot; Pat~ Pat~ Meow~</title>
+  <meta name="description" content="数据结构与算法课程期末复习记录 Chapter 1" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.css" integrity="sha384-9eLZqc9ds8eNjO3TmqPeYcDj8n+Qfa4nuSiGYa6DjLNcv9BtN69ZIulL9+8CqC9Y" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://www.kmahyyg.xyz/css/main.min.css" />
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-123948588-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+
+  <style>
+    body {
+      background: #ecedef url("https://alicdn.kmahyyg.xyz/asset_files/aether/bgimg.webp") repeat;
+    }
+  </style>
+</head>
+  <body class="single-body">
+    <nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="https://www.kmahyyg.xyz/" class="nav-text">Patrick Young</a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="https://www.kmahyyg.xyz/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://www.kmahyyg.xyz/express-page/" class="hamburger-menu-overlay-link">Express Inc</a></li>
+      <li><a href="https://www.kmahyyg.xyz/about-me-page/" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="https://www.kmahyyg.xyz/archlinux-bug-page/" class="hamburger-menu-overlay-link">Arch Linux</a></li>
+      <li><a href="https://www.kmahyyg.xyz/donate-page/" class="hamburger-menu-overlay-link">Donate</a></li>
+      <li><a href="https://www.kmahyyg.xyz/categories/code" class="hamburger-menu-overlay-link">Code</a></li><li><a href="https://www.kmahyyg.xyz/categories/life" class="hamburger-menu-overlay-link">Life</a></li><li><a href="https://www.kmahyyg.xyz/categories/network" class="hamburger-menu-overlay-link">Network</a></li><li><a href="https://www.kmahyyg.xyz/categories/school" class="hamburger-menu-overlay-link">School</a></li><li><a href="https://www.kmahyyg.xyz/categories/tech" class="hamburger-menu-overlay-link">Tech</a></li>
+    </ul>
+  </div>
+</nav>
+    <main class="content side-text-padding">
+      <article class="post ">
+        <header class="post-header">
+        	<h1 class="post-title">数据结构与算法课程 - Chap 1 序言</h1>
+          <p class="post-date">Posted <time datetime="2019-01-05">Jan 5, 2019</time></p>
+        </header>
+        
+        <picture class="post-figure">
+            
+            <source srcset="https://alicdn.kmahyyg.xyz/asset_files/aether/cat_school.webp">
+          <img src="https://alicdn.kmahyyg.xyz/asset_files/aether/cat_school.webp" >
+        </picture>
+        
+        
+
+<h1 id="数据结构复习-chapter-1-序言">数据结构复习 - Chapter 1 序言</h1>
+
+<h2 id="导论">导论</h2>
+
+<p>数据结构研究： 数据的 <strong>逻辑结构、存储结构、每种结构定义的运算</strong> 。</p>
+
+<p>相关概念：
+- 数据：信息的符号表示
+- 数据元素：数据的基本单位
+- 数据项：一个数据元素可由若干个数据项组成，<strong>数据项是数据的不可分割的最小单位</strong>。
+- 数据对象：性质相同的数据元素的集合，数据的一个子集。
+- 结构：数据彼此之间存在的相互关系。
+- 数据结构：相互之间存在的一种或多种特定关系的数据元素的集合。元素之间的相互联系称为逻辑结构。</p>
+
+<p>逻辑结构包括：
+- 集合：没有相关性。
+- 线性关系：一对一。
+- 树形关系：一对多。
+- 图状结构：多对多。</p>
+
+<h2 id="adt-抽象数据类型描述">ADT 抽象数据类型描述</h2>
+
+<p>表示对应数学模型及定义在该模型上的一组操作。</p>
+
+<pre><code>ADT Typename{
+  Object: Definition
+  Relationship: Definition
+  BasicOperation: Definition
+} ADT Typename
+</code></pre>
+
+<h2 id="算法">算法</h2>
+
+<p>算法：指令的有限序列，每条指令包括一个或多个操作，五个特性：<strong>有穷、确定、可行性、输入、输出</strong> 。</p>
+
+<p>算法意味着 <strong>可终止</strong> ，程序是 <strong>算法使用某种具体程序设计语言</strong> 具体实现。</p>
+
+<p>算法的设计要求：
+- 正确性： 满足具体问题需求。
+- 可读性：有助于阅读理解，简化后续维护与调试修改的难度。
+- 健壮性（Robustness，鲁棒性）：具有容错处理能力。
+- 效率 与 存储需求：算法执行时间 + 算法执行过程中所需的最大存储空间，与问题规模相关。</p>
+
+<h3 id="算法构成与复杂度问题">算法构成与复杂度问题</h3>
+
+<p>时间复杂度 &lt;=&gt; 运算工作量，对应问题规模
+空间复杂度 &lt;=&gt; 对应需要的最大存储空间</p>
+
+<p>算法：控制结构（循环、顺序、分支）+原操作（固有数据类型的操作）</p>
+
+<p>例如：三次循环，从1到n，总次数为 n^3 ，时间复杂度为 O(n^3)</p>
+
+      </article>
+      <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "kmahyyg" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </main>
+    <nav class="end-nav side-padding">
+      
+      <a ontouchstart="cardPressed.call(this)" ontouchend="cardReleased.call(this)" ontouchmove="cardReleased.call(this)" 
+  href="https://www.kmahyyg.xyz/inschool/ask-questions/" class="card blog-card" rel="bookmark" >
+    
+    <div class="card-img-container">
+      <p class="card-img-overlay">Next Article</p>
+      <picture>
+        
+        <source srcset="https://alicdn.kmahyyg.xyz/asset_files/aether/cat_school.webp">
+        <img src="https://alicdn.kmahyyg.xyz/asset_files/aether/cat_school.webp" class="card-img" >
+      </picture>
+    </div>
+    
+  <article class="card-body">
+    <h2 class="card-title">正确提问</h2>
+    <p class="card-text">How to ask questions the smart way?</p>
+    <div class="card-subtext muted-text">
+      <p>Posted <time datetime="2018-10-18 1018:00">Oct 18, 2018</time></p>
+      <p>#school </p>
+    </div>
+  </article>
+</a>
+      
+      <a ontouchstart="cardPressed.call(this)" ontouchend="cardReleased.call(this)" ontouchmove="cardReleased.call(this)" 
+  href="https://www.kmahyyg.xyz/" class="card home-card" style="background-image: url( https://alicdn.kmahyyg.xyz/asset_files/aether/backtohome.webp )" rel="bookmark" >
+  Home
+</a>
+    </nav>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/highlight.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.js" integrity="sha384-K3vbOmF2BtaVai+Qk37uypf7VrgBubhQreNQe9aGsz9lB63dIFiQVlJbr92dw2Lx" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/contrib/auto-render.min.js" integrity="sha384-kmZOZB5ObwgQnS/DuDg6TScgOiWWBiVt0plIRkZCmE6rDZGrEOQeHM5PcHi+nyqe" crossorigin="anonymous"
+    onload="renderMathInElement(document.body);"></script>
+<script src="https://www.kmahyyg.xyz/js/core.js"></script>
+<script>
+  hljs.initHighlightingOnLoad();
+</script>
+  </body>
+</html>
