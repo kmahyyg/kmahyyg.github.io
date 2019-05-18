@@ -60,9 +60,9 @@ $ smbclient -L -U guest -N //10.10.10.123
         Sharename       Type      Comment                                                            
         ---------       ----      -------                                                         
         print$          Disk      Printer Drivers                                                 
-        Files           Disk      FriendZone Samba Server Files /etc/Files  <NO PERM>                         
-        general         Disk      FriendZone Samba Server Files             <RO>                                            
-        Development     Disk      FriendZone Samba Server Files             <RW>               
+        Files           Disk      FriendZone Samba Server Files /etc/Files  {NO PERM}                         
+        general         Disk      FriendZone Samba Server Files             {RO}                                          
+        Development     Disk      FriendZone Samba Server Files             {RW}              
         IPC$            IPC       IPC Service (FriendZone server (Samba, Ubuntu))   
 ```
 
@@ -156,7 +156,7 @@ Check the dashboard, found `https://administrator1.friendzone.red/login.php?imag
 
 Using the last result of gobuster, you may guess there's a LFI here. That's it.
 
-> https://uploads.friendzone.red/   <UPLOAD FORM NOT WORKING, RABBIT HOLE>
+> https://uploads.friendzone.red/   {UPLOAD FORM NOT WORKING, RABBIT HOLE}
 
 The only way to upload the file is via SMB, you have RW permission only on Development.
 
