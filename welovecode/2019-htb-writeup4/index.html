@@ -110,9 +110,9 @@ if (!doNotTrack) {
         Sharename       Type      Comment                                                            
         ---------       ----      -------                                                         
         print$          Disk      Printer Drivers                                                 
-        Files           Disk      FriendZone Samba Server Files /etc/Files  &lt;NO PERM&gt;                         
-        general         Disk      FriendZone Samba Server Files             &lt;RO&gt;                                            
-        Development     Disk      FriendZone Samba Server Files             &lt;RW&gt;               
+        Files           Disk      FriendZone Samba Server Files /etc/Files  {NO PERM}                         
+        general         Disk      FriendZone Samba Server Files             {RO}                                          
+        Development     Disk      FriendZone Samba Server Files             {RW}              
         IPC$            IPC       IPC Service (FriendZone server (Samba, Ubuntu))   
 </code></pre>
 
@@ -202,7 +202,7 @@ friendzone.red.         604800  IN      SOA     localhost. root.localhost. 2 604
 <p>Using the last result of gobuster, you may guess there&rsquo;s a LFI here. That&rsquo;s it.</p>
 
 <blockquote>
-<p><a href="https://uploads.friendzone.red/">https://uploads.friendzone.red/</a>   <UPLOAD FORM NOT WORKING, RABBIT HOLE></p>
+<p><a href="https://uploads.friendzone.red/">https://uploads.friendzone.red/</a>   {UPLOAD FORM NOT WORKING, RABBIT HOLE}</p>
 </blockquote>
 
 <p>The only way to upload the file is via SMB, you have RW permission only on Development.</p>
