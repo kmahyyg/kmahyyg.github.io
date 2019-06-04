@@ -8,6 +8,21 @@
   </url>
   
   <url>
+    <loc>https://www.kmahyyg.xyz/hioscp/2019-htb-writeup5/</loc>
+    <lastmod>2019-05-24T18:06:06+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.kmahyyg.xyz/hioscp/2019-htb-writeup4/</loc>
+    <lastmod>2019-05-18T13:02:03+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.kmahyyg.xyz/hioscp/2019-htb-writeup3/</loc>
+    <lastmod>2019-05-14T23:00:45+08:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://www.kmahyyg.xyz/welovecode/java-oop-inheritance-class/</loc>
     <lastmod>2019-05-14T09:11:09+08:00</lastmod>
   </url>
@@ -18,6 +33,11 @@
   </url>
   
   <url>
+    <loc>https://www.kmahyyg.xyz/hioscp/2019-htb-writeup2/</loc>
+    <lastmod>2019-05-13T22:20:40+08:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://www.kmahyyg.xyz/dailylife/add-mime-for-charles/</loc>
     <lastmod>2019-05-09T00:17:51+08:00</lastmod>
   </url>
@@ -25,6 +45,11 @@
   <url>
     <loc>https://www.kmahyyg.xyz/welovecode/systemd-nspawn-first-try/</loc>
     <lastmod>2019-05-05T10:56:22+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.kmahyyg.xyz/hioscp/2019-htb-writeup1/</loc>
+    <lastmod>2019-04-27T19:18:00+08:00</lastmod>
   </url>
   
   <url>
@@ -505,6 +530,12 @@
   </url>
   
   <url>
+    <loc>https://www.kmahyyg.xyz/hioscp/</loc>
+    <lastmod>2019-05-24T18:06:06+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://www.kmahyyg.xyz/inschool/</loc>
     <lastmod>2019-04-13T23:19:40+00:00</lastmod>
     <priority>0</priority>
@@ -541,7 +572,7 @@
   
   <url>
     <loc>https://www.kmahyyg.xyz/categories/tech/</loc>
-    <lastmod>2018-10-24T10:31:57+00:00</lastmod>
+    <lastmod>2019-05-24T18:06:06+08:00</lastmod>
     <priority>0</priority>
   </url>
   
