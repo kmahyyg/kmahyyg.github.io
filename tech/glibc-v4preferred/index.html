@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="zh-cn" dir="ltr">
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>对指定域名的解析 IPv4 结果优先 &middot; Pat~ Pat~ Meow~</title>
+  <meta name="description" content="对 GLIBC getaddrinfo 函数进行配置，A 记录优先级高于 AAAA 记录" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.css" integrity="sha384-9eLZqc9ds8eNjO3TmqPeYcDj8n+Qfa4nuSiGYa6DjLNcv9BtN69ZIulL9+8CqC9Y" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://www.kmahyyg.xyz/css/main.min.css" />
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-123948588-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+
+  <style>
+    body {
+      background: #ecedef url("https://alicdn.kmahyyg.xyz/asset_files/aether/bgimg.webp") repeat;
+    }
+  </style>
+</head>
+  <body class="single-body">
+    <nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="https://www.kmahyyg.xyz/" class="nav-text">Patrick Young</a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="https://www.kmahyyg.xyz/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://www.kmahyyg.xyz/express-page/" class="hamburger-menu-overlay-link">Express Inc</a></li>
+      <li><a href="https://www.kmahyyg.xyz/about-me-page/" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="https://www.kmahyyg.xyz/archlinux-bug-page/" class="hamburger-menu-overlay-link">Arch Linux</a></li>
+      <li><a href="https://www.kmahyyg.xyz/donate-page/" class="hamburger-menu-overlay-link">Donate</a></li>
+      <li><a href="https://www.kmahyyg.xyz/categories/code" class="hamburger-menu-overlay-link">Code</a></li><li><a href="https://www.kmahyyg.xyz/categories/life" class="hamburger-menu-overlay-link">Life</a></li><li><a href="https://www.kmahyyg.xyz/categories/network" class="hamburger-menu-overlay-link">Network</a></li><li><a href="https://www.kmahyyg.xyz/categories/school" class="hamburger-menu-overlay-link">School</a></li><li><a href="https://www.kmahyyg.xyz/categories/tech" class="hamburger-menu-overlay-link">Tech</a></li>
+    </ul>
+  </div>
+</nav>
+    <main class="content side-text-padding">
+      <article class="post ">
+        <header class="post-header">
+        	<h1 class="post-title">对指定域名的解析 IPv4 结果优先</h1>
+          <p class="post-date">Posted <time datetime="2019-06-05">Jun 5, 2019</time></p>
+        </header>
+        
+        <picture class="post-figure">
+            
+            <source srcset="https://alicdn.kmahyyg.xyz/asset_files/aether/cat_network.webp">
+          <img src="https://alicdn.kmahyyg.xyz/asset_files/aether/cat_network.webp" >
+        </picture>
+        
+        
+
+<h1 id="preface">Preface</h1>
+
+<p>Application Environment:</p>
+
+<ol>
+<li>You have a native dual-stack network.</li>
+<li>The route to destination via IPv6 is broken or much more slower than IPv4.</li>
+<li>The latency is 20x faster in IPv4 comparing to IPv6.</li>
+</ol>
+
+<h1 id="depend-on-your-situation">Depend on your situation</h1>
+
+<p>You have those methods listed below:</p>
+
+<ul>
+<li>Block the route to destination via IPv6.</li>
+<li>Use <code>iptables-wrapper</code> -like tool to remove the AAAA response in the packet.</li>
+<li>Force IPv4 globally.</li>
+<li>Hack the <code>getaddrinfo()</code> in GLIBC.</li>
+<li>Disable IPv6 in specific software.</li>
+</ul>
+
+<p>I strongly recommend you to achieve this in DNS layer or just disable IPv6, not in IP layer, due to the IP corresponding to the specific domain name may get changed someday.</p>
+
+<h2 id="force-ipv4-globally">Force IPv4 globally</h2>
+
+<ol>
+<li>Open a terminal window.</li>
+<li>Change to the root user.</li>
+<li>Issue the command sysctl -w net.ipv6.conf.all.disable_ipv6=1</li>
+<li>Issue the command sysctl -w net.ipv6.conf.default.disable_ipv6=1</li>
+</ol>
+
+<h2 id="disable-ipv6-in-specific-software-eg-apt">Disable IPv6 in specific software (eg. apt)</h2>
+
+<hr />
+
+<p>echo <code>Acquire::ForceIPv4 &quot;true&quot;;</code> &gt; <code>/etc/apt/apt.conf.d/99force-ipv4</code></p>
+
+<hr />
+
+<p>OR specify <code>AF_INET</code> in <code>AddressFamily</code> when you open a socket.</p>
+
+<hr />
+
+<h2 id="use-wrapper-software-with-iptables">Use wrapper software with iptables</h2>
+
+<p><a href="https://alicdn.kmahyyg.xyz/asset_files/dns-dropper.tar.xz">DNS-dropper</a> by <a href="https://blog.lilydjwg.me/">@lilydjwg</a> , Thanks a lot to him.</p>
+
+<p>It works like a DNS proxy, filter the AAAA inside a DNS response packet and feedback to software.</p>
+
+<p>If you are an Arch Linux User, just run the binary inside with a domain blacklist in this way:</p>
+
+<pre><code class="language-bash">$ echo &quot;fuckyou.com&quot; &gt; domain.txt
+$ sudo ./dns-dropper domain.txt
+</code></pre>
+
+<h2 id="block-the-route">Block the route</h2>
+
+<p>Issue a command with <code>sudo</code>: <code>sudo ip route add unr xxxx:xxxx::xxxx</code></p>
+
+<p><code>unr</code> means <code>unreachable</code>.</p>
+
+<h2 id="hack-the-glibc-getaddrinfo">Hack the glibc getaddrinfo</h2>
+
+<p>CAUTION: THIS METHOD SHOULD BE USED AT LAST AND IN A VERY CAREFULLY WAY!
+IT MAY BROKEN YOUR WHOLE INTERNET CONNECTION IF CONFIGURED IN AN IMPROPER WAY!</p>
+
+<p>This way ONLY APPLIED to softwares which rely on <code>getaddrinfo()</code> system call in GLIBC.</p>
+
+<p>You should read the RFC listed in Reference list to know what&rsquo;s behind to make sure you understand what you are going to do.</p>
+
+<p>Step-By-Step Tutorial:</p>
+
+<ul>
+<li>Get the AAAA and A result for the host you need to block</li>
+<li>Check its IP range and subnet mask using ipip.net</li>
+<li>Convert A Response to IPv4-mapped IPv6 address via <a href="https://www.ipaddressguide.com/ipv4-to-ipv6">Convert tools</a></li>
+<li>Calculate converted address subnet mask</li>
+<li>Read each line carefully and backup <code>/etc/gai.conf</code></li>
+<li>Append <code>reload yes</code> to <code>/etc/gai.conf</code>, it will allow you to check the result immediately (OPTIONAL).</li>
+<li>Append <code>precedence &lt;IPv4-Mapped Addr&gt; &lt;Larger precedence, like 100&gt;</code> to <code>/etc/gai.conf</code></li>
+<li>Append <code>precedence &lt;IPv6 Addr in AAAA Response&gt; &lt;Smaller precedence, like 10&gt;</code> to <code>/etc/gai.conf</code></li>
+<li>Done!</li>
+</ul>
+
+<h1 id="reference">Reference</h1>
+
+<ul>
+<li><a href="https://tools.ietf.org/html/rfc6145">https://tools.ietf.org/html/rfc6145</a></li>
+<li><a href="https://tools.ietf.org/html/rfc4291">https://tools.ietf.org/html/rfc4291</a></li>
+<li><a href="https://tools.ietf.org/html/rfc6724">https://tools.ietf.org/html/rfc6724</a></li>
+<li><a href="https://tools.ietf.org/html/rfc7757">https://tools.ietf.org/html/rfc7757</a></li>
+<li><a href="https://tools.ietf.org/html/rfc6555">https://tools.ietf.org/html/rfc6555</a></li>
+<li><a href="https://tools.ietf.org/html/rfc3484">https://tools.ietf.org/html/rfc3484</a></li>
+<li><a href="http://man7.org/linux/man-pages/man5/gai.conf.5.html">http://man7.org/linux/man-pages/man5/gai.conf.5.html</a></li>
+</ul>
+
+      </article>
+      <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "kmahyyg" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </main>
+    <nav class="end-nav side-padding">
+      
+      <a ontouchstart="cardPressed.call(this)" ontouchend="cardReleased.call(this)" ontouchmove="cardReleased.call(this)" 
+  href="https://www.kmahyyg.xyz/tech/asm-bighomework/" class="card blog-card" rel="bookmark" >
+    
+    <div class="card-img-container">
+      <p class="card-img-overlay">Next Article</p>
+      <picture>
+        
+        <source srcset="https://alicdn.kmahyyg.xyz/asset_files/aether/cat_code.webp">
+        <img src="https://alicdn.kmahyyg.xyz/asset_files/aether/cat_code.webp" class="card-img" >
+      </picture>
+    </div>
+    
+  <article class="card-body">
+    <h2 class="card-title">2018 汇编大作业</h2>
+    <p class="card-text">学校汇编语言的大作业</p>
+    <div class="card-subtext muted-text">
+      <p>Posted <time datetime="2019-02-08 28:00">Feb 8, 2019</time></p>
+      <p>#code </p>
+    </div>
+  </article>
+</a>
+      
+      <a ontouchstart="cardPressed.call(this)" ontouchend="cardReleased.call(this)" ontouchmove="cardReleased.call(this)" 
+  href="https://www.kmahyyg.xyz/" class="card home-card" style="background-image: url( https://alicdn.kmahyyg.xyz/asset_files/aether/backtohome.webp )" rel="bookmark" >
+  Home
+</a>
+    </nav>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/highlight.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.js" integrity="sha384-K3vbOmF2BtaVai+Qk37uypf7VrgBubhQreNQe9aGsz9lB63dIFiQVlJbr92dw2Lx" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/contrib/auto-render.min.js" integrity="sha384-kmZOZB5ObwgQnS/DuDg6TScgOiWWBiVt0plIRkZCmE6rDZGrEOQeHM5PcHi+nyqe" crossorigin="anonymous"
+    onload="renderMathInElement(document.body);"></script>
+<script src="https://www.kmahyyg.xyz/js/core.js"></script>
+<script>
+  hljs.initHighlightingOnLoad();
+</script>
+  </body>
+</html>

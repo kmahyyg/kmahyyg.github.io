@@ -6,11 +6,18 @@
     <description>Recent content in Network on Pat~ Pat~ Meow~</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Wed, 09 Jan 2019 00:06:43 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 05 Jun 2019 00:32:14 +0800</lastBuildDate>
     
         <atom:link href="https://www.kmahyyg.xyz/categories/network/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
+      <title>对指定域名的解析 IPv4 结果优先</title>
+      <link>https://www.kmahyyg.xyz/tech/glibc-v4preferred/</link>
+      <pubDate>Wed, 05 Jun 2019 00:32:14 +0800</pubDate>
+      
+      <guid>https://www.kmahyyg.xyz/tech/glibc-v4preferred/</guid>
+      <description>对 GLIBC getaddrinfo 函数进行配置，A 记录优先级高于 AAAA 记录</description>
+    </item><item>
       <title>计算机网络期末复习稿</title>
       <link>https://www.kmahyyg.xyz/inschool/ynu-networkbasic/</link>
       <pubDate>Wed, 09 Jan 2019 00:06:43 +0000</pubDate>
@@ -38,13 +45,6 @@
       
       <guid>https://www.kmahyyg.xyz/tech/6in4-tunnel/</guid>
       <description>在 IPv4 Only 网络中尝试构建 6in4 隧道</description>
-    </item><item>
-      <title>DNS-Over-TLS Client Setup</title>
-      <link>https://www.kmahyyg.xyz/welovecode/dns-over-tls/</link>
-      <pubDate>Mon, 02 Apr 2018 11:22:47 +0000</pubDate>
-      
-      <guid>https://www.kmahyyg.xyz/welovecode/dns-over-tls/</guid>
-      <description>DoT 是一项新兴的 DNS 查询方式，本文主要介绍作者尝试部署 DoT 服务器的一次实践。</description>
     </item>
   </channel>
 </rss>
