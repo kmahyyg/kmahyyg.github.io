@@ -6,11 +6,18 @@
     <description>Recent content in Welovecodes on Pat~ Pat~ Meow~</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Tue, 14 May 2019 09:11:09 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 05 Jun 2019 13:02:53 +0800</lastBuildDate>
     
         <atom:link href="https://www.kmahyyg.xyz/welovecode/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
+      <title>Vulnhub - Mr.Robot Writeup</title>
+      <link>https://www.kmahyyg.xyz/welovecode/vulnhub-mrrobot/</link>
+      <pubDate>Wed, 05 Jun 2019 13:02:53 +0800</pubDate>
+      
+      <guid>https://www.kmahyyg.xyz/welovecode/vulnhub-mrrobot/</guid>
+      <description></description>
+    </item><item>
       <title>Java 语言笔记 - 继承与类</title>
       <link>https://www.kmahyyg.xyz/welovecode/java-oop-inheritance-class/</link>
       <pubDate>Tue, 14 May 2019 09:11:09 +0800</pubDate>
@@ -38,13 +45,6 @@
       
       <guid>https://www.kmahyyg.xyz/welovecode/java-oop-packagendocs/</guid>
       <description>Java 语言面向对象编程中包和包文档的相关内容</description>
-    </item><item>
-      <title>Java 语言笔记 - OOP - 对象构造</title>
-      <link>https://www.kmahyyg.xyz/welovecode/java-oop-objconst/</link>
-      <pubDate>Wed, 10 Apr 2019 00:28:49 +0000</pubDate>
-      
-      <guid>https://www.kmahyyg.xyz/welovecode/java-oop-objconst/</guid>
-      <description>Java 语言面向对象编程中一些基础的对象构造</description>
     </item>
   </channel>
 </rss>
