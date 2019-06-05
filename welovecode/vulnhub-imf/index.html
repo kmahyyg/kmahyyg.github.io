@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="zh-cn" dir="ltr">
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Vulnhub - IMF Writeup &middot; Pat~ Pat~ Meow~</title>
+  <meta name="description" content="" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.css" integrity="sha384-9eLZqc9ds8eNjO3TmqPeYcDj8n+Qfa4nuSiGYa6DjLNcv9BtN69ZIulL9+8CqC9Y" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://www.kmahyyg.xyz/css/main.min.css" />
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-123948588-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+
+  <style>
+    body {
+      background: #ecedef url("https://alicdn.kmahyyg.xyz/asset_files/aether/bgimg.webp") repeat;
+    }
+  </style>
+</head>
+  <body class="single-body">
+    <nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="https://www.kmahyyg.xyz/" class="nav-text">Patrick Young</a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="https://www.kmahyyg.xyz/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://www.kmahyyg.xyz/express-page/" class="hamburger-menu-overlay-link">Express Inc</a></li>
+      <li><a href="https://www.kmahyyg.xyz/about-me-page/" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="https://www.kmahyyg.xyz/archlinux-bug-page/" class="hamburger-menu-overlay-link">Arch Linux</a></li>
+      <li><a href="https://www.kmahyyg.xyz/donate-page/" class="hamburger-menu-overlay-link">Donate</a></li>
+      <li><a href="https://www.kmahyyg.xyz/categories/code" class="hamburger-menu-overlay-link">Code</a></li><li><a href="https://www.kmahyyg.xyz/categories/life" class="hamburger-menu-overlay-link">Life</a></li><li><a href="https://www.kmahyyg.xyz/categories/network" class="hamburger-menu-overlay-link">Network</a></li><li><a href="https://www.kmahyyg.xyz/categories/school" class="hamburger-menu-overlay-link">School</a></li><li><a href="https://www.kmahyyg.xyz/categories/tech" class="hamburger-menu-overlay-link">Tech</a></li>
+    </ul>
+  </div>
+</nav>
+    <main class="content side-text-padding">
+      <article class="post ">
+        <header class="post-header">
+        	<h1 class="post-title">Vulnhub - IMF Writeup</h1>
+          <p class="post-date">Posted <time datetime="2019-06-05">Jun 5, 2019</time></p>
+        </header>
+        
+        <picture class="post-figure">
+            
+            <source srcset="https://alicdn.kmahyyg.xyz/asset_files/aether/cat_tech.webp">
+          <img src="https://alicdn.kmahyyg.xyz/asset_files/aether/cat_tech.webp" >
+        </picture>
+        
+        
+
+<h1 id="紧急插播">紧急插播</h1>
+
+<p><a href="https://github.com/numirias/security/blob/master/doc/2019-06-04_ace-vim-neovim.md">https://github.com/numirias/security/blob/master/doc/2019-06-04_ace-vim-neovim.md</a></p>
+
+<h1 id="download-here">Download here</h1>
+
+<p>Target VM: <a href="https://download.vulnhub.com/imf/IMF.ova">https://download.vulnhub.com/imf/IMF.ova</a></p>
+
+<p>Difficulty: Beginner/Moderate</p>
+
+<p>IMF is a intelligence agency that you must hack to get all flags and ultimately root. The flags start off easy and get harder as you progress. Each flag contains a hint to the next flag. This IMF has 6 flags.</p>
+
+<h1 id="before-start">Before Start</h1>
+
+<p>After you download it, just import to your VMWare workstation and change the network interface type as you pleased. Network is configured via DHCP.</p>
+
+<p>Prepare your Kali and ensure they are in the same subnet.</p>
+
+<p>Open VMware workstation - Edit - Virtual network editor to get the ip range.</p>
+
+<h2 id="check-vm-ip">Check VM IP</h2>
+
+<p><code>nmap -sn -n 172.16.51.0/24</code>, found: 172.16.51.134</p>
+
+<h1 id="gogogo">GOGOGO</h1>
+
+<h2 id="before-attack">Before Attack</h2>
+
+<p><code>nmap -A -Pn -p1-65535 -O -oN imf-nmap 172.16.51.134</code></p>
+
+<p>Only 80 port is opened, things might be tough.</p>
+
+<h2 id="start-attack">Start Attack</h2>
+
+<h3 id="flag-1">Flag 1</h3>
+
+<p>Access to the site, <code>flag1{YWxsdGhlZmlsZXM=}</code> found at the <code>contact.php</code> source code.</p>
+
+<p>Decode flag via Base64: allthefiles</p>
+
+<h3 id="flag-2">Flag 2</h3>
+
+<p><code>contact.php</code> src:</p>
+
+<pre><code class="language-html">        &lt;script src=&quot;js/ZmxhZzJ7YVcxbVl.js&quot;&gt;&lt;/script&gt;
+        &lt;script src=&quot;js/XUnRhVzVwYzNS.js&quot;&gt;&lt;/script&gt;
+        &lt;script src=&quot;js/eVlYUnZjZz09fQ==.min.js&quot;&gt;&lt;/script&gt;
+</code></pre>
+
+<p>Combine and decode via base64: <code>flag2{aW1mYWRtaW5pc3RyYXRvcg==}</code></p>
+
+<p>Decode again: imfadministrator</p>
+
+<h3 id="flag-3">Flag 3</h3>
+
+<p><code>gobuster -u http://172.16.51.134 -w /media/kmahyyg/linuxdata/WorkData/HostedOnGithub/hackbox_tools/utils/outsidetools/dictionaries/DirBuster-Lists/directory-list-2.3-medium.txt -x php,html,txt,html -o imf.txt</code> to check if can find something:</p>
+
+<pre><code>/contact.php (Status: 200)
+/images (Status: 301)
+/index.php (Status: 200)
+/projects.php (Status: 200)
+/css (Status: 301)
+/js (Status: 301)
+/fonts (Status: 301)
+/less (Status: 301)
+/server-status (Status: 403)
+</code></pre>
+
+<p>Nothing useful&hellip; Try <code>/imfadministrator</code>, check webpage source code, found:</p>
+
+<pre><code>&lt;!-- I couldn't get the SQL working, so I hard-coded the password. It's still mad secure through. - Roger --&gt;
+</code></pre>
+
+<blockquote>
+<p>Please note: OSCP doesn&rsquo;t allow bruteforce and SQLMap/Metasploit etc.</p>
+</blockquote>
+
+<p>Try to get information from <code>contact.php</code>, found 3 usernames: estone, rmichaels, akeith</p>
+
+<p>If you have a invalid username, it will tell you. So the only valid username is : <code>rmichaels</code>.</p>
+
+<p>But how about password?</p>
+
+<p>Firstly, <code>SQL</code>, SQL Injection? Due to the large amount data here, try SQLMap. NOT WORKING&hellip;</p>
+
+<p>Secondly, <code>hard-coded</code> ? So, what to do next?</p>
+
+<p>I just asked for help here, got the response:</p>
+
+<blockquote>
+<p>Update the name of the field <code>pass</code> to be <code>pass[]</code>. This means that PHP will interprete this field as <strong>an array</strong>, instead of <strong>a string</strong>. This can some times confuse validation or even string checks, as <code>strcmp</code> will return <code>NULL</code> if one of the inputs is an array.
+The script compares the user input from the <code>pass</code> field to the hardcoded password, using the <code>strcmp</code> function. It <strong>then compares the result of this call to the value 0</strong>. If you use <code>strcmp</code> to compare a <code>string</code> and an <code>array</code>, it will return <code>NULL</code>. <code>(NULL == 0) = TRUE</code>, as we&rsquo;re only using two equals signs. If the author had used three, then this bypass would not work, as <code>(NULL === 0) = FALSE</code>.</p>
+</blockquote>
+
+<p>So just change the form code in HTML.</p>
+
+<p>Got FLAG3: <code>flag3{Y29udGludWVUT2Ntcw==}</code> and a link to CMS which goes to <code>http://172.16.51.134/imfadministrator/cms.php?pagename=home</code>.</p>
+
+<p>Decode again: continueTOcms</p>
+
+<h2 id="flag-4">FLAG 4</h2>
+
+      </article>
+      <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "kmahyyg" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </main>
+    <nav class="end-nav side-padding">
+      
+      <a ontouchstart="cardPressed.call(this)" ontouchend="cardReleased.call(this)" ontouchmove="cardReleased.call(this)" 
+  href="https://www.kmahyyg.xyz/welovecode/vulnhub-skytower/" class="card blog-card" rel="bookmark" >
+    
+    <div class="card-img-container">
+      <p class="card-img-overlay">Next Article</p>
+      <picture>
+        
+        <source srcset="https://alicdn.kmahyyg.xyz/asset_files/aether/cat_tech.webp">
+        <img src="https://alicdn.kmahyyg.xyz/asset_files/aether/cat_tech.webp" class="card-img" >
+      </picture>
+    </div>
+    
+  <article class="card-body">
+    <h2 class="card-title">Vulnhub - SkyTower Writeup</h2>
+    <p class="card-text"></p>
+    <div class="card-subtext muted-text">
+      <p>Posted <time datetime="2019-06-05 65:00">Jun 5, 2019</time></p>
+      <p>#tech </p>
+    </div>
+  </article>
+</a>
+      
+      <a ontouchstart="cardPressed.call(this)" ontouchend="cardReleased.call(this)" ontouchmove="cardReleased.call(this)" 
+  href="https://www.kmahyyg.xyz/" class="card home-card" style="background-image: url( https://alicdn.kmahyyg.xyz/asset_files/aether/backtohome.webp )" rel="bookmark" >
+  Home
+</a>
+    </nav>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/highlight.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.js" integrity="sha384-K3vbOmF2BtaVai+Qk37uypf7VrgBubhQreNQe9aGsz9lB63dIFiQVlJbr92dw2Lx" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/contrib/auto-render.min.js" integrity="sha384-kmZOZB5ObwgQnS/DuDg6TScgOiWWBiVt0plIRkZCmE6rDZGrEOQeHM5PcHi+nyqe" crossorigin="anonymous"
+    onload="renderMathInElement(document.body);"></script>
+<script src="https://www.kmahyyg.xyz/js/core.js"></script>
+<script>
+  hljs.initHighlightingOnLoad();
+</script>
+  </body>
+</html>
