@@ -40,7 +40,7 @@ Found 80,443. Nothing useful.
 
 Found wordpress.
 
-> gobuster -u http://172.16.51.132 -w /media/kmahyyg/linuxdata/WorkData/HostedOnGithub/hackbox_tools/utils/outsidetools/dictionaries/DirBuster-Lists/directory-list-2.3-medium.txt -x php,html,txt,html -o mrrbot.txt
+> gobuster -u http://172.16.51.132 -w /<PATH TO DICT>/directory-list-2.3-medium.txt -x php,html,txt,html -o mrrbot.txt
 
 Well, there's a lot of rabbit holes. But just check StatusCode == 200
 

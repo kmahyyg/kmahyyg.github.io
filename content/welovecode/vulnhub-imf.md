@@ -66,7 +66,7 @@ Decode again: imfadministrator
 
 ### Flag 3
 
-`gobuster -u http://172.16.51.134 -w /media/kmahyyg/linuxdata/WorkData/HostedOnGithub/hackbox_tools/utils/outsidetools/dictionaries/DirBuster-Lists/directory-list-2.3-medium.txt -x php,html,txt,html -o imf.txt` to check if can find something:
+`gobuster -u http://172.16.51.134 -w /<PATH TO DICT>/directory-list-2.3-medium.txt -x php,html,txt,html -o imf.txt` to check if can find something:
 
 ```
 /contact.php (Status: 200)
@@ -137,7 +137,7 @@ got: `Error: Invalid filetype (php)`. Let's try to change to `jpg`, then, got: `
 
 So we use `FFD8FFE0` as prefix to build a fake jpg file to bypass it. Then After successfully uploaded, you got: `<!-- 577539cb4b62 -->` in source code. Next question is, where is the file uploaded?
 
-GOBUSTER! `gobuster -u http://172.16.51.134/imfadministrator -w /media/kmahyyg/linuxdata/WorkData/HostedOnGithub/hackbox_tools/utils/outsidetools/dictionaries/DirBuster-Lists/directory-list-2.3-medium.txt -x txt,html,php,jpg -o imf.txt`
+GOBUSTER! `gobuster -u http://172.16.51.134/imfadministrator -w /<PATH TO DICT>/directory-list-2.3-medium.txt -x txt,html,php,jpg -o imf.txt`
 
 Then: `images`(200) and `uploads`(403), that's it `/imfadministrator/uploads/577539cb4b62.jpg`, gosh, but not executed.
 
