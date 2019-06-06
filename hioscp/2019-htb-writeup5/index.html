@@ -267,6 +267,8 @@ Basically no operation is used to make sure that our exploit doesn’t fail ,  <
 
 <h2 id="privilege-escalation-via-overflow">Privilege Escalation via Overflow</h2>
 
+<p>After you get this program crashed, you can see EIP with filled with our input (0x41366441, which means &lsquo;Ad6A&rsquo;). Then use <code>./pattern_offset.rb -q 41366441 -l 150</code>, you got the offset 112.</p>
+
 <p>Now when we try to insert shellcode into the buffer but we were unable to execute it because of DEP. It prevents code from being executed in the stack.</p>
 
 <p>Now we are going to do a <code>ret2libc</code> attack to execute a process already present in the process’ executable memory.</p>

