@@ -219,6 +219,8 @@ Now, let's get back to the box.
 
 ## Privilege Escalation via Overflow
 
+After you get this program crashed, you can see EIP with filled with our input (0x41366441, which means 'Ad6A'). Then use `./pattern_offset.rb -q 41366441 -l 150`, you got the offset 112.
+
 Now when we try to insert shellcode into the buffer but we were unable to execute it because of DEP. It prevents code from being executed in the stack. 
 
 Now we are going to do a `ret2libc` attack to execute a process already present in the process’ executable memory. 

