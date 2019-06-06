@@ -117,7 +117,7 @@ if (!doNotTrack) {
 
 <h3 id="flag-3">Flag 3</h3>
 
-<p><code>gobuster -u http://172.16.51.134 -w /media/kmahyyg/linuxdata/WorkData/HostedOnGithub/hackbox_tools/utils/outsidetools/dictionaries/DirBuster-Lists/directory-list-2.3-medium.txt -x php,html,txt,html -o imf.txt</code> to check if can find something:</p>
+<p><code>gobuster -u http://172.16.51.134 -w /&lt;PATH TO DICT&gt;/directory-list-2.3-medium.txt -x php,html,txt,html -o imf.txt</code> to check if can find something:</p>
 
 <pre><code>/contact.php (Status: 200)
 /images (Status: 301)
@@ -189,7 +189,7 @@ The script compares the user input from the <code>pass</code> field to the hardc
 
 <p>So we use <code>FFD8FFE0</code> as prefix to build a fake jpg file to bypass it. Then After successfully uploaded, you got: <code>&lt;!-- 577539cb4b62 --&gt;</code> in source code. Next question is, where is the file uploaded?</p>
 
-<p>GOBUSTER! <code>gobuster -u http://172.16.51.134/imfadministrator -w /media/kmahyyg/linuxdata/WorkData/HostedOnGithub/hackbox_tools/utils/outsidetools/dictionaries/DirBuster-Lists/directory-list-2.3-medium.txt -x txt,html,php,jpg -o imf.txt</code></p>
+<p>GOBUSTER! <code>gobuster -u http://172.16.51.134/imfadministrator -w /&lt;PATH TO DICT&gt;/directory-list-2.3-medium.txt -x txt,html,php,jpg -o imf.txt</code></p>
 
 <p>Then: <code>images</code>(200) and <code>uploads</code>(403), that&rsquo;s it <code>/imfadministrator/uploads/577539cb4b62.jpg</code>, gosh, but not executed.</p>
 
