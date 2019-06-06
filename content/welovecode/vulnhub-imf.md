@@ -371,9 +371,9 @@ client.sendall(buf)
 client.close()
 ```
 
-Then you have the root shell, the flag is under `/root/flag.txt`: flag6{R2gwc3RQcm90MGMwbHM=}
+Then you have the root shell, the flag is under `/root/flag.txt`: `flag6{R2gwc3RQcm90MGMwbHM=}`
 
-Decode again: Gh0stProt0c0ls
+Decode again: `Gh0stProt0c0ls`
 
 # Reference
 
