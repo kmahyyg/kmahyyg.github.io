@@ -144,7 +144,7 @@ $ chmod 755 /dev/shm/gibs
 
 <h3 id="prepare-container">Prepare container</h3>
 
-<p>Importing tar files as images is explained here. The steps are as follows:</p>
+<p>Importing tar files as images is explained <a href="https://stgraber.org/2016/03/30/lxd-2-0-image-management-512/">here</a>. The steps are as follows:</p>
 
 <pre><code class="language-bash">xalvas@calamity:/dev/shm/.tmp$ lxc image import ./alpine.tar.gz --alias myimage
 Generating a client certificate. This may take a minute...
@@ -201,7 +201,19 @@ drwxr-xr-x   96 root     root          4096 Jun 28  2017 etc
 
 <p><strong>This is really the most difficult one I faced here.</strong></p>
 
-<p>TBD</p>
+<p>If you aren&rsquo;t a container expert, chances are you would have taken another much harder path. A simple search for SUID binaries delivers the following result:</p>
+
+<pre><code class="language-bash">xalvas@calamity:~$ find / -perm -4000 2&gt;/dev/null
+/home/xalvas/app/goodluck
+/bin/ping6
+/bin/umount
+/bin/mount
+[...]
+</code></pre>
+
+<p>A file called goodluck sounds like you are supposed to exploit it. And indeed, it is possible.</p>
+
+<h3 id="start">Start</h3>
 
       </article>
       <div id="disqus_thread"></div>
