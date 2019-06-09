@@ -26,6 +26,8 @@ Gobuster Scan: /uploads(200), admin.php(200)
 
 Access `admin.php` and you will find the `admin` with password in the comment of the webpage source code, which is: `password is:skoupidotenekes`
 
+![lgnpage](https://alicdn.kmahyyg.xyz/asset_files/htb7/calamati-1.webp)
+
 After you login, you've been told that this page could execute and php code. The question is that this method is submitted via URL params, so you can't submit too long code.
 
 The shortest php webshell is: 
@@ -130,6 +132,7 @@ xalvas@calamity:/dev/shm/.tmp$ lxc list
 ```
 
 ### Run shell
+
 The last part is starting the container and executing a shell inside. We can then change into the rooted host filesystem and cat out the flag.
 
 ```bash
@@ -191,6 +194,8 @@ Check the binary: run `checksec` in `gdb-peda`, return
 > PIE       : ENABLED
 > RELRO     : Partial
 
+![checksec](https://alicdn.kmahyyg.xyz/asset_files/htb7/calamati-2.webp)
+
 ### Start
 
 The partial source code attached with the program can be found [here](https://pastebin.com/p15dyBXk).
@@ -230,9 +235,15 @@ Ok, let's break before and after `strncpy`.
 
 As we seen in the photo, that's how we control the EBX,EAX,ECX,EDX.
 
+![bp1](https://alicdn.kmahyyg.xyz/asset_files/htb7/calamati-3.webp)
+
+![bp2](https://alicdn.kmahyyg.xyz/asset_files/htb7/calamati-4.webp)
+
 So what's happening? 
 
 > info frame
+
+![infoframe](https://alicdn.kmahyyg.xyz/asset_files/htb7/calamati-5.webp)
 
 returns all registers that are saved in the stack frame during the function.
 
@@ -245,6 +256,8 @@ So ebx must be how the program refers to the struct `hey`. Effectively, any time
 > disas main
 
 Now, we know we have 4 registers in control. Disassemly main function, at +262, + 263, +266, +267, before `attempt_login`, we see a instruction structure called `pop pop ret`. During a function call, a function will take as it’s arguments the top three values on the stack. Since attempt_login is called in the manner `attempt_login(hey.admin, protect, hey.secret);` we can ascertain that eax will contain the value of `hey.admin` at the time of the function call.
+
+![regs1](https://alicdn.kmahyyg.xyz/asset_files/htb7/calamati-6.webp)
 
 So that, the corresponding relationship is:
 
@@ -302,6 +315,8 @@ So the `hey.secret` is on `0x80003068+12 = 0x80003074`.
 
 That's it.
 
+![heysucked](https://alicdn.kmahyyg.xyz/asset_files/htb7/calamati-7.webp)
+
 In order to patch `eax` entering printdeb, we have to make sure it matches the following equation:
 
 - 0x80003074 = ebx + 0x68 + 0x14  (Use `printdeb()` to see the secret)
@@ -333,6 +348,8 @@ So that:
 - eax = ebx + 0x68
 - edx = [eax+0xc]
 
+![allcalcregs](https://alicdn.kmahyyg.xyz/asset_files/htb7/calamati-8.webp)
+
 The ebx should be `0x80002ff4`.
 
 ### Final script to build payload 1,2
@@ -357,9 +374,19 @@ with open('patchfile', 'wb') as tfile:
 
 ## SORT ALL THINGS OUT ABOVE!
 
+1. 由于启用了 NX，所以 PIE 生效后 GOT 表必须有一个寄存器指向，以便间接访问。
+2. 由于我们有源代码，所以可以知道全局变量表里的 hey 这个对应的 struct 的内存结构
+3. 根据对 main 函数和 attempt_login 函数的反汇编，我们可以根据栈的 FILO 特性知道对应参数使用了哪些寄存器。
+4. 对应各类寄存器，继续向上查找寄存器设定代码，获得寄存器之间的设定关系。根据缓冲区溢出的结果，确定字符串长度与对应寄存器的控制关系。
+5. 利用程序可以动态加载用户文件的特性，构造对应 payload, 修改 BX 寄存器，达到读写特定变量的目的
+6. 整体流程：构造 Payload -> 读取 Secret -> 将 Secret 输入到 hey.user -> 构造 Payload -> 验证通过，显示 RAMMAP -> 利用 mprotect 使栈内的代码可执行 -> shellcode 入栈 -> 提权完成。
+
 ## Ret2mprotect
 
 Run the code we offered above, and after you see the RAMMAP. You were asked to offer another file here. Let's create a pattern in 100 chars with `pattern create 100 test100`, then offer it to the program, finally `pattern search` to get the data address in stack which overrided EIP, Here, it's 0xbffff5b0.
+
+![rammap](https://alicdn.kmahyyg.xyz/asset_files/htb7/calamati-9.webp)
+![offsetcheck](https://alicdn.kmahyyg.xyz/asset_files/htb7/calamati-10.webp)
 
 According to the `disas main` and the man page of `mprotect`.
 
@@ -403,6 +430,8 @@ buf += setread
 with open('tmpbuf','wb') as buffef:
 	buffef.write(buf)
 ```
+
+![rooted](https://alicdn.kmahyyg.xyz/asset_files/htb7/calamati-11.webp)
 
 ## Ret2libc
 
