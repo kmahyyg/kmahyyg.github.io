@@ -165,6 +165,19 @@ xalvas@calamity:~$ find / -perm -4000 2>/dev/null
 [...]
 ```
 
-A file called goodluck sounds like you are supposed to exploit it. And indeed, it is possible.
+A file called goodluck sounds like you are supposed to exploit it. And indeed, it is possible. Also the partial source code is in the folder.
+
+### Before we start
+
+I suggest you read the following contents as preparation:
+
+- https://steemit.com/ctf/@austinhudson/return-oriented-programming-techniques
+- http://man7.org/linux/man-pages/man2/mprotect.2.html
+- https://www.roguesecurity.in/2017/07/16/a-quick-reference-guide-to-gnu-debugger/
+- https://reboare.github.io/bof/linux-stack-bof-3.html
+
+This man's blog is really useful:
+
+- https://reboare.github.io
 
 ### Start
