@@ -95,7 +95,7 @@ Alpine is a popular Linux distribution to base container images on since it is s
 With SSH access, copying is as easy as running `scp alpine-v3.7-i686-20180121_1729.tar.gz xalvas@10.10.10.27:/dev/shm/.tmp/alpine.tar.gz` .
 
 ### Prepare container
-Importing tar files as images is explained here. The steps are as follows:
+Importing tar files as images is explained [here](https://stgraber.org/2016/03/30/lxd-2-0-image-management-512/). The steps are as follows:
 
 ```bash
 xalvas@calamity:/dev/shm/.tmp$ lxc image import ./alpine.tar.gz --alias myimage
@@ -154,4 +154,17 @@ drwxr-xr-x   96 root     root          4096 Jun 28  2017 etc
 
 **This is really the most difficult one I faced here.**
 
-TBD
+If you aren't a container expert, chances are you would have taken another much harder path. A simple search for SUID binaries delivers the following result:
+
+```bash
+xalvas@calamity:~$ find / -perm -4000 2>/dev/null
+/home/xalvas/app/goodluck
+/bin/ping6
+/bin/umount
+/bin/mount
+[...]
+```
+
+A file called goodluck sounds like you are supposed to exploit it. And indeed, it is possible.
+
+### Start
