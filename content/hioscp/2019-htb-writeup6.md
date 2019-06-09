@@ -64,8 +64,3 @@ Privilege Escalated. Finished.
 ## OSCP way
 
 TBD
-
-# Bart
-
-# Calamity
-
