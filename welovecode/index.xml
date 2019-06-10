@@ -6,11 +6,18 @@
     <description>Recent content in Welovecodes on Pat~ Pat~ Meow~</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Sun, 09 Jun 2019 19:46:08 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 10 Jun 2019 16:15:19 +0800</lastBuildDate>
     
         <atom:link href="https://www.kmahyyg.xyz/welovecode/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
+      <title>HackTheBox - WriteUp 8</title>
+      <link>https://www.kmahyyg.xyz/welovecode/2019-htb-writeup8/</link>
+      <pubDate>Mon, 10 Jun 2019 16:15:19 +0800</pubDate>
+      
+      <guid>https://www.kmahyyg.xyz/welovecode/2019-htb-writeup8/</guid>
+      <description>HackTheBox 练手</description>
+    </item><item>
       <title>HackTheBox - WriteUp 7</title>
       <link>https://www.kmahyyg.xyz/welovecode/2019-htb-writeup7/</link>
       <pubDate>Sun, 09 Jun 2019 19:46:08 +0800</pubDate>
@@ -38,13 +45,6 @@
       
       <guid>https://www.kmahyyg.xyz/welovecode/vulnhub-mrrobot/</guid>
       <description></description>
-    </item><item>
-      <title>Java 语言笔记 - 继承与类</title>
-      <link>https://www.kmahyyg.xyz/welovecode/java-oop-inheritance-class/</link>
-      <pubDate>Tue, 14 May 2019 09:11:09 +0800</pubDate>
-      
-      <guid>https://www.kmahyyg.xyz/welovecode/java-oop-inheritance-class/</guid>
-      <description>Java 语言字符串处理和对终端 STDIN STDOUT 流的处理</description>
     </item>
   </channel>
 </rss>
