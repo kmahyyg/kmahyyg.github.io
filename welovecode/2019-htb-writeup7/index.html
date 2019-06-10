@@ -134,9 +134,11 @@ $ chmod 755 /dev/shm/gibs
 
 <p>The privesc requires to run a container with elevated privileges and mount the host filesystem inside. Running containers requires an image on the machine. Since we do not have an internet connection on the machine, we have to copy over an image. The outline is as follows:</p>
 
-<p>= Build an image locally and copy image to remote host
-= Import image into LXD, create a container and mount host filesystem
-= Run a shell inside the container and get flag</p>
+<ul>
+<li>Build an image locally and copy image to remote host</li>
+<li>Import image into LXD, create a container and mount host filesystem</li>
+<li>Run a shell inside the container and get flag</li>
+</ul>
 
 <h3 id="prepare-image">Prepare image</h3>
 
@@ -238,11 +240,15 @@ drwxr-xr-x   96 root     root          4096 Jun 28  2017 etc
 <p>Check the binary: run <code>checksec</code> in <code>gdb-peda</code>, return</p>
 
 <blockquote>
-<p>CANARY    : disabled
-FORTIFY   : disabled
-NX        : ENABLED
-PIE       : ENABLED
-RELRO     : Partial</p>
+<p>CANARY    : disabled</p>
+
+<p>FORTIFY   : disabled</p>
+
+<p>NX        : ENABLED</p>
+
+<p>PIE       : ENABLED</p>
+
+<p>RELRO     : Partial</p>
 </blockquote>
 
 <p><img src="https://alicdn.kmahyyg.xyz/asset_files/htb7/calamati-2.webp" alt="checksec" /></p>
@@ -258,8 +264,9 @@ RELRO     : Partial</p>
 <p>If not specified, the commands listed below are <code>gdb-peda</code> commands.</p>
 
 <blockquote>
-<p>set disassembly-flavor intel
-p &amp;hey</p>
+<p>set disassembly-flavor intel</p>
+
+<p>p &amp;hey</p>
 </blockquote>
 
 <p>The hey is located at 0x80003068.</p>
@@ -285,9 +292,11 @@ p &amp;hey</p>
 <p>Ok, let&rsquo;s break before and after <code>strncpy</code>.</p>
 
 <blockquote>
-<p>b *createusername+99
-b *craateusername+122
-r</p>
+<p>b *createusername+99</p>
+
+<p>b *craateusername+122</p>
+
+<p>r</p>
 </blockquote>
 
 <p>As we seen in the photo, that&rsquo;s how we control the EBX,EAX,ECX,EDX.</p>
@@ -359,8 +368,11 @@ r</p>
 <p>As we know, <code>hey</code> is storaged into <code>0x80003068</code>, Check the RAMMAP:</p>
 
 <blockquote>
-<p>x/4w &amp;hey
-&gt; 0x80003068 <hey>:       0x41414141      0x00000042      0x00000000      0x0107b34b</p>
+<p>x/4w &amp;hey</p>
+
+<blockquote>
+<p>0x80003068 <hey>:       0x41414141      0x00000042      0x00000000      0x0107b34b</p>
+</blockquote>
 </blockquote>
 
 <p>The <code>secret</code> variable, according to source code:</p>
@@ -476,8 +488,11 @@ with open('patchfile', 'wb') as tfile:
 <p>Get the function address of <code>mprotect</code>,</p>
 
 <blockquote>
-<p>p mprotect
-&gt;  $1 = {<text variable, no debug info>} 0xb7efcd50 <mprotect></p>
+<p>p mprotect</p>
+
+<blockquote>
+<p>$1 = {<text variable, no debug info>} 0xb7efcd50 <mprotect></p>
+</blockquote>
 </blockquote>
 
 <p>Let&rsquo;s grab a shellcode from <a href="https://www.soldierx.com/bbs/201308/HOWTO-x86-setresuid-execve-shellcode-44-bytes">here</a></p>
@@ -530,10 +545,17 @@ with open('tmpbuf','wb') as buffef:
 <p>Find the function we need:</p>
 
 <blockquote>
-<p>gdb-peda$ p execl
-&gt; $1 = {<text variable, no debug info>} 0xb7ecaa80 &lt;<strong>GI_execl&gt;
-gdb-peda$ p exit
-&gt; $2 = {<text variable, no debug info>} 0xb7e489d0 &lt;</strong>GI_exit&gt;</p>
+<p>gdb-peda$ p execl</p>
+
+<blockquote>
+<p>$1 = {<text variable, no debug info>} 0xb7ecaa80 &lt;__GI_execl&gt;</p>
+</blockquote>
+
+<p>gdb-peda$ p exit</p>
+
+<blockquote>
+<p>$2 = {<text variable, no debug info>} 0xb7e489d0 &lt;__GI_exit&gt;</p>
+</blockquote>
 </blockquote>
 
 <p>The <code>execl</code> function usage:</p>
