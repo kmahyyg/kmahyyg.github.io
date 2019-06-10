@@ -78,7 +78,7 @@ if (!doNotTrack) {
 
 <p>Access <code>admin.php</code> and you will find the <code>admin</code> with password in the comment of the webpage source code, which is: <code>password is:skoupidotenekes</code></p>
 
-<p><img src="https://alicdn.kmahyyg.xyz/asset_files/htb7/calamati-1.webp" alt="lgnpage" /></p>
+<p><img src="https://alicdn.kmahyyg.xyz/asset_files/htb7/calamity-1.webp" alt="lgnpage" /></p>
 
 <p>After you login, you&rsquo;ve been told that this page could execute and php code. The question is that this method is submitted via URL params, so you can&rsquo;t submit too long code.</p>
 
@@ -251,7 +251,7 @@ drwxr-xr-x   96 root     root          4096 Jun 28  2017 etc
 <p>RELRO     : Partial</p>
 </blockquote>
 
-<p><img src="https://alicdn.kmahyyg.xyz/asset_files/htb7/calamati-2.webp" alt="checksec" /></p>
+<p><img src="https://alicdn.kmahyyg.xyz/asset_files/htb7/calamity-2.webp" alt="checksec" /></p>
 
 <h3 id="start">Start</h3>
 
@@ -301,9 +301,9 @@ drwxr-xr-x   96 root     root          4096 Jun 28  2017 etc
 
 <p>As we seen in the photo, that&rsquo;s how we control the EBX,EAX,ECX,EDX.</p>
 
-<p><img src="https://alicdn.kmahyyg.xyz/asset_files/htb7/calamati-3.webp" alt="bp1" /></p>
+<p><img src="https://alicdn.kmahyyg.xyz/asset_files/htb7/calamity-3.webp" alt="bp1" /></p>
 
-<p><img src="https://alicdn.kmahyyg.xyz/asset_files/htb7/calamati-4.webp" alt="bp2" /></p>
+<p><img src="https://alicdn.kmahyyg.xyz/asset_files/htb7/calamity-4.webp" alt="bp2" /></p>
 
 <p>So what&rsquo;s happening?</p>
 
@@ -311,7 +311,7 @@ drwxr-xr-x   96 root     root          4096 Jun 28  2017 etc
 <p>info frame</p>
 </blockquote>
 
-<p><img src="https://alicdn.kmahyyg.xyz/asset_files/htb7/calamati-5.webp" alt="infoframe" /></p>
+<p><img src="https://alicdn.kmahyyg.xyz/asset_files/htb7/calamity-5.webp" alt="infoframe" /></p>
 
 <p>returns all registers that are saved in the stack frame during the function.</p>
 
@@ -327,7 +327,7 @@ drwxr-xr-x   96 root     root          4096 Jun 28  2017 etc
 
 <p>Now, we know we have 4 registers in control. Disassemly main function, at +262, + 263, +266, +267, before <code>attempt_login</code>, we see a instruction structure called <code>pop pop ret</code>. During a function call, a function will take as it’s arguments the top three values on the stack. Since attempt_login is called in the manner <code>attempt_login(hey.admin, protect, hey.secret);</code> we can ascertain that eax will contain the value of <code>hey.admin</code> at the time of the function call.</p>
 
-<p><img src="https://alicdn.kmahyyg.xyz/asset_files/htb7/calamati-6.webp" alt="regs1" /></p>
+<p><img src="https://alicdn.kmahyyg.xyz/asset_files/htb7/calamity-6.webp" alt="regs1" /></p>
 
 <p>So that, the corresponding relationship is:</p>
 
@@ -393,7 +393,7 @@ struct f {
 
 <p>That&rsquo;s it.</p>
 
-<p><img src="https://alicdn.kmahyyg.xyz/asset_files/htb7/calamati-7.webp" alt="heysucked" /></p>
+<p><img src="https://alicdn.kmahyyg.xyz/asset_files/htb7/calamity-7.webp" alt="heysucked" /></p>
 
 <p>In order to patch <code>eax</code> entering printdeb, we have to make sure it matches the following equation:</p>
 
@@ -434,7 +434,7 @@ struct f {
 <li>edx = [eax+0xc]</li>
 </ul>
 
-<p><img src="https://alicdn.kmahyyg.xyz/asset_files/htb7/calamati-8.webp" alt="allcalcregs" /></p>
+<p><img src="https://alicdn.kmahyyg.xyz/asset_files/htb7/calamity-8.webp" alt="allcalcregs" /></p>
 
 <p>The ebx should be <code>0x80002ff4</code>.</p>
 
@@ -472,8 +472,8 @@ with open('patchfile', 'wb') as tfile:
 
 <p>Run the code we offered above, and after you see the RAMMAP. You were asked to offer another file here. Let&rsquo;s create a pattern in 100 chars with <code>pattern create 100 test100</code>, then offer it to the program, finally <code>pattern search</code> to get the data address in stack which overrided EIP, Here, it&rsquo;s 0xbffff5b0.</p>
 
-<p><img src="https://alicdn.kmahyyg.xyz/asset_files/htb7/calamati-9.webp" alt="rammap" />
-<img src="https://alicdn.kmahyyg.xyz/asset_files/htb7/calamati-10.webp" alt="offsetcheck" /></p>
+<p><img src="https://alicdn.kmahyyg.xyz/asset_files/htb7/calamity-9.webp" alt="rammap" />
+<img src="https://alicdn.kmahyyg.xyz/asset_files/htb7/calamity-10.webp" alt="offsetcheck" /></p>
 
 <p>According to the <code>disas main</code> and the man page of <code>mprotect</code>.</p>
 
@@ -524,7 +524,7 @@ with open('tmpbuf','wb') as buffef:
 	buffef.write(buf)
 </code></pre>
 
-<p><img src="https://alicdn.kmahyyg.xyz/asset_files/htb7/calamati-11.webp" alt="rooted" /></p>
+<p><img src="https://alicdn.kmahyyg.xyz/asset_files/htb7/calamity-11.webp" alt="rooted" /></p>
 
 <h2 id="ret2libc">Ret2libc</h2>
 
