@@ -86,9 +86,9 @@ We notice xalvas is member of the lxd group. Like with most container technologi
 
 The privesc requires to run a container with elevated privileges and mount the host filesystem inside. Running containers requires an image on the machine. Since we do not have an internet connection on the machine, we have to copy over an image. The outline is as follows:
 
-= Build an image locally and copy image to remote host
-= Import image into LXD, create a container and mount host filesystem
-= Run a shell inside the container and get flag
+- Build an image locally and copy image to remote host
+- Import image into LXD, create a container and mount host filesystem
+- Run a shell inside the container and get flag
 
 ### Prepare image
 
@@ -189,9 +189,13 @@ Check the Kernel ASLR: run `aslr` in `gdb-peda`, return `OFF`
 Check the binary: run `checksec` in `gdb-peda`, return
 
 > CANARY    : disabled
+
 > FORTIFY   : disabled
+
 > NX        : ENABLED
+
 > PIE       : ENABLED
+
 > RELRO     : Partial
 
 ![checksec](https://alicdn.kmahyyg.xyz/asset_files/htb7/calamati-2.webp)
@@ -207,6 +211,7 @@ Skim the code, to login as admin, you must let `hey.admin != 0` and `hey.secret 
 If not specified, the commands listed below are `gdb-peda` commands.
 
 > set disassembly-flavor intel
+
 > p &hey
 
 The hey is located at 0x80003068.
@@ -230,7 +235,9 @@ Let's run gdb with the 3rd input, to analyze.
 Ok, let's break before and after `strncpy`.
 
 > b *createusername+99
+
 > b *craateusername+122
+
 > r
 
 As we seen in the photo, that's how we control the EBX,EAX,ECX,EDX.
@@ -294,6 +301,7 @@ Again, on `main+224`, we see `push eax`, which should be `hey.session` in `print
 As we know, `hey` is storaged into `0x80003068`, Check the RAMMAP:
 
 > x/4w &hey
+
 >> 0x80003068 <hey>:       0x41414141      0x00000042      0x00000000      0x0107b34b
 
 The `secret` variable, according to source code:
@@ -399,6 +407,7 @@ Address must be in stack, which is `bfedf000`, the length should be `0xc0000000 
 Get the function address of `mprotect`, 
 
 > p mprotect
+
 >>  $1 = {<text variable, no debug info>} 0xb7efcd50 <mprotect>
 
 Let's grab a shellcode from [here](https://www.soldierx.com/bbs/201308/HOWTO-x86-setresuid-execve-shellcode-44-bytes)
@@ -448,8 +457,11 @@ Send it to the box:
 Find the function we need:
 
 > gdb-peda$ p execl
+
 >> $1 = {<text variable, no debug info>} 0xb7ecaa80 <__GI_execl>
+
 > gdb-peda$ p exit
+
 >> $2 = {<text variable, no debug info>} 0xb7e489d0 <__GI_exit>
 
 The `execl` function usage:
