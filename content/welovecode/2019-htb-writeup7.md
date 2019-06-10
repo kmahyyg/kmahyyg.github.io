@@ -26,7 +26,7 @@ Gobuster Scan: /uploads(200), admin.php(200)
 
 Access `admin.php` and you will find the `admin` with password in the comment of the webpage source code, which is: `password is:skoupidotenekes`
 
-![lgnpage](https://alicdn.kmahyyg.xyz/asset_files/htb7/calamati-1.webp)
+![lgnpage](https://alicdn.kmahyyg.xyz/asset_files/htb7/calamity-1.webp)
 
 After you login, you've been told that this page could execute and php code. The question is that this method is submitted via URL params, so you can't submit too long code.
 
@@ -198,7 +198,7 @@ Check the binary: run `checksec` in `gdb-peda`, return
 
 > RELRO     : Partial
 
-![checksec](https://alicdn.kmahyyg.xyz/asset_files/htb7/calamati-2.webp)
+![checksec](https://alicdn.kmahyyg.xyz/asset_files/htb7/calamity-2.webp)
 
 ### Start
 
@@ -242,15 +242,15 @@ Ok, let's break before and after `strncpy`.
 
 As we seen in the photo, that's how we control the EBX,EAX,ECX,EDX.
 
-![bp1](https://alicdn.kmahyyg.xyz/asset_files/htb7/calamati-3.webp)
+![bp1](https://alicdn.kmahyyg.xyz/asset_files/htb7/calamity-3.webp)
 
-![bp2](https://alicdn.kmahyyg.xyz/asset_files/htb7/calamati-4.webp)
+![bp2](https://alicdn.kmahyyg.xyz/asset_files/htb7/calamity-4.webp)
 
 So what's happening? 
 
 > info frame
 
-![infoframe](https://alicdn.kmahyyg.xyz/asset_files/htb7/calamati-5.webp)
+![infoframe](https://alicdn.kmahyyg.xyz/asset_files/htb7/calamity-5.webp)
 
 returns all registers that are saved in the stack frame during the function.
 
@@ -264,7 +264,7 @@ So ebx must be how the program refers to the struct `hey`. Effectively, any time
 
 Now, we know we have 4 registers in control. Disassemly main function, at +262, + 263, +266, +267, before `attempt_login`, we see a instruction structure called `pop pop ret`. During a function call, a function will take as it’s arguments the top three values on the stack. Since attempt_login is called in the manner `attempt_login(hey.admin, protect, hey.secret);` we can ascertain that eax will contain the value of `hey.admin` at the time of the function call.
 
-![regs1](https://alicdn.kmahyyg.xyz/asset_files/htb7/calamati-6.webp)
+![regs1](https://alicdn.kmahyyg.xyz/asset_files/htb7/calamity-6.webp)
 
 So that, the corresponding relationship is:
 
@@ -323,7 +323,7 @@ So the `hey.secret` is on `0x80003068+12 = 0x80003074`.
 
 That's it.
 
-![heysucked](https://alicdn.kmahyyg.xyz/asset_files/htb7/calamati-7.webp)
+![heysucked](https://alicdn.kmahyyg.xyz/asset_files/htb7/calamity-7.webp)
 
 In order to patch `eax` entering printdeb, we have to make sure it matches the following equation:
 
@@ -356,7 +356,7 @@ So that:
 - eax = ebx + 0x68
 - edx = [eax+0xc]
 
-![allcalcregs](https://alicdn.kmahyyg.xyz/asset_files/htb7/calamati-8.webp)
+![allcalcregs](https://alicdn.kmahyyg.xyz/asset_files/htb7/calamity-8.webp)
 
 The ebx should be `0x80002ff4`.
 
@@ -393,8 +393,8 @@ with open('patchfile', 'wb') as tfile:
 
 Run the code we offered above, and after you see the RAMMAP. You were asked to offer another file here. Let's create a pattern in 100 chars with `pattern create 100 test100`, then offer it to the program, finally `pattern search` to get the data address in stack which overrided EIP, Here, it's 0xbffff5b0.
 
-![rammap](https://alicdn.kmahyyg.xyz/asset_files/htb7/calamati-9.webp)
-![offsetcheck](https://alicdn.kmahyyg.xyz/asset_files/htb7/calamati-10.webp)
+![rammap](https://alicdn.kmahyyg.xyz/asset_files/htb7/calamity-9.webp)
+![offsetcheck](https://alicdn.kmahyyg.xyz/asset_files/htb7/calamity-10.webp)
 
 According to the `disas main` and the man page of `mprotect`.
 
@@ -440,7 +440,7 @@ with open('tmpbuf','wb') as buffef:
 	buffef.write(buf)
 ```
 
-![rooted](https://alicdn.kmahyyg.xyz/asset_files/htb7/calamati-11.webp)
+![rooted](https://alicdn.kmahyyg.xyz/asset_files/htb7/calamity-11.webp)
 
 ## Ret2libc
 
