@@ -10,7 +10,7 @@ displayInList: true
 dropCap: false
 ---
 
-# Grandpa
+# Grandpa & Granny
 
 That really sucks. Even I use VPS in New York which result in ping response always in 20ms, it still failed to get connected from victim.
 
