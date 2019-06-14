@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://www.kmahyyg.xyz/hioscp/2019-htb-writeup6/</loc>
+    <lastmod>2019-06-14T14:07:30+08:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://www.kmahyyg.xyz/welovecode/2019-htb-writeup8/</loc>
     <lastmod>2019-06-10T16:15:19+08:00</lastmod>
   </url>
@@ -10,11 +15,6 @@
   <url>
     <loc>https://www.kmahyyg.xyz/welovecode/2019-htb-writeup7/</loc>
     <lastmod>2019-06-09T19:46:08+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://www.kmahyyg.xyz/hioscp/2019-htb-writeup6/</loc>
-    <lastmod>2019-06-08T10:04:44+08:00</lastmod>
   </url>
   
   <url>
@@ -561,7 +561,7 @@
   
   <url>
     <loc>https://www.kmahyyg.xyz/hioscp/</loc>
-    <lastmod>2019-06-08T10:04:44+08:00</lastmod>
+    <lastmod>2019-06-14T14:07:30+08:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -585,7 +585,7 @@
   
   <url>
     <loc>https://www.kmahyyg.xyz/</loc>
-    <lastmod>2019-06-10T16:15:19+08:00</lastmod>
+    <lastmod>2019-06-14T14:07:30+08:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -602,7 +602,7 @@
   
   <url>
     <loc>https://www.kmahyyg.xyz/categories/tech/</loc>
-    <lastmod>2019-06-10T16:15:19+08:00</lastmod>
+    <lastmod>2019-06-14T14:07:30+08:00</lastmod>
     <priority>0</priority>
   </url>
   

@@ -51,7 +51,7 @@ if (!doNotTrack) {
       <article class="post ">
         <header class="post-header">
         	<h1 class="post-title">HackTheBox - WriteUp 6</h1>
-          <p class="post-date">Posted <time datetime="2019-06-08">Jun 8, 2019</time></p>
+          <p class="post-date">Posted <time datetime="2019-06-14">Jun 14, 2019</time></p>
         </header>
         
         <picture class="post-figure">
@@ -116,6 +116,34 @@ download &quot;C:\Documents and settings\administrator\desktop\root.txt&quot;
 <h2 id="oscp-way">OSCP way</h2>
 
 <p>TBD</p>
+
+<h1 id="writeup">Writeup</h1>
+
+<p>Remember It&rsquo;s a EASY box.</p>
+
+<p>This box has fail2ban mechanism, stop using automated tools, eg. SQLMAP.</p>
+
+<h2 id="user">User</h2>
+
+<p>Use <code>nmap -A -O 10.10.10.138</code> to get the result.</p>
+
+<p>You will find a <code>robots.txt</code> and a path <code>/writeup</code>.</p>
+
+<p>Check the page source code, &ldquo;CMS Made Simple&rdquo; generated. Then <code>searchsploit</code> and choose the <code>46635.py</code>, finally, crack with <code>rockyou</code> in kali built-in wordlist.</p>
+
+<h2 id="root">Root</h2>
+
+<blockquote>
+<p>The quieter you are, the more you are able to hear.</p>
+</blockquote>
+
+<p>Use Linenum to check the directory/files you can write. Then pay attention to PATH.</p>
+
+<p>Next, run pspy64 and generate some traffic with login again.</p>
+
+<p>You will find <code>run-parts</code> seems to be running in root and with a specific PATH in absolute path of the run-parts. According to the order of PATH, you just create a script, and <code>ln -s</code> to <code>/usr/local/bin</code>, then, you&rsquo;ll get it.</p>
+
+<p>(DONE)</p>
 
       </article>
       <div id="disqus_thread"></div>
