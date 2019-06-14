@@ -1,6 +1,6 @@
 ---
 title: "HackTheBox - WriteUp 6"
-date: 2019-06-08T10:04:44+08:00
+date: 2019-06-14T14:07:30+08:00
 description: "HackTheBox 练手"
 featuredImage: "https://alicdn.kmahyyg.xyz/asset_files/aether/cat_tech.webp"
 categories: ["tech"]
@@ -64,3 +64,31 @@ Privilege Escalated. Finished.
 ## OSCP way
 
 TBD
+
+# Writeup
+
+Remember It's a EASY box.
+
+This box has fail2ban mechanism, stop using automated tools, eg. SQLMAP.
+
+## User
+
+Use `nmap -A -O 10.10.10.138` to get the result.
+
+You will find a `robots.txt` and a path `/writeup`.
+
+Check the page source code, "CMS Made Simple" generated. Then `searchsploit` and choose the `46635.py`, finally, crack with `rockyou` in kali built-in wordlist.
+
+## Root
+
+> The quieter you are, the more you are able to hear.
+
+Use Linenum to check the directory/files you can write. Then pay attention to PATH.
+
+Next, run pspy64 and generate some traffic with login again.
+
+You will find `run-parts` seems to be running in root and with a specific PATH in absolute path of the run-parts. According to the order of PATH, you just create a script, and `ln -s` to `/usr/local/bin`, then, you'll get it.
+
+(DONE)
+
+
