@@ -6,11 +6,18 @@
     <description>Recent content in Teches on Pat~ Pat~ Meow~</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Wed, 05 Jun 2019 00:32:14 +0800</lastBuildDate>
+    <lastBuildDate>Tue, 18 Jun 2019 08:31:57 +0800</lastBuildDate>
     
         <atom:link href="https://www.kmahyyg.xyz/tech/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
+      <title>OSCP Prepare - Fuck GFW</title>
+      <link>https://www.kmahyyg.xyz/tech/redsocks-with-gce-oscp/</link>
+      <pubDate>Tue, 18 Jun 2019 08:31:57 +0800</pubDate>
+      
+      <guid>https://www.kmahyyg.xyz/tech/redsocks-with-gce-oscp/</guid>
+      <description>使用 GCP 构建一个 Kali 工作平台并配置本地快速访问</description>
+    </item><item>
       <title>对指定域名的解析 IPv4 结果优先</title>
       <link>https://www.kmahyyg.xyz/tech/glibc-v4preferred/</link>
       <pubDate>Wed, 05 Jun 2019 00:32:14 +0800</pubDate>
@@ -38,13 +45,6 @@
       
       <guid>https://www.kmahyyg.xyz/tech/crc32-network/</guid>
       <description>CRC32 是数据包校验的一个重要算法，本文主要记录作者的一些思考。</description>
-    </item><item>
-      <title>数据结构实验 4 - 迷宫</title>
-      <link>https://www.kmahyyg.xyz/tech/ds04-maze-exp/</link>
-      <pubDate>Thu, 18 Oct 2018 23:57:13 +0000</pubDate>
-      
-      <guid>https://www.kmahyyg.xyz/tech/ds04-maze-exp/</guid>
-      <description>数据结构的迷宫实验的一个解法，有点复杂，记录一下</description>
     </item>
   </channel>
 </rss>

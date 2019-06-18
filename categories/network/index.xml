@@ -6,11 +6,18 @@
     <description>Recent content in Network on Pat~ Pat~ Meow~</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Wed, 05 Jun 2019 00:32:14 +0800</lastBuildDate>
+    <lastBuildDate>Tue, 18 Jun 2019 08:31:57 +0800</lastBuildDate>
     
         <atom:link href="https://www.kmahyyg.xyz/categories/network/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
+      <title>OSCP Prepare - Fuck GFW</title>
+      <link>https://www.kmahyyg.xyz/tech/redsocks-with-gce-oscp/</link>
+      <pubDate>Tue, 18 Jun 2019 08:31:57 +0800</pubDate>
+      
+      <guid>https://www.kmahyyg.xyz/tech/redsocks-with-gce-oscp/</guid>
+      <description>使用 GCP 构建一个 Kali 工作平台并配置本地快速访问</description>
+    </item><item>
       <title>对指定域名的解析 IPv4 结果优先</title>
       <link>https://www.kmahyyg.xyz/tech/glibc-v4preferred/</link>
       <pubDate>Wed, 05 Jun 2019 00:32:14 +0800</pubDate>
@@ -38,13 +45,6 @@
       
       <guid>https://www.kmahyyg.xyz/welovecode/set-up-6in4-tunnel-via-openvpn/</guid>
       <description>一次关于 OpenVPN based 6in4 Tunnel 的尝试</description>
-    </item><item>
-      <title>6in4 Tunnel</title>
-      <link>https://www.kmahyyg.xyz/tech/6in4-tunnel/</link>
-      <pubDate>Mon, 21 May 2018 17:01:53 +0000</pubDate>
-      
-      <guid>https://www.kmahyyg.xyz/tech/6in4-tunnel/</guid>
-      <description>在 IPv4 Only 网络中尝试构建 6in4 隧道</description>
     </item>
   </channel>
 </rss>
