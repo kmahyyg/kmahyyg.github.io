@@ -1,5 +1,5 @@
 ---
-title: "HackTheBox - WriteUp 9"
+title: "HackTheBox - WriteUp 10"
 date: 2019-07-04T17:33:14+08:00
 description: "HackTheBox 练手"
 featuredImage: "https://alicdn.kmahyyg.xyz/asset_files/aether/cat_tech.webp"
