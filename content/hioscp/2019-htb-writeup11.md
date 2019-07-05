@@ -33,9 +33,9 @@ Nmap again, you'll find the NFS port is opened. Then `apt install nfs-common -y`
 
 ## Root
 
-After that, the home folder contains a file called `mbox`, this is a mail archive telling you that dba password is the same as the root.
+After that, write the public key you've just got to the `/mnt/nfs1/charlie/.ssh/authorized_keys`, then the home folder contains a file called `mbox`, this is a mail archive telling you that dba password is the same as the root.
 
-Check the process list, you will find postgresql and `pgadmin4`. Check `/var/appsrv/pgadmin4`, there is a `PGAdmin4 V3.4` here, but installed on `/usr/local/pgadmin4`, check the folder, from the `<PGADMIN4>/web/utils/crypto.py`, you will find how to decrypt the hash we will got.
+Check the process list, you will find postgresql and `pgadmin4`. Check `/var/appsrv/pgadmin4`, there is a `PGAdmin4 V3.4` here, but installed on `/usr/local/pgadmin4/pgadmin4-3.4/`, check the folder, from the `<PGADMIN4>/web/utils/crypto.py`, you will find how to decrypt the hash we will got.
 
 Then, at `/var/appsrv/pgadmin4/pgadmin4.db`, use `select * from server;`, the hash you've found is the hashed key of dba, and this hash is encrypted using AES-128-CFB, ciphertext is encoded in base64 with IV attached.
 
