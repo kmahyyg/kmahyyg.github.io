@@ -6,12 +6,19 @@
     <description>Recent content on Pat~ Pat~ Meow~</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Thu, 04 Jul 2019 17:33:14 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 05 Jul 2019 19:10:22 +0800</lastBuildDate>
     
         <atom:link href="https://www.kmahyyg.xyz/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
-      <title>HackTheBox - WriteUp 9</title>
+      <title>HackTheBox - WriteUp 11</title>
+      <link>https://www.kmahyyg.xyz/hioscp/2019-htb-writeup11/</link>
+      <pubDate>Fri, 05 Jul 2019 19:10:22 +0800</pubDate>
+      
+      <guid>https://www.kmahyyg.xyz/hioscp/2019-htb-writeup11/</guid>
+      <description>HackTheBox 练手</description>
+    </item><item>
+      <title>HackTheBox - WriteUp 10</title>
       <link>https://www.kmahyyg.xyz/hioscp/2019-htb-writeup10/</link>
       <pubDate>Thu, 04 Jul 2019 17:33:14 +0800</pubDate>
       
@@ -37,13 +44,6 @@
       <pubDate>Fri, 14 Jun 2019 14:07:30 +0800</pubDate>
       
       <guid>https://www.kmahyyg.xyz/hioscp/2019-htb-writeup6/</guid>
-      <description>HackTheBox 练手</description>
-    </item><item>
-      <title>HackTheBox - WriteUp 8</title>
-      <link>https://www.kmahyyg.xyz/welovecode/2019-htb-writeup8/</link>
-      <pubDate>Mon, 10 Jun 2019 16:15:19 +0800</pubDate>
-      
-      <guid>https://www.kmahyyg.xyz/welovecode/2019-htb-writeup8/</guid>
       <description>HackTheBox 练手</description>
     </item>
   </channel>
