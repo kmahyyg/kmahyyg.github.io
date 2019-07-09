@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="zh-cn" dir="ltr">
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>YNU 操作系统课程期末复习 Part 2 &middot; Pat~ Pat~ Meow~</title>
+  <meta name="description" content="操作系统课程期末复习 Part 2 存储管理与IO" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.css" integrity="sha384-9eLZqc9ds8eNjO3TmqPeYcDj8n+Qfa4nuSiGYa6DjLNcv9BtN69ZIulL9+8CqC9Y" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://www.kmahyyg.xyz/css/main.min.css" />
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-123948588-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+
+  <style>
+    body {
+      background: #ecedef url("https://alicdn.kmahyyg.xyz/asset_files/aether/bgimg.webp") repeat;
+    }
+  </style>
+</head>
+  <body class="single-body">
+    <nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="https://www.kmahyyg.xyz/" class="nav-text">Patrick Young</a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="https://www.kmahyyg.xyz/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://www.kmahyyg.xyz/express-page/" class="hamburger-menu-overlay-link">Express Inc</a></li>
+      <li><a href="https://www.kmahyyg.xyz/about-me-page/" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="https://www.kmahyyg.xyz/archlinux-bug-page/" class="hamburger-menu-overlay-link">Arch Linux</a></li>
+      <li><a href="https://www.kmahyyg.xyz/donate-page/" class="hamburger-menu-overlay-link">Donate</a></li>
+      <li><a href="https://www.kmahyyg.xyz/categories/code" class="hamburger-menu-overlay-link">Code</a></li><li><a href="https://www.kmahyyg.xyz/categories/life" class="hamburger-menu-overlay-link">Life</a></li><li><a href="https://www.kmahyyg.xyz/categories/network" class="hamburger-menu-overlay-link">Network</a></li><li><a href="https://www.kmahyyg.xyz/categories/school" class="hamburger-menu-overlay-link">School</a></li><li><a href="https://www.kmahyyg.xyz/categories/tech" class="hamburger-menu-overlay-link">Tech</a></li>
+    </ul>
+  </div>
+</nav>
+    <main class="content side-text-padding">
+      <article class="post ">
+        <header class="post-header">
+        	<h1 class="post-title">YNU 操作系统课程期末复习 Part 2</h1>
+          <p class="post-date">Posted <time datetime="2019-07-09">Jul 9, 2019</time></p>
+        </header>
+        
+        <picture class="post-figure">
+            
+            <source srcset="https://alicdn.kmahyyg.xyz/asset_files/aether/cat_school.webp">
+          <img src="https://alicdn.kmahyyg.xyz/asset_files/aether/cat_school.webp" >
+        </picture>
+        
+        
+
+<h1 id="操作系统">操作系统</h1>
+
+<p>Part 2 存储与I/O</p>
+
+<h2 id="存储管理">存储管理</h2>
+
+<p>存储分为内存和外存，物理结构上呈线性组织，虚拟地址上编址从 0 开始，可以一维、可以多维。</p>
+
+<p>引入虚拟存储的好处：在较小的可用运行内存中执行较大的应用程序，提供给用户的可用虚拟内存空间大于物理内存，在内存中便于容纳更多程序并发执行，并不会影响编程时的程序结构。</p>
+
+<p>虚拟存储器：进程中的目标代码和数据等的相对地址组成的虚拟空间。</p>
+
+<p>地址转换的实现：</p>
+
+<ul>
+<li>静态地址重定位，装入内存后移动困难且必须一次装入完整的应用程序。</li>
+<li>动态地址重定位，依赖硬件地址变换机制在执行时完成（基址+偏移地址），装入后可以实现程序段共享，对内存进行非连续分配。</li>
+</ul>
+
+<p>内外存的数据流动：</p>
+
+<ul>
+<li>用户程序控制：以覆盖技术进行数据交换。</li>
+<li>操作系统控制：Swap, On Demand, On Prefetch</li>
+</ul>
+
+<p>Swap: OS 将处于等待状态的进程换出内存，将等待事件已经发生的处于就绪状态的进程换入进程。</p>
+
+<p>On Demand: 程序执行时若发生缺乏需要的数据，自动从外存中调入相关的程序和数据段</p>
+
+<p>On Prefetch: OS 预测将来需要调用的数据，在被访问之前由 OS 选择恰当时机调入 RAM</p>
+
+<p>内存分配与回收：</p>
+
+<ul>
+<li>分配结构：登记使用情况，用于分配程序使用的表格和链表。‘</li>
+<li>放置策略：确定调入内存的程序和数据在内存中的位置。</li>
+<li>交换策略：确定把哪些程序段和数据调出内存。</li>
+<li>调入策略：按什么控制方式进入内存。</li>
+<li>回收策略：确定回收时机和对已回收的内存、内存空闲区进行调整</li>
+</ul>
+
+<p>内存信息的保护和共享：</p>
+
+<ul>
+<li>硬件法：上下界保护，下界 &lt;= 基址+offset &lt; 上界</li>
+<li>软件法：保护键，程序状态字中相应保护键开关字段数据与内存中对应被保护的存储块的保护键相同。</li>
+<li>软硬结合：界限寄存器与 CPU 用户态/核心态工作方式相结合，用户态进程只能访问界限寄存器规定的内存区域</li>
+</ul>
+
+<h2 id="内存的分区存储管理">内存的分区存储管理</h2>
+
+<p>将内存分为大小不等的区域，程序调入后占用一个分区。支持程序的并发执行，不支持分区共享。</p>
+
+<p>内碎片：占用分区之内未被利用的空间。
+外碎片：占用分区之间难以利用的空闲分区。</p>
+
+<ul>
+<li>静态分区：初始分为大小不等的区域。特点：可能产生内外碎片。</li>
+<li>动态分区：按照程序要求进行初始分配，执行过程中动态分配或改变分区大小。特点：无内碎片，有外碎片。</li>
+</ul>
+
+<p>动态分区使用分区说明表记录每一个空闲区，自由链利用内存每个空闲区的头几个单元存放本空闲区大小和下一空闲区的存储地址，便于链接分配。请求表的每个表目记录请求内存资源的进程号和请求大小。</p>
+
+<p>优点：</p>
+
+<ul>
+<li>内存共享，多道并行。</li>
+<li>硬件支持少，管理算法简单易实现。</li>
+</ul>
+
+<p>缺点：</p>
+
+<ul>
+<li>内存利用率不高，小碎片难以利用。</li>
+<li>进程大小受分区大小限制</li>
+<li>难以实现分区间信息共享</li>
+</ul>
+
+<h3 id="固定分区的分配">固定分区的分配</h3>
+
+<p>分配：根据请求表查找分区说明表，查找出一个空闲的大于请求容量且未在使用的空闲区分配给应用程序。
+回收：将对应分区说明表的自由链的分区状态置为未使用。</p>
+
+<h3 id="动态分区的分配">动态分区的分配</h3>
+
+<p>动态分配需要解决的问题：</p>
+
+<ol>
+<li>从自由链中查出合适的空闲区分配给程序</li>
+<li>分配后更新</li>
+<li>释放后进行链接合并空闲区，更新</li>
+</ol>
+
+<p>分配算法：</p>
+
+<ul>
+<li>最先适应：按起始地址递增排序，找到符合要求的就分配。</li>
+<li>最佳适应：按空闲区域从小到大排序，符合长度就分配。</li>
+<li>最坏适应：按空闲区域从大到小排序，大于等于长度就分配，小于则分配失败。</li>
+</ul>
+
+<p>分区存储的问题：</p>
+
+<ul>
+<li>无法实现容量只受内存和外存容量之和限制的虚拟存储器</li>
+<li>用户进程所需的内存容量受到分区大小的限制</li>
+</ul>
+
+<h2 id="内存的页式管理">内存的页式管理</h2>
+
+<p>背景：分区管理存在严重的碎片问题，进程大小仍然受到分区大小或内存可用空间的限制，不利用数据段和程序段的共享。</p>
+
+<p>实现：虚拟地址空间划分为若干个长度相等的 Page，物理地址按相同大小划分为 Page Frame，建立一个虚拟地址与物理地址一一对应的页表，使用对应的硬件地址变换结构解决地址变换。使用请求调页或预调页实现内存与外存的统一关联。此时虚拟地址 = 页号 + 页内地址。这样的实现减少了内存中的碎片，实现了从连续存储到非连续存储的飞跃。</p>
+
+<p>由于页面置换算法不当造成的频繁调度，称之为 <em>抖动</em> 。</p>
+
+<p><strong>抖动</strong> 的两种可能：</p>
+
+<ul>
+<li><p>并发进程所要求的工作集大于内存可用区</p></li>
+
+<li><p>分配了足够的工作集，但是无法在执行前选择了适当的程序段和数据集</p></li>
+</ul>
+
+<p>解决 <strong>抖动</strong> 的方法：</p>
+
+<ul>
+<li>扩大工作集（Unix 采用此种方法，放弃一些阻塞状态的进程，锁住缺页进程，增大工作集）</li>
+<li>改变内存、外存访问速度，即选择不同的淘汰算法</li>
+</ul>
+
+<h3 id="静态页面管理">静态页面管理</h3>
+
+<p>进程开始执行前将所有数据装入内存各个页面并实现地址映射。</p>
+
+<p>请求表：确定进程的虚拟空间在内存中的对应地址、长度、进程要求的页面数。</p>
+
+<p>存储页面表：标记页面是否被分配，记录未分配页面总数，全系统共用。</p>
+
+<p>回收：拆除对应页表，状态插入存储页面表。</p>
+
+<p>特点：解决了分区管理的碎片问题，但要求全部数据在初始时装入内存，进程大小仍受到可用页面数的限制。</p>
+
+<h3 id="动态页面管理-请求页式管理">动态页面管理 - 请求页式管理</h3>
+
+<p>产生缺页中断时从外存调入对应页面。为了避免重复的保存页，需要记录页内数据是否被修改。</p>
+
+<h4 id="belady-现象">××Belady 现象××</h4>
+
+<p>使用 FIFO 时，在未分配给进程足够的页面数时，会存在分配页面数增多，缺页次数反而增加的现象。 <strong>缺页率</strong> = $缺页中断 / 调用请求 * 100%$</p>
+
+<h4 id="置换算法">置换算法</h4>
+
+<ul>
+<li>Random: 随机淘汰</li>
+<li>Round Robin: 轮换法循环换出内存可用区中一个可被换出的页。</li>
+<li>FIFO: 先进先出</li>
+</ul>
+
+<p>First In First Out, 选择驻留内存最长时间的页优先淘汰，基于假设：先调入的页不再被访问的可能性比其他页更大。 实现：将各个已分配页面按分配时间形成链表，并设置一个置换指针指向队首。</p>
+
+<ul>
+<li>Least Recently Used: 最近最久未使用（需要设置更新记录和访问记录）</li>
+<li>Least Frequently Used: 最不经常使用（需要设置访问次数）</li>
+<li>Not Recently Used : 最近没有使用（设置访问位）</li>
+<li>Optimal Replacement Algorithm: 理想淘汰算法（淘汰在将来不会出现或最远出现的页，但因为操作系统无法预测，故无法实现）</li>
+</ul>
+
+<h3 id="动态页面管理-预调入页式管理">动态页面管理- 预调入页式管理</h3>
+
+<p>系统进行调入顺序计算，预计被访问的顺序后依次将页面调入/调出。</p>
+
+<h3 id="页式管理的优缺点">页式管理的优缺点</h3>
+
+<p>优点：有效解决了碎片问题，提供了内存外存统一管理的虚拟存储器实现方式，用户可利用的存储空间大大增加</p>
+
+<p>缺点：要求有相应的硬件支持，增加了系统开销（缺页中断处理），可能产生抖动，每个进程最后总有一部分空间得不到利用。</p>
+
+<h2 id="内存的段式管理">内存的段式管理</h2>
+
+<p>共享的程序数据往往按照程序名或数据块调用，故而不同进程共用子程序和数据变得非常困难。且一个页面中可能存储了多个不同程序段的指令代码，很难通过共享页面来共享程序块和数据块。页式管理只能采用静态链接，造成 CPU 资源的浪费。</p>
+
+<h3 id="基本思想">基本思想</h3>
+
+<p>程序按照函数关系成段，对应一个二维的虚拟存储器，段式管理器以段为单位分配内存，通过交换技术扩充内存。段的长度不固定，地址 = 段号 + 段内偏移。每个段是一个首地址为0的逻辑上完整的程序或数据，根据需要，段的长度可以动态增长。每个段是一段连续的内存空间，各段不连续，分配与释放在执行过程中动态执行。</p>
+
+<p>地址变换的数据结构：段表：段号、起始地址、长度、存储地址、内存外存、访问位</p>
+
+<p>内存给定指定区域放置段表，开始进程时管理程序将段的段表起始地址放入段表寄存器。开始根据段号 s 为索引，查表获取物理地址。</p>
+
+<p>段的地址保护：</p>
+
+<ul>
+<li>地址越界保护：比较段长与段内相对地址，但在允许段长动态增长的系统中，段内地址可以大于段长。</li>
+<li>存取方式控制保护</li>
+</ul>
+
+<h3 id="段的淘汰">段的淘汰</h3>
+
+<ul>
+<li>LRU、LFU、NRU</li>
+<li>FIFO</li>
+</ul>
+
+<p>淘汰时应当注意，如果淘汰段长后内存可用区仍不满足，应当继续淘汰。</p>
+
+<h3 id="段式管理的优缺点">段式管理的优缺点</h3>
+
+<p>优点：</p>
+
+<ul>
+<li>提供内存外存统一的虚拟存储器实现</li>
+<li>允许段长动态增长</li>
+<li>便于对具有完整逻辑功能的信息段进行共享</li>
+<li>便于实现动态链接</li>
+</ul>
+
+<p>缺点：</p>
+
+<ul>
+<li>需要硬件支持，提高机器成本</li>
+<li>仍然存在碎片</li>
+<li>允许动态增长会给系统管理带来一定难度</li>
+<li>段长度受到内存可用区大小的限制</li>
+<li>淘汰算法不当会造成抖动</li>
+</ul>
+
+<h2 id="内存的段页式管理">内存的段页式管理</h2>
+
+<p>段页式管理时将进程中包含的具有独立逻辑功能的程序或数据划分成段，并有各自的段号，按照一定的大小划分成不同的页，最后不足一页的部分独占一页。</p>
+
+<p>此时的虚拟地址 = 段号 s + 页号 p + 页内相对地址 d</p>
+
+<p>最小划分单位是页。每段所拥有的程序和数据在内存中可以非连续性地存放，这样分段的大小不再受内存可用区的限制。每个进程建立一张段表，段表中应当有专项指出对应的页表始址和页表长度，每段中建立一个页表。</p>
+
+<p>硬件上存在一个快速联想寄存器，存放当前对应的最常用的段号、页号、对应内存页面。</p>
+
+<h3 id="相关的特殊概念">相关的特殊概念</h3>
+
+<p>局部性原理：在一段时间内 CPU 总是集中地访问程序中的某一个部分而不是随机地对程序的所有部分。</p>
+
+<p>工作集：内存分配大小的临界值，小于此值频繁交换，大于此值不能显著减少交换次数。</p>
+
+<h2 id="內外存的数据交换-覆盖">內外存的数据交换 - 覆盖</h2>
+
+<p>现今使用不多。目标是在较小的运行内存中运行较大程序，与分区存储管理配合使用。根据时间先后占用公共的内存空间，常用功能常驻内存，不常用功能需要时通过覆盖装入内存，不同时使用的模块可以共用一个内存分区。</p>
+
+<p>缺点：变成时必须划分程序模块和数据模块之间的划分关系，增加编程复杂度，用装入时间换取空间节省。</p>
+
+<h2 id="內外存的数据交换-swap">內外存的数据交换 - Swap</h2>
+
+<p>交换单位为整个进程的内存空间，与分区管理配合使用。</p>
+
+<p>原理：暂停内存中执行的进程，将整个进程的地址空间保存到外存交换区（Swap out），将外存中就绪的进程对应地址空间读入内存并送入就绪队列（Swap in）。</p>
+
+<p>优点：增加并发数目，给用户提供适当响应时间，编写时不影响程序结构</p>
+
+<p>缺点：换入换出增加处理机开销，没有考虑执行过程中地址访问的统计特性（考虑：传入时的重定位，交换时的传送信息来嗯，外存交换区的管理）</p>
+
+<h2 id="存储保护">存储保护</h2>
+
+<p>地址越界：硬件寄存器设置受保护的地址范围</p>
+
+<p>存取控制：页表中设置对应保护位</p>
+
+      </article>
+      <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "kmahyyg" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </main>
+    <nav class="end-nav side-padding">
+      
+      <a ontouchstart="cardPressed.call(this)" ontouchend="cardReleased.call(this)" ontouchmove="cardReleased.call(this)" 
+  href="https://www.kmahyyg.xyz/inschool/ynu-os1/" class="card blog-card" rel="bookmark" >
+    
+    <div class="card-img-container">
+      <p class="card-img-overlay">Next Article</p>
+      <picture>
+        
+        <source srcset="https://alicdn.kmahyyg.xyz/asset_files/aether/cat_school.webp">
+        <img src="https://alicdn.kmahyyg.xyz/asset_files/aether/cat_school.webp" class="card-img" >
+      </picture>
+    </div>
+    
+  <article class="card-body">
+    <h2 class="card-title">YNU 操作系统课程期末复习 Part 1</h2>
+    <p class="card-text">YNU 操作系统课程期末复习 Part 1 进程与处理机调度</p>
+    <div class="card-subtext muted-text">
+      <p>Posted <time datetime="2019-07-09 79:00">Jul 9, 2019</time></p>
+      <p>#school </p>
+    </div>
+  </article>
+</a>
+      
+      <a ontouchstart="cardPressed.call(this)" ontouchend="cardReleased.call(this)" ontouchmove="cardReleased.call(this)" 
+  href="https://www.kmahyyg.xyz/" class="card home-card" style="background-image: url( https://alicdn.kmahyyg.xyz/asset_files/aether/backtohome.webp )" rel="bookmark" >
+  Home
+</a>
+    </nav>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/highlight.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.js" integrity="sha384-K3vbOmF2BtaVai+Qk37uypf7VrgBubhQreNQe9aGsz9lB63dIFiQVlJbr92dw2Lx" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/contrib/auto-render.min.js" integrity="sha384-kmZOZB5ObwgQnS/DuDg6TScgOiWWBiVt0plIRkZCmE6rDZGrEOQeHM5PcHi+nyqe" crossorigin="anonymous"
+    onload="renderMathInElement(document.body);"></script>
+<script src="https://www.kmahyyg.xyz/js/core.js"></script>
+<script>
+  hljs.initHighlightingOnLoad();
+</script>
+  </body>
+</html>
