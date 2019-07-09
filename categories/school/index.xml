@@ -6,11 +6,18 @@
     <description>Recent content in School on Pat~ Pat~ Meow~</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Tue, 09 Jul 2019 23:37:26 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 10 Jul 2019 01:15:53 +0800</lastBuildDate>
     
         <atom:link href="https://www.kmahyyg.xyz/categories/school/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
+      <title>YNU 操作系统课程期末复习 Part 3</title>
+      <link>https://www.kmahyyg.xyz/inschool/ynu-os3/</link>
+      <pubDate>Wed, 10 Jul 2019 01:15:53 +0800</pubDate>
+      
+      <guid>https://www.kmahyyg.xyz/inschool/ynu-os3/</guid>
+      <description>操作系统课程期末复习 Part 3 文件系统</description>
+    </item><item>
       <title>YNU 操作系统课程期末复习 Part 2</title>
       <link>https://www.kmahyyg.xyz/inschool/ynu-os2/</link>
       <pubDate>Tue, 09 Jul 2019 23:37:26 +0800</pubDate>
@@ -38,13 +45,6 @@
       
       <guid>https://www.kmahyyg.xyz/welovecode/java-oop-packagendocs/</guid>
       <description>Java 语言面向对象编程中包和包文档的相关内容</description>
-    </item><item>
-      <title>操作系统原理 - PV原语与互斥锁、信号量</title>
-      <link>https://www.kmahyyg.xyz/inschool/os-pvnmutex/</link>
-      <pubDate>Sat, 13 Apr 2019 23:19:40 +0000</pubDate>
-      
-      <guid>https://www.kmahyyg.xyz/inschool/os-pvnmutex/</guid>
-      <description>A reference list about PV signal and mutex</description>
     </item>
   </channel>
 </rss>

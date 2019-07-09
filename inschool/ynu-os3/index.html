@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="zh-cn" dir="ltr">
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>YNU 操作系统课程期末复习 Part 3 &middot; Pat~ Pat~ Meow~</title>
+  <meta name="description" content="操作系统课程期末复习 Part 3 文件系统" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.css" integrity="sha384-9eLZqc9ds8eNjO3TmqPeYcDj8n+Qfa4nuSiGYa6DjLNcv9BtN69ZIulL9+8CqC9Y" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://www.kmahyyg.xyz/css/main.min.css" />
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-123948588-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+
+  <style>
+    body {
+      background: #ecedef url("https://alicdn.kmahyyg.xyz/asset_files/aether/bgimg.webp") repeat;
+    }
+  </style>
+</head>
+  <body class="single-body">
+    <nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="https://www.kmahyyg.xyz/" class="nav-text">Patrick Young</a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="https://www.kmahyyg.xyz/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://www.kmahyyg.xyz/express-page/" class="hamburger-menu-overlay-link">Express Inc</a></li>
+      <li><a href="https://www.kmahyyg.xyz/about-me-page/" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="https://www.kmahyyg.xyz/archlinux-bug-page/" class="hamburger-menu-overlay-link">Arch Linux</a></li>
+      <li><a href="https://www.kmahyyg.xyz/donate-page/" class="hamburger-menu-overlay-link">Donate</a></li>
+      <li><a href="https://www.kmahyyg.xyz/categories/code" class="hamburger-menu-overlay-link">Code</a></li><li><a href="https://www.kmahyyg.xyz/categories/life" class="hamburger-menu-overlay-link">Life</a></li><li><a href="https://www.kmahyyg.xyz/categories/network" class="hamburger-menu-overlay-link">Network</a></li><li><a href="https://www.kmahyyg.xyz/categories/school" class="hamburger-menu-overlay-link">School</a></li><li><a href="https://www.kmahyyg.xyz/categories/tech" class="hamburger-menu-overlay-link">Tech</a></li>
+    </ul>
+  </div>
+</nav>
+    <main class="content side-text-padding">
+      <article class="post ">
+        <header class="post-header">
+        	<h1 class="post-title">YNU 操作系统课程期末复习 Part 3</h1>
+          <p class="post-date">Posted <time datetime="2019-07-10">Jul 10, 2019</time></p>
+        </header>
+        
+        <picture class="post-figure">
+            
+            <source srcset="https://alicdn.kmahyyg.xyz/asset_files/aether/cat_school.webp">
+          <img src="https://alicdn.kmahyyg.xyz/asset_files/aether/cat_school.webp" >
+        </picture>
+        
+        
+
+<h1 id="操作系统">操作系统</h1>
+
+<p>Part 3 文件系统</p>
+
+<h1 id="文件系统">文件系统</h1>
+
+<h2 id="文件与文件系统的概念">文件与文件系统的概念</h2>
+
+<p>文件是存贮在某种介质上的具有文件名的一组有序信息的集合。文件是一组赋名的有关联的字符流或相关联的记录的集合。</p>
+
+<p>文件形式包括：流式文件和记录式文件。</p>
+
+<p>文件分类：系统文件、库文件、用户文件（性质和用途）；普通文件、目录文件、特殊文件（组织形式）；输入、输出文件（信息流向）；RO、RW、RWX、Unprotected（保护级别）</p>
+
+<p>文件系统是计算机组织、存取和保存信息的重要手段，是负责文件存储空间管理的机构，是用户在计算机上存储信息和使用信息的接口。</p>
+
+<p>文件系统的功能：</p>
+
+<ul>
+<li>对磁盘空间进行统一管理</li>
+<li>对文件实现按名存取</li>
+<li>建立文件的物理结构，便于存储和加工</li>
+<li>完成对存放在存储设备上的文件信息的查找</li>
+<li>提供文件的共享和保护</li>
+</ul>
+
+<p>文件系统的特点：</p>
+
+<ul>
+<li>友好的用户接口</li>
+<li>按名存取，对用户透明</li>
+<li>可被多个用户或进程共享</li>
+<li>可以存储大量信息</li>
+</ul>
+
+<h2 id="文件的-逻辑结构">文件的 <strong>逻辑结构</strong></h2>
+
+<p>逻辑结构分为：字符流式的无结构文件 + 记录式的有结构文件</p>
+
+<p>逻辑结构的选取原则：
+- 用户修改时尽量减少对已存储信息的变动
+- 文件系统应当在最短时间内查找到所需的记录
+- 占据空间最小、便于用户操作</p>
+
+<p>流式文件：查找困难、管理简单、操作方便
+记录式文件：文件中的记录按不同方式排列，构成不同的逻辑结构，方便用户 CRUD，记录形式为： Key - Attribute - Attribute Value</p>
+
+<p>记录式文件的结构：</p>
+
+<ul>
+<li>连续结构: 按照记录生成先后排序，适用性强，搜索性能差</li>
+<li>多重结构: Key - Mutiple Value Chains</li>
+<li>转置结构: Mutiple Value -&gt; Single Corresponding Key</li>
+<li>顺序结构: Key 按一定规律排列</li>
+</ul>
+
+<h2 id="文件的-物理结构">文件的 <strong>物理结构</strong></h2>
+
+<p>存取过程都是先取逻辑地址，然后映射到物理地址，最后再对物理地址内的信息进行操作。映射和文件的物理存储方式紧密相关。</p>
+
+<p>物理存储设备格式化后形成存储块，块大小一般磁盘的一个扇区，通常为 4 kiB，分配一个物理块号。以块作为分配和传送信息的基本单位。物理块存放的是与其长度相等的文件信息。</p>
+
+<p>文件的物理结构分为：</p>
+
+<ul>
+<li>连续：连续的物理磁盘块，不可动态扩充文件大小，适用于顺序访问。</li>
+<li>串联：文件按顺序由串联的物理块组成，最末一个字或第一个字作为链接字，指出其后续块的物理地址。在记录式文件中，可以由此实现 多/一 对 多/一 映射。空间利用率高，存取效率高，动态扩充方便，但随机访问开销较大。（文件映照技术：FAT：文件分配表中的链接字集中在同一结构中）</li>
+<li>索引：建立文件索引表，建立的是物理块号到逻辑块号的一一映射。</li>
+</ul>
+
+<p>这样的索引表有三种形式：直接地址、索引、计算寻址。Unix 系统采用多级间接索引文件结构，索引表位置在文件目录或文件开头，表大小可以固定可以不固定。小型文件采用直接索引，大型文件采用间接索引。 这样的索引表增大了系统开销，可以通过预先把索引表放入内存解决。</p>
+
+<h2 id="文件的存取">文件的存取</h2>
+
+<p>存取方法：顺序存取、随机存取、按键存取</p>
+
+<p>按键存取则涉及对键的搜索，常见的表格搜索方法有以下三种类型：Linear, Hash, Binary</p>
+
+<h2 id="文件的存储设备">文件的存储设备</h2>
+
+<p>顺序存储：磁带，直接存储：光盘、磁盘。传输速率与信息密度、磁带转速、块间间隙有关。</p>
+
+<p>磁盘的结构：磁头、磁道、柱面。</p>
+
+<h2 id="存储空间的管理">存储空间的管理</h2>
+
+<p>本质：空闲块的组织和管理，包括组织、回收、分配。</p>
+
+<p>管理方法：</p>
+
+<ul>
+<li>空闲文件目录：统一存放在一个物理块中，每一个表项包括空闲块个数、空闲块长度、第一个空闲块号。主要用于连续文件结构的存取。</li>
+<li>空闲块链：参考链表。链接方法有：空闲块大小、释放顺序、成组链接。</li>
+</ul>
+
+<p>前两种方法对于增加和移动空闲块时开销较大，后一种方法则是对对应物理块进行分组，从后往前依次划分，第一块用于存储前一组中的块号和块数。</p>
+
+<p>为了加速成组链接：将放有最后一组空闲块的链表放入内存，在内存进行操作。</p>
+
+<ul>
+<li>位示图：系统在内存中划出若干字节用于存储，每个存储设备的物理块对应图中一个标志位，为 1 表示已分配，为 0 表示空闲。</li>
+</ul>
+
+<h2 id="文件目录管理">文件目录管理</h2>
+
+<p>文件名和对文件实施管理的控制信息称为该文件的文件说明，文件的文件说明信息成为该文件的目录。</p>
+
+<p>文件目录的管理包括：</p>
+
+<ul>
+<li>存储空间的有效利用</li>
+<li>快速搜索</li>
+<li>文件命名冲突</li>
+<li>文件共享</li>
+</ul>
+
+<p>文件 = 文件体 + 文件说明（FCB），FCB 包括 文件逻辑结构、物理结构、存取控制、管理信息，文件说明组成目录文件，文件系统利用 FCB 完成按名存取和文件信息的共享与保护。</p>
+
+<p>FCB 包括：文件名、大小、在物理介质中的位置、存取控制信息、管理信息、文件类型。</p>
+
+<h3 id="文件目录定义与分类"><strong>文件目录定义与分类</strong></h3>
+
+<p>单级文件目录：建立线性表，搜索效率低、重名问题严重。</p>
+
+<p>二级文件目录：组成目录文件后以用户为单位，把文件说明划分为不同组，存取控制信息存储在主目录（MFD），用户文件的说明组成的目录文件被称为用户目录（UFD），MFD、UFD 形成二级目录</p>
+
+<p>树状文件目录：系统中存在根目录文件，目录中存在一般文件（叶子），也可以有子目录文件（树枝）。</p>
+
+<p>树状目录结构特点：层次清楚、重名问题解决了、查找搜索速度快</p>
+
+<h3 id="文件目录共享">文件目录共享</h3>
+
+<p>文件的固有名：为了访问某个文件而必须访问的各个文件的目录名与文件名的顺序连接。</p>
+
+<p>绕道法：用户从当前目录出发，向上返回到与共享文件所在目录的交叉点，再顺序下访。</p>
+
+<p>链接法：将目录中的一个链指针指向被共享文件所在的目录。</p>
+
+<p>基本文件目录表：</p>
+
+<p>包括 BFD 和 SFD 两部分。</p>
+
+<p>BFD 包括：文件的结构信息、物理块号、存取控制、管理信息，并由系统赋予唯一内部标识。</p>
+
+<p>SFD 包括：用户给出的符号名和系统赋予文件说明信息的内部表示，称为符号文件目录表。</p>
+
+<p>用户只需给出被共享文件名，系统会自动在 SFD 相关文件处生成与被共享文件相同的内部标识 ID。</p>
+
+<h3 id="目录管理">目录管理</h3>
+
+<p>由于文件打开需要经过目录的查找，速度缓慢，解决办法：将 正在使用的文件的目录表复制到内存。</p>
+
+<p>系统打开文件的步骤： 复制 MFD 至内存 -&gt; 根据得到的标识符，复制标识符指定的 BFD 对应条目，根据 BFD 搜索 SFD，找到对应的目录表项 -&gt; 根据目录表项，复制对应的最终 BFD 至内存。</p>
+
+<p>包含被打开的文件的 SFD 表称为活动名字表，每用户一张；对应的 BFD 表称为活动名字表，一个系统一张。</p>
+
+<h2 id="文件存取控制">文件存取控制</h2>
+
+<p>关心的问题：权限授予，防止盗用权限，防止有权限用户误用文件。</p>
+
+<p>控制步骤：审定用户权限 -&gt; 验证存取要求是否与权限一直 -&gt; 比较保密性要求</p>
+
+<p>验证方法：存取控制矩阵（用户-文件-存取控制位），存取控制表（每个文件）- 口令 - 密码。</p>
+
+<h2 id="文件的使用">文件的使用</h2>
+
+<p>文件的使用指的是操作系统提供的与文件有关的系统调用。</p>
+
+<p>文件的访问指的是围绕文件内容的读写进行的各种文件操作：打开，关闭，读，写文件。添加操作，定位操作。</p>
+
+<p>文件的控制指的是围绕文件属性的控制进行的各种文件操作：创建，删除，获取文件属性，设置文件属性，修改文件名。</p>
+
+<h2 id="文件系统的层次模型">文件系统的层次模型</h2>
+
+<p>优点：</p>
+
+<ul>
+<li>按照系统提供的功能来划分层次</li>
+<li>下层为上层提供服务，上层使用下层功能</li>
+<li>互相之间不了解对方的内部结构和实现方法</li>
+<li>易于设计、理解、实现、管理、维护</li>
+</ul>
+
+<p>文件系统的层次：（1-&gt;8） 用户接口 -&gt; 符号文件系统 -&gt; 基本文件系统 -&gt; 存取控制验证 -&gt; 逻辑文件系统 -&gt; 物理文件系统 -&gt; 文件存储分配 / 设备策略模块 -&gt; 启动 I/O</p>
+
+      </article>
+      <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "kmahyyg" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </main>
+    <nav class="end-nav side-padding">
+      
+      <a ontouchstart="cardPressed.call(this)" ontouchend="cardReleased.call(this)" ontouchmove="cardReleased.call(this)" 
+  href="https://www.kmahyyg.xyz/inschool/ynu-os2/" class="card blog-card" rel="bookmark" >
+    
+    <div class="card-img-container">
+      <p class="card-img-overlay">Next Article</p>
+      <picture>
+        
+        <source srcset="https://alicdn.kmahyyg.xyz/asset_files/aether/cat_school.webp">
+        <img src="https://alicdn.kmahyyg.xyz/asset_files/aether/cat_school.webp" class="card-img" >
+      </picture>
+    </div>
+    
+  <article class="card-body">
+    <h2 class="card-title">YNU 操作系统课程期末复习 Part 2</h2>
+    <p class="card-text">操作系统课程期末复习 Part 2 存储管理与IO</p>
+    <div class="card-subtext muted-text">
+      <p>Posted <time datetime="2019-07-09 79:00">Jul 9, 2019</time></p>
+      <p>#school </p>
+    </div>
+  </article>
+</a>
+      
+      <a ontouchstart="cardPressed.call(this)" ontouchend="cardReleased.call(this)" ontouchmove="cardReleased.call(this)" 
+  href="https://www.kmahyyg.xyz/" class="card home-card" style="background-image: url( https://alicdn.kmahyyg.xyz/asset_files/aether/backtohome.webp )" rel="bookmark" >
+  Home
+</a>
+    </nav>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/highlight.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.js" integrity="sha384-K3vbOmF2BtaVai+Qk37uypf7VrgBubhQreNQe9aGsz9lB63dIFiQVlJbr92dw2Lx" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/contrib/auto-render.min.js" integrity="sha384-kmZOZB5ObwgQnS/DuDg6TScgOiWWBiVt0plIRkZCmE6rDZGrEOQeHM5PcHi+nyqe" crossorigin="anonymous"
+    onload="renderMathInElement(document.body);"></script>
+<script src="https://www.kmahyyg.xyz/js/core.js"></script>
+<script>
+  hljs.initHighlightingOnLoad();
+</script>
+  </body>
+</html>
