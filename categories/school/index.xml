@@ -6,11 +6,18 @@
     <description>Recent content in School on Pat~ Pat~ Meow~</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Wed, 10 Jul 2019 01:15:53 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 10 Jul 2019 10:15:03 +0800</lastBuildDate>
     
         <atom:link href="https://www.kmahyyg.xyz/categories/school/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
+      <title>YNU 操作系统课程期末复习 Part 4</title>
+      <link>https://www.kmahyyg.xyz/inschool/ynu-os4/</link>
+      <pubDate>Wed, 10 Jul 2019 10:15:03 +0800</pubDate>
+      
+      <guid>https://www.kmahyyg.xyz/inschool/ynu-os4/</guid>
+      <description>操作系统课程期末复习 Part 4 设备与数据</description>
+    </item><item>
       <title>YNU 操作系统课程期末复习 Part 3</title>
       <link>https://www.kmahyyg.xyz/inschool/ynu-os3/</link>
       <pubDate>Wed, 10 Jul 2019 01:15:53 +0800</pubDate>
@@ -38,13 +45,6 @@
       
       <guid>https://www.kmahyyg.xyz/welovecode/java-oop-inheritance-class/</guid>
       <description>Java 语言字符串处理和对终端 STDIN STDOUT 流的处理</description>
-    </item><item>
-      <title>Java 语言笔记 - OOP - 包与包文档</title>
-      <link>https://www.kmahyyg.xyz/welovecode/java-oop-packagendocs/</link>
-      <pubDate>Tue, 16 Apr 2019 08:58:13 +0800</pubDate>
-      
-      <guid>https://www.kmahyyg.xyz/welovecode/java-oop-packagendocs/</guid>
-      <description>Java 语言面向对象编程中包和包文档的相关内容</description>
     </item>
   </channel>
 </rss>

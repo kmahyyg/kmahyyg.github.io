@@ -6,11 +6,18 @@
     <description>Recent content in Inschools on Pat~ Pat~ Meow~</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Wed, 10 Jul 2019 01:15:53 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 10 Jul 2019 10:15:03 +0800</lastBuildDate>
     
         <atom:link href="https://www.kmahyyg.xyz/inschool/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
+      <title>YNU 操作系统课程期末复习 Part 4</title>
+      <link>https://www.kmahyyg.xyz/inschool/ynu-os4/</link>
+      <pubDate>Wed, 10 Jul 2019 10:15:03 +0800</pubDate>
+      
+      <guid>https://www.kmahyyg.xyz/inschool/ynu-os4/</guid>
+      <description>操作系统课程期末复习 Part 4 设备与数据</description>
+    </item><item>
       <title>YNU 操作系统课程期末复习 Part 3</title>
       <link>https://www.kmahyyg.xyz/inschool/ynu-os3/</link>
       <pubDate>Wed, 10 Jul 2019 01:15:53 +0800</pubDate>
@@ -38,13 +45,6 @@
       
       <guid>https://www.kmahyyg.xyz/inschool/os-pvnmutex/</guid>
       <description>A reference list about PV signal and mutex</description>
-    </item><item>
-      <title>操作系统原理 - 用户空间、内核空间与上下文</title>
-      <link>https://www.kmahyyg.xyz/inschool/os-process-context/</link>
-      <pubDate>Mon, 08 Apr 2019 00:51:52 +0000</pubDate>
-      
-      <guid>https://www.kmahyyg.xyz/inschool/os-process-context/</guid>
-      <description>Kernel Space &amp; User Space &amp; Context Switch</description>
     </item>
   </channel>
 </rss>
