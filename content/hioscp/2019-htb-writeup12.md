@@ -1,7 +1,7 @@
 ---
 title: "HackTheBox - WriteUp 12"
 date: 2019-07-08T13:16:37+08:00
-description: "HackTheBox 练手"
+description: "HackTheBox 练手 - Ghoul - Pivoting"
 featuredImage: "https://alicdn.kmahyyg.xyz/asset_files/aether/cat_tech.webp"
 categories: ["tech"]
 draft: false

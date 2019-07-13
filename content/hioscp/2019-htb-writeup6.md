@@ -1,7 +1,7 @@
 ---
 title: "HackTheBox - WriteUp 6"
 date: 2019-06-14T14:07:30+08:00
-description: "HackTheBox 练手"
+description: "HackTheBox 练手 - Grandparents - MSF for Windows Target"
 featuredImage: "https://alicdn.kmahyyg.xyz/asset_files/aether/cat_tech.webp"
 categories: ["tech"]
 draft: false

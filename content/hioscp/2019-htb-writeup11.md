@@ -1,7 +1,7 @@
 ---
 title: "HackTheBox - WriteUp 11"
 date: 2019-07-05T19:10:22+08:00
-description: "HackTheBox 练手"
+description: "HackTheBox 练手 - Fortune - BSD AUTHPF"
 featuredImage: "https://alicdn.kmahyyg.xyz/asset_files/aether/cat_tech.webp"
 categories: ["tech"]
 draft: false

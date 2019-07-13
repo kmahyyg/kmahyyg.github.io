@@ -1,7 +1,7 @@
 ---
 title: "HackTheBox - WriteUp 10"
 date: 2019-07-04T17:33:14+08:00
-description: "HackTheBox 练手"
+description: "HackTheBox 练手 - Ellingson - ret2plt"
 featuredImage: "https://alicdn.kmahyyg.xyz/asset_files/aether/cat_tech.webp"
 categories: ["tech"]
 draft: false

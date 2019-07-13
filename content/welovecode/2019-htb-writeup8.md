@@ -1,7 +1,7 @@
 ---
 title: "HackTheBox - WriteUp 8"
 date: 2019-06-10T16:15:19+08:00
-description: "HackTheBox 练手"
+description: "HackTheBox 练手 - CronOS - PHP Cron"
 featuredImage: "https://alicdn.kmahyyg.xyz/asset_files/aether/cat_tech.webp"
 categories: ["tech"]
 draft: false

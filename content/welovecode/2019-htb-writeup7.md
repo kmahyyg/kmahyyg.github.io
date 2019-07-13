@@ -1,7 +1,7 @@
 ---
 title: "HackTheBox - WriteUp 7"
 date: 2019-06-09T19:46:08+08:00
-description: "HackTheBox 练手"
+description: "HackTheBox 练手 - Calamity - ret2mprotect"
 featuredImage: "https://alicdn.kmahyyg.xyz/asset_files/aether/cat_tech.webp"
 categories: ["tech"]
 draft: false

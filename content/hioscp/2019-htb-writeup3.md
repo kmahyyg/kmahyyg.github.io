@@ -1,7 +1,7 @@
 ---
 title: "HackTheBox - WriteUp 3"
 date: 2019-05-14T23:00:45+08:00
-description: "HackTheBox 练手"
+description: "HackTheBox 练手 - Chaos - Latex Privilege Escalation"
 featuredImage: "https://alicdn.kmahyyg.xyz/asset_files/aether/cat_tech.webp"
 categories: ["tech"]
 draft: false
@@ -258,11 +258,3 @@ Now you have root and webmin. Do anything you want.
 
 (Finished.) 2019.5.14
 
-# 插播一条讣告
-
-> https://teddysun.com/548.html
-> TeddySun 的工作帮助我在小白时期减少了很大的工作量，现在，虽然我已经学到了很多关于 Linux 的东西，仍然喜欢用他的 BBR 脚本。 没了逸冰，没了逗比，还会有易冰，还会有豆比，GFW 不倒，翻墙之路不止！
-> 在此问候举报者全家！
-> 同样，在文末向将翻墙难度降低数十个数量级的几位大佬致敬，一路保重！
-> 番外：个人建议了解一键脚本原理，慢慢学习、了解工作原理，逐步学习更多的知识，增强自己，早日肉翻。
-> 番外2：我不完全反对 GFW，GFW 可以在提供明文禁止提示、有明文立法限制的情况下墙掉邪教和恐怖主义、儿童色情网站，但是不是现在这样的 GFW！

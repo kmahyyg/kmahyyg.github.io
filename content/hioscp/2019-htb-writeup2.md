@@ -1,7 +1,7 @@
 ---
 title: "HackTheBox - WriteUp 2"
 date: 2019-05-13T22:20:40+08:00
-description: "HackTheBox 练手"
+description: "HackTheBox 练手 - Swagshop, Help"
 featuredImage: "https://alicdn.kmahyyg.xyz/asset_files/aether/cat_tech.webp"
 categories: ["tech"]
 draft: false

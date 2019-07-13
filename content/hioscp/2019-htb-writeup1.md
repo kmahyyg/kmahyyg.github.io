@@ -1,7 +1,7 @@
 ---
 title: "HackTheBox - WriteUp 1"
 date: 2019-04-27T19:18:00+08:00
-description: "HackTheBox 第一次练手"
+description: "HackTheBox 练手 - IRKed, Netmon, LightWeight, LaCasaDePapel, Bastion"
 featuredImage: "https://alicdn.kmahyyg.xyz/asset_files/aether/cat_tech.webp"
 categories: ["tech"]
 draft: false
@@ -42,14 +42,15 @@ dropCap: false
 
 ## 第二关：Reverse Shell -> Interactive Shell
 
-检查痕迹，发现存在一个 `.b**********y` 文件，读取，检测到里面有个 `.b****p` 文件。但是不在当前目录，检测权限，可读，读取，拿到一串代码和一个 `s*********** elite st**** ** b*****p` 的提示。
+检查痕迹，发现存在一个 `.bash_history` 文件，读取，检测到里面有个 `.backup` 文件。但是不在当前目录，检测权限，可读，读取，拿到一串代码和一个 `s*********** elite st**** ** b*****p` 的提示。
+
 联想到之前开放的端口中存在一个看似古怪的文件，测试读取，成功，拿到普通用户权限。登陆 SSH，拿到 Proof。
 
 ## 第三关： Privilege escalation
 
 这关就是不能想太多，我都折腾了差点把 exim4 提权搞上去了，最后发现简单的一批。
 
-关键词：SUID 提权。 一通检查之后发现一个奇怪的 Shell Script，提示是用来检测用户权限并测试的，还处于开发待完善状态。尝试运行，提示缺失文件，手动建立并写入内容，再次尝试执行，拿到 Root Shell，提权完成。
+关键词：SUID 提权。使用 LinEnum 检测即可，一通检查之后发现一个奇怪的 Shell Script，提示是用来检测用户权限并测试的，还处于开发待完善状态。尝试运行，提示缺失文件，手动建立并写入内容，再次尝试执行，拿到 Root Shell，提权完成。
 
 （完） 2019.4.27
 
@@ -57,15 +58,19 @@ dropCap: false
 
 ## 第一关：扫扫扫
 
-Nmap 来一下，发现开放了一些端口。可以有匿名目录列举和文件下载。轻易拿到 User 权限。
+Nmap 来一下，发现开放了 21,80,135,139,445,5985 端口。可以有匿名目录列举和文件下载。轻易拿到 User 权限。
 
 ## 第二关：NetMon
 
-正如其名，开了个 NetMon，这个 NetMon 的问题很多。首先版本号带了好几个 CVE，然后有明文的密钥存储，再然后有权限控制不严导致的 Remote Code Execution。
+https://kb.paessler.com/en/topic/463-how-and-where-does-prtg-store-its-data 这里可以得到一个配置文件的备份，明文密码 Get.
+
+正如其名，开了个 PRTG NetMon，这个 NetMon 的问题很多。首先版本号带了好几个 CVE，然后有明文的密钥存储，再然后有权限控制不严导致的 Remote Code Execution。
 
 ## 第三关：手写 Payload
 
 既然有 RCE，那就要手写 Payload，相关的漏洞也有 CVE，搜索一下软件名，然后通过文件下载服务拿到那个文件，分析源代码直接构造一个 Payload 就行。
+
+例如：添加一个监测的 Notification，然后根据刚刚得到的软件版本，知道 PRTG Netmon 的示例 Trigger 对应的 Script 格式，最终设置对应的 Notification 使用 Execute Program 为 `abc.txt | net user htb abc123! /add; net localgroup administrators htb /add` ，之后使用 psexec 连接即可获得最高权限 Shell。 
 
 （完） 2019.4.28
 
@@ -77,28 +82,32 @@ Think Simple, Try Harder. --OffSEC
 
 ## 第一关：First FootHold
 
-Nmap 扫描常见端口，CentOS 7, 有 80 、22、 LDAP。 80 访问之后有个网站，仔细阅读每个页面，获得最低登陆凭据。
+Nmap 扫描常见端口，CentOS 7, 有 80 、22、 389(LDAP)。 80 访问之后有个网站，仔细阅读每个页面，获得最低登陆凭据。
+
+LDAP 枚举：`ldapsearch -h 10.10.10.119 -x -b "dc=lightweight,dc=htb"`
 
 ## 第二关：Normal User Privilege
 
-查看登陆用户，发现普通权限，没有 sudoer，SELinux 处于 Enforcing 状态。搜索可读目录，发现 `/tmp/b****p.7z`。下载，带密码。找个字典，跑 john，密码得到，是个单词 `de***e`。
+查看登陆用户，发现普通权限，没有 sudoer，SELinux 处于 Enforcing 状态。搜索可读目录，发现 `/tmp/backup.7z`。下载，带密码。找个字典，跑 john，密码得到，是个单词 `de***e`。
 
-解压文件，拿到普通用户 `ld******1`。（ 127.0.0.1 那个账户是没用的，LDAP 服务器的作用是拿普通用户权限，不要想太多）。最骚的操作就在这里，找了半天没发现 `user.txt`，一问才知道，在另外一个普通用户里。
+解压文件，拿到普通用户 `ldapuser1`。（ 127.0.0.1 那个账户是没用的，LDAP 服务器的作用是拿普通用户权限，不要想太多）。最骚的操作就在这里，找了半天没发现 `user.txt`，一问才知道，在另外一个普通用户里。
 
 继续返回 80 浏览整个网站，发现有这样一段话：
 
 > This server is protected against some kinds of threats, for instance, bruteforcing. If you try to bruteforce some of the exposed services you may be banned up to 5 minutes.
 > We strongly suggest you to change your password as soon as you get in the box.
 
+从 80 拿到一个 SSH Interactive Shell 登陆凭据，登录。
+
 然后访问论坛查找提示，发现有这样一个提示：
 
 > The quieter you become, the more you are able to hear. (some peneration test may be needed.)
 
-接下来你需要上传一个 `tcpdump` ，并监听在 `lo` 接口，然后尝试访问所有 80 端口的页面，可能需要多访问几次。这样，你就会抓到 `ld*******2` 这个用户的登录凭据， `su` 切换，获得 `user.txt`。
+接下来你需要一个 `tcpdump` ，使用 `whereis tcpdump` 和 `getcap /usr/sbin/tcpdump`，并监听在 `lo` 接口，然后尝试访问所有 80 端口的页面，可能需要多访问几次。这样，你就会抓到 `ldapuser2` 这个用户的登录凭据， `su` 切换，获得 `user.txt`。
 
 ## 第三关：Root User Privilege
 
-观察 `ld******1` 的家目录，发现有些奇怪的一个 binary，叫做 `o*******l` ，`ls -Zlha` 发现没有可疑点， SELinux Context 正常， `getcap` 进一步检查发现具有 `ep` 权限位。使用对应命令监听可得到 root 权限的 reverse shell，使用对应命令可以直接读取 `/root/root.txt` 拿到 root 用户的 flag。至此，渗透完成。
+观察 `ldapuser1` 的家目录，发现有些奇怪的一个 binary，叫做 `openssl` ，`ls -Zlha` 发现没有可疑点， SELinux Context 正常， `getcap` 进一步检查发现具有 `ep` 权限位。使用对应命令监听可得到 root 权限的 reverse shell，使用对应命令可以直接读取 `/root/root.txt` 拿到 root 用户的 flag。至此，渗透完成。
 
 ## Reference
 
@@ -124,7 +133,9 @@ Nmap 走起，80/443/21/22 常见端口开启。（其实这里漏了一个）
 
 读取函数内容之后使用 PHP 函数获取到对应密钥，本地生成需要的验证凭据。生成后的凭据需要转换成对应格式才能被对应应用程序识别。
 
-凭据生成完成，访问 443, 正确登陆。是个目录列表，观察发现下载地址的特征，是 `/files/xxxxxx` ，其中 `xxxxx` 是一个常见的编码后的字符串。进一步观察并检测，发现存在任意目录枚举。至此拿到普通用户。
+Reference: https://medium.com/@sevcsik/authentication-using-https-client-certificates-3c9d270e8326
+
+凭据生成完成，访问 443, 正确登陆。是个目录列表，观察发现下载地址的特征，是 `/files/xxxxxx` ，其中 `xxxxx` 是一个 Base64 编码后的字符串。进一步观察并检测，发现存在任意目录枚举。至此拿到普通用户。
 
 ## Step 3：获取 Root 用户
 
@@ -143,7 +154,7 @@ Nmap 走起，80/443/21/22 常见端口开启。（其实这里漏了一个）
 
 ## Step 1: 信息收集
 
-Nmap 扫描，开放了一堆端口，还有一些连续的，然而都没什么卵用。
+Nmap 扫描，开放了 22,135,139,445,5985,47001,49664~49670 端口，然而都没什么卵用。
 
 检测到 SMB 打开，允许 Guest 访问，访问查看，有备份的 VHD，使用 `smbclient` / `mount -t cifs` 挂载到本地之后，使用 `guestmount` / `qemu-nbd -c /dev/nbd0` 进一步挂载，检查发现 SAM 文件。
 

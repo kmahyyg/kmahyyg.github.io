@@ -1,7 +1,7 @@
 ---
 title: "HackTheBox - WriteUp 5"
 date: 2019-05-24T18:06:06+08:00
-description: "HackTheBox 练手"
+description: "HackTheBox 练手 - Solidstate - Ret2libc"
 featuredImage: "https://alicdn.kmahyyg.xyz/asset_files/aether/cat_tech.webp"
 categories: ["tech"]
 draft: false
