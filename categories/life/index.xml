@@ -6,11 +6,18 @@
     <description>Recent content in Life on Pat~ Pat~ Meow~</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Sun, 07 Apr 2019 16:32:33 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 13 Jul 2019 23:06:44 +0800</lastBuildDate>
     
         <atom:link href="https://www.kmahyyg.xyz/categories/life/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
+      <title>2019 学年度第二学期既年中总结</title>
+      <link>https://www.kmahyyg.xyz/dailylife/2019-senior2end/</link>
+      <pubDate>Sat, 13 Jul 2019 23:06:44 +0800</pubDate>
+      
+      <guid>https://www.kmahyyg.xyz/dailylife/2019-senior2end/</guid>
+      <description>2019 年也过去了一半，离毕业也越来越近，总结过去，展望未来。</description>
+    </item><item>
       <title>2019 新年之旅 - 重庆 Day 3</title>
       <link>https://www.kmahyyg.xyz/dailylife/cqcd-trip-cqday3/</link>
       <pubDate>Sun, 07 Apr 2019 16:32:33 +0000</pubDate>
@@ -38,13 +45,6 @@
       
       <guid>https://www.kmahyyg.xyz/dailylife/cqcd-trip/</guid>
       <description>2019 新年之旅，学会告别，更要大步向前去探寻诗和远方。</description>
-    </item><item>
-      <title>2018 学年度第二学期既年终总结</title>
-      <link>https://www.kmahyyg.xyz/dailylife/2018-endofyear/</link>
-      <pubDate>Fri, 11 Jan 2019 11:55:00 +0000</pubDate>
-      
-      <guid>https://www.kmahyyg.xyz/dailylife/2018-endofyear/</guid>
-      <description>2018 学年马上要结束，2019 年马上就来了。总结一下第二学期吧。</description>
     </item>
   </channel>
 </rss>

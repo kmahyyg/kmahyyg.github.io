@@ -6,11 +6,18 @@
     <description>Recent content in Teches on Pat~ Pat~ Meow~</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Tue, 18 Jun 2019 08:31:57 +0800</lastBuildDate>
+    <lastBuildDate>Sat, 13 Jul 2019 23:07:18 +0800</lastBuildDate>
     
         <atom:link href="https://www.kmahyyg.xyz/tech/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
+      <title>SQL Injection Tutorial</title>
+      <link>https://www.kmahyyg.xyz/tech/sql-injection-tuto/</link>
+      <pubDate>Sat, 13 Jul 2019 23:07:18 +0800</pubDate>
+      
+      <guid>https://www.kmahyyg.xyz/tech/sql-injection-tuto/</guid>
+      <description>SQL 注入相关的学习笔记</description>
+    </item><item>
       <title>OSCP Prepare - Fuck GFW</title>
       <link>https://www.kmahyyg.xyz/tech/redsocks-with-gce-oscp/</link>
       <pubDate>Tue, 18 Jun 2019 08:31:57 +0800</pubDate>
@@ -38,13 +45,6 @@
       
       <guid>https://www.kmahyyg.xyz/tech/asm-exp-report2/</guid>
       <description>学校汇编语言课程的实验报告 2</description>
-    </item><item>
-      <title>关于 C 的 CRC32 实现</title>
-      <link>https://www.kmahyyg.xyz/tech/crc32-network/</link>
-      <pubDate>Tue, 04 Dec 2018 21:14:28 +0000</pubDate>
-      
-      <guid>https://www.kmahyyg.xyz/tech/crc32-network/</guid>
-      <description>CRC32 是数据包校验的一个重要算法，本文主要记录作者的一些思考。</description>
     </item>
   </channel>
 </rss>

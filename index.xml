@@ -6,45 +6,45 @@
     <description>Recent content on Pat~ Pat~ Meow~</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Wed, 10 Jul 2019 10:15:03 +0800</lastBuildDate>
+    <lastBuildDate>Tue, 16 Jul 2019 16:23:16 +0800</lastBuildDate>
     
         <atom:link href="https://www.kmahyyg.xyz/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
-      <title>YNU 操作系统课程期末复习 Part 4</title>
-      <link>https://www.kmahyyg.xyz/inschool/ynu-os4/</link>
-      <pubDate>Wed, 10 Jul 2019 10:15:03 +0800</pubDate>
+      <title>HackTheBox - WriteUp 15</title>
+      <link>https://www.kmahyyg.xyz/hioscp/2019-htb-writeup15/</link>
+      <pubDate>Tue, 16 Jul 2019 16:23:16 +0800</pubDate>
       
-      <guid>https://www.kmahyyg.xyz/inschool/ynu-os4/</guid>
-      <description>操作系统课程期末复习 Part 4 设备与数据</description>
+      <guid>https://www.kmahyyg.xyz/hioscp/2019-htb-writeup15/</guid>
+      <description>HackTheBox 练手 - Craft - Code review</description>
     </item><item>
-      <title>YNU 操作系统课程期末复习 Part 3</title>
-      <link>https://www.kmahyyg.xyz/inschool/ynu-os3/</link>
-      <pubDate>Wed, 10 Jul 2019 01:15:53 +0800</pubDate>
+      <title>SQL Injection Tutorial</title>
+      <link>https://www.kmahyyg.xyz/tech/sql-injection-tuto/</link>
+      <pubDate>Sat, 13 Jul 2019 23:07:18 +0800</pubDate>
       
-      <guid>https://www.kmahyyg.xyz/inschool/ynu-os3/</guid>
-      <description>操作系统课程期末复习 Part 3 文件系统</description>
+      <guid>https://www.kmahyyg.xyz/tech/sql-injection-tuto/</guid>
+      <description>SQL 注入相关的学习笔记</description>
     </item><item>
-      <title>YNU 操作系统课程期末复习 Part 2</title>
-      <link>https://www.kmahyyg.xyz/inschool/ynu-os2/</link>
-      <pubDate>Tue, 09 Jul 2019 23:37:26 +0800</pubDate>
+      <title>2019 学年度第二学期既年中总结</title>
+      <link>https://www.kmahyyg.xyz/dailylife/2019-senior2end/</link>
+      <pubDate>Sat, 13 Jul 2019 23:06:44 +0800</pubDate>
       
-      <guid>https://www.kmahyyg.xyz/inschool/ynu-os2/</guid>
-      <description>操作系统课程期末复习 Part 2 存储管理与IO</description>
+      <guid>https://www.kmahyyg.xyz/dailylife/2019-senior2end/</guid>
+      <description>2019 年也过去了一半，离毕业也越来越近，总结过去，展望未来。</description>
     </item><item>
-      <title>YNU 操作系统课程期末复习 Part 1</title>
-      <link>https://www.kmahyyg.xyz/inschool/ynu-os1/</link>
-      <pubDate>Tue, 09 Jul 2019 23:37:15 +0800</pubDate>
+      <title>HackTheBox - WriteUp 13</title>
+      <link>https://www.kmahyyg.xyz/hioscp/2019-htb-writeup13/</link>
+      <pubDate>Sat, 13 Jul 2019 22:31:09 +0800</pubDate>
       
-      <guid>https://www.kmahyyg.xyz/inschool/ynu-os1/</guid>
-      <description>YNU 操作系统课程期末复习 Part 1 进程与处理机调度</description>
+      <guid>https://www.kmahyyg.xyz/hioscp/2019-htb-writeup13/</guid>
+      <description>HackTheBox 练手 - Helpline - Encrypted File System on Windows</description>
     </item><item>
-      <title>HackTheBox - WriteUp 12</title>
-      <link>https://www.kmahyyg.xyz/hioscp/2019-htb-writeup12/</link>
-      <pubDate>Mon, 08 Jul 2019 13:16:37 +0800</pubDate>
+      <title>HackTheBox - WriteUp 14</title>
+      <link>https://www.kmahyyg.xyz/hioscp/2019-htb-writeup14/</link>
+      <pubDate>Sat, 13 Jul 2019 22:31:09 +0800</pubDate>
       
-      <guid>https://www.kmahyyg.xyz/hioscp/2019-htb-writeup12/</guid>
-      <description>HackTheBox 练手</description>
+      <guid>https://www.kmahyyg.xyz/hioscp/2019-htb-writeup14/</guid>
+      <description>HackTheBox 练手 - Jarvis - SQLi+Systemd</description>
     </item>
   </channel>
 </rss>

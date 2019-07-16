@@ -5,7 +5,7 @@
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <title>HackTheBox - WriteUp 1 &middot; Pat~ Pat~ Meow~</title>
-  <meta name="description" content="HackTheBox 第一次练手" />
+  <meta name="description" content="HackTheBox 练手 - IRKed, Netmon, LightWeight, LaCasaDePapel, Bastion" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.css" integrity="sha384-9eLZqc9ds8eNjO3TmqPeYcDj8n+Qfa4nuSiGYa6DjLNcv9BtN69ZIulL9+8CqC9Y" crossorigin="anonymous">
   <link rel="stylesheet" href="https://www.kmahyyg.xyz/css/main.min.css" />
@@ -98,14 +98,15 @@ if (!doNotTrack) {
 
 <h2 id="第二关-reverse-shell-interactive-shell">第二关：Reverse Shell -&gt; Interactive Shell</h2>
 
-<p>检查痕迹，发现存在一个 <code>.b**********y</code> 文件，读取，检测到里面有个 <code>.b****p</code> 文件。但是不在当前目录，检测权限，可读，读取，拿到一串代码和一个 <code>s*********** elite st**** ** b*****p</code> 的提示。
-联想到之前开放的端口中存在一个看似古怪的文件，测试读取，成功，拿到普通用户权限。登陆 SSH，拿到 Proof。</p>
+<p>检查痕迹，发现存在一个 <code>.bash_history</code> 文件，读取，检测到里面有个 <code>.backup</code> 文件。但是不在当前目录，检测权限，可读，读取，拿到一串代码和一个 <code>s*********** elite st**** ** b*****p</code> 的提示。</p>
+
+<p>联想到之前开放的端口中存在一个看似古怪的文件，测试读取，成功，拿到普通用户权限。登陆 SSH，拿到 Proof。</p>
 
 <h2 id="第三关-privilege-escalation">第三关： Privilege escalation</h2>
 
 <p>这关就是不能想太多，我都折腾了差点把 exim4 提权搞上去了，最后发现简单的一批。</p>
 
-<p>关键词：SUID 提权。 一通检查之后发现一个奇怪的 Shell Script，提示是用来检测用户权限并测试的，还处于开发待完善状态。尝试运行，提示缺失文件，手动建立并写入内容，再次尝试执行，拿到 Root Shell，提权完成。</p>
+<p>关键词：SUID 提权。使用 LinEnum 检测即可，一通检查之后发现一个奇怪的 Shell Script，提示是用来检测用户权限并测试的，还处于开发待完善状态。尝试运行，提示缺失文件，手动建立并写入内容，再次尝试执行，拿到 Root Shell，提权完成。</p>
 
 <p>（完） 2019.4.27</p>
 
@@ -113,15 +114,19 @@ if (!doNotTrack) {
 
 <h2 id="第一关-扫扫扫">第一关：扫扫扫</h2>
 
-<p>Nmap 来一下，发现开放了一些端口。可以有匿名目录列举和文件下载。轻易拿到 User 权限。</p>
+<p>Nmap 来一下，发现开放了 21,80,135,139,445,5985 端口。可以有匿名目录列举和文件下载。轻易拿到 User 权限。</p>
 
 <h2 id="第二关-netmon">第二关：NetMon</h2>
 
-<p>正如其名，开了个 NetMon，这个 NetMon 的问题很多。首先版本号带了好几个 CVE，然后有明文的密钥存储，再然后有权限控制不严导致的 Remote Code Execution。</p>
+<p><a href="https://kb.paessler.com/en/topic/463-how-and-where-does-prtg-store-its-data">https://kb.paessler.com/en/topic/463-how-and-where-does-prtg-store-its-data</a> 这里可以得到一个配置文件的备份，明文密码 Get.</p>
+
+<p>正如其名，开了个 PRTG NetMon，这个 NetMon 的问题很多。首先版本号带了好几个 CVE，然后有明文的密钥存储，再然后有权限控制不严导致的 Remote Code Execution。</p>
 
 <h2 id="第三关-手写-payload">第三关：手写 Payload</h2>
 
 <p>既然有 RCE，那就要手写 Payload，相关的漏洞也有 CVE，搜索一下软件名，然后通过文件下载服务拿到那个文件，分析源代码直接构造一个 Payload 就行。</p>
+
+<p>例如：添加一个监测的 Notification，然后根据刚刚得到的软件版本，知道 PRTG Netmon 的示例 Trigger 对应的 Script 格式，最终设置对应的 Notification 使用 Execute Program 为 <code>abc.txt | net user htb abc123! /add; net localgroup administrators htb /add</code> ，之后使用 psexec 连接即可获得最高权限 Shell。</p>
 
 <p>（完） 2019.4.28</p>
 
@@ -154,13 +159,15 @@ if (!doNotTrack) {
 
 <h2 id="第一关-first-foothold">第一关：First FootHold</h2>
 
-<p>Nmap 扫描常见端口，CentOS 7, 有 80 、22、 LDAP。 80 访问之后有个网站，仔细阅读每个页面，获得最低登陆凭据。</p>
+<p>Nmap 扫描常见端口，CentOS 7, 有 80 、22、 389(LDAP)。 80 访问之后有个网站，仔细阅读每个页面，获得最低登陆凭据。</p>
+
+<p>LDAP 枚举：<code>ldapsearch -h 10.10.10.119 -x -b &quot;dc=lightweight,dc=htb&quot;</code></p>
 
 <h2 id="第二关-normal-user-privilege">第二关：Normal User Privilege</h2>
 
-<p>查看登陆用户，发现普通权限，没有 sudoer，SELinux 处于 Enforcing 状态。搜索可读目录，发现 <code>/tmp/b****p.7z</code>。下载，带密码。找个字典，跑 john，密码得到，是个单词 <code>de***e</code>。</p>
+<p>查看登陆用户，发现普通权限，没有 sudoer，SELinux 处于 Enforcing 状态。搜索可读目录，发现 <code>/tmp/backup.7z</code>。下载，带密码。找个字典，跑 john，密码得到，是个单词 <code>de***e</code>。</p>
 
-<p>解压文件，拿到普通用户 <code>ld******1</code>。（ 127.0.0.1 那个账户是没用的，LDAP 服务器的作用是拿普通用户权限，不要想太多）。最骚的操作就在这里，找了半天没发现 <code>user.txt</code>，一问才知道，在另外一个普通用户里。</p>
+<p>解压文件，拿到普通用户 <code>ldapuser1</code>。（ 127.0.0.1 那个账户是没用的，LDAP 服务器的作用是拿普通用户权限，不要想太多）。最骚的操作就在这里，找了半天没发现 <code>user.txt</code>，一问才知道，在另外一个普通用户里。</p>
 
 <p>继续返回 80 浏览整个网站，发现有这样一段话：</p>
 
@@ -169,17 +176,19 @@ if (!doNotTrack) {
 We strongly suggest you to change your password as soon as you get in the box.</p>
 </blockquote>
 
+<p>从 80 拿到一个 SSH Interactive Shell 登陆凭据，登录。</p>
+
 <p>然后访问论坛查找提示，发现有这样一个提示：</p>
 
 <blockquote>
 <p>The quieter you become, the more you are able to hear. (some peneration test may be needed.)</p>
 </blockquote>
 
-<p>接下来你需要上传一个 <code>tcpdump</code> ，并监听在 <code>lo</code> 接口，然后尝试访问所有 80 端口的页面，可能需要多访问几次。这样，你就会抓到 <code>ld*******2</code> 这个用户的登录凭据， <code>su</code> 切换，获得 <code>user.txt</code>。</p>
+<p>接下来你需要一个 <code>tcpdump</code> ，使用 <code>whereis tcpdump</code> 和 <code>getcap /usr/sbin/tcpdump</code>，并监听在 <code>lo</code> 接口，然后尝试访问所有 80 端口的页面，可能需要多访问几次。这样，你就会抓到 <code>ldapuser2</code> 这个用户的登录凭据， <code>su</code> 切换，获得 <code>user.txt</code>。</p>
 
 <h2 id="第三关-root-user-privilege">第三关：Root User Privilege</h2>
 
-<p>观察 <code>ld******1</code> 的家目录，发现有些奇怪的一个 binary，叫做 <code>o*******l</code> ，<code>ls -Zlha</code> 发现没有可疑点， SELinux Context 正常， <code>getcap</code> 进一步检查发现具有 <code>ep</code> 权限位。使用对应命令监听可得到 root 权限的 reverse shell，使用对应命令可以直接读取 <code>/root/root.txt</code> 拿到 root 用户的 flag。至此，渗透完成。</p>
+<p>观察 <code>ldapuser1</code> 的家目录，发现有些奇怪的一个 binary，叫做 <code>openssl</code> ，<code>ls -Zlha</code> 发现没有可疑点， SELinux Context 正常， <code>getcap</code> 进一步检查发现具有 <code>ep</code> 权限位。使用对应命令监听可得到 root 权限的 reverse shell，使用对应命令可以直接读取 <code>/root/root.txt</code> 拿到 root 用户的 flag。至此，渗透完成。</p>
 
 <h2 id="reference-1">Reference</h2>
 
@@ -207,7 +216,9 @@ We strongly suggest you to change your password as soon as you get in the box.</
 
 <p>读取函数内容之后使用 PHP 函数获取到对应密钥，本地生成需要的验证凭据。生成后的凭据需要转换成对应格式才能被对应应用程序识别。</p>
 
-<p>凭据生成完成，访问 443, 正确登陆。是个目录列表，观察发现下载地址的特征，是 <code>/files/xxxxxx</code> ，其中 <code>xxxxx</code> 是一个常见的编码后的字符串。进一步观察并检测，发现存在任意目录枚举。至此拿到普通用户。</p>
+<p>Reference: <a href="https://medium.com/@sevcsik/authentication-using-https-client-certificates-3c9d270e8326">https://medium.com/@sevcsik/authentication-using-https-client-certificates-3c9d270e8326</a></p>
+
+<p>凭据生成完成，访问 443, 正确登陆。是个目录列表，观察发现下载地址的特征，是 <code>/files/xxxxxx</code> ，其中 <code>xxxxx</code> 是一个 Base64 编码后的字符串。进一步观察并检测，发现存在任意目录枚举。至此拿到普通用户。</p>
 
 <h2 id="step-3-获取-root-用户">Step 3：获取 Root 用户</h2>
 
@@ -230,7 +241,7 @@ The folder you have write permission, you can rename any files in it.</p>
 
 <h2 id="step-1-信息收集-1">Step 1: 信息收集</h2>
 
-<p>Nmap 扫描，开放了一堆端口，还有一些连续的，然而都没什么卵用。</p>
+<p>Nmap 扫描，开放了 22,135,139,445,5985,47001,49664~49670 端口，然而都没什么卵用。</p>
 
 <p>检测到 SMB 打开，允许 Guest 访问，访问查看，有备份的 VHD，使用 <code>smbclient</code> / <code>mount -t cifs</code> 挂载到本地之后，使用 <code>guestmount</code> / <code>qemu-nbd -c /dev/nbd0</code> 进一步挂载，检查发现 SAM 文件。</p>
 
