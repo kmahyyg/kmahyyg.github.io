@@ -6,11 +6,25 @@
     <description>Recent content in Tech on Pat~ Pat~ Meow~</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Wed, 17 Jul 2019 21:06:35 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 18 Jul 2019 23:46:54 +0800</lastBuildDate>
     
         <atom:link href="https://www.kmahyyg.xyz/categories/tech/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
+      <title>HackTheBox - WriteUp 18</title>
+      <link>https://www.kmahyyg.xyz/hioscp/2019-htb-writeup18/</link>
+      <pubDate>Thu, 18 Jul 2019 23:46:54 +0800</pubDate>
+      
+      <guid>https://www.kmahyyg.xyz/hioscp/2019-htb-writeup18/</guid>
+      <description>HackTheBox 练手 - Arkham - Java Deserialization Vuln</description>
+    </item><item>
+      <title>HackTheBox - WriteUp 17</title>
+      <link>https://www.kmahyyg.xyz/hioscp/2019-htb-writeup17/</link>
+      <pubDate>Thu, 18 Jul 2019 23:13:19 +0800</pubDate>
+      
+      <guid>https://www.kmahyyg.xyz/hioscp/2019-htb-writeup17/</guid>
+      <description>HackTheBox 练手 - Luke - JWT Enum - FreeBSD</description>
+    </item><item>
       <title>HackTheBox - WriteUp 16</title>
       <link>https://www.kmahyyg.xyz/hioscp/2019-htb-writeup16/</link>
       <pubDate>Wed, 17 Jul 2019 21:06:35 +0800</pubDate>
@@ -31,20 +45,6 @@
       
       <guid>https://www.kmahyyg.xyz/tech/sql-injection-tuto/</guid>
       <description>SQL 注入相关的学习笔记</description>
-    </item><item>
-      <title>HackTheBox - WriteUp 13</title>
-      <link>https://www.kmahyyg.xyz/hioscp/2019-htb-writeup13/</link>
-      <pubDate>Sat, 13 Jul 2019 22:31:09 +0800</pubDate>
-      
-      <guid>https://www.kmahyyg.xyz/hioscp/2019-htb-writeup13/</guid>
-      <description>HackTheBox 练手 - Helpline - Encrypted File System on Windows</description>
-    </item><item>
-      <title>HackTheBox - WriteUp 14</title>
-      <link>https://www.kmahyyg.xyz/hioscp/2019-htb-writeup14/</link>
-      <pubDate>Sat, 13 Jul 2019 22:31:09 +0800</pubDate>
-      
-      <guid>https://www.kmahyyg.xyz/hioscp/2019-htb-writeup14/</guid>
-      <description>HackTheBox 练手 - Jarvis - SQLi+Systemd</description>
     </item>
   </channel>
 </rss>

