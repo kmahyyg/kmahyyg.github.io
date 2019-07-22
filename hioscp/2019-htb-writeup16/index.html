@@ -70,7 +70,7 @@ if (!doNotTrack) {
 
 <p>First, access 80, get 403. We need enum vhost.</p>
 
-<p>Use gobuster here: <code>gobuster vhost -r -u http://player.htb -o /tmp/player1.log -w ./subdomains-top1mil-20000.txt -s 200</code>, Found: <code>dev</code> <code>staging</code> <code>chat</code></p>
+<p>Use gobuster here: <code>gobuster vhost -r -u http://player.htb -o /tmp/player1.log -w ./subdomains-top1mil-20000.txt</code>, Found: <code>dev</code> <code>staging</code> <code>chat</code></p>
 
 <p>Add the following lines into <code>/etc/hosts</code>:</p>
 
