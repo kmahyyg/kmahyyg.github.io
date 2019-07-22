@@ -20,6 +20,8 @@ Try anomymously access the SMB, use `smbclient -U anonymous --no-pass //10.10.10
 
 Unarchive it, get `backup.img`, `file` check: `LUKS Encrypted v1[aes, xts-plain64, sha256] partition file`. Run `hashcat` with `rockyou`: 
 
+> Update: `binwalk -e` can extract LUKSv1 encrypted data. You should try it next time. LUKSv2 will not work.
+
 ```bash
 $ dd if=backup.img of=header.luks bs=512 count=4097
 $ hashcat --session rockhead1 -m 14600 -a 0 -w 3 ./header.luks /usr/share/wordlists/rockyou.txt -o luks_pwd.txt

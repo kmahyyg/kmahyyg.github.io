@@ -18,7 +18,7 @@ Nmap enum 22(SSH 6.6.1p1), 80(Apache Web 2.4.7 With PHP 5.5.9), 6686(SSH 7.2p1)
 
 First, access 80, get 403. We need enum vhost.
 
-Use gobuster here: `gobuster vhost -r -u http://player.htb -o /tmp/player1.log -w ./subdomains-top1mil-20000.txt -s 200`, Found: `dev` `staging` `chat`
+Use gobuster here: `gobuster vhost -r -u http://player.htb -o /tmp/player1.log -w ./subdomains-top1mil-20000.txt`, Found: `dev` `staging` `chat`
 
 Add the following lines into `/etc/hosts`:
 
