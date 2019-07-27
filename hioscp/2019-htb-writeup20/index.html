@@ -175,11 +175,11 @@ http://127.0.0.1/dev/d9e28afcf0b274a5e0542abb67db0784/callupt.php
 
 <p>After you have a reverse shell, check <code>/etc/passwd</code>, found user: <code>rijndael</code>.</p>
 
-<p>You have read permission of <code>/home/rijndael/creds.txt</code> and also <code>/home/rijndael/creds.txt.old</code>.</p>
+<p>You have read permission of <code>/home/rijndael/creds.txt</code> and also <code>/home/rijndael/creds.txt.old</code>. The <code>.old</code> file suggest us that the creds is in format of &ldquo;username / password&rdquo; format. It&rsquo;s a partial known plaintext attack.</p>
 
 <p>According to the file header of <code>creds.txt</code>, it&rsquo;s encrypted with Vim, File header is <code>Vimcrypt~02!</code> means a Blowfish with wrong implementation.</p>
 
-<p>So we are be able to recover the first 64 bytes of the encrypted text. Except the header, the encrypted text is only 26 Bytes&hellip; It&rsquo;s a partial known plaintext attack.</p>
+<p>So we are be able to recover the first 64 bytes of the encrypted text. Except the header, the encrypted text is only 26 Bytes&hellip;</p>
 
 <p>Blowfish is based on XOR too. We have script for it, check <code>xor-kpa.py</code>, run it:</p>
 
