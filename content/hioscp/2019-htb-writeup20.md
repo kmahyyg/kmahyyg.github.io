@@ -124,11 +124,11 @@ You get a shell as `www-data`.
 
 After you have a reverse shell, check `/etc/passwd`, found user: `rijndael`.
 
-You have read permission of `/home/rijndael/creds.txt` and also `/home/rijndael/creds.txt.old`.
+You have read permission of `/home/rijndael/creds.txt` and also `/home/rijndael/creds.txt.old`. The `.old` file suggest us that the creds is in format of "username / password" format. It's a partial known plaintext attack.
 
 According to the file header of `creds.txt`, it's encrypted with Vim, File header is `Vimcrypt~02!` means a Blowfish with wrong implementation.
 
-So we are be able to recover the first 64 bytes of the encrypted text. Except the header, the encrypted text is only 26 Bytes... It's a partial known plaintext attack.
+So we are be able to recover the first 64 bytes of the encrypted text. Except the header, the encrypted text is only 26 Bytes...
 
 Blowfish is based on XOR too. We have script for it, check `xor-kpa.py`, run it:
 
