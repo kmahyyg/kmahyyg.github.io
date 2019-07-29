@@ -4,12 +4,11 @@
   <meta charset="utf-8" />
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>Hioscps &middot; Pat~ Pat~ Meow~</title>
-  <meta name="description" content="" />
+  <title>HackTheBox - Challenges 1 &middot; Pat~ Pat~ Meow~</title>
+  <meta name="description" content="HackTheBox 练手 - Forensics Challenges" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.css" integrity="sha384-9eLZqc9ds8eNjO3TmqPeYcDj8n+Qfa4nuSiGYa6DjLNcv9BtN69ZIulL9+8CqC9Y" crossorigin="anonymous">
   <link rel="stylesheet" href="https://www.kmahyyg.xyz/css/main.min.css" />
-  <link rel="alternate" type="application/rss+xml" href="https://www.kmahyyg.xyz/hioscp/index.xml" title="Pat~ Pat~ Meow~" />
   
 <script type="application/javascript">
 var doNotTrack = false;
@@ -30,7 +29,7 @@ if (!doNotTrack) {
     }
   </style>
 </head>
-  <body class="list-body">
+  <body class="single-body">
     <nav class="nav-bar side-padding">
   <h1 class="nav-header"><a href="https://www.kmahyyg.xyz/" class="nav-text">Patrick Young</a></h1>
   <div class="hamburger-menu">
@@ -48,101 +47,97 @@ if (!doNotTrack) {
     </ul>
   </div>
 </nav>
-    <main class="card-container side-gutter">
-      <header class="list-header">
-        <p class="list-header-subtext"></p>
-        <h1 class="list-header-title">Hioscps</h1>
-      </header>
+    <main class="content side-text-padding">
+      <article class="post ">
+        <header class="post-header">
+        	<h1 class="post-title">HackTheBox - Challenges 1</h1>
+          <p class="post-date">Posted <time datetime="2019-04-27">Apr 27, 2019</time></p>
+        </header>
+        
+        <picture class="post-figure">
+            
+            <source srcset="https://alicdn.kmahyyg.xyz/asset_files/aether/cat_tech.webp">
+          <img src="https://alicdn.kmahyyg.xyz/asset_files/aether/cat_tech.webp" >
+        </picture>
+        
+        
+
+<h1 id="solutions">Solutions</h1>
+
+<p>MarketDump:  Wireshark extract SQL, found strange string, do the magic using cyberchef (Exactly Base58)</p>
+
+<p>Took The Byte: XOR encrypted using password &ldquo;ff&rdquo;, then unzip.</p>
+
+<p>Blue Shadow:</p>
+
+<ol>
+<li>Use <a href="https://www.vicinitas.io/free-tools/download-user-tweets">https://www.vicinitas.io/free-tools/download-user-tweets</a> to download all tweets of <code>@blue_shad0w_</code></li>
+<li>Download tweets, and convert xlsx to csv</li>
+<li>Use <code>python</code> to process csv, grab all binary digits.</li>
+<li><code>dd</code> a new bin , its length is 4050</li>
+<li><code>hexedit</code> to input all binary digits in hex form</li>
+<li>execute the elf</li>
+<li>you&rsquo;ll get notice: get antidote on the blue shadow virus</li>
+<li>google it, you will find the virus born in Star War, and reeksa is the antidote</li>
+<li>Run <code>./virus.bin reeksa</code>, get flag.</li>
+</ol>
+
+<h1 id="referrence">Referrence</h1>
+
+<ul>
+<li><a href="https://gchq.github.io/CyberChef/">https://gchq.github.io/CyberChef/</a></li>
+</ul>
+
+      </article>
+      <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "kmahyyg" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </main>
+    <nav class="end-nav side-padding">
+      
       <a ontouchstart="cardPressed.call(this)" ontouchend="cardReleased.call(this)" ontouchmove="cardReleased.call(this)" 
-  href="https://www.kmahyyg.xyz/hioscp/2019-htb-writeup4/" class="card blog-card" rel="bookmark" >
-    <div class="card-img-container">
-      <picture>
-        
-        <source srcset="https://alicdn.kmahyyg.xyz/asset_files/aether/cat_tech.webp">
-        <img src="https://alicdn.kmahyyg.xyz/asset_files/aether/cat_tech.webp" class="card-img" >
-      </picture>
-    </div>
-  <article class="card-body">
-    <h2 class="card-title">HackTheBox - WriteUp 4</h2>
-    <p class="card-text">HackTheBox 练手 - FriendZone - DNS Zone Transfer Attack</p>
-    <div class="card-subtext muted-text">
-      <p>Posted <time datetime="2019-05-18">May 18, 2019</time></p>
-      <p>#tech </p>
-    </div>
-  </article>
-</a><a ontouchstart="cardPressed.call(this)" ontouchend="cardReleased.call(this)" ontouchmove="cardReleased.call(this)" 
-  href="https://www.kmahyyg.xyz/hioscp/2019-htb-writeup3/" class="card blog-card" rel="bookmark" >
-    <div class="card-img-container">
-      <picture>
-        
-        <source srcset="https://alicdn.kmahyyg.xyz/asset_files/aether/cat_tech.webp">
-        <img src="https://alicdn.kmahyyg.xyz/asset_files/aether/cat_tech.webp" class="card-img" >
-      </picture>
-    </div>
-  <article class="card-body">
-    <h2 class="card-title">HackTheBox - WriteUp 3</h2>
-    <p class="card-text">HackTheBox 练手 - Chaos - Latex Privilege Escalation</p>
-    <div class="card-subtext muted-text">
-      <p>Posted <time datetime="2019-05-14">May 14, 2019</time></p>
-      <p>#tech </p>
-    </div>
-  </article>
-</a><a ontouchstart="cardPressed.call(this)" ontouchend="cardReleased.call(this)" ontouchmove="cardReleased.call(this)" 
-  href="https://www.kmahyyg.xyz/hioscp/2019-htb-writeup2/" class="card blog-card" rel="bookmark" >
-    <div class="card-img-container">
-      <picture>
-        
-        <source srcset="https://alicdn.kmahyyg.xyz/asset_files/aether/cat_tech.webp">
-        <img src="https://alicdn.kmahyyg.xyz/asset_files/aether/cat_tech.webp" class="card-img" >
-      </picture>
-    </div>
-  <article class="card-body">
-    <h2 class="card-title">HackTheBox - WriteUp 2</h2>
-    <p class="card-text">HackTheBox 练手 - Swagshop, Help</p>
-    <div class="card-subtext muted-text">
-      <p>Posted <time datetime="2019-05-13">May 13, 2019</time></p>
-      <p>#tech </p>
-    </div>
-  </article>
-</a><a ontouchstart="cardPressed.call(this)" ontouchend="cardReleased.call(this)" ontouchmove="cardReleased.call(this)" 
-  href="https://www.kmahyyg.xyz/hioscp/2019-htb-challenges/" class="card blog-card" rel="bookmark" >
-    <div class="card-img-container">
-      <picture>
-        
-        <source srcset="https://alicdn.kmahyyg.xyz/asset_files/aether/cat_tech.webp">
-        <img src="https://alicdn.kmahyyg.xyz/asset_files/aether/cat_tech.webp" class="card-img" >
-      </picture>
-    </div>
-  <article class="card-body">
-    <h2 class="card-title">HackTheBox - Challenges 1</h2>
-    <p class="card-text">HackTheBox 练手 - Forensics Challenges</p>
-    <div class="card-subtext muted-text">
-      <p>Posted <time datetime="2019-04-27">Apr 27, 2019</time></p>
-      <p>#tech </p>
-    </div>
-  </article>
-</a><a ontouchstart="cardPressed.call(this)" ontouchend="cardReleased.call(this)" ontouchmove="cardReleased.call(this)" 
   href="https://www.kmahyyg.xyz/hioscp/2019-htb-writeup1/" class="card blog-card" rel="bookmark" >
+    
     <div class="card-img-container">
+      <p class="card-img-overlay">Next Article</p>
       <picture>
         
         <source srcset="https://alicdn.kmahyyg.xyz/asset_files/aether/cat_tech.webp">
         <img src="https://alicdn.kmahyyg.xyz/asset_files/aether/cat_tech.webp" class="card-img" >
       </picture>
     </div>
+    
   <article class="card-body">
     <h2 class="card-title">HackTheBox - WriteUp 1</h2>
     <p class="card-text">HackTheBox 练手 - IRKed, Netmon, LightWeight, LaCasaDePapel, Bastion</p>
     <div class="card-subtext muted-text">
-      <p>Posted <time datetime="2019-04-27">Apr 27, 2019</time></p>
+      <p>Posted <time datetime="2019-04-27 427:00">Apr 27, 2019</time></p>
       <p>#tech </p>
     </div>
   </article>
 </a>
-    </main>
-    <nav class="pagination-nav side-padding">
-      <a href="/hioscp/page/3/" class="pagination-newer">&lt; Newer Posts</a>
       
+      <a ontouchstart="cardPressed.call(this)" ontouchend="cardReleased.call(this)" ontouchmove="cardReleased.call(this)" 
+  href="https://www.kmahyyg.xyz/" class="card home-card" style="background-image: url( https://alicdn.kmahyyg.xyz/asset_files/aether/backtohome.webp )" rel="bookmark" >
+  Home
+</a>
     </nav>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/highlight.min.js"></script>
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.js" integrity="sha384-K3vbOmF2BtaVai+Qk37uypf7VrgBubhQreNQe9aGsz9lB63dIFiQVlJbr92dw2Lx" crossorigin="anonymous"></script>
